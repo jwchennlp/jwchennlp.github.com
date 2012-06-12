@@ -38,7 +38,7 @@ tags:
 随机搜索不是一种好的优化方法，为什么？因为没有充分利用已经得出的当前最好解。对于上面这个问题，最优解可能和当前最优解有一些相近之处，可能是因为某一步当前最优解走错了，最后没有演变成最优解。其意思就是，如果把当前最优解稍微改变一下，可能会向最优解的方向靠 近。那么爬山法就是通过当前的最优解，在其附近找更好的解，知道当前没有更好的解为止。而随机搜索是跳越型的，所以没有这个优势。看下面这幅图，现实中很 多问题都会像这样，如果我们把所有解都算出来，按组合排列的顺寻作为x轴，评估函数得出的值为y轴，能得出稍微连贯的曲线。随机从某个初始点出发，沿着我们想要的方向寻找，能找到优解。
 
 <p>陷入局部最小 最优解为最低点</p>
-<p><a href="http://moorekang.com/wp-content/uploads/2010/11/suiji.jpg"><img class="size-medium wp-image-268" title="suiji" src="http://moorekang.com/wp-content/uploads/2010/11/suiji-300x188.jpg" alt="" width="300" height="188" /></a></p>
+<p><a href="http://moorekang.com/wp-content/uploads/2010/11/suiji.jpg"><img class="size-medium wp-image-268" title="suiji" src="http://chenyukang.github.com/images/suiji-300x188.jpg" alt="" width="300" height="188" /></a></p>
 
 
 爬山法的缺点是，如过找到某个局部最优的地方，可能就被欺骗了，因为发现没有斜率了，以为是最优解。最后可能是个次优解。所以继续改进。
@@ -53,7 +53,7 @@ tags:
 
 <p>难优化的例子 最优解为最低点</p>
 <p>
-<a href="http://moorekang.com/wp-content/uploads/2010/11/nanyouhua.jpg"><img class="size-medium wp-image-269" title="nanyouhua" src="http://moorekang.com/wp-content/uploads/2010/11/nanyouhua-300x198.jpg" alt="" width="300" height="198" /></a>
+<a href="http://moorekang.com/wp-content/uploads/2010/11/nanyouhua.jpg"><img class="size-medium wp-image-269" title="nanyouhua" src="http://chenyukang.github.com/images/nanyouhua-300x198.jpg" alt="" width="300" height="198" /></a>
 </p>
 
 

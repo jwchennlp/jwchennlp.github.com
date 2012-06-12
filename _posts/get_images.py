@@ -55,9 +55,12 @@ def process(html_file):
             out_text = out_text.replace(jpg, new_jpg)
     if(len(new_res) != 0):
         print html_file
-        out_html = open(html_file+".bak", "w+")
+        new_file = html_file + ".bak"
+        out_html = open(new_file, "w+")
         out_html.write(out_text)
         out_html.close()
+        cmd = "mv " + new_file + " " + html_file
+        os.system(cmd)
     
 for f in htmls:
     process(f)
