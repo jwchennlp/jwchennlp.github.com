@@ -20,7 +20,26 @@ def get_files(dir, pattern):
 
 htmls = get_files("./", ".html")
 
-
+def parse_jpg(text):
+    pos =0
+    end = len(text)
+    res = []
+    while(pos < end):
+        if  text[pos:pos+4] == ".jpg" or text[pos:pos+4] == ".png":
+            begin = pos
+            while( begin > 0) :
+                if text[begin-4:begin] == "http":
+                    begin = begin - 4
+                    break
+                else:
+                    begin = begin - 1
+            res.append(text[begin:pos+4])
+            pos = pos + 4
+        else:
+            pos = pos + 1
+    return res
+        
+        
 def process_one(jpg):
     length = len(jpg)
     first = 0
@@ -40,16 +59,13 @@ def process_one(jpg):
     return new_path
     
 def process(html_file):
-    pattern = re.compile('src="http:\/\/moorekang.+\..+g"')
     f = open(html_file, "r")
     text = f.read()
     out_text = text
-    res = pattern.findall(text)
+    res = parse_jpg(text)
     new_res = []
     if len(res) != 0:
-        for r in res:
-            print r[5:-1]
-            jpg = r[5:-1]
+        for jpg in res:
             new_jpg = process_one(jpg)
             new_res.append(new_jpg)
             out_text = out_text.replace(jpg, new_jpg)

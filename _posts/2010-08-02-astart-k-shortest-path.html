@@ -21,27 +21,27 @@ tags:
 
 1.  用Dijkstra算法来，其中白色的点表示搜索过程中访问了的点。可以看出Dijkstra算法有点像BFS向周围扩展,做了很多无用的搜索。当然这与图的形状也有一定关系。   
 
-[caption id="" align="aligncenter" width="532" caption="Dijkstra 访问18191个点"]<img title="Dij" src="http://www.moorekang.com/wp-content/uploads/2010/08/Dij.jpg" alt="" width="532" height="510" />[/caption]
+[caption id="" align="aligncenter" width="532" caption="Dijkstra 访问18191个点"]<img title="Dij" src="http://chenyukang.github.com/images/Dij.jpg" alt="" width="532" height="510" />[/caption]
 
  
 
 2.  用A*算法，设S为起点，T为终点，启发函数为F(N)=Path_Dist(S-&gt;N)+Dist(N-&gt;T)。在搜索过程中Path_Dist一直维持着S-&gt;N的路径长度，那么Disk(N-&gt;T)得计算，这里我选择 Dist(N-&gt;T)=sqrt(|Xn-Xt|*|Xn-Xt|+|Yn-Yt|*|Yn-Yt|),这个为两点之间的理论最短路径，肯定是满足条件h*(N) &lt;= h(N)的，那么能得到最优解。可以看到搜索偏向于目标点的方向。   
 
-<a href="http://www.moorekang.com/wp-content/uploads/2010/08/Dij.jpg"></a>   
+<a href="http://chenyukang.github.com/images/Dij.jpg"></a>   
 
-[caption id="attachment_77" align="aligncenter" width="526" caption="A* 两点之间距离为评估函数 访问4398个点"]<a href="http://www.moorekang.com/wp-content/uploads/2010/08/Astar.jpg"><img class="size-full wp-image-77 " title="Astar" src="http://www.moorekang.com/wp-content/uploads/2010/08/Astar.jpg" alt="" width="526" height="499" /></a>[/caption]
+[caption id="attachment_77" align="aligncenter" width="526" caption="A* 两点之间距离为评估函数 访问4398个点"]<a href="http://chenyukang.github.com/images/Astar.jpg"><img class="size-full wp-image-77 " title="Astar" src="http://chenyukang.github.com/images/Astar.jpg" alt="" width="526" height="499" /></a>[/caption]
 
  
 
 3. 另外(x+y)/2 &lt;= sqrt(x^2+y^2)，所以也可以选择(|Xn-Xt|+|Yn-Yt|)/2作为启发函数。但为了节省这个sqrt的操作，代价就是访问了更多的点。   
 
-[caption id="attachment_79" align="aligncenter" width="559" caption="A* (x+y)/2作为启发函数 访问14374个点"]<a href="http://www.moorekang.com/wp-content/uploads/2010/08/Astar3.jpg"><img class="size-full wp-image-79 " title="Astar3" src="http://www.moorekang.com/wp-content/uploads/2010/08/Astar3.jpg" alt="" width="559" height="503" /></a>[/caption]
+[caption id="attachment_79" align="aligncenter" width="559" caption="A* (x+y)/2作为启发函数 访问14374个点"]<a href="http://chenyukang.github.com/images/Astar3.jpg"><img class="size-full wp-image-79 " title="Astar3" src="http://chenyukang.github.com/images/Astar3.jpg" alt="" width="559" height="503" /></a>[/caption]
 
  
 
 4. 可以做得更好，修改启发函数。Dist(N-&gt;T)=|Xn-Xt|+|Yn-Yt|,这为曼哈顿函数，这样就不满足条件h*(N)&lt;=h(N)了。所以得不到最优解，但是速度上会快很多，搜索的点也会减少很多。   
 
-[caption id="attachment_78" align="aligncenter" width="556" caption="A* 曼哈顿距离作为启发函数 访问296个点"]<a href="http://www.moorekang.com/wp-content/uploads/2010/08/Astar2.jpg"><img class="size-full wp-image-78  " title="Astar2" src="http://www.moorekang.com/wp-content/uploads/2010/08/Astar2.jpg" alt="" width="556" height="508" /></a>[/caption]
+[caption id="attachment_78" align="aligncenter" width="556" caption="A* 曼哈顿距离作为启发函数 访问296个点"]<a href="http://chenyukang.github.com/images/Astar2.jpg"><img class="size-full wp-image-78  " title="Astar2" src="http://chenyukang.github.com/images/Astar2.jpg" alt="" width="556" height="508" /></a>[/caption]
 
  
 
