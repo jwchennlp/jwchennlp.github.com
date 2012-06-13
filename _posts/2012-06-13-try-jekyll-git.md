@@ -45,3 +45,4 @@ tags: [jekyll, git]
  + 从wordpress迁徙，我使用wordpress.xml这个方法，跟换域名解析。
 
  具体参考[这里](http://jekyllbootstrap.com/usage/jekyll-quick-start.html)[这里](http://vitobotta.com/how-to-migrate-from-wordpress-to-jekyll/)，你所需要的全在这里了。
+
