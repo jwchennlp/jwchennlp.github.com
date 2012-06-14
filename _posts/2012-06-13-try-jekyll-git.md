@@ -65,4 +65,3 @@ done
  + 从wordpress迁徙，我使用wordpress.xml这个方法，最后修改域名解析就大功告成了。
 
  整个流程非常简单，你甚至可以在[三分钟内完成Github的博客搭建](http://ztpala.com/2012/01/12/zero-to-hosted-jekyll-blog-in-3-minutes/)，更相详细可以参考[这里](http://jekyllbootstrap.com/usage/jekyll-quick-start.html)[这里](http://vitobotta.com/how-to-migrate-from-wordpress-to-jekyll/)。
-
