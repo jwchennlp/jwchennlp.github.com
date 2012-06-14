@@ -19,6 +19,11 @@
     <link href="{{ ASSET_PATH }}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
 
+    <link href="{{ ASSET_PATH }}/prettify/prettify.css" rel="stylesheet" type="text/css" media="all">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ ASSET_PATH }}/prettify/prettify.js"></script>{% if page.codes %}{% for code in page.codes %} 
+    <script type="text/javascript" src="{{ ASSET_PATH }}/prettify/lang-{{ code }}.js"></script>{% endfor %}{% endif %}
+
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/favicon.ico">
   <!-- Update these with your own images
@@ -29,7 +34,7 @@
   </head>
 
   <body>
-
+  <body onload="prettyPrint()" >
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container">

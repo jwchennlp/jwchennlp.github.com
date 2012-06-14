@@ -26,7 +26,7 @@ tags: [jekyll, git]
 像写程序一样写日志，这对程序员吸引很大。
 我用这个小脚本来完成发布:
 
-<pre><code>
+<pre class="prettyprint lang-sh">
 #!/bin/sh
 do_commit() {
     cmd="git commit -a -m\"$log\""
@@ -43,7 +43,7 @@ do
   esac
   shift
 done
-</code></pre>
+</pre>
 
 + __简洁__
   
