@@ -9,13 +9,13 @@ pygments: true
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : MooreKang
-tagline: some thing from Yukang
+title : Yukang
+tagline: something from Yukang
 author :
   name : moorekang
   email : moorekang@gmail.com
   github : chenyukang
-name: MooreKang
+name: Yukang
 description: Some thing noted by Yukang
 url: http://www.moorekang.com
 
