@@ -24,6 +24,26 @@ tags: [jekyll, git]
 + __可以使用Github进行版本管理__
 	
 像写程序一样写日志，这对程序员吸引很大。
+我用这个小脚本来完成发布:
+
+<pre><code>
+#!/bin/sh
+do_commit() {
+    cmd="git commit -a -m\"$log\""
+    echo $cmd
+    git add .;
+    git commit -a -m"$log"
+    git push;
+}
+
+while [ $# -gt 0 ]
+do
+  case $1 in
+    -commit |-u) shift; log=$1; do_commit; exit 0;;
+  esac
+  shift
+done
+</code></pre>
 
 + __简洁__
   
@@ -35,9 +55,9 @@ tags: [jekyll, git]
 
 - - - 
 
- 这套工具适合程序员，而且也正在开发中，所以转移过程中会碰上一些问题。不过如果你懂一点Ruby，这些都还是比较好解决的。我是自己写了一点小程序转移图片。
+ 这套工具适合程序员，因为一切都可以在本机上操作，你可以自己写程序来批量处理文档。我是自己写了一点Python小程序转移图片。 迁徙的过程中也会碰上一些问题，不过如果你懂一点Ruby，这些都还是比较好解决的。基本步骤为：
 
- + 申请GitHub，这个不少程序员有，直接跳过
+ + 申请GitHub，这个不少程序员有，直接跳过。
  
  + 安装Jekyll 在本地，可能会遇上ruby版本的问题，我的机子上是1.8.7，需要1.9.2，使用[rvm](https://rvm.io//）来解决，具体参考[这里](http://lanvige.iteye.com/blog/857501)。
  + 在建立yourname.github.com项目
