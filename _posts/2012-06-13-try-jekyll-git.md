@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "使用Jekyll和GitPage搭建博客"
-description: "基于GitPage提供平台，使用jekyll来写博客，这是非常适合程序员的博客环境"
+title: "使用Jekyll和Github搭建博客"
+description: "基于Github提供平台，使用jekyll来写博客，这是非常适合程序员的博客环境"
 category: Notes
 tags: [jekyll, git]
 
@@ -10,7 +10,7 @@ tags: [jekyll, git]
 {% include JB/setup %}
 
 ## 为什么要折腾
-折腾了几次终于把博客从wordpress搬到GitPage了，迁徙这事本来是够麻烦的，而且也比较无聊。不过最终还是抑制不住诱惑，这有下面几点点好处。
+折腾了几次终于把博客从wordpress搬到Github了，迁徙这事本来是够麻烦的，而且也比较无聊。不过最终还是抑制不住诱惑，这有下面几点点好处。
 
 - - -
 
@@ -18,7 +18,7 @@ tags: [jekyll, git]
 
   在线下编辑，可以随便选择自己喜欢的编辑器。当然wordpress也有离线编辑工具，不过Linux下我还没找到合适的，
 我平常是用[Muse](http://mwolson.org/projects/EmacsMuse.html)生成html，然后再粘贴到站上。其实还好，
-就是插入图片不方便。使用GitPage和Jekyll是完全的离线，你甚至都不需要离开终端就可以发布文章，一切都只是简单的git push而已。
+就是插入图片不方便。使用Github和Jekyll是完全的离线，你甚至都不需要离开终端就可以发布文章，一切都只是简单的git push而已。
 写的过程中还可以用jekyll  --server预览最终排版。
 
 + __可以使用Github进行版本管理__
@@ -42,7 +42,7 @@ tags: [jekyll, git]
  + 安装Jekyll 在本地，可能会遇上ruby版本的问题，我的机子上是1.8.7，需要1.9.2，使用[rvm](https://rvm.io//）来解决，具体参考[这里](http://lanvige.iteye.com/blog/857501)。
  + 在建立yourname.github.com项目
 
- + 从wordpress迁徙，我使用wordpress.xml这个方法，跟换域名解析。
+ + 从wordpress迁徙，我使用wordpress.xml这个方法，最后修改域名解析就大功告成了。
 
- 具体参考[这里](http://jekyllbootstrap.com/usage/jekyll-quick-start.html)[这里](http://vitobotta.com/how-to-migrate-from-wordpress-to-jekyll/)，你所需要的全在这里了。
+ 整个流程非常简单，你甚至可以在[三分钟内完成Github的博客搭建](http://ztpala.com/2012/01/12/zero-to-hosted-jekyll-blog-in-3-minutes/)，更相详细可以参考[这里](http://jekyllbootstrap.com/usage/jekyll-quick-start.html)[这里](http://vitobotta.com/how-to-migrate-from-wordpress-to-jekyll/)。
 
