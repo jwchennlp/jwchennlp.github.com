@@ -1,0 +1,46 @@
+
+
+
+
+
+[[../images/concrete.gif]]
+
+** 一条指令
+
+<src lang="c">
+
+#define first_zerobit(x) (first_onebit(~(x)))
+
+/* ffs: if ret == 0 : no one bit found
+   return index is begin with 1 */
+static inline int first_onebit(int x)
+{
+    if (!x) {
+        return 0;
+    }
+    else {
+        int ret;
+        __asm__("bsfl %1, %0; incl %0" : "=r" (ret) : "r" (x));
+        return ret;
+    }
+}
+</src>
+
+** bitmap的小优化
+
+那么对于bitmap中经常需要用的找第一个空位的实现可以进行一个小优化。
+
+<src lang="c">
+
+u32 first_empty()
+{
+    u32 idx;
+    for(idx=0; idx<max_idx; idx++){
+        if(arr[idx] == 0xFFFFFFFF) //full
+            continue;
+        u32 v = arr[index];
+        return 32*idx + first_zerobit(v) - 1;
+    }
+    return -1;
+}
+</src>
