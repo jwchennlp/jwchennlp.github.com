@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "bsfl指令和bitmap的一个优化"
+title: "bsfl指令和Bitmap的一个优化"
 description: ""
 category: 
-tags: []
+tags: [Programming, bitmap]
 ---
 {% include JB/setup %}
 
