@@ -3,7 +3,7 @@ layout: post
 title: "GDB调试动态链接库"
 description: ""
 category: 
-tags: [gdb,调试]
+tags: [gdb, Programming, 调试]
 ---
 {% include JB/setup %}
 
