@@ -59,7 +59,18 @@ done
 
  + 申请GitHub，这个不少程序员有，直接跳过。
  
- + 安装Jekyll 在本地，可能会遇上ruby版本的问题，我的机子上是1.8.7，需要1.9.2，使用[rvm](https://rvm.io//）来解决，具体参考[这里](http://lanvige.iteye.com/blog/857501)。
+ + 安装Jekyll 在本地，可能会遇上ruby版本的问题，我的机子上是1.8.7，需要1.9.2，使用[rvm](https://rvm.io//)来解决，具体参考[这里](http://lanvige.iteye.com/blog/857501)。具体使用下面一些命令:
+<pre class="prettyprint lang-sh">
+sudo apt-get install gems curl
+gem install rvm
+rvm get latest 
+rvm reload
+rvm install 1.9.2
+rvm use 1.9.2
+ruby -v #(use 1.9.2)
+gem install directory_watcher liquid open4 maruku classifier jekyll
+</pre>
+
  + 再建立yourname.github.com项目，git clone [jekyll bootstrap](https://github.com/plusjade/jekyll-bootstrap.git)到自己的代码库。
 
  + 从wordpress迁徙，我使用wordpress.xml这个方法，最后修改域名解析就大功告成了。
