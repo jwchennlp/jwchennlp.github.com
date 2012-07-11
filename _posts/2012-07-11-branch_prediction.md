@@ -70,8 +70,7 @@ if(likely(some_cond)) { //this is often happen!
     /* Do something */
 }
 
-if (unlikely(some_cond)) //this is rare!
-{
+if (unlikely(some_cond)) { //this is rare!
     /* Do something */
 }
 </code></pre>
