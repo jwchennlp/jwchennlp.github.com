@@ -482,11 +482,9 @@ pre.example {
 }
 
 pre.src {
- /*background: #f4f4f4;*/
-/*background: #CC99FF;*/
+  background: #f4f4f4;
   font-weight: bold;
   font-size: 1.0em;
-  background: #FFFF99;
   color: #navy;
   border: #73afb7 1px solid;
   padding: 0.5em 0.5em 0.5em 1em;
