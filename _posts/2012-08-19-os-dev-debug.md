@@ -12,42 +12,39 @@ tags: [bochs, OS, debug]
 ## Bochs调试
 
 Bochs自带调试功能，但是如果你是apt装上的是不行的，下源码来自己编译，编译选项为：
-<pre><code>
-./configure --enable-debugger --enable-disasm
-</code></pre>
+
+    ./configure --enable-debugger --enable-disasm
+
 
 这个我只是尝试过，在OS的loder阶段可能会用到，当如果进入C语言实现部分的代码如何调试?我希望看到C的源码级别调试，而不是汇编的。
 
 ## Bochs + gdb调试
 
 同样需要在编译的时候加上选项，这个选项必须注意，否则在gdb调试的时候会出现"Cannot find bounds of current function"之类的问题。
-<pre><code>
-./configure --enable-debugger --enable-disasm --enable-gdb-stub
-</code></pre>
+
+    ./configure --enable-debugger --enable-disasm --enable-gdb-stub
+ 
 诡异的是这个--enable-gdb-stub选项和上面的 --enable-debugger选项只能二选一。也行，编译出来后重命名吧。编译完成后在Bochs的配置文件.bashrc中加上这么一行:
 
-<pre><code>
-gdbstub: enabled=1, port=1234, text_base=0, data_base=0, bss_base=0
-</code></pre>
+    gdbstub: enabled=1, port=1234, text_base=0, data_base=0, bss_base=0
+
 
 另外注意kernel的代码也需要加入-g编译选项。最后在编译完成后的文件是带调试信息的，但是我们在用Bochs启动的img文件不需要这些，现在比如kernel.elf是带编译信息的kernel
 文件，用下面的这个步骤去掉调试信息，据说也可以用strip来。
 
-<pre><code>
-cmd="objcopy -R .pdr -R .comment -R .note -S -O binary kernel.elf kernel.bin"
+    cmd="objcopy -R .pdr -R .comment -R .note -S -O binary kernel.elf kernel.bin"
 
-cat boot.bin setup.bin kernel.bin > ../a.img;
-Bochs 使用的是这个a.img文件， gdb载入的是kernel.elf文件。
-</code></pre>
+    cat boot.bin setup.bin kernel.bin > ../a.img;
+    Bochs 使用的是这个a.img文件， gdb载入的是kernel.elf文件。
 
 启动Bochs后会等待gdb连进来(其实Qemu也可以这样进行调试的)，查资料过程中发现还可在调试的目录加上.gdbinit，这样每次启动gdb就不那么麻烦了：
 
-<pre><code>
-file ./objs/kernel.elf
-target remote localhost:1234
-set disassembly-flavor intel
- b kmain
-</code></pre>
+    file ./objs/kernel.elf
+    target remote localhost:1234
+    set disassembly-flavor intel
+    b kmain
+
+## 一些有用tips
 
 OS的代码中经常会有内联汇编，有的时候一条内联过去就崩溃了，所以在gdb里需要查看反汇编语句和registers。下面这些gdb指令比较有用：
 
