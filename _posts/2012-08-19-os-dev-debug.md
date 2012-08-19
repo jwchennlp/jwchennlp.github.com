@@ -7,7 +7,7 @@ tags: [bochs, OS, debug]
 ---
 {% include JB/setup %}
 
-最近在弄一个自己的hobbyOS，作为菜鸟在调试时候积累一些经验，记录一下。
+最近在弄一个自己的hobby OS，作为菜鸟在调试时候积累一些经验，记录一下。
 
 ## Bochs调试
 
