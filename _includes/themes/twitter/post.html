@@ -45,7 +45,7 @@
   
 
   <div class="span4 sidebar">
-    <h4 class="date">发布日期：<span>{{ latest_post.date | date_to_long_string }}</span></h4>
+    <h4 class="date">发布日期：<span>{{ page.date | date_to_long_string }}</span></h4>
 
   {% unless latest_post.tags == empty %}
     <h4>标签</h4>
@@ -86,6 +86,8 @@
 	<li><a href="http://wangcong.org/blog/" target="_blank" rel="nofollow">王聪</a></li>
       </ul>
     </nav> 
+
+
 
   </div>
 </div>
