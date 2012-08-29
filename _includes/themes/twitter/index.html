@@ -17,7 +17,7 @@
   <div class="span4 sidebar">
 
 
-    <h4 class="date">发布时间：<span>{{ latest_post.date | date_to_long_string }}</span></h4>
+    <h4 class="date">发布日期：<span>{{ latest_post.date | date_to_long_string }}</span></h4>
 
   {% unless latest_post.tags == empty %}
     <h4>标签</h4>
@@ -38,7 +38,7 @@
 
 
     <div class="violet-aside-post">
-      <h4 class="v-section-tit">最近发表</h4>
+      <h4 class="v-section-tit">最近</h4>
       <ul>
         {% for rpost in site.posts limit:8  %}   
         <li class="v-aside-li">
