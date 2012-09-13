@@ -418,13 +418,13 @@ tr.alt td {
 	width: 175px;
 	margin-top: 20px;
 	padding-left: 10px;
+	position: fixed;
+    top: 0;
 }
 
 #mainNav ul {
 	margin: 0;
 	padding: 0;
-	position: fixed;
-    top: 0;
 	list-style-type: none;
 	width: 175px;
 	border-bottom: 1px dashed #999999;
