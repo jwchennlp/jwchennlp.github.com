@@ -13,14 +13,14 @@ html, body {
 }
 
 
-header{
-    width: 100%;
-    background: yellow;
-    position: fixed;
-    top: 0;
-    height: 30px !important;
-    opacity:.8;
-}
+/* header{ */
+/*     width: 100%; */
+/*     background: yellow; */
+/*     position: fixed; */
+/*     top: 0; */
+/*     height: 30px !important; */
+/*     opacity:.8; */
+/* } */
 
 /* Site slogan */
 .slogan {
@@ -423,6 +423,8 @@ tr.alt td {
 #mainNav ul {
 	margin: 0;
 	padding: 0;
+	position: fixed;
+    top: 0;
 	list-style-type: none;
 	width: 175px;
 	border-bottom: 1px dashed #999999;
