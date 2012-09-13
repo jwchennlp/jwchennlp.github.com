@@ -10,13 +10,13 @@ pygments: true
 # so be sure to set them if your theme uses them.
 #
 title : Yukang
-tagline: something from Yukang
+tagline: Something from Yukang
 author :
-  name : moorekang
+  name : yukang
   email : moorekang@gmail.com
   github : chenyukang
 name: Yukang
-description: Some thing noted by Yukang
+description: Some thing noted by Yukang(Linux, C/C++, Algorithms)
 #url: http://www.moorekang.com
 url: http://www.cyukang.com
 
