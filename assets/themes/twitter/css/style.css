@@ -12,7 +12,7 @@ html, body {
   text-align: center; /* center align it with the container */
 }
 
-.head { 
+header { 
 	position:fixed; top:0; 
 }
 
