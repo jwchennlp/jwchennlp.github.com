@@ -15,11 +15,9 @@ html, body {
 
 header{
     width: 100%;
-    background: black;
     position: fixed;
     top: 0;
-    height: 40px !important;
-    opacity:.8;
+    height: 30px !important;
 }
 
 /* Site slogan */
