@@ -15,8 +15,8 @@ author :
   name : yukang
   email : moorekang@gmail.com
   github : chenyukang
-name: Yukang
-description: Some thing noted by Yukang(Linux, C/C++, Algorithms)
+  name: Yukang
+  description: "Some thing noted by Yukang(Linux, C/C++, Algorithms)"
 #url: http://www.moorekang.com
 url: http://www.cyukang.com
 
@@ -106,4 +106,3 @@ JB :
       site_id : 
     mixpanel :
         token : '_MIXPANEL_TOKEN_'
-  
