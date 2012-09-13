@@ -12,8 +12,14 @@ html, body {
   text-align: center; /* center align it with the container */
 }
 
-header { 
-	position:fixed; top:0; 
+
+header{
+    width: 100%;
+    background: black;
+    position: fixed;
+    top: 0;
+    height: 40px !important;
+    opacity:.8;
 }
 
 /* Site slogan */
