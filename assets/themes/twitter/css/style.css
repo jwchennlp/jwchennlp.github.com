@@ -13,14 +13,14 @@ html, body {
 }
 
 
-/* header{ */
-/*     width: 100%; */
-/*     background: yellow; */
-/*     position: fixed; */
-/*     top: 0; */
-/*     height: 30px !important; */
-/*     opacity:.8; */
-/* } */
+header{
+    width: 100%;
+    background: yellow;
+    position: fixed;
+    top: 0;
+    height: 30px !important;
+    opacity:.8;
+}
 
 /* Site slogan */
 .slogan {
