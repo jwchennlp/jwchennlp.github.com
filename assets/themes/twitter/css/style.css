@@ -12,6 +12,10 @@ html, body {
   text-align: center; /* center align it with the container */
 }
 
+.head { 
+	position:fixed; top:0; 
+}
+
 /* Site slogan */
 .slogan {
   padding: 10px 0 11px;
