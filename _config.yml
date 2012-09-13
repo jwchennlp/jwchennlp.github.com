@@ -18,6 +18,7 @@ author :
 name: Yukang
 description: Some thing noted by Yukang
 #url: http://www.moorekang.com
+url: http://www.cyukang.com
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
@@ -27,7 +28,7 @@ description: Some thing noted by Yukang
 # Else if you are pushing to username.github.com, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-#production_url : http://www.moorekang.com
+production_url : http://www.cyukang.com
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
