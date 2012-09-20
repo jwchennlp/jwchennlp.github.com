@@ -5,5 +5,6 @@ User-agent: *
 Disallow: /css/
 Disallow: /js/
 Disallow: /works/
+Disallow: /backs/
 
 Sitemap: {{ site.url }}/sitemap.txt
