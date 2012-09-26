@@ -43,7 +43,10 @@ tags: [Emacs,Notes]
 
 
 ## __不好的方面__
- 
+
+
+ - 正如上所说的Emacs给了用户太大的自由，有很多不必要在编辑器里做的事情是Emacs能做到，这可能会让一些人花时间去折腾，而忘记了原本要用编辑器来做什么的感觉。
+
  - 也许你手指用多了会产生[RSI](http://xahlee.org/emacs/emacs_hand_pain_celebrity.html)。
 
 <img src="/images/emacs_joke.jpg" alt="Emacs jokes" class="img-center" />
