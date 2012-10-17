@@ -1,52 +1,27 @@
---- 
-layout: post
-title: 用Bootstrap设计blog界面
-date: 2012-01-19
-categories:
-    - 电脑
-tags:
-    - Jekyll
-    - Blog
-    - Bootstrap
-    - 设计
 ---
-[Bootstrap](http://twitter.github.com/bootstrap/)是[Twitter](https://twitter.com)设计并开源的用于开发网页与网络程序的工具套件。用它可以方便快捷地设计各种很漂亮的网页元素，比如字体，表单，按钮导航等。
+layout: post
+title: Jekyll 博客主题之 Black Cube
+description: Black Cube 是一款 Jekyll 博客主题, 提供首页(index), 归档(archives), 联系(contact)三个页面。
+keywords: Jekyll, Blog, Theme, Design, Black Cube, PIZn
+---
 
-因为多数[Jekyll](https://github.com/mojombo/jekyll)用户都是先fork别人的一套主题，然后根据自己需要再修改。但如果不懂CSS的话，比如我，这个工作是相当头疼和漫长的。这时，强大的Bootstrap就成了Jekyll在界面设计上非常完美的补充。
+blogTheme 项目是我之前在 Github 上建立的一个博客主题，这次新增设计好的黑色主题 Black Cube, 希望大家喜欢。
 
-Jekyll本身的理念是快速方便的用自己喜欢的编辑器发布内容，用Git管理整个站点。Bootstrap则用类似的理念在界面设计上对网站建设提供了强大的支持，把上面说到的修改主题的头疼工作简化到不可思议的程度。
+###主题预览
 
-Bootstrap用起来超级简单，只需要在你的网页里包含如下一句：
+如果你喜欢这个主题，再去看下文吧：
 
-<pre class="prettyprint">
-&lt;link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.min.css"&gt;
-</pre>
+<img src="/resources/blackCubeTheme.jpg" alt="Black Cube Theme" class="img-center" width="580px" />
 
-然后在HTML元素里加上合适的class名字就可以了，比如下面各种标签：
+###个性化设置
 
-<span class="label">Default</span> <span class="label label-success">Success</span> <span class="label label-warning">Warning</span> <span class="label label-important">Important</span> <span class="label label-info">Info</span>
+该主题提供了比较方便的设置方法，主要在于修改<code class="v-code">_confim.yml</code>。包括修改分页数量，网站地址，博客名称，博客简介等。
 
-另外Bootstrap支持[LESS](http://lesscss.org/)，一种CSS预处理工具，可以把上面已经很简单的工作再简化。
+###使用方法
 
-比如在less文件里有如下定义：
+您可以 clone 该主题的源代码，在您的 jekyll 服务器上运行 <code class="v-code">jekyll --server</code>，然后在浏览器上访问就可以看到了。或者 fork 到您的 github 博客上，就可以看到页面效果。
+增加博客文章，需要您在 <code class="v-code">_posts</code> 下编写文章就好。
 
-<pre class="prettyprint">
-@blue:              #049CDB;
-@green:             #46a546;
-@red:               #dc322f;
-@yellow:            #ffc40d;
-@linkColor:         @blue
-@linkColorHover:    darken(@linkColor, 15);
-</pre>
+###更多需求？
 
-我想就算完全不懂CSS也能很容易的理解和修改。(个人理解LESS就像是CSS的CSS，不知道对不对)
-
-Bootstrap里给了三个挺漂亮的实例，你可以直接拿来用，尤其是[这个](http://twitter.github.com/bootstrap/examples/container-app.html)固定宽度并居中的页面，风格上和twitter主页一样，顶部有个黑色导航条。
-
-![](https://lh3.googleusercontent.com/-QO0oNYoziVA/TxjKcvnQvfI/AAAAAAABixY/sTK3w74GnfU/s800/Screen%252520Shot%2525202012-01-19%252520at%2525208.58.15%252520PM.png)
-
-Jekyll和Bootstrap给了用户很大的自由去定义自己的内容，不喜欢黑色导航条？没关系，几秒钟变本站现在用的红色，只要把导航条改成 `nav pills` 类，然后把上面less文件里的 `@linkColor` 从 `@blue` 改成 `@red`即可。
-
-除了HTML样式上的定制，Bootstrap还提供了十几种jQuery插件，比如下拉菜单，见本文右下角的分享，比如合拢与展开列表，见本站的存档，等等等等。
-
-<span class="label label-info">Notice</span> 目前Bootstrap的开发已经到了2.0版，但它的master branch和主页里仍旧是1.4.0版，如果你想试用2.0版，请看它的[2.0-wip](https://github.com/twitter/bootstrap/tree/2.0-wip)这个分支。
+恩，给我发邮件，我比较忙，但会及时回复你的:D
