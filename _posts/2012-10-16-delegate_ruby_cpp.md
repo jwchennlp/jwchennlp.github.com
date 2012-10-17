@@ -1,8 +1,7 @@
 ---
 layout: post
 title: "Ruby vs C++ for delegation"
-description: "下班之前同事BigBird给我show他的一段C++代码，对于我等拿C++当作C来用的未入门者实看起来实在是炫丽。虽然比较冗长晦涩，不过还是能看懂个大概，然后觉得这对于动态语言是非常容易实现的。 于是晚上回来用Ruby来搞搞，弄出下面这么段代码。
-"
+description: ""
 category: 
 tags: [Ruby, C++, delegator]
 ---

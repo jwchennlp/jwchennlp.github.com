@@ -3,7 +3,7 @@ layout: post
 title: "UbiGraph动态显示Python函数调用"
 description: ""
 category: 
-tags: [Python,Ubigraph]
+tags: [Python, Ubigraph]
 ---
 {% include JB/setup %}
 
