@@ -32,7 +32,6 @@ tags: [Algorithms, Programming]
 
 所以如果能确切的计算出来`h*(s)`，那么评估函数f(s)将是s点的最短路径，这可算是一个最优的启发函数。可以利用Dijkstra算法来求解出各个点到T点的最短路径，假设第i个节点到T的最短路径计为`Dist_T(i)`，`Dist_T(i)`作为`A*`函数中的启发函数`h(s)`，从S开始搜索，因此算法描述如下：
 
-	Dijkstra(T); //计算各个点到T点的最短路径
         int Astar(){
             if(dist[S]==INF) return -1;
             priority_queue<Node> Q;      //极小堆，定点为f(s)=g(s)+h(s)最小的节点
@@ -85,7 +84,7 @@ tags: [Algorithms, Programming]
 ## 算法复杂度分析
 假设图G有m条边和n个节点，
 Dijkstra算法的复杂度为`((m+n)log n)`(二叉树实现的优先队列)。
-`A*`算法的时间复杂度取决于启发函数，事实我还不清楚如何分析这样的算法的时间复杂度和空间复杂度，根据[这篇文章](http://richardxx.yo2.cn/articles/%E6%9C%80%E7%9F%AD%E8%B7%AFdijkstra%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%80%E4%BA%9B%E6%89%A9%E5%B1%95%E9%97%AE%E9%A2%98.html)来说是`O(delta*V^2*(lgV+lg(delta)`的。
+`A*`算法的时间复杂度取决于启发函数，事实我还不清楚如何分析这样的算法的时间复杂度和空间复杂度，根据[这篇文章](http://richardxx.yo2.cn/articles/%E6%9C%80%E7%9F%AD%E8%B7%AFdijkstra%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%80%E4%BA%9B%E6%89%A9%E5%B1%95%E9%97%AE%E9%A2%98.html)来说是`O(delta*V^2*(lgV+lg(delta)))`的。
 
 如果哪位知道如何分析A*算法的复杂度，劳烦请教。
 
