@@ -3,7 +3,7 @@ layout: post
 title: "Ruby Robot AI"
 description: "Ruby Robot AI"
 category: Ruby, Programming
-tags: []
+tags: [Ruby, Programming]
 ---
 {% include JB/setup %}
 
