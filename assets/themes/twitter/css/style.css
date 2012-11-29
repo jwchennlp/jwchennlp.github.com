@@ -33,7 +33,8 @@ header{
 
 /* The white background content wrapper */
 .content {
-  background-color: #fff;
+	/*background-color: #fff;*/
+  background-color: #e8dabf;
   padding: 20px;
   margin: 20px -20px 0; /* negative indent the amount of the padding to maintain the grid system */
   -webkit-border-radius: 3px;
