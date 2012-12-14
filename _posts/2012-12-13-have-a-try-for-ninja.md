@@ -12,7 +12,7 @@ tags: [Ninja, makefile]
 <img src="/images/compiling.png" alt="My code is compiling" class="img-center" />
 
 ## 什么是Ninja
- 在Unix/Linux下通常使用Makefile来控制代码的编译，但是Makefile对于比较大的项目有时候会比较慢，看看上面那副漫画，代码在编译都变成了程序员放松的借口了。所以这个Google的程序员在开发Chrome的时候因为忍受不了Makefile的速度，自己重新开发出来一套新的控制编译的工具叫作Ninja，Ninja相对于Makefile这套工具更注重于编译速度。除了Chrome现在还有一些其他的比较大的项目也在开始使用Ninja，比如LLVM。我试用了一下感觉还是不错，比如编译Cmake时间大概是原来的1/4。Ninja试用C++实现，其支持的语法非常简单，作者在这里说明了为了控制复杂度。
+ 在Unix/Linux下通常使用Makefile来控制代码的编译，但是Makefile对于比较大的项目有时候会比较慢，看看上面那副漫画，代码在编译都变成了程序员放松的借口了。所以这个Google的程序员在开发Chrome的时候因为忍受不了Makefile的速度，自己重新开发出来一套新的控制编译的工具叫作[Ninja](https://github.com/martine/ninja)，Ninja相对于Makefile这套工具更注重于编译速度。除了Chrome现在还有一些其他的比较大的项目也在开始使用Ninja，比如LLVM。我试用了一下感觉还是不错，比如编译Cmake时间大概是原来的1/4。Ninja试用C++实现，[其支持的语法非常简单](http://martine.github.com/ninja/manual.html)，作者在这里说明了为了控制复杂度。
 
 ## 代码如何编译
 其实对于C/C++和很多其他程序的编译都是一个道理，就是把一些源代码文件编译成目标文件，或者有的目标文件再编译到一个库里，然后再链接起来。所以Ninja的配置文件分为两个部分，rule和文件依赖关系。看个简单的例子:
