@@ -11,7 +11,9 @@ tags: [LLVM, Gcc, Emacs]
 
     The gcc version has been difficult to support and maintain, due mainly to the fact that the GIMPLE intermediate language was never designed for static analysis. The abstract syntax tree provided by Clang is an easier data structure to work with for front-end analyses of this kind.
 
-最近切换到Mac下，因为在Mac OS X下编译器变成了Clang， Clang是基于LLVM的。LLVM对于分析代码是有比较方便的支持，所以基于LLVM有各种分析源程序的工具了，Xcode下的一些辅助开发的工具还是很舒服的。前些天突然想到那么会不会有个东西来作为Emacs的自动补全的后端，一搜果然有了这个[auto-complete-clang](https://github.com/mikeandmore/auto-complete-clang)，使用了一下非常的方便。其实看看其代码是在后面调用Clang的，比如在main.cc源文件里面写一些代码:
+这个thread挺好玩的，后面变成了一大群人争论functional programming和Imperative Programming。这篇[The Downfall of Imperative Programming](http://fpcomplete.com/the-downfall-of-imperative-programming/)再好好看看。
+
+回到正题，我最近切换到Mac下。因为在Mac OS X下编译器变成了Clang， Clang是基于LLVM的。LLVM对于分析代码是有比较方便的支持，所以基于LLVM有各种分析源程序的工具了，Xcode下的一些辅助开发的工具还是很舒服的。前些天突然想到那么会不会有个东西来作为Emacs的自动补全的后端，一搜果然有了这个[auto-complete-clang](https://github.com/mikeandmore/auto-complete-clang)，使用了一下非常的方便。其实看看其代码是在后面调用Clang的，比如在main.cc源文件里面写一些代码:
 
 {% highlight cpp %}
 
