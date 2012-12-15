@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Clang is Making Emacs Smater"
+title: "Clang is Making Emacs Smarter"
 description: ""
 category: Tools
 tags: [LLVM, Gcc, Emacs]
