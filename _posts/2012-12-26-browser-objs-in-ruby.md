@@ -40,9 +40,8 @@ end
 use this command to get image:
  {% highlight sh %}
   $ruby prog.rb > class.dot; dot -Tpng class.dot -o class.png
- {% endhighlight %｝
+ {% endhighlight %}
 
 结果看起来像这样，所有对象都画出来比较多，看大图还稍微能看到一些。完整的代码在[这里](https://gist.github.com/4380597)。
 <img src="/images/class.png" alt="class in Ruby" class="img-center" />
 <img src="/images/objs.png" alt="class in Ruby" class="img-center" />
-
