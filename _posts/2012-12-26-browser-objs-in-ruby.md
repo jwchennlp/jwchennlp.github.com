@@ -7,7 +7,6 @@ tags: [Ruby, Programming]
 ---
 {% include JB/setup %}
 
-
 Ruby里一切都是对象，如何能看到Ruby内建的对象模型呢。这里有个小程序来查看Ruby内部构建好的的对象和类。ObjectSpace可以迭代所有对象。
 {% highlight ruby %}
 set = Set.new()
