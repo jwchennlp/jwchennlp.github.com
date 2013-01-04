@@ -9,7 +9,7 @@ tags: [C/C++, Programming]
 
 在程序挂掉的时候最好还是留点有用的遗言，特别是对于一些比较难重现的Bug，也许这些信息会成为解决问题的关键。
 
-下面这个技巧可以让程挂掉的时候打印出来栈信息。这个办法来自(这里)[http://neugierig.org/software/blog/2012/06/backtraces.html], 我觉得把SIGABRT、SIGBUS信号加进去也挺好的，在此做了点修改。曾经尝也试过glibc的backtrace函数，，但是给的信息不全(没有行号)，对此做得最好的还是gdb。 在终端可以用gdb获取某个进程的当前栈：
+下面这个技巧可以让程挂掉的时候打印出来栈信息。这个办法来自[这里](http://neugierig.org/software/blog/2012/06/backtraces.html), 我觉得把SIGABRT、SIGBUS信号加进去也挺好的，在此做了点修改。曾经尝也试过glibc的backtrace函数，，但是给的信息不全(没有行号)，对此做得最好的还是gdb。 在终端可以用gdb获取某个进程的当前栈：
 
 {% highlight shell %}
 $ gdb -p 5595 -batch -ex bt
@@ -74,17 +74,25 @@ int main() {
 }
 {% endhighlight %}
 
-另外前段时间看到这篇文章(Solving vs. Fixing)[http://www.runswift.ly/solving-bugs.html]写得不错，在面对一个bug的时候，先不要急于立马上gdb调试，根据现有的信息好好思考为什么会出现这个情况。
+另外前段时间看到这篇文章[Solving vs. Fixing](http://www.runswift.ly/solving-bugs.html)写得不错，在面对一个bug的时候，先不要急于立马上gdb调试，根据现有的信息好好思考为什么会出现这个情况。
 Reddit上的一个得分最高的回复：
 
-  The ability to reason about code is probably the most important skill. But it is sadly rare, and doesn't seem to be taught much, if at all.
-  Some things are simple, others take some more thought:
-    Under what conditions will this branch get taken?
-    What could cause this API to fail?
-    Are all these parameters even valid?
-    What sequence of events could lead to this situation?
-    What assumptions does this code make?
-    What side-effects does this code have?
-    What contract is this code making (or breaking)?
-    etc
-  The most talented engineer I know, when presented with a bug, does nothing but read the code and think about the code and how it could fail. Most of the time, he just figures it out in his head and fixes it. Sometimes he will insert some strategic printfs and narrow it down like that. I don't think I have ever seen him use a debugger, even on the most complex of problems.
+
+     The ability to reason about code is probably the most important skill. 
+     But it is sadly rare, and doesn't seem to be taught much, if at all.
+     Some things are simple, others take some more thought:
+
+     * Under what conditions will this branch get taken?
+     * What could cause this API to fail?
+     * Are all these parameters even valid?
+     * What sequence of events could lead to this situation?
+     * What assumptions does this code make?
+     * What side-effects does this code have?
+     * What contract is this code making (or breaking)?
+     
+     The most talented engineer I know, when presented with a bug, does nothing but 
+     read the code and think about the code and how it could fail. 
+     Most of the time,  he just figures it out in his head and fixes it. 
+     Sometimes he will insert some strategic printfs and narrow it down like that. 
+     I don't think I have ever seen him use a debugger, 
+     even on the most complex of problems.
