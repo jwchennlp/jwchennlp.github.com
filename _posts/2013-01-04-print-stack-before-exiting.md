@@ -11,7 +11,7 @@ tags: [C/C++, Programming]
 
 下面这个技巧可以让程挂掉的时候打印出来栈信息。这个办法来自[这里](http://neugierig.org/software/blog/2012/06/backtraces.html), 我觉得把SIGABRT、SIGBUS信号加进去也挺好的，在此做了点修改。曾经尝也试过glibc的backtrace函数，，但是给的信息不全(没有行号)，对此做得最好的还是gdb。 在终端可以用gdb获取某个进程的当前栈：
 
-{% highlight bash %}
+{% highlight sh %}
 $ gdb -p 5595 -batch -ex bt
 0xb7fb4410 in __kernel_vsyscall ()
 #0  0xb7fb4410 in __kernel_vsyscall ()
