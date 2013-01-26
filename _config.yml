@@ -4,12 +4,12 @@ permalink: /:year/:month/:day/:title.html
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 auto: true
-pygments: true
+pygments: false
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : Yukang
+title : Yukang's Blog
 tagline: Something from Yukang
 author :
   name : yukang
@@ -17,6 +17,7 @@ author :
   github : chenyukang
   name: Yukang
   description: "Some thing noted by Yukang(Linux, C/C++, Algorithms)"
+  markdown: rdiscount
 #url: http://www.moorekang.com
 url: http://www.cyukang.com
 
