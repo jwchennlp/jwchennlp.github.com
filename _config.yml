@@ -4,7 +4,7 @@ permalink: /:year/:month/:day/:title.html
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 auto: true
-# pygments: false
+pygments: true
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
@@ -17,7 +17,7 @@ author :
   github : chenyukang
   name: Yukang
   description: "Something noted by Yukang(Linux, C/C++, Algorithms)"
-# markdown: rdiscount
+markdown: rdiscount
 #url: http://www.moorekang.com
 url: http://www.cyukang.com
 
