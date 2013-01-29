@@ -14,7 +14,7 @@ tags: [Emacs]
      say hello wrold
      say -f demo.txt
 
-前几天突然觉得如果写个Emacs Minor Mode，能在边写单词的时候Emacs就把你写的朗读一遍就好了。除了在公司我也很少写英文，不过这个想法看起来比较好玩，于是动手做了一下。预想的基本功能是实现了，我把它叫做EmacSay-mode，意为在Emacs+Mac+Say下实现的，所以这东西可能不能在Linux下运行。
+前几天突然觉得如果写个Emacs Minor Mode，能在边写单词的时候Emacs就把你写的朗读一遍就好了，Emacs号称能煮咖啡，这点小事当然不在话下。其实除了在公司我也很少写英文，不过这个想法看起来比较好玩，于是动手做了一下。预想的基本功能是实现了，我把它叫做EmacSay-mode，意为在Emacs+Mac+Say下实现的，所以这东西可能不能在Linux下运行。
 
 这也是我第一次学着写一个minor mode，实现起来也很简单。整个不到100行elisp代码。
 
