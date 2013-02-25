@@ -18,6 +18,7 @@ author :
   name: Yukang
   description: "Something noted by Yukang(Linux, C/C++, Algorithms)"
 markdown: rdiscount
+#url: http://www.moorekang.com
 url: http://www.cyukang.com
 
 # The production_url is only used when full-domain names are needed
