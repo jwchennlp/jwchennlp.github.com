@@ -1,5 +1,6 @@
 /* Override some defaults */
 html, body {
+  /*background-color: #eee;*/
     /*background-color: #e8dabf;*/
     background-color: #fff8f0;
 }
@@ -33,8 +34,9 @@ header{
 
 /* The white background content wrapper */
 .content {
-  /*background-color: #e8dabf;*/
-  background-color: #fff8f0;
+	/*background-color: #fff;*/
+ /* background-color: #e8dabf;*/
+ background-color: #fff8f0;
   padding: 20px;
   margin: 20px -20px 0; /* negative indent the amount of the padding to maintain the grid system */
   -webkit-border-radius: 3px;
