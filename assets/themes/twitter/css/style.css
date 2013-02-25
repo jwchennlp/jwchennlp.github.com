@@ -1,6 +1,5 @@
 /* Override some defaults */
 html, body {
-    /*background-color: #eee;*/
     /*background-color: #e8dabf;*/
     background-color: #fff8f0;
 }
@@ -37,7 +36,9 @@ header{
     /*background-color: #fff;*/
     /* background-color: #e8dabf; */
     background-color: #fff8f0;
-  padding: 20px;
+  padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin: 20px -20px 0; /* negative indent the amount of the padding to maintain the grid system */
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
