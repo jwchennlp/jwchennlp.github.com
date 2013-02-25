@@ -264,9 +264,10 @@ pre {
 }
 
 body {
-	color: #102536;
-	font-family: Tahoma, "Lucida Grande", Arial, sans-serif;
+    color: #102536;
+    font-family: Tahoma, "Lucida Grande", Arial, sans-serif;
 }
+
 h1 {
 	font-size: 2.4em;
 	color:#14556B;
@@ -276,6 +277,19 @@ h2 {
 	color: #993;
 	margin-bottom: 5px;
 }
+
+h2 span { 
+    position:absolute; 
+    margin-top:100px;
+}
+
+.anchor{
+  display: block;
+  height: 40px; <!--same height as header-->*/
+  margin-top: -40px; <!--same height as header-->
+  visibility: hidden;
+}
+
 h3, h4, h5, h6 {
   color: #527bbd;
   font-family: sans-serif;
