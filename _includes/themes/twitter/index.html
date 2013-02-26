@@ -1,11 +1,9 @@
 {% assign latest_post = site.posts.first %}
 
-<link rel="stylesheet" href="{{ ASSET_PATH }}/bootstrap/css/bootstrap.min.css" />
-<link rel="stylesheet" href="{{ ASSET_PATH }}/css/style.css" />
-
   <div class="row post">
     <div class="span8">
       <h1 class="title"><a href="{{ latest_post.url }}" title="{{ latest_post.title }}">{{ latest_post.title }}</a> {% if latest_post.tagline %} <small>{{ latest_post.tagline }}</small>{% endif %}</h1>
+
       {{ latest_post.content }}
       
       <ul class="pager">
@@ -81,6 +79,7 @@
 	<li><a href="http://wangcong.org/blog/" target="_blank" rel="nofollow">王聪</a></li>
 	<li><a href="http://helloworld.tk/" target="_blank" rel="nofollow">邓甜</a></li>
 	<li><a href="http://www.cguage.com/" target="_blank" rel="nofollow">C瓜</a></li>
+	<li><a href="http://www.totrit.com/" target="_blank" rel="nofollow">Totrit</a></li>
 	<li><a href="http://www.crazyshell.org/blog/" target="_blank" rel="nofollow">狂Shell</a></li>
       </ul>
     </nav> 
