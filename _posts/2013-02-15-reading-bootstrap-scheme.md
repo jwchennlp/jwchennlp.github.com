@@ -10,7 +10,7 @@ tags: [Programming, Lisp]
 
 <img src="/images/scheme_car_cdr.png" alt="scheme-car-cdr" class="img-center" />
 
-For a List, Car is the First, Cdr is the Rest。
+For a List in Lisp, Car is the First, Cdr is the Rest, so it's called List-Proccessing。
 
 前段时间偶然在网上看到这个[bootstrap scheme这个开源程序](https://github.com/petermichaux/bootstrap-scheme)，读来简洁明了，十分有趣。我对scheme有一点了解，毕竟以前看过一段时间SICP，自己做练习的代码也是scheme写的。scheme本身属于Lisp方言，语法也极其简单，学习起来非常快的。
 
