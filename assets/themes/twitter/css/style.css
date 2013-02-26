@@ -1,7 +1,8 @@
 /* Override some defaults */
 html, body {
     /*background-color: #e8dabf;*/
-    background-color: #fff8f0;
+/*    background-color: #fff8f0; */
+    background-color: #e5ebe4;
 }
 .navbar {
   margin-bottom: 0;
@@ -33,9 +34,10 @@ header{
 
 /* The white background content wrapper */
 .content {
-    /*background-color: #fff;*/
+    background-color: #ffffff;
     /* background-color: #e8dabf; */
-    background-color: #fff8f0;
+    /*background-color: #fff8f0; */
+    /*background-color: #e5ebe4;*/
   padding-top: 40px;
   padding-left: 20px;
   padding-right: 20px;
