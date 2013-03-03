@@ -249,39 +249,6 @@ Reddit上的一个得分最高的回复：&lt;/p&gt;
 			</item>
 		
 			<item>
-				<title>A little hacking on Ninja</title>
-				<description>
-&lt;h3 id=&quot;a-little-hacking&quot;&gt;A Little hacking&lt;/h3&gt;
-&lt;p&gt;我前段时间花了些时间来看Ninja这个开源项目，期间还是有一些收获。另外自己也做了一些修改，我希望有一个工具能帮忙生成Ninja的config(build.ninja)，现在的CMake和pyg都能做这个事情，但是我觉得稍微复杂了一点。很多时候我只是一些简单的几个文件的小项目，如果能有一个工具来分析代码然后生成build.ninja还是很方便的。所以我就做了一个Ninja的选项，使用方法是ninja -t config,当前的输出是打印到标准输出的，重定向以后就直接可以用了。当然如果你的项目用到了其他的一些库，还是需要稍微地修改一下的。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ninja&lt;/span&gt; -t config &amp;gt;　build.ninja 
-&lt;span class=&quot;nv&quot;&gt;$ninja&lt;/span&gt; all  //objects and executable file will output obj dir
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;其过程也很简单，就是分析当前项目的源码结构，最主要是找到main函数所在的源文件，其他的文件编译成为一个静态库，然后链接起来可执行文件。注意gcc(clang)的编译参数，这样才能使得某个头文件改变了重新编译所依赖的其他文件。源代码在这里可以。&lt;/p&gt;
-
-&lt;h3 id=&quot;ninja&quot;&gt;Ninja代码的一些分析&lt;/h3&gt;
-
-&lt;p&gt;Ninja 整个使用C++实现，一共1w行所有的代码。其中核心的代码主要在于&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;配置文件build.ninja的parse和解析。&lt;/li&gt;
-  &lt;li&gt;内部图的构建，用来表示文件之间的依赖关系。&lt;/li&gt;
-  &lt;li&gt;并行执行编译命令。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;buildninja&quot;&gt;build.ninja的解析&lt;/h4&gt;
-&lt;p&gt;这里使用了一个库来方便写parse。&lt;/p&gt;
-
-&lt;h4 id=&quot;section&quot;&gt;一个图问题，如何通过一个有向图来生产执行顺序&lt;/h4&gt;
-
-</description>
-				<published>2013-01-04 00:00:00 +0800</published>
-				<link>http://cyukang.com/2013/01/04/add-a-config-generator-for-ninja.html</link>
-			</item>
-		
-			<item>
 				<title>Browser objs and class hierarchy  in Ruby</title>
 				<description>
 &lt;p&gt;Ruby里一切都是对象，如何能看到Ruby内建的对象模型呢。这里有个小程序来查看Ruby内部构建好的的对象和类。ObjectSpace可以迭代所有对象。&lt;/p&gt;
@@ -488,6 +455,68 @@ Ruby也更Lisp化，Ruby的开源气氛非常好。&lt;/p&gt;
 </description>
 				<published>2012-11-22 00:00:00 +0800</published>
 				<link>http://cyukang.com/2012/11/22/ruby-robot-ai.html</link>
+			</item>
+		
+			<item>
+				<title>Ruby's Block and Proc</title>
+				<description>
+&lt;h3 id=&quot;callable-objects&quot;&gt;Callable objects&lt;/h3&gt;
+
+&lt;p&gt;在Ruby当中一切都是对象，但是有一个例外，那就是block。Block和Proc类似，但是还是有稍有差别的，Block。最近在看《Metaprogramming Ruby》，在这节中有个例子是这样的。&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint ruby&quot;&gt;
+require 'highline'
+hl = HighLine.new
+friends = hl.ask(&quot;Friends?&quot; , lambda {|s| s.split(',' ) })
+puts &quot;You're friends with: #{friends.inspect}&quot;
+⇒
+Friends?
+Bill,Mirella,Luca
+You're friends with: [&quot;Bill&quot;, &quot;Mirella&quot;, &quot;Luca&quot;]
+&lt;/pre&gt;
+
+&lt;p&gt;这里看起来hl.ask把Proc当作参数来传递，而不是接受了一个block，接受Block是另外一种使用模式：&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint ruby&quot;&gt;
+require 'highline'
+hl = HighLine.new
+new_pass = hl.ask(&quot;password: &quot;) { |prompt| prompt.echo = false }
+&lt;/pre&gt;
+
+&lt;p&gt;在highline代码可以看到相应的处理方式，第一种方式lambda构造成的Proc其实传递给了answer_type，而yield来处理block。&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint ruby&quot;&gt;
+    def initialize( question, answer_type )
+      # initialize instance data
+      @question    = question
+      @answer_type = answer_type
+      
+      # allow block to override settings
+      yield self if block_given?
+&lt;/pre&gt;
+
+&lt;h3 id=&quot;proc-lambda-block&quot;&gt;Proc, Lambda, Block&lt;/h3&gt;
+
+&lt;p&gt;有三种方式转化Block为Proc, Proc.new、Lambda、&amp;amp;Operator。但是在使用过程中Block还是比Proc要常见，在给一个函数传递这种callable objcts的时候，可以隐式或者显示传递，像这样：&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint ruby&quot;&gt;
+def foo(*args)
+ yield(args.join(' '))
+end
+
+foo('Yukang', 'Chen'){|name| puts &quot;Hello #{name}&quot;} # =&amp;gt; &quot;Hello Yukang Chen&quot;
+
+def foo(*args, &amp;amp;blk)
+ blk.call(args.join(' '))
+end
+
+foo('Yukang', 'Chen'){|name| puts &quot;Hello #{name}&quot;} # =&amp;gt; &quot;Hello Yukang Chen&quot;
+&lt;/pre&gt;
+
+&lt;p&gt;隐式传递要比显式传递performance要好一些。这很早就有&lt;a href=&quot;http://www.ruby-forum.com/topic/71221&quot;&gt;讨论&lt;/a&gt;，具体原因是根据Ruby的实现一个Block在yield的时候并没有转换为Proc或者其他对象，所以少了一些开销。Ruby中的函数块是高阶函数的一种特殊形式的语法，Matz在设计块的时候考虑到： (1)在高阶函数中，这种只有一个函数参数非常常见，在实际使用中几乎没有必要在一个地方使用多个函数参数，(2)外观和形式上更直观，Enumerable利用块写的代码简洁易懂。&lt;/p&gt;
+</description>
+				<published>2012-11-14 00:00:00 +0800</published>
+				<link>http://cyukang.com/2012/11/14/ruby_block_proc.html</link>
 			</item>
 		
 	</channel>
