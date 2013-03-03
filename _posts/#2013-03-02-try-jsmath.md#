@@ -1,0 +1,37 @@
+---
+layout: post
+title: "Jekyll使用jsmath来显示数学式"
+description: "Jekyll使用jsmath来显示数学式""
+category: 
+tags: [Jekyll]
+---
+{% include JB/setup %}
+b
+     The ability to reason about code is probably the most important skill. 
+     But it is sadly rare, and doesn't seem to be taught much, if at all.
+     Some things are simple, others take some more thought:
+
+     * Under what conditions will this branch get taken?
+     * What could cause this API to fail?
+     * Are all these parameters even valid?
+     * What sequence of events could lead to this situation?
+     * What assumptions does this code make?
+     * What side-effects does this code have?
+     * What contract is this code making (or breaking)?
+     
+     The most talented engineer I know, when presented with a bug, does nothing but 
+     read the code and think about the code and how it could fail. 
+     Most of the time,  he just figures it out in his head and fixes it. 
+     Sometimes he will insert some strategic printfs and narrow it down like that. 
+     I don't think I have ever seen him use a debugger, 
+     even on the most complex of problems.
+
+
+步骤：
+ 1. 在每个页面开头加上这么一句，在Jekyll下可以通过修改default.html加上。
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+

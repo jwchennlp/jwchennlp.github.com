@@ -17,7 +17,8 @@ author :
   github : chenyukang
   name: Yukang
   description: "Something noted by Yukang(Linux, C/C++, Algorithms)"
-markdown: rdiscount
+#markdown: rdiscount
+markdown: kramdown
 #url: http://www.moorekang.com
 url: http://cyukang.com
 

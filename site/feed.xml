@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+	<channel>
+		<title></title>
+		<description></description>
+		<link>http://cyukang.com</link>
+		
+			<item>
+				<title>读bootstrap scheme</title>
+				<description>&lt;p&gt;&lt;img src=&quot;/images/scheme_car_cdr.png&quot; alt=&quot;scheme-car-cdr&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For a List in Lisp, Car is the First, Cdr is the Rest, and Lisp means List-Proccessing.&lt;/p&gt;
+
+&lt;p&gt;前段时间偶然在网上看到这个&lt;a href=&quot;https://github.com/petermichaux/bootstrap-scheme&quot;&gt;bootstrap scheme这个开源程序&lt;/a&gt;，读来简洁明了，十分有趣。我对scheme有一点了解，毕竟以前看过一段时间SICP，自己做练习的代码也是scheme写的。scheme本身属于Lisp方言，语法也极其简单，学习起来非常快的。&lt;/p&gt;
+
+&lt;p&gt;看看这个简单的scheme实现，不禁再次感叹递归的优美。Lisp这样的语言直接使用语法树结构来表示程序，不仅使得表示出来的程序异常简洁，就是用C语言来实现这种语言的解释器代码也看起来非常优美。在这里区区2000行的C语言代码，当然没有完整地实现scheme所有的内容，甚至只支持了整数。但是包含scheme的基本语法层面的东西，还有lambda。抛开实现的效率不说，递归是易于编写和理解代码的一种方式，这里语法是递归的，parser是递归的，eval也是递归的。在这里所有的东西都是object，没有显示的列表结构，但是嵌套的pair里蕴含着列表和树的关系。在parse阶段建立好一个以object为基本元素的树结构，做eval的时候顺着往下走就是了。&lt;/p&gt;
+
+&lt;p&gt;推荐对语言实现感兴趣的同学阅读一下这个代码，如果对scheme不了解也没关系，用一个小时看几个scheme程序基本就了解了。再看这个解释器，你就懂了代码是如何被运行的。&lt;/p&gt;
+
+&lt;p&gt;参考&lt;a href=&quot;http://peter.michaux.ca/articles/scheme-from-scratch-introduction&quot;&gt;scheme-from-scratch-introduction&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;图片来自&lt;a href=&quot;http://www.cs.utah.edu/~draperg/cartoons/&quot;&gt;Draperg's cartoons&lt;/a&gt;&lt;/p&gt;
+</description>
+				<published>2013-02-15 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/02/15/reading-bootstrap-scheme.html</link>
+			</item>
+		
+			<item>
+				<title>Emacs会说话</title>
+				<description>&lt;p&gt;出来工作之前我从来没认真考虑过我的英语口语问题，大学时候的四级口语考试C级也没让我意识到自己的发音比较烂。学了好多年哑巴英语，又因为本人生性有点害羞经常不好意思开口说英语，悲剧早就注定。其实我的英语阅读能力还是可以的，不过工作之后同事们都嘲笑我口语听起来像印度人，据说发音极其古怪。&lt;/p&gt;
+
+&lt;p&gt;在Mac下有一个叫做say的命令行程序，我有时候会用来听单词单词发音。这个程序加上-f参数也可以用来朗读整个文件。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; say hello wrold
+ say -f demo.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;前几天突然觉得如果写个Emacs Minor Mode，能在边写单词的时候Emacs就把你写的朗读一遍就好了，Emacs号称能煮咖啡，这点小事当然不在话下。其实除了在公司我也很少写英文，不过这个想法看起来比较好玩，于是动手做了一下。预想的基本功能是实现了，我把它叫做EmacSay-mode，意为在Emacs+Mac+Say下实现的，所以这东西可能不能在Linux下运行。&lt;/p&gt;
+
+&lt;p&gt;这也是我第一次学着写一个minor mode，实现起来也很简单。整个不到100行elisp代码。&lt;/p&gt;
+
+&lt;p&gt;基本思路就是如果当前输入的字符是空白(或者其他非字母字符)，寻找前面一个字符串，格式化成一个命令行，用start-process或者shell-command来调用。
+注意start-process会fork出来一个子进程来执行命令，在书写过程中最好还是使用start-process来调用命令，因为say可能要待个一两秒才返回，如果使用shell-command来调用会造成输入有迟钝的感觉。&lt;/p&gt;
+
+&lt;p&gt;绑定的快捷键有这些，其中eamcsay-say-buffer是用来朗读当前的整个buffer，如果你想在其中中断朗读使用emacsay-say-stop。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cl&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;defvar&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;emacsay-mode-map&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;&amp;quot;Keymap for emacsay minor mode&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;emacsay-mode-map&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;make-sparse-keymap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;define-key&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\C-cs&amp;quot;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;#39;emacsay-say-current-string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;define-key&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\C-cp&amp;quot;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;#39;emacsay-say-buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;define-key&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\C-ct&amp;quot;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;#39;emacsay-say-stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;setq&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;emacsay-mode-map&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;还可以有一些小的改进，比如阅读时候闪烁单词，或者say声音的选择等等。&lt;/p&gt;
+
+&lt;p&gt;所有代码在GitHub: &lt;a href=&quot;https://github.com/chenyukang/emacSay&quot;&gt;emacSay-mode&lt;/a&gt;。&lt;/p&gt;
+</description>
+				<published>2013-01-27 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/01/27/emacs-speaking-now.html</link>
+			</item>
+		
+			<item>
+				<title>迟到的POJ 500</title>
+				<description>&lt;p&gt;我发现自己有了很重的拖延症，一个表现就是在2011年3月定下的目标&lt;a href=&quot;http://cyukang.com/2011/03/27/fuckpaper.html&quot;&gt;POJ 500&lt;/a&gt;最近才完成。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://poj.org/userstatus?user_id=chenyukang&quot;&gt;这一页500道题&lt;/a&gt;耗费了我很多时间和精力，同样也带给了我很多知识和乐趣。&lt;/p&gt;
+
+&lt;p&gt;当然工作后毕竟还是没有学校的时间充足了，现在还花时间来做题似乎显得很悠闲，这500题最后十个是在元旦的几天假期里完成的。我是从2010年的4月份开始在Poj上做题，那天偶然发现自己原来2006年还注册过账号，于是做了两题试试，没想到后面就竟然沉迷其中，一直到自己从学校毕业出来。这两年强度还不算大，平时还是要在实验室做做项目的。我没参加过专业队的训练，不过参加过一次学校的比赛，和王骆驼两个人一个下午做出来五道，比较悲剧的是差一道没进决赛。不过当时还是挺欣慰的，毕竟自己还是不算专业选手啊。这一年多静下心来写程序收获很多，因为体会到了写程序的乐趣，有时候在睡觉的时候脑袋也在不知不觉地想问题。有时候我选择按不同的数据结构或者算法思想来选题做，有时候就在线上泡着看排我前面的人在做什么，然后自己也跟着做，这真写的是寂寞啊。不过现在回想起来这一两年算是最自由、最充实的写程序的日子了。&lt;/p&gt;
+
+&lt;p&gt;像ACM题这些东西最好还是大学开始接触，在开始学习基本算法和数据结构的时候就开始进行训练是最好的。当然如果大学能进专业队训练就更不错了，如果只是业余拿来练练手也是大有裨益的。也许我们做不到专业队哪些人写代码就像秀肌肉一样，体会到其中的乐趣就够了。在我开始做POJ之前我还是对算法充满了恐惧，感觉太高深。经过这些渐进的学习和训练，现在至少说有点入门的感受，面对一个问题多多少少会有一些思路和想法。也许平时项目和工作并没用到多少纯粹的算法部分，只是这有了这基本功还是能让你迅速上手其他东西。&lt;/p&gt;
+
+&lt;p&gt;《黑客和画家》里写到学习写程序和学习绘画的诸多相同点，这都是一门技能，除了多写、多看、多思考之外没有其他捷径可走。折腾多了自然就会有一点感觉。学习绘画的另外一个途径就是观摩经典的杰作，同样对应地看开源项目是另外一个很好的学习编程的途径。&lt;/p&gt;
+
+&lt;p&gt;幸好GitHub又被解封了。&lt;/p&gt;
+</description>
+				<published>2013-01-22 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/01/22/poj-500.html</link>
+			</item>
+		
+			<item>
+				<title>获取挂掉程序的栈信息</title>
+				<description>&lt;p&gt;在程序挂掉的时候最好还是留点有用的遗言，特别是对于一些比较难重现的Bug，也许这些信息会成为解决问题的关键。&lt;/p&gt;
+
+&lt;p&gt;下面这个技巧可以让程挂掉的时候打印出来栈信息。这个办法来自&lt;a href=&quot;http://neugierig.org/software/blog/2012/06/backtraces.html&quot;&gt;这里&lt;/a&gt;, 我觉得把SIGABRT、SIGBUS信号加进去也挺好的，在此做了点修改。曾经尝也试过glibc的backtrace函数，，但是给的信息不全(没有行号)，对此做得最好的还是gdb。 在终端可以用gdb获取某个进程的当前栈：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ gdb -p 5595 -batch -ex bt
+0xb7fb4410 in __kernel_vsyscall ()
+#0  0xb7fb4410 in __kernel_vsyscall ()
+#1  0xb7dc2d50 in nanosleep () from /lib/tls/i686/cmov/libc.so.6
+#2  0xb7dc2b87 in sleep () from /lib/tls/i686/cmov/libc.so.6
+#3  0x0804874f in main () at print_stack.cc:64
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;那么一个好的办法就是在程序开始的时候设置好信号，绑定SIGSEGV和SIGABRT到DumpBackTrace()函数，DumpBackTrace函数fork出来一个新进程，运行上面的命令来获取调用栈。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;signal.h&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;sys/types.h&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;sys/wait.h&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;unistd.h&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;assert.h&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DumpBacktrace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pid_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dying_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getpid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pid_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fork&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;fork() while collecting backtrace:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;gdb -p %d -batch -ex bt 2&amp;gt;/dev/null | &amp;quot;&lt;/span&gt;
+                &lt;span class=&quot;s&quot;&gt;&amp;quot;sed &amp;#39;0,/&amp;lt;signal handler/d&amp;#39;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dying_pid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;sh&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-c&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;execve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/bin/sh&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;_exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;waitpid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;_exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BacktraceOnSegv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sa_handler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DumpBacktrace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sigaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIGSEGV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;sigaction(SEGV)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sigaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIGABRT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;sigaction(SEGV)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//assert(0);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;BacktraceOnSegv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;另外前段时间看到这篇文章&lt;a href=&quot;http://www.runswift.ly/solving-bugs.html&quot;&gt;Solving vs. Fixing&lt;/a&gt;写得不错，在面对一个bug的时候，先不要急于立马上gdb调试，根据现有的信息好好思考为什么会出现这个情况。
+Reddit上的一个得分最高的回复：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; The ability to reason about code is probably the most important skill. 
+ But it is sadly rare, and doesn't seem to be taught much, if at all.
+ Some things are simple, others take some more thought:
+
+ * Under what conditions will this branch get taken?
+ * What could cause this API to fail?
+ * Are all these parameters even valid?
+ * What sequence of events could lead to this situation?
+ * What assumptions does this code make?
+ * What side-effects does this code have?
+ * What contract is this code making (or breaking)?
+
+ The most talented engineer I know, when presented with a bug, does nothing but 
+ read the code and think about the code and how it could fail. 
+ Most of the time,  he just figures it out in his head and fixes it. 
+ Sometimes he will insert some strategic printfs and narrow it down like that. 
+ I don't think I have ever seen him use a debugger, 
+ even on the most complex of problems.
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+				<published>2013-01-04 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/01/04/print-stack-before-exiting.html</link>
+			</item>
+		
+			<item>
+				<title>Browser objs and class hierarchy  in Ruby</title>
+				<description>&lt;p&gt;Ruby里一切都是对象，如何能看到Ruby内建的对象模型呢。这里有个小程序来查看Ruby内部构建好的的对象和类。ObjectSpace可以迭代所有对象。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;set = Set.new()
+ObjectSpace.each_object do |x|
+  set.add(x.class)
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;   set.each do |x|&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; puts x
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;   end&lt;/p&gt;
+
+&lt;p&gt;下面这段就能根据对象，取得class对象，建立起类的继承图。&lt;/p&gt;
+
+&lt;p&gt;  # Creates or updates a klass_tree.
+  # When updating no classes or objects are removed
+  def object_browser(classtree = ClassTreeNode.new(Kernel))&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ObjectSpace.each_object do | x |
+  classnode = classtree
+  x.class.ancestors.reverse[1..-1] \
+    .inject(classtree){ | classnode, klass |
+    classnode.add_class(klass)
+  }.add_object(x)
+end
+classtree
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;  end&lt;/p&gt;
+
+&lt;p&gt;use this command to get image:&lt;/p&gt;
+
+&lt;p&gt;  $ruby prog.rb &gt; class.dot; dot -Tpng class.dot -o class.png&lt;/p&gt;
+
+&lt;p&gt;结果看起来像这样，所有对象都画出来比较多，看大图还稍微能看到一些。完整的代码在&lt;a href=&quot;https://gist.github.com/4380597&quot;&gt;这里&lt;/a&gt;。
+&lt;img src=&quot;/images/class.png&quot; alt=&quot;class in Ruby&quot; class=&quot;img-center&quot; /&gt;
+&lt;img src=&quot;/images/objs.png&quot; alt=&quot;class in Ruby&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
+</description>
+				<published>2012-12-26 00:00:00 +0800</published>
+				<link>http://cyukang.com/2012/12/26/browser-objs-in-ruby.html</link>
+			</item>
+		
+			<item>
+				<title>Clang is Making Emacs Smarter</title>
+				<description>&lt;p&gt;在Emacs下自动补全总是个问题，对于同一个buffer内的基于symbol补全auto-complete-mode做得非常好了，但是因为没有进行代码的分析，所以像结构体的成员变量或者类的成员函数的补全是不可能的。当然你可能试过这个号称最智能的&lt;a href=&quot;http://cx4a.org/software/gccsense/&quot;&gt;GCCSence&lt;/a&gt;,但是我觉得这个东西够复杂的，在使用之前还需要用户手动运行一个命令来用Gcc处理一遍，它还会把一些东西放在sqlite数据库里面。这大概是因为Gcc不编译做静态分析工具造成的，在&lt;a href=&quot;http://lwn.net/Articles/493599/&quot;&gt;这里&lt;/a&gt;、&lt;a href=&quot;http://lwn.net/Articles/493627/&quot;&gt;这里&lt;/a&gt;、&lt;a href=&quot;http://lwn.net/Articles/493630/&quot;&gt;这里&lt;/a&gt;有讨论，Google的一个静态分析的项目从Gcc迁移到LLVM，重点是这:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;The gcc version has been difficult to support and maintain, due mainly to the fact that the GIMPLE intermediate language was never designed for static analysis. The abstract syntax tree provided by Clang is an easier data structure to work with for front-end analyses of this kind.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这个thread挺好玩的，后面变成了一大群人争论functional programming和Imperative Programming。这篇&lt;a href=&quot;http://fpcomplete.com/the-downfall-of-imperative-programming/&quot;&gt;The Downfall of Imperative Programming&lt;/a&gt;再好好看看。&lt;/p&gt;
+
+&lt;p&gt;回到正题，我最近切换到Mac下。因为在Mac OS X下编译器变成了Clang， Clang是基于LLVM的。LLVM对于分析代码是有比较方便的支持，所以基于LLVM有各种分析源程序的工具了，Xcode下的一些辅助开发的工具还是很舒服的。前些天突然想到那么会不会有个东西来作为Emacs的自动补全的后端，一搜果然有了这个&lt;a href=&quot;https://github.com/mikeandmore/auto-complete-clang&quot;&gt;auto-complete-clang&lt;/a&gt;，使用了一下非常的方便。其实看看其代码是在后面调用Clang的，比如在main.cc源文件里面写一些代码:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;    &lt;span class=&quot;cp&quot;&gt;#include &amp;lt;string&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;#include &amp;lt;vector&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Demo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Demo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;demo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;demo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;结果还是非常精准的，不想截图了。后端运行的命令其实是:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;    cmd: clang -cc1 main.cc -fsyntax-only -code-completion-at main.cc:18:10
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;所得到的结果是:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;    COMPLETION: Demo : Demo::
+    COMPLETION: &lt;span class=&quot;nv&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#Demo &amp;amp;#]operator=(&amp;lt;#const Demo &amp;amp;#&amp;gt;)&lt;/span&gt;
+    COMPLETION: print : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#void#]print()&lt;/span&gt;
+    COMPLETION: &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#void#]test()&lt;/span&gt;
+    COMPLETION: value : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#int#]value&lt;/span&gt;
+    COMPLETION: ~Demo : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#void#]~Demo()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;auto-complete-clang做的事情就是把这个结果再展示出来，其实这条命令也做了语法检查的，所以加上一个语法检查的功能应该也是可以的。一搜果然还是有了，看这个&lt;a href=&quot;http://duncan.mac-vicar.com/2011/08/30/realtime-syntax-checking-with-emacs/&quot;&gt;Realtime syntax checking with emacs&lt;/a&gt;，需要翻墙，不过代码在&lt;a href=&quot;https://github.com/dmacvicar/duncan-emacs-setup/tree/master/site-lisp&quot;&gt;Github上&lt;/a&gt;。其实其后端运行的命令是：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;   cmd: clang  -fsyntax-only -fno-exceptions main.cc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;最近用这个插件，基本代码都会是一遍编译通过啊，哈哈。Clang错误提示也人性化一点，比如在Xcode下会提示你想的是不是&quot;XXX&quot;之类的。&lt;/p&gt;
+</description>
+				<published>2012-12-16 00:00:00 +0800</published>
+				<link>http://cyukang.com/2012/12/16/use-clang-autocomplete-mode.html</link>
+			</item>
+		
+			<item>
+				<title>Have a try on Ninja</title>
+				<description>&lt;p&gt;&lt;img src=&quot;/images/compiling.png&quot; alt=&quot;My code is compiling&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h2&gt;什么是Ninja&lt;/h2&gt;
+
+&lt;p&gt; 在Unix/Linux下通常使用Makefile来控制代码的编译，但是Makefile对于比较大的项目有时候会比较慢，看看上面那副漫画，代码在编译都变成了程序员放松的借口了。所以这个Google的程序员在开发Chrome的时候因为忍受不了Makefile的速度，自己重新开发出来一套新的控制编译的工具叫作&lt;a href=&quot;https://github.com/martine/ninja&quot;&gt;Ninja&lt;/a&gt;，Ninja相对于Makefile这套工具更注重于编译速度。除了Chrome现在还有一些其他的比较大的项目也在开始使用Ninja，比如LLVM。我试用了一下感觉还是不错，比如编译Cmake时间大概是原来的1/4。Ninja试用C++实现，&lt;a href=&quot;http://martine.github.com/ninja/manual.html&quot;&gt;其支持的语法非常简单&lt;/a&gt;，作者在这里说明了为了控制复杂度。&lt;/p&gt;
+
+&lt;h2&gt;代码如何编译&lt;/h2&gt;
+
+&lt;p&gt;其实对于C/C++和很多其他程序的编译都是一个道理，就是把一些源代码文件编译成目标文件，或者有的目标文件再编译到一个库里，然后再链接起来。所以Ninja的配置文件分为两个部分，rule和文件依赖关系。看个简单的例子:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;    &lt;span class=&quot;nv&quot;&gt;cc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;gcc
+    &lt;span class=&quot;nv&quot;&gt;cflags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; -g -c
+    
+    rule cc
+         &lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;   &lt;span class=&quot;nv&quot;&gt;$cc&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$cflags&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$in&lt;/span&gt; -o &lt;span class=&quot;nv&quot;&gt;$out&lt;/span&gt;
+    
+    rule link
+         &lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$cc&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$in&lt;/span&gt; -o &lt;span class=&quot;nv&quot;&gt;$out&lt;/span&gt;
+    
+    rule cleanup
+         &lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; rm -rf *.exe *.o
+    
+    build func.o           : cc func.c
+    build main.o           : cc main.c
+    
+    build app.exe            : link main.o func.o
+    
+    build all:  phony &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; app.exe
+    build clean: cleanup 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;非常易懂，编译的可执行未见叫做app.exe, 其中有三条rule: cc, link, cleanup。看看这个官方的试用手册，还有一些附加参数可以加在rule的下面，比如description用来在编译的时候显示出来。Ninja还有个比较好玩的功能就是Ninja -t graph all命令，这可以用来生成编译时候的依赖关系，可以用dot来生成图片等。Ninja的实现也可以大概推测到，根据用户给的依赖关系图，&lt;em&gt;并行&lt;/em&gt; 地编译各个文件。&lt;/p&gt;
+
+&lt;p&gt;使用Ninja的一个问题就是需要生成这个build.ninja文件，对于大型项目来说这样一条一条地写配置文件是不可能的。幸好我们可以使用Cmake来生成这个配置文件，Cmake对应的是automake这样的东西。在&lt;a href=&quot;http://www.kitware.com/news/home/browse/CMake?2012_11_07&amp;amp;CMake+2.8.10+Just+Released&quot;&gt;Cmake的最新版本&lt;/a&gt;中已经支持参数Camke -G Ninja，Cmake会根据用户给定的CMakeLists.txt来生成build.ninja文件。而CmakeLists文件相对来说要简单一些，只要写清楚编译的可执行文件的名字，和其依赖的包含main函数的源文件。把我的&lt;a href=&quot;https://github.com/chenyukang/Maze&quot;&gt;迷宫小项目&lt;/a&gt;来举个例子,在项目文件夹下写配置文件CMakeLists.txt:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;    
+cmake_minimum_required&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;VERSION 2.8&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+project &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Maze&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+add_library&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;maze A_star.cpp Algorithm.cpp DFS_L.cpp DFS_R.cpp DisjSets.cpp Maze.cpp&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+add_executable&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Maze.exe main.cpp&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+target_link_libraries&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Maze.exe maze&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;add_library写明了生成一个叫做maze.a的库文件，然后和main.cpp编译出来的main.o生成可执行文件，写好CmakeList.txt后运行Cmake -G Ninja, 然后运行ninja all就能编译这个工程。具体的Cmake语法参考&lt;a href=&quot;http://www.cmake.org/cmake/help/cmake_tutorial.html&quot;&gt;这里&lt;/a&gt;，对于不少项目来说Cmake已经足够使用，只是我觉得Cmake还是稍微复杂了一点。&lt;/p&gt;
+
+&lt;h2&gt;我这样来使用&lt;/h2&gt;
+
+&lt;p&gt; 整个Ninja是使用C++写的开源项目，如果我们想增加一些自己的feature可以hack一下，不过作者估计不会接受增加语法支持的patch。我准备做一个小的hack来自动分析我当前的源码，自动生成build.ninja文件，不要求处理所有的复杂情况，只是分析.cc和.c，自动检测main函数文件。最后用户只用配置链接参数就可以了。我觉得这样用起来就非常方便了，待完成中，顺便看看Ninja的内部实现。&lt;/p&gt;
+</description>
+				<published>2012-12-13 00:00:00 +0800</published>
+				<link>http://cyukang.com/2012/12/13/have-a-try-for-ninja.html</link>
+			</item>
+		
+			<item>
+				<title>Ruby Robot AI</title>
+				<description>&lt;p&gt;最近看到一个&lt;a href=&quot;http://rrobots.rubyforge.org/index.html&quot;&gt;RRobot&lt;/a&gt;，这是一个用Ruby来实现的坦克对战平台。感觉挺好玩的，周三在公司也顺带和同事分享了一下。有时间的同学可以尝试尝试，用Ruby来写坦克的AI。另外这个不到1000行的程序也比较好读，这种Robot AI平台以前也有C++/Java版本的，不过都要比这个实现得复杂一点吧。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/tank.png&quot; alt=&quot;tank-ai&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;每个你控制的robot的api是这些，注意雷达扫描到的目标只包含距离信息，没有x和y，如果雷达扫描得越快所得到的目标位置准确率越低。自己摸索着写，找一些别人&lt;a href=&quot;http://rubyforge.org/forum/forum.php?forum_id=4792&quot;&gt;写好的策略&lt;/a&gt;来对战一把吧。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; battlefield_height  #the height of the battlefield
+ battlefield_width   #the width of the battlefield
+ energy              #your remaining energy (if this drops below 0 you are dead)
+ gun_heading         #the heading of your gun, 0 pointing east, 90 pointing 
+                     #north, 180 pointing west, 270 pointing south
+ gun_heat            #your gun heat, if this is above 0 you can't shoot
+ heading             #your robots heading, 0 pointing east, 90 pointing north,
+                     #180 pointing west, 270 pointing south
+ size                #your robots radius, if x &amp;lt;= size you hit the left wall
+ radar_heading       #the heading of your radar, 0 pointing east, 
+                     #90 pointing north, 180 pointing west, 270 pointing south
+ time                #ticks since match start
+ speed               #your speed (-8/8)
+ x                   #your x coordinate, 0...battlefield_width
+ y                   #your y coordinate, 0...battlefield_height
+ accelerate(param)   #accelerate (max speed is 8, max accelerate is 1/-1, 
+                     #negativ speed means moving backwards)
+ stop                #accelerates negativ if moving forward (and vice versa), 
+                     #may take 8 ticks to stop (and you have to call it every tick)
+ fire(power)         #fires a bullet in the direction of your gun, 
+                     #power is 0.1 - 3, this power will heat your gun
+ turn(degrees)       #turns the robot (and the gun and the radar), 
+                     #max 10 degrees per tick
+ turn_gun(degrees)   #turns the gun (and the radar), max 30 degrees per tick
+ turn_radar(degrees) #turns the radar, max 60 degrees per tick
+ dead                #true if you are dead
+ say(msg)            #shows msg above the robot on screen
+ broadcast(msg)      #broadcasts msg to all bots (they recieve 'broadcasts'
+                     #events with the msg and rough direction)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;最近关注Ruby比较多，平时工作中也会用Ruby来写一些脚本(渐渐代替了Python)。有两个原因，Ruby的语法更符合口味(不喜欢用Python的indent约束),
+Ruby也更Lisp化，Ruby的开源气氛非常好。&lt;/p&gt;
+</description>
+				<published>2012-11-22 00:00:00 +0800</published>
+				<link>http://cyukang.com/2012/11/22/ruby-robot-ai.html</link>
+			</item>
+		
+			<item>
+				<title>Ruby's Block and Proc</title>
+				<description>&lt;h3&gt;Callable objects&lt;/h3&gt;
+
+&lt;p&gt;在Ruby当中一切都是对象，但是有一个例外，那就是block。Block和Proc类似，但是还是有稍有差别的，Block。最近在看《Metaprogramming Ruby》，在这节中有个例子是这样的。&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint ruby&quot;&gt;
+require 'highline'
+hl = HighLine.new
+friends = hl.ask(&quot;Friends?&quot; , lambda {|s| s.split(',' ) })
+puts &quot;You're friends with: #{friends.inspect}&quot;
+⇒
+Friends?
+Bill,Mirella,Luca
+You're friends with: [&quot;Bill&quot;, &quot;Mirella&quot;, &quot;Luca&quot;]
+&lt;/pre&gt;
+
+
+&lt;p&gt;这里看起来hl.ask把Proc当作参数来传递，而不是接受了一个block，接受Block是另外一种使用模式：&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint ruby&quot;&gt;
+require 'highline'
+hl = HighLine.new
+new_pass = hl.ask(&quot;password: &quot;) { |prompt| prompt.echo = false }
+&lt;/pre&gt;
+
+
+&lt;p&gt;在highline代码可以看到相应的处理方式，第一种方式lambda构造成的Proc其实传递给了answer_type，而yield来处理block。&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint ruby&quot;&gt;
+    def initialize( question, answer_type )
+      # initialize instance data
+      @question    = question
+      @answer_type = answer_type
+      
+      # allow block to override settings
+      yield self if block_given?
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Proc, Lambda, Block&lt;/h3&gt;
+
+&lt;p&gt;有三种方式转化Block为Proc, Proc.new、Lambda、&amp;amp;Operator。但是在使用过程中Block还是比Proc要常见，在给一个函数传递这种callable objcts的时候，可以隐式或者显示传递，像这样：&lt;/p&gt;
+
+&lt;pre class=&quot;prettyprint ruby&quot;&gt;
+def foo(*args)
+ yield(args.join(' '))
+end
+
+foo('Yukang', 'Chen'){|name| puts &quot;Hello #{name}&quot;} # =&gt; &quot;Hello Yukang Chen&quot;
+
+def foo(*args, &amp;blk)
+ blk.call(args.join(' '))
+end
+
+foo('Yukang', 'Chen'){|name| puts &quot;Hello #{name}&quot;} # =&gt; &quot;Hello Yukang Chen&quot;
+&lt;/pre&gt;
+
+
+&lt;p&gt;隐式传递要比显式传递performance要好一些。这很早就有&lt;a href=&quot;http://www.ruby-forum.com/topic/71221&quot;&gt;讨论&lt;/a&gt;，具体原因是根据Ruby的实现一个Block在yield的时候并没有转换为Proc或者其他对象，所以少了一些开销。Ruby中的函数块是高阶函数的一种特殊形式的语法，Matz在设计块的时候考虑到： (1)在高阶函数中，这种只有一个函数参数非常常见，在实际使用中几乎没有必要在一个地方使用多个函数参数，(2)外观和形式上更直观，Enumerable利用块写的代码简洁易懂。&lt;/p&gt;
+</description>
+				<published>2012-11-14 00:00:00 +0800</published>
+				<link>http://cyukang.com/2012/11/14/ruby_block_proc.html</link>
+			</item>
+		
+			<item>
+				<title>丽江印象</title>
+				<description>&lt;p&gt;上周我们公司一行九个人去丽江开会、游玩了四天。我去之前心里还没什么期望的，不过在那边待了一段时间后对丽江的印象还是挺好的。
+其实像这种古镇以前也逛过不少，成都的和江浙一带的都去过，大多商业化比较严重。不过丽江的古镇确实是我见过的最大的，虽然说也是商业化，还是存在不少原生态的东西。我们去的时间也刚好还算是合适，避开了人流的高峰期，也还有暖暖的阳光。&lt;/p&gt;
+
+&lt;h3&gt;关于住宿&lt;/h3&gt;
+
+&lt;p&gt;因为前面两天要讨论一些技术问题，所以刚到丽江住的是宾馆。在丽江古城的边缘地带，价格比较贵。如果是个人去旅游，坚决不要住宾馆，找个靠谱的客栈吧，比如我们后来一天所住的泡沫之夏就非常实惠，老板人也挺好。丽江古城的客栈非常多，而且据我观察不少看起来非常干净，有的还可以跟着客栈主人一起吃饭，价钱也便宜。当地人给人印象还算是朴实，也很容易和游客乐成一片。&lt;/p&gt;
+
+&lt;h3&gt;关于吃饭&lt;/h3&gt;
+
+&lt;p&gt;第一天我们因为旅途劳累所以随便选择了一个古城边缘的饭店吃饭，气氛不错，就是有点小贵。其实丽江吃饭便宜又好吃的地方挺多的，找那些当地的特色馆子，我们去过的唠叨妈私房菜是个很好的馆子，里面有个唠叨妹特别好玩，唠叨妈开馆子不是为了多赚钱，价钱实惠份量又足。在人多的时候他们准备收拾收拾为自家做饭了，要不是我们人多都不会被接待。&lt;/p&gt;
+
+&lt;h3&gt;关于艳遇&lt;/h3&gt;
+
+&lt;p&gt;在丽江到处都写着艳遇，艳遇乃丽江的另一个代名词。丽江的酒吧非常多，各种风格的都有，这歌声和酒精为所谓艳遇创造了条件。在丽江玩的人大多都比较放松，在那种环境下人的隔阂也会少一些，问问几个哲学基本问题搭讪基本没问题的。但我觉得大部分人都是普通旅客，所谓&quot;艳遇&quot;也不过是交个陌生朋友，谈谈旅行见闻而已。当然也有不少是单独在那边待着“疗伤”的，如果恰好能碰上聊得来的也算是缘分了。去酒吧泡着是丽江夜生活的常态，我们去了几个比较有名气的酒吧，其中江湖酒吧感觉是最好的，乐队的现场表演非常吸引人。我在丽江等你音乐要要轻一些。Bamboo很有名因为小倩那首《一瞬间》是丽江今年的街歌，不过现场表演的效果不如江湖酒吧。后街2号就没有时间去了。&lt;/p&gt;
+
+&lt;h3&gt;一点照片&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/gou.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; /&gt;
+丽江的狗挺多，大多都还看起来很干净，无聊地天天在那里晒太阳。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/jianghu.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; /&gt;
+江湖酒吧，小松的嗓音极好。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/shan.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; /&gt;
+茶马古道上面那座山，因为时间紧张，所以我们没爬到山顶，遗憾。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/hu.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; /&gt;
+&lt;img src=&quot;/images/lahai.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; /&gt;
+拉市海附近非常漂亮，蓝天碧水。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/yumi.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; /&gt;
+拉市海旁边老太太的玉米，我所吃过的最好吃的玉米。&lt;/p&gt;
+
+&lt;p&gt;云南玩的地方还真是非常多，丽江附近可去的还有泸沽湖、玉龙雪山、香格里拉等等。有机会再去一次把这些地方看一看，最好能稍微多住一段时间。&lt;/p&gt;
+</description>
+				<published>2012-11-08 00:00:00 +0800</published>
+				<link>http://cyukang.com/2012/11/08/lijiang.html</link>
+			</item>
+		
+	</channel>
+</rss>
