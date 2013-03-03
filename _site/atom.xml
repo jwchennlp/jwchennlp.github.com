@@ -4,7 +4,7 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-03-03T11:42:58+08:00</updated>
+ <updated>2013-03-03T11:43:56+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
@@ -18,7 +18,7 @@
    <updated>2013-03-03T00:00:00+08:00</updated>
    <id>http://cyukang.com/2013/03/03/try-mathjax</id>
    <content type="html">
-&lt;p&gt;使用Jekyll写作文章的时候有可能需要内嵌一些数学公式, &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathMax&lt;/a&gt;就是用来干这个的，试用了一下感觉非常方便。步骤如下:&lt;/p&gt;
+&lt;p&gt;使用Jekyll写作文章的时候有可能需要内嵌一些数学公式, &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt;就是用来干这个的，试用了一下感觉非常方便。步骤如下:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
