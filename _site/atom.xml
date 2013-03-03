@@ -4,7 +4,7 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-03-03T10:03:33+08:00</updated>
+ <updated>2013-03-03T10:09:46+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
@@ -67,13 +67,12 @@
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt; \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)&lt;/script&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
- 
+&lt;script type=&quot;math/tex; mode=display&quot;&gt; 
 \begin{aligned}
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp;amp; = \frac{4\pi}{c}\vec{\mathbf{j}} \\ \nabla \cdot \vec{\mathbf{E}} &amp;amp; = 4 \pi \rho \\
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} &amp;amp; = \vec{\mathbf{0}} \\
-\nabla \cdot \vec{\mathbf{B}} &amp;amp; = 0 \end{aligned}
- %]]&gt;&lt;/script&gt;
+\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} = \frac{4\pi}{c}\vec{\mathbf{j}} \\ \nabla \cdot \vec{\mathbf{E}} = 4 \pi \rho \\
+\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} = \vec{\mathbf{0}} \\
+\nabla \cdot \vec{\mathbf{B}} = 0 \end{aligned}
+&lt;/script&gt;
 
 &lt;p&gt;不过我可能永远用不到这么复杂的表达式 :). &lt;/p&gt;
 
