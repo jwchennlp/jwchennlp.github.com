@@ -10,7 +10,7 @@ http://cyukang.com/robots.txt
 http://cyukang.com/sitemap.txt
 http://cyukang.com/tags.html
 
-http://cyukang.com/2013/03/03/try-jsmath.html
+http://cyukang.com/2013/03/03/try-mathjax.html
 http://cyukang.com/2013/02/15/reading-bootstrap-scheme.html
 http://cyukang.com/2013/01/27/emacs-speaking-now.html
 http://cyukang.com/2013/01/22/poj-500.html
