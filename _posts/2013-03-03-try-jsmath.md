@@ -50,11 +50,12 @@ $$ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
 
 $$ \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
 
-$$ \mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix}
-\mathbf{i} ; \mathbf{j} ; \mathbf{k} \\
-\frac{\partial X}{\partial u} ; \frac{\partial Y}{\partial u} ; 0 \\
-\frac{\partial X}{\partial v} ; \frac{\partial Y}{\partial v} ; 0 \\
-\end{vmatrix} $$
+$$ 
+\begin{aligned}
+\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp; = \frac{4\pi}{c}\vec{\mathbf{j}} \\ \nabla \cdot \vec{\mathbf{E}} &amp; = 4 \pi \rho \\
+\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} &amp; = \vec{\mathbf{0}} \\
+\nabla \cdot \vec{\mathbf{B}} &amp; = 0 \end{aligned}
+$$
        
    不过我可能永远用不到这么复杂的表达式 :). 
    
