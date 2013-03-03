@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/themes/twitter/css/style.css" />
 
   <header>
@@ -159,7 +159,7 @@
 <div class="row post">
   <div class="span8">
     <h1 class="title">内存又泄漏:(</h1>
-    <p class="meta"><time class="date" pubdate="2011-04-25">2011-04-25</time> By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p>
+
     <h3>内存泄漏</h3>
 <p class="first">上一次以为内存泄露查完了，发现服务器跑了比较长时间后又占用太多内存。刚好这段时间加了一些新的模块，又该查查了。整个服务器模块分的还行，但是中间经过几个人一起写，所以看起来就麻烦了。要解决问题还是必须找到泄露的代码段。在C/C++中，只要用了指针这东西，很多逻辑上的问题也会产生内存泄露。在线下用上次封装malloc和free的方法测试，找不到产生内存泄露的样例，grep了一下没有用原来的malloc之类的东西啊，那就应该是测试数量太少的问题。没法，从线上的log中导入一些天的访问记录，其中包含了一天的访问url。试着用Python写个小程序把一天中所有的url依次往线下的服务器发送，这应该有几万条数据了。Python中这相关的库够多的,可以用的httplib,或者webbrowser模块中的webbrowser.open("url_address",1),不过这得打开系统的默认的浏览器，并且好像还没关掉一个tab的接口。最合适这个简单任务的是urllib这个模块，下面这样就行了，往线下的服务器狂发请求吧:</p>
 
@@ -190,6 +190,7 @@
 </p>
 
 
+    <p class="meta"> -- EOF -- </p>
 
     <ul class="pager">
 
@@ -231,6 +232,7 @@
 
   <div class="span4 sidebar">
     <h4 class="date">发布日期：<span>25 April 2011</span></h4>
+    <!-- <p class="meta">By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p> -->
 
 
     
@@ -291,15 +293,15 @@
         </li>              	      	            
            
         <li class="v-aside-li">
+          <a href="/2013/01/04/add-a-config-generator-for-ninja.html" title="A little hacking on Ninja" rel="bookmark">A little hacking on Ninja</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2012/12/26/browser-objs-in-ruby.html" title="Browser objs and class hierarchy  in Ruby" rel="bookmark">Browser objs and class hierarchy  in Ruby</a>
         </li>              	      	            
            
         <li class="v-aside-li">
           <a href="/2012/12/16/use-clang-autocomplete-mode.html" title="Clang is Making Emacs Smarter" rel="bookmark">Clang is Making Emacs Smarter</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2012/12/13/have-a-try-for-ninja.html" title="Have a try on Ninja" rel="bookmark">Have a try on Ninja</a>
         </li>              	      	            
         
       </ul>  

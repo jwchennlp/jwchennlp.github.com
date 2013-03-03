@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/themes/twitter/css/style.css" />
 
   <header>
@@ -159,7 +159,7 @@
 <div class="row post">
   <div class="span8">
     <h1 class="title">Cflow分析</h1>
-    <p class="meta"><time class="date" pubdate="2011-03-09">2011-03-09</time> By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p>
+
     <h2>cflow</h2>
 <a href="http://www.gnu.org/software/cflow/">cflow</a>是个比较古老的程序(好像比我老一岁)，主要是用来打印C程序的函数调用关系，通过函数调用关系能大概看一下程序的流程。最近看了一下这个程序的代码，主要分为两个小程序组成。首先是prcc.c这个程序，作用是读源文件，提取出函数名称，然后生成一个函数列表。第一列是调用函数，第二列是被调用的函数名称(如果是函数声明则这两列相同)。第二个程序prcg.c是读取函数关系，里面建起一个有向无环图。根据这个图加上缩进打印出函数调用轮廓，<a href="http://www.gnu.org/software/cflow/sample.html">这里</a>有一个例子。最后是一个脚本cflow.sh，其核心代码就是。
 <pre class="src">prcc demo.c | prcg</pre>
@@ -186,6 +186,7 @@ find  *.c | xargs prcc| python drawfuncs.py 来处理多个程序。
 C要的是运行速度，Python实现速度快！
 
 
+    <p class="meta"> -- EOF -- </p>
 
     <ul class="pager">
 
@@ -227,6 +228,7 @@ C要的是运行速度，Python实现速度快！
 
   <div class="span4 sidebar">
     <h4 class="date">发布日期：<span>09 March 2011</span></h4>
+    <!-- <p class="meta">By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p> -->
 
 
     
@@ -246,7 +248,7 @@ C要的是运行速度，Python实现速度快！
      
     	<li><a href="/tags.html#Linux-ref">Linux <span>7</span></a></li>
      
-    	<li><a href="/tags.html#Programming-ref">Programming <span>30</span></a></li>
+    	<li><a href="/tags.html#Programming-ref">Programming <span>31</span></a></li>
      
     	<li><a href="/tags.html#Python-ref">Python <span>5</span></a></li>
     
@@ -293,15 +295,15 @@ C要的是运行速度，Python实现速度快！
         </li>              	      	            
            
         <li class="v-aside-li">
+          <a href="/2013/01/04/add-a-config-generator-for-ninja.html" title="A little hacking on Ninja" rel="bookmark">A little hacking on Ninja</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2012/12/26/browser-objs-in-ruby.html" title="Browser objs and class hierarchy  in Ruby" rel="bookmark">Browser objs and class hierarchy  in Ruby</a>
         </li>              	      	            
            
         <li class="v-aside-li">
           <a href="/2012/12/16/use-clang-autocomplete-mode.html" title="Clang is Making Emacs Smarter" rel="bookmark">Clang is Making Emacs Smarter</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2012/12/13/have-a-try-for-ninja.html" title="Have a try on Ninja" rel="bookmark">Have a try on Ninja</a>
         </li>              	      	            
         
       </ul>  

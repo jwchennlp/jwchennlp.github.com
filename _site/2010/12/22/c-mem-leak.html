@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/themes/twitter/css/style.css" />
 
   <header>
@@ -159,7 +159,7 @@
 <div class="row post">
   <div class="span8">
     <h1 class="title">内存泄漏</h1>
-    <p class="meta"><time class="date" pubdate="2010-12-22">2010-12-22</time> By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p>
+
     以前写的一些程序运行一段时间后占用的内存越来越多，估计是内存泄露了。服务端的程序要长时间的运行，内存泄露是个很严重的问题。于是再检查程序，很崩溃的是还有另外一个模块不是自己写的，看起来很麻烦。看了半小时后发现一些问题，但是还是不能保证是否完全解决了。同事让我用以前他们写的一些函数，对应的为MALLOC和FREE。仔细看了一下觉得很不错，其实就是把malloc和free函数封装了一下，用来记录申请空间的文件和代码位置，使用方法就是用MALLOC和FREE替代原来的函数。主要的数据结构是：
 <div>
 <pre><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">struct</span>
@@ -199,6 +199,7 @@ mem_info mem_in[MEM_SIZE];  <span style="color: #008000;">//MEM_SIZE最大指针
 </div>
 
 
+    <p class="meta"> -- EOF -- </p>
 
     <ul class="pager">
 
@@ -240,6 +241,7 @@ mem_info mem_in[MEM_SIZE];  <span style="color: #008000;">//MEM_SIZE最大指针
 
   <div class="span4 sidebar">
     <h4 class="date">发布日期：<span>22 December 2010</span></h4>
+    <!-- <p class="meta">By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p> -->
 
 
     
@@ -255,7 +257,7 @@ mem_info mem_in[MEM_SIZE];  <span style="color: #008000;">//MEM_SIZE最大指针
      
     	<li><a href="/tags.html#内存泄漏-ref">内存泄漏 <span>1</span></a></li>
      
-    	<li><a href="/tags.html#Programming-ref">Programming <span>30</span></a></li>
+    	<li><a href="/tags.html#Programming-ref">Programming <span>31</span></a></li>
     
   
 
@@ -300,15 +302,15 @@ mem_info mem_in[MEM_SIZE];  <span style="color: #008000;">//MEM_SIZE最大指针
         </li>              	      	            
            
         <li class="v-aside-li">
+          <a href="/2013/01/04/add-a-config-generator-for-ninja.html" title="A little hacking on Ninja" rel="bookmark">A little hacking on Ninja</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2012/12/26/browser-objs-in-ruby.html" title="Browser objs and class hierarchy  in Ruby" rel="bookmark">Browser objs and class hierarchy  in Ruby</a>
         </li>              	      	            
            
         <li class="v-aside-li">
           <a href="/2012/12/16/use-clang-autocomplete-mode.html" title="Clang is Making Emacs Smarter" rel="bookmark">Clang is Making Emacs Smarter</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2012/12/13/have-a-try-for-ninja.html" title="Have a try on Ninja" rel="bookmark">Have a try on Ninja</a>
         </li>              	      	            
         
       </ul>  

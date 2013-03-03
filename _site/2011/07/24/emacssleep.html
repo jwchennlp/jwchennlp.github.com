@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/themes/twitter/css/style.css" />
 
   <header>
@@ -159,7 +159,7 @@
 <div class="row post">
   <div class="span8">
     <h1 class="title">让Emacs提醒睡觉</h1>
-    <p class="meta"><time class="date" pubdate="2011-07-24">2011-07-24</time> By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p>
+
     最近都睡的比较晚，对身体不好啊。写了几行恶趣味的elisp，晚上10点40开始提醒提醒我准备睡觉，如果10点50还没动，我的上下移动键就不能用了，下面会有一条提示：太晚了，该睡觉了。不过这时可以用方向键盘来移动。但过十分钟后快捷键又恢复正常，因为过了11点表示我确实要再待晚点，下个小时40分钟继续提醒，50分锁死快捷键盘。12点过后emacs彻底对我无语了。真是egg hurt...
 <pre class="src">
 (<span style="color: #00ffff; font-weight: bold;">defun</span> <span style="color: #87cefa; font-weight: bold;">is-late-now</span>()
@@ -200,6 +200,7 @@
 这样后只要执行previous-line这个函数之前都会执行我这个defadvice定义的代码，但是这样连方向键也不能移动了，因为向上这个按钮是绑定的previous-line这个函数。
 
 
+    <p class="meta"> -- EOF -- </p>
 
     <ul class="pager">
 
@@ -241,6 +242,7 @@
 
   <div class="span4 sidebar">
     <h4 class="date">发布日期：<span>24 July 2011</span></h4>
+    <!-- <p class="meta">By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p> -->
 
 
     
@@ -297,15 +299,15 @@
         </li>              	      	            
            
         <li class="v-aside-li">
+          <a href="/2013/01/04/add-a-config-generator-for-ninja.html" title="A little hacking on Ninja" rel="bookmark">A little hacking on Ninja</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2012/12/26/browser-objs-in-ruby.html" title="Browser objs and class hierarchy  in Ruby" rel="bookmark">Browser objs and class hierarchy  in Ruby</a>
         </li>              	      	            
            
         <li class="v-aside-li">
           <a href="/2012/12/16/use-clang-autocomplete-mode.html" title="Clang is Making Emacs Smarter" rel="bookmark">Clang is Making Emacs Smarter</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2012/12/13/have-a-try-for-ninja.html" title="Have a try on Ninja" rel="bookmark">Have a try on Ninja</a>
         </li>              	      	            
         
       </ul>  

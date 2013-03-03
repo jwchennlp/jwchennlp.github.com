@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/themes/twitter/css/style.css" />
 
   <header>
@@ -159,7 +159,7 @@
 <div class="row post">
   <div class="span8">
     <h1 class="title">valgrind</h1>
-    <p class="meta"><time class="date" pubdate="2011-05-06">2011-05-06</time> By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p>
+
     <p>
 纪念一下跑测试跑了几天才找出的一个内存泄漏，这个函数源于UNP，还以为UNP有bug呢，找到原书当getaddreinfo失败或者res==NULL的时候直接退出了。但是写这个代码的同学当然不想连接不上直接退出，于是忘记了freeaddrinfo调用直接返回，那个struct addrinfo就没释放。很多错误都是这种，涉及到库函数的时候更加难查。
 </p>
@@ -209,6 +209,7 @@
 <a href="http://hi.baidu.com/sgj_22/blog/item/c437bc10c21be00a203f2e89.html">更多Memwatch</a>
 
 
+    <p class="meta"> -- EOF -- </p>
 
     <ul class="pager">
 
@@ -250,6 +251,7 @@
 
   <div class="span4 sidebar">
     <h4 class="date">发布日期：<span>06 May 2011</span></h4>
+    <!-- <p class="meta">By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p> -->
 
 
     
@@ -310,15 +312,15 @@
         </li>              	      	            
            
         <li class="v-aside-li">
+          <a href="/2013/01/04/add-a-config-generator-for-ninja.html" title="A little hacking on Ninja" rel="bookmark">A little hacking on Ninja</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2012/12/26/browser-objs-in-ruby.html" title="Browser objs and class hierarchy  in Ruby" rel="bookmark">Browser objs and class hierarchy  in Ruby</a>
         </li>              	      	            
            
         <li class="v-aside-li">
           <a href="/2012/12/16/use-clang-autocomplete-mode.html" title="Clang is Making Emacs Smarter" rel="bookmark">Clang is Making Emacs Smarter</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2012/12/13/have-a-try-for-ninja.html" title="Have a try on Ninja" rel="bookmark">Have a try on Ninja</a>
         </li>              	      	            
         
       </ul>  

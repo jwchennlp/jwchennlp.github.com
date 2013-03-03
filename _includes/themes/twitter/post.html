@@ -2,9 +2,10 @@
 <div class="row post">
   <div class="span8">
     <h1 class="title">{{ page.title }}</h1>
-    <p class="meta"><time class="date" pubdate="{{ page.date | date_to_utc | date: '%Y-%m-%d' }}">{{ page.date | date_to_utc | date: "%Y-%m-%d" }}</time> By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p>
+
     {{ content }}
 
+    <p class="meta"> -- EOF -- </p>
 
     <ul class="pager">
 
@@ -46,6 +47,7 @@
 
   <div class="span4 sidebar">
     <h4 class="date">发布日期：<span>{{ page.date | date_to_long_string }}</span></h4>
+    <!-- <p class="meta">By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p> -->
 
 
     {% unless page.tags == empty %}

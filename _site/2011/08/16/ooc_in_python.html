@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/themes/twitter/css/style.css" />
 
   <header>
@@ -159,7 +159,7 @@
 <div class="row post">
   <div class="span8">
     <h1 class="title">C的面向对象风格代码</h1>
-    <p class="meta"><time class="date" pubdate="2011-08-16">2011-08-16</time> By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p>
+
     <span class="Apple-style-span" style="font-size: 13px; font-weight: normal;">OO是一种编程范型，而不只是特定语言的特定支持，所以用C来实现也是可行的。最近碰到的一部分代码都是用C实现的面向对象风格，可能是参考了Python里面的实现，Python内部实现的基本对象这块也全是这样的代码。在这里做一个小小的总结。</span>
 
 C语言里面没有语言层面的面向对象支持，那OO中的三个基本要素封装、继承、多态如何实现？C里面最强大的东西是指针，指针中最神奇的是void指针，这是一切的基本。首先来看封装，如何通过实例来调用方法，而对内部数据进行隐藏。完全可以写一些struct，然后写对应的函数来针对这个struct来操作，我们需要更进一步，把数据和方法绑定起来。这样写初看起来并没什么好处，后面会发现，通过函数指针去找对应的函数是多态的关键。
@@ -248,6 +248,7 @@ C语言里面没有语言层面的面向对象支持，那OO中的三个基本�
 上面的代码在这里下载：<a href="https://github.com/chenyukang/ooc" target="_blank">https://github.com/chenyukang/ooc</a>。
 
 
+    <p class="meta"> -- EOF -- </p>
 
     <ul class="pager">
 
@@ -289,6 +290,7 @@ C语言里面没有语言层面的面向对象支持，那OO中的三个基本�
 
   <div class="span4 sidebar">
     <h4 class="date">发布日期：<span>16 August 2011</span></h4>
+    <!-- <p class="meta">By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p> -->
 
 
     
@@ -302,7 +304,7 @@ C语言里面没有语言层面的面向对象支持，那OO中的三个基本�
      
     	<li><a href="/tags.html#Backup-ref">Backup <span>17</span></a></li>
      
-    	<li><a href="/tags.html#Programming-ref">Programming <span>30</span></a></li>
+    	<li><a href="/tags.html#Programming-ref">Programming <span>31</span></a></li>
     
   
 
@@ -347,15 +349,15 @@ C语言里面没有语言层面的面向对象支持，那OO中的三个基本�
         </li>              	      	            
            
         <li class="v-aside-li">
+          <a href="/2013/01/04/add-a-config-generator-for-ninja.html" title="A little hacking on Ninja" rel="bookmark">A little hacking on Ninja</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2012/12/26/browser-objs-in-ruby.html" title="Browser objs and class hierarchy  in Ruby" rel="bookmark">Browser objs and class hierarchy  in Ruby</a>
         </li>              	      	            
            
         <li class="v-aside-li">
           <a href="/2012/12/16/use-clang-autocomplete-mode.html" title="Clang is Making Emacs Smarter" rel="bookmark">Clang is Making Emacs Smarter</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2012/12/13/have-a-try-for-ninja.html" title="Have a try on Ninja" rel="bookmark">Have a try on Ninja</a>
         </li>              	      	            
         
       </ul>  

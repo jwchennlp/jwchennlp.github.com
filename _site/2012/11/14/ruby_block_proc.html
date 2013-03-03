@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/themes/twitter/css/style.css" />
 
   <header>
@@ -159,7 +159,7 @@
 <div class="row post">
   <div class="span8">
     <h1 class="title">Ruby's Block and Proc</h1>
-    <p class="meta"><time class="date" pubdate="2012-11-14">2012-11-14</time> By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p>
+
     
 <h3 id="callable-objects">Callable objects</h3>
 
@@ -217,6 +217,7 @@ foo('Yukang', 'Chen'){|name| puts "Hello #{name}"} # =&gt; "Hello Yukang Chen"
 <p>隐式传递要比显式传递performance要好一些。这很早就有<a href="http://www.ruby-forum.com/topic/71221">讨论</a>，具体原因是根据Ruby的实现一个Block在yield的时候并没有转换为Proc或者其他对象，所以少了一些开销。Ruby中的函数块是高阶函数的一种特殊形式的语法，Matz在设计块的时候考虑到： (1)在高阶函数中，这种只有一个函数参数非常常见，在实际使用中几乎没有必要在一个地方使用多个函数参数，(2)外观和形式上更直观，Enumerable利用块写的代码简洁易懂。</p>
 
 
+    <p class="meta"> -- EOF -- </p>
 
     <ul class="pager">
 
@@ -258,6 +259,7 @@ foo('Yukang', 'Chen'){|name| puts "Hello #{name}"} # =&gt; "Hello Yukang Chen"
 
   <div class="span4 sidebar">
     <h4 class="date">发布日期：<span>14 November 2012</span></h4>
+    <!-- <p class="meta">By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p> -->
 
 
     
@@ -271,7 +273,7 @@ foo('Yukang', 'Chen'){|name| puts "Hello #{name}"} # =&gt; "Hello Yukang Chen"
      
     	<li><a href="/tags.html#Ruby-ref">Ruby <span>4</span></a></li>
      
-    	<li><a href="/tags.html#Programming-ref">Programming <span>30</span></a></li>
+    	<li><a href="/tags.html#Programming-ref">Programming <span>31</span></a></li>
     
   
 
@@ -316,15 +318,15 @@ foo('Yukang', 'Chen'){|name| puts "Hello #{name}"} # =&gt; "Hello Yukang Chen"
         </li>              	      	            
            
         <li class="v-aside-li">
+          <a href="/2013/01/04/add-a-config-generator-for-ninja.html" title="A little hacking on Ninja" rel="bookmark">A little hacking on Ninja</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2012/12/26/browser-objs-in-ruby.html" title="Browser objs and class hierarchy  in Ruby" rel="bookmark">Browser objs and class hierarchy  in Ruby</a>
         </li>              	      	            
            
         <li class="v-aside-li">
           <a href="/2012/12/16/use-clang-autocomplete-mode.html" title="Clang is Making Emacs Smarter" rel="bookmark">Clang is Making Emacs Smarter</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2012/12/13/have-a-try-for-ninja.html" title="Have a try on Ninja" rel="bookmark">Have a try on Ninja</a>
         </li>              	      	            
         
       </ul>  
