@@ -78,8 +78,9 @@ header{
 
 .post p, .about p {
     text-indent: 2em;
-    font-size:14px;
+    font-size: 14px;
     line-height: 1.8;
+    font-family: "微软雅黑", "Arial","Helvetica","sans-serif";
 }
 
 .post .sidebar {

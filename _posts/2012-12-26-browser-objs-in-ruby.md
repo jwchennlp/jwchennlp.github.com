@@ -9,6 +9,7 @@ tags: [Ruby, Programming]
 
 Ruby里一切都是对象，如何能看到Ruby内建的对象模型呢。这里有个小程序来查看Ruby内部构建好的的对象和类。ObjectSpace可以迭代所有对象。
 
+{% highlight ruby %}
     set = Set.new()
     ObjectSpace.each_object do |x|
       set.add(x.class)
@@ -17,9 +18,12 @@ Ruby里一切都是对象，如何能看到Ruby内建的对象模型呢。这里
    set.each do |x|
      puts x
    end
+   
+{% endhighlight %}
 
 下面这段就能根据对象，取得class对象，建立起类的继承图。
 
+{% highlight ruby %}
 
   # Creates or updates a klass_tree.
   # When updating no classes or objects are removed
@@ -34,6 +38,7 @@ Ruby里一切都是对象，如何能看到Ruby内建的对象模型呢。这里
     classtree
   end
 
+{% endhighlight %}
 
 use this command to get image:
 

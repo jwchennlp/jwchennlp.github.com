@@ -4,13 +4,67 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-04-12T00:09:33+08:00</updated>
+ <updated>2013-04-17T22:00:00+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
    <email>moorekang@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>一些包管理命令</title>
+   <link href="http://cyukang.com/2013/04/17/apt-usage.html"/>
+   <updated>2013-04-17T00:00:00+08:00</updated>
+   <id>http://cyukang.com/2013/04/17/apt-usage</id>
+   <content type="html">
+&lt;p&gt;包管理器是Linux上一个经常用的东西，我觉得下面这几个命令是非常有用的，便于查询包的状态，或者搜索我该安装哪些包。&lt;/p&gt;
+
+&lt;h2 id=&quot;apt-cache&quot;&gt;apt-cache&lt;/h2&gt;
+
+&lt;p&gt;用来根据名字查询软件包，比如apt-cache search vim查询vim相关的。&lt;/p&gt;
+
+&lt;h2 id=&quot;apt-file&quot;&gt;apt-file&lt;/h2&gt;
+
+&lt;p&gt;用来根据某个文件查询软件包，这在编译程序的时候非常有用，可以通过所需要的头文件去查询要安装的东西，可以避免去Google了。注意使用之前需要安装并update。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install apt-file
+sudo apt-file update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;比如我在编译某个软件的时候找不到&amp;lt;readline/readline.h&amp;gt;，使用下面的命令来查询一下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-file readline.h
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;结果中有这么一行，那么我就知道继续安装libreadline5-dev库就行了。&lt;/p&gt;
+
+&lt;h2 id=&quot;dpkg&quot;&gt;dpkg&lt;/h2&gt;
+
+&lt;p&gt;apt是基于dpkg开发的，dpkg是更古老更底层的一套工具，Debian系统管理器的基础。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dpkg -l 列出所有已经安装的包
+dpkg -s vim 列出包vim的状态
+dpkg -L vim 列出本地所有vim相关联系的文件
+dpkg -S vim 搜索所属包的内容
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;brew&quot;&gt;brew&lt;/h2&gt;
+
+&lt;p&gt;Mac下推荐Brew来替代apt，大部分的开源包都有对应的地址源了。我没使用过MacPorts，无法比较这两套的差别。
+不过我个人很喜欢的一点是brew所有安装的东西都在&lt;code&gt;brew -prefix&lt;/code&gt;/Cellar这个统一目录下，&lt;/p&gt;
+
+&lt;p&gt;brew相关的命令：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;brew list   — 列出已安装的软件
+brew update — 更新Homebrew
+brew home   — 用浏览器打开
+brew info   — 显示软件内容信息
+brew deps   - 显示包依赖
+&lt;/code&gt;&lt;/pre&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>巧妙的XOR Link List</title>
@@ -326,30 +380,34 @@ Reddit上的一个得分最高的回复：&lt;/p&gt;
    <content type="html">
 &lt;p&gt;Ruby里一切都是对象，如何能看到Ruby内建的对象模型呢。这里有个小程序来查看Ruby内部构建好的的对象和类。ObjectSpace可以迭代所有对象。&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;set = Set.new()
-ObjectSpace.each_object do |x|
-  set.add(x.class)
-end
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;    &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;ObjectSpace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each_object&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 
-&lt;p&gt;set.each do |x|
-     puts x
-   end&lt;/p&gt;
+   &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+     &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+   
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;下面这段就能根据对象，取得class对象，建立起类的继承图。&lt;/p&gt;
 
-&lt;p&gt;# Creates or updates a klass_tree.
-  # When updating no classes or objects are removed
-  def object_browser(classtree = ClassTreeNode.new(Kernel))
-    ObjectSpace.each_object do | x |
-      classnode = classtree
-      x.class.ancestors.reverse[1..-1] \
-        .inject(classtree){ | classnode, klass |
-        classnode.add_class(klass)
-      }.add_object(x)
-    end
-    classtree
-  end&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;  &lt;span class=&quot;c1&quot;&gt;# Creates or updates a klass_tree.&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# When updating no classes or objects are removed&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;object_browser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classtree&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ClassTreeNode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Kernel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;ObjectSpace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each_object&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;classnode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classtree&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ancestors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reverse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;\&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classtree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classnode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;classnode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;classtree&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;use this command to get image:&lt;/p&gt;
 

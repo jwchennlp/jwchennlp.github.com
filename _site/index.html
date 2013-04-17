@@ -152,65 +152,60 @@
 
   <body>
     <div class="container">
-
       <div class="content">
         
 
 
   <div class="row post">
     <div class="span8">
-      <h1 class="title"><a href="/2013/04/11/xor_link_list.html" title="巧妙的XOR Link List">巧妙的XOR Link List</a> </h1>
+      <h1 class="title"><a href="/2013/04/17/apt-usage.html" title="一些包管理命令">一些包管理命令</a> </h1>
 
       
-<p>XOR Link List, 只用一个附加的变量来实现双向链表。首先xor本身是个稍微有点难理解的操作。xor有下面的一些特性:</p>
+<p>包管理器是Linux上一个经常用的东西，我觉得下面这几个命令是非常有用的，便于查询包的状态，或者搜索我该安装哪些包。</p>
 
-<p><code>A ^ 0 = A</code></p>
+<h2 id="apt-cache">apt-cache</h2>
 
-<p><code>A ^ A = 0</code></p>
+<p>用来根据名字查询软件包，比如apt-cache search vim查询vim相关的。</p>
 
-<p><code>A ^ B = B ^ A</code></p>
+<h2 id="apt-file">apt-file</h2>
 
-<p><code>(A ^ B) ^ A = B</code></p>
+<p>用来根据某个文件查询软件包，这在编译程序的时候非常有用，可以通过所需要的头文件去查询要安装的东西，可以避免去Google了。注意使用之前需要安装并update。</p>
 
-<p><code>(B ^ A) ^ B = A</code></p>
-
-<p>注意最后两条，这是XOR Link List的关键，这也是通过xor操作来实现swap的关键。</p>
-
-<div class="highlight"><pre><code class="cpp"><span class="kt">void</span> <span class="n">xorSwap</span> <span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">y</span><span class="p">)</span> <span class="p">{</span>
-     <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">!=</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
-         <span class="o">*</span><span class="n">x</span> <span class="o">^=</span> <span class="o">*</span><span class="n">y</span><span class="p">;</span>
-         <span class="o">*</span><span class="n">y</span> <span class="o">^=</span> <span class="o">*</span><span class="n">x</span><span class="p">;</span>
-         <span class="o">*</span><span class="n">x</span> <span class="o">^=</span> <span class="o">*</span><span class="n">y</span><span class="p">;</span>
-     <span class="p">}</span>
- <span class="p">}</span>
- 
+<pre><code>sudo apt-get install apt-file
+sudo apt-file update
 </code></pre>
-</div>
 
-<p>这里注意需要判断x!=y，否则如果传入的是相同的指针，最后所指向的变量被设置为0了。</p>
+<p>比如我在编译某个软件的时候找不到&lt;readline/readline.h&gt;，使用下面的命令来查询一下：</p>
 
-<p>通过最后两条联想到双向链表中的两个指针的实现，一般如下图所示：</p>
-
-<div class="highlight"><pre><code class="cpp">      <span class="p">...</span>  <span class="n">A</span>       <span class="n">B</span>         <span class="n">C</span>         <span class="n">D</span>         <span class="n">E</span>  <span class="p">...</span>
-               <span class="err">–</span><span class="o">&gt;</span>  <span class="n">next</span> <span class="err">–</span><span class="o">&gt;</span>  <span class="n">next</span>  <span class="err">–</span><span class="o">&gt;</span>  <span class="n">next</span>  <span class="err">–</span><span class="o">&gt;</span>        
-               <span class="o">&lt;</span><span class="err">–</span>  <span class="n">prev</span> <span class="o">&lt;</span><span class="err">–</span>  <span class="n">prev</span>  <span class="o">&lt;</span><span class="err">–</span>  <span class="n">prev</span>  <span class="o">&lt;</span><span class="err">–</span>        
- 
+<pre><code>sudo apt-file readline.h
 </code></pre>
-</div>
 
-<p>如果把next和prev用一个变量替换还能实现前向和后向遍历，那就节省了一个变量的空间。</p>
+<p>结果中有这么一行，那么我就知道继续安装libreadline5-dev库就行了。</p>
 
-<div class="highlight"><pre><code class="cpp"><span class="p">...</span>  <span class="n">A</span>        <span class="n">B</span>         <span class="n">C</span>         <span class="n">D</span>         <span class="n">E</span>  <span class="p">...</span>
-        <span class="o">&lt;</span><span class="err">–</span><span class="o">&gt;</span>  <span class="n">A</span><span class="err">⊕</span><span class="n">C</span>  <span class="o">&lt;-&gt;</span>  <span class="n">B</span><span class="err">⊕</span><span class="n">D</span>  <span class="o">&lt;-&gt;</span>  <span class="n">C</span><span class="err">⊕</span><span class="n">E</span>  <span class="o">&lt;-&gt;</span>
- 
+<h2 id="dpkg">dpkg</h2>
+
+<p>apt是基于dpkg开发的，dpkg是更古老更底层的一套工具，Debian系统管理器的基础。</p>
+
+<pre><code>dpkg -l 列出所有已经安装的包
+dpkg -s vim 列出包vim的状态
+dpkg -L vim 列出本地所有vim相关联系的文件
+dpkg -S vim 搜索所属包的内容
 </code></pre>
-</div>
 
-<p>比如当前在B节点，其pointer变量为A⊕C，如果前面的A地址保存下来然后做运算(A⊕C)⊕A -&gt; C，这样就得到下一个节点指针，反向遍历同样如此。当然其缺点是逻辑复杂了，删除其中的某一个节点也不方便(删除头和尾要好点)，遍历的时候需要保存上一个节点。这样看来为了省一点点空间这样实现似乎有点不值，在大部分情况下这样的一个pointer的节省并没什么用，不过这其中的细节有趣、巧妙。</p>
+<h2 id="brew">brew</h2>
 
-<p>同样上面的xorSwap<a href="http://stackoverflow.com/questions/249423/how-does-xor-variable-swapping-work">对于现代的CPU来说也没什么优化</a>，这样的代码只是更加不便于编译器来实现指令级别的优化。这种类型trick的东西还是要避免使用才好。</p>
+<p>Mac下推荐Brew来替代apt，大部分的开源包都有对应的地址源了。我没使用过MacPorts，无法比较这两套的差别。
+不过我个人很喜欢的一点是brew所有安装的东西都在<code>brew -prefix</code>/Cellar这个统一目录下，</p>
 
-<p>自己稍微写了一下，代码在<a href="https://gist.github.com/chenyukang/5364515">这个Gist</a>。</p>
+<p>brew相关的命令：</p>
+
+<pre><code>brew list   — 列出已安装的软件
+brew update — 更新Homebrew
+brew home   — 用浏览器打开
+brew info   — 显示软件内容信息
+brew deps   - 显示包依赖
+</code></pre>
+
 
       
       <ul class="pager">
@@ -244,7 +239,7 @@
 
   <div class="span4 sidebar">
 
-    <h4 class="date">发布日期：<span>11 April 2013</span></h4>
+    <h4 class="date">发布日期：<span>17 April 2013</span></h4>
 
     
     <h4>标签</h4>
@@ -255,9 +250,7 @@
 
   
      
-    	<li><a href="/tags.html#C/C++-ref">C/C++ <span>2</span></a></li>
-     
-    	<li><a href="/tags.html#XorLinkList-ref">XorLinkList <span>1</span></a></li>
+    	<li><a href="/tags.html#工具-ref">工具 <span>1</span></a></li>
     
   
 
@@ -280,6 +273,10 @@
     <div class="violet-aside-post">
       <h4 class="v-section-tit">最近</h4>
       <ul>
+           
+        <li class="v-aside-li">
+          <a href="/2013/04/17/apt-usage.html" title="一些包管理命令" rel="bookmark">一些包管理命令</a>
+        </li>              	      	            
            
         <li class="v-aside-li">
           <a href="/2013/04/11/xor_link_list.html" title="巧妙的XOR Link List" rel="bookmark">巧妙的XOR Link List</a>
@@ -307,10 +304,6 @@
            
         <li class="v-aside-li">
           <a href="/2012/12/26/browser-objs-in-ruby.html" title="Browser objs and class hierarchy  in Ruby" rel="bookmark">Browser objs and class hierarchy  in Ruby</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2012/12/16/use-clang-autocomplete-mode.html" title="Clang is Making Emacs Smarter" rel="bookmark">Clang is Making Emacs Smarter</a>
         </li>              	      	            
         
       </ul>  

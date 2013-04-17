@@ -7,9 +7,9 @@
   <header>
     <meta charset="utf-8">
     
-    <title>内存泄漏 | Yukang's Page</title>
+    <title>一些包管理命令 | Yukang's Page</title>
     
-    
+    <meta name="description" content="some useful apt usage">
     <meta name="author" content="Yukang">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -157,45 +157,54 @@
 
 <div class="row post">
   <div class="span8">
-    <h1 class="title">内存泄漏</h1>
+    <h1 class="title">一些包管理命令</h1>
 
-    以前写的一些程序运行一段时间后占用的内存越来越多，估计是内存泄露了。服务端的程序要长时间的运行，内存泄露是个很严重的问题。于是再检查程序，很崩溃的是还有另外一个模块不是自己写的，看起来很麻烦。看了半小时后发现一些问题，但是还是不能保证是否完全解决了。同事让我用以前他们写的一些函数，对应的为MALLOC和FREE。仔细看了一下觉得很不错，其实就是把malloc和free函数封装了一下，用来记录申请空间的文件和代码位置，使用方法就是用MALLOC和FREE替代原来的函数。主要的数据结构是：
-<div>
-<pre><span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">struct</span>
-{
-	<span style="color: #0000ff;">long</span> pcode;                          <span style="color: #008000;">//指针</span>
-	<span style="color: #0000ff;">char</span> filename[128];                  <span style="color: #008000;">//申请空间的源文件名称</span>
-	<span style="color: #0000ff;">int</span> line;　　　　　　　　　　　　　　<span style="color: #008000;">//申请空间的代码所在的行</span>
-	<span style="color: #0000ff;">int</span> ct;				　　 <span style="color: #008000;">//内存状态: 0-未闭合,1-闭合,2-log/脚手架</span>
-}mem_info;
+    
+<p>包管理器是Linux上一个经常用的东西，我觉得下面这几个命令是非常有用的，便于查询包的状态，或者搜索我该安装哪些包。</p>
 
-mem_info mem_in[MEM_SIZE];  <span style="color: #008000;">//MEM_SIZE最大指针数目</span></pre>
-<pre><span style="color: #0000ff;">int</span> mem_in_id; <span style="color: #008000;">//数组中已经占有的mem_info数目</span></pre>
-<pre><span style="color: #0000ff;">int</span> mem_check_statue; <span style="color: #008000;">//是否进行内存泄露检查</span></pre>
-然后有两个函数，一个是初始化函数mem_check_init(),另一个为mem_check_write(),这样就能检查者两个函数之间的代码是否有内存泄露，mem_check_write()可以打印成一个表，所有申请了空间的代码的文件名称和代码所在的行数，以及运行到mem_check_write()这里的时候所有申请空间的状态，1表示已经释放，0表示申请未释放，2表示的是脚手架的位置（用来方便检查哪一小段代码是否有内存泄露）。
-<pre>#define MALLOC(size)  __ck_malloc(size,__FILE__,__LINE__)　<span style="color: #008000;">//__FILE__ 文件 __LINE__ 代码所在行</span></pre>
-<pre><span style="color: #0000ff;">void</span>   *__ck_malloc(<span style="color: #0000ff;">int</span> size,<span style="color: #0000ff;">char</span> *file,<span style="color: #0000ff;">int</span> line)
-{
-	<span style="color: #0000ff;">void</span> *p=<span style="color: #0000ff;">malloc</span>(size); 
+<h2 id="apt-cache">apt-cache</h2>
 
-	<span style="color: #0000ff;">if</span> (mem_check_statue)	<span style="color: #0000ff;">return</span> p;
-	<span style="color: #0000ff;">if</span> (mem_in_id&gt;=MEM_SIZE) <span style="color: #0000ff;">return</span> p;
+<p>用来根据名字查询软件包，比如apt-cache search vim查询vim相关的。</p>
 
-	mem_in[mem_in_id].pcode=(<span style="color: #0000ff;">long</span>)p;
-	<span style="color: #0000ff;">strcpy</span>(mem_in[mem_in_id].filename,file);
-	mem_in[mem_in_id].line=line;
-	mem_in[mem_in_id].ct=0; <span style="color: #008000;">// 状态: 0-未闭合</span></pre>
-</div>
-<div>
-<pre>	mem_in_id++;
+<h2 id="apt-file">apt-file</h2>
 
-	<span style="color: #0000ff;">return</span> p;
-}</pre>
-那么FREE(p)，进行的操作就是现在数组中找到是否有这个p，如果有就改变状态，变为1表示闭合了，也就是释放掉了。CALLOC和MALLOC类似，是调用calloc，函数malloc()和函数calloc()的主要区别是前者不能初始化所分配的内存空间，而后者能。REALLOC有点不一样，调用void* np=realloc(p,size)，这里要注意np和原来的p有可能不一样，有可能一样，比较一下进行相应处理。最后mem_check_write()遍历上上面的数组打印出来表，其顺序就是按照代码执行的顺序了，其中脚手架可以比较方便的定位于申请了没有释放的代码行，也就是查找两个2之间的0所对应的行。
+<p>用来根据某个文件查询软件包，这在编译程序的时候非常有用，可以通过所需要的头文件去查询要安装的东西，可以避免去Google了。注意使用之前需要安装并update。</p>
 
-这是一个很不错的方法，今天用这个办法找到了好多处不易发现的内存泄露错误。但这也有其缺点，即使完全通过也不能保证就完全没内存泄露了，除非测试时运行代码的覆盖率要保证所有代码都运行到了，这也是正规的、高质量的测试所要做到的程度。我们现在没有时间来做足够好的测试，以后再好好规范一下。
+<pre><code>sudo apt-get install apt-file
+sudo apt-file update
+</code></pre>
 
-</div>
+<p>比如我在编译某个软件的时候找不到&lt;readline/readline.h&gt;，使用下面的命令来查询一下：</p>
+
+<pre><code>sudo apt-file readline.h
+</code></pre>
+
+<p>结果中有这么一行，那么我就知道继续安装libreadline5-dev库就行了。</p>
+
+<h2 id="dpkg">dpkg</h2>
+
+<p>apt是基于dpkg开发的，dpkg是更古老更底层的一套工具，Debian系统管理器的基础。</p>
+
+<pre><code>dpkg -l 列出所有已经安装的包
+dpkg -s vim 列出包vim的状态
+dpkg -L vim 列出本地所有vim相关联系的文件
+dpkg -S vim 搜索所属包的内容
+</code></pre>
+
+<h2 id="brew">brew</h2>
+
+<p>Mac下推荐Brew来替代apt，大部分的开源包都有对应的地址源了。我没使用过MacPorts，无法比较这两套的差别。
+不过我个人很喜欢的一点是brew所有安装的东西都在<code>brew -prefix</code>/Cellar这个统一目录下，</p>
+
+<p>brew相关的命令：</p>
+
+<pre><code>brew list   — 列出已安装的软件
+brew update — 更新Homebrew
+brew home   — 用浏览器打开
+brew info   — 显示软件内容信息
+brew deps   - 显示包依赖
+</code></pre>
+
 
 
     <p class="meta"> -- EOF -- </p>
@@ -203,18 +212,16 @@ mem_info mem_in[MEM_SIZE];  <span style="color: #008000;">//MEM_SIZE最大指针
     <ul class="pager">
 
       
-      <li class="next"><a href="/2010/12/01/luopanzi.html" title="老罗的扯淡极致">老罗的扯淡极致&rarr;</a></li>
+      <li class="next"><a href="/2013/04/11/xor_link_list.html" title="巧妙的XOR Link List">巧妙的XOR Link List&rarr;</a></li>
       
 
-      
-      <li class="previous"><a href="/2010/12/29/theprophet.html" title="《先知》- 纪伯伦">&larr; 《先知》- 纪伯伦</a></li>
       
 
 
     </ul>
 
     <div class="span8">
-      <p>声明: 本文采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="nofollow" title="署名-非商业性使用-相同方式共享">BY-NC-SA</a> 协议进行授权. 转载请注明转自: <a href="/2010/12/22/c-mem-leak.html" title="内存泄漏" rel="nofollow">内存泄漏</a></p>
+      <p>声明: 本文采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="nofollow" title="署名-非商业性使用-相同方式共享">BY-NC-SA</a> 协议进行授权. 转载请注明转自: <a href="/2013/04/17/apt-usage.html" title="一些包管理命令" rel="nofollow">一些包管理命令</a></p>
     </div>
 
 
@@ -239,7 +246,7 @@ mem_info mem_in[MEM_SIZE];  <span style="color: #008000;">//MEM_SIZE最大指针
   
 
   <div class="span4 sidebar">
-    <h4 class="date">发布日期：<span>22 December 2010</span></h4>
+    <h4 class="date">发布日期：<span>17 April 2013</span></h4>
     <!-- <p class="meta">By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p> -->
 
 
@@ -252,11 +259,7 @@ mem_info mem_in[MEM_SIZE];  <span style="color: #008000;">//MEM_SIZE最大指针
 
   
      
-    	<li><a href="/tags.html#C-ref">C <span>8</span></a></li>
-     
-    	<li><a href="/tags.html#内存泄漏-ref">内存泄漏 <span>1</span></a></li>
-     
-    	<li><a href="/tags.html#Programming-ref">Programming <span>30</span></a></li>
+    	<li><a href="/tags.html#工具-ref">工具 <span>1</span></a></li>
     
   
 
