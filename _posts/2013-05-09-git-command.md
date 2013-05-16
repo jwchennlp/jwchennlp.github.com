@@ -11,9 +11,10 @@ tags: [Tools]
 迁徙计划虽然纸上谈兵了很长时间，直到现在才终于打算行动。
 
 上午把Git在服务器上搭建好，主要卡在一个Git的命令上，因为一些权限问题。
+
 {% highlight sh %}
 
-git init --bare --shared=group ; --shared=group 么有加上
+git init --bare --shared=group ; --shared=group forget this
 
 {% endhighlight %}
 
