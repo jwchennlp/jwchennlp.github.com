@@ -71,13 +71,14 @@ D = Dependency Inversion Principle</pre>
 下面我们逐一介绍上面的几个原则。
 <h3><a name="sec3"></a>
 Single Responsibility Principle 单一职责原则</h3>
-<a href="http://chenyukang.github.com/images/1.jpg"><img class="aligncenter size-medium wp-image-426" title="1" src="http://chenyukang.github.com/images/1-300x220.jpg" alt="" width="300" height="220" /></a>
-<p style="text-align: center;"></p>
 
+<p style="text-align: center;"></p>
 <ul>
+<p><a href="/images/1.jpg"><img class="aligncenter size-medium wp-image-426" title="1" src="/images/1-300x220.jpg" alt="" width="300" height="220" align="center"></a></p>
 	<li>Shubho : 先来看幅图，很形象。你能把所有的功能都集成在一个东西上，但是真的不应该。为什么？因为这为以后增加了很多额外的管理工作。我来用OO术语解释一下,"不能有多个理由去改变一个类",或者说"一个类有且只能有单一职责"。</li>
 	<li>Farhana: 能解释一下吗？</li>
-	<li><a href="http://chenyukang.github.com/images/2.png"><img class="aligncenter size-medium wp-image-427" title="2" src="http://chenyukang.github.com/images/2-300x161.png" alt="" width="300" height="161" /></a></li>
+	<p><a href="/images/2.png">
+	<img class="aligncenter size-medium wp-image-427" title="2" src="/images/2-300x161.png" alt="" width="300" height="161" align="center"></a></p>
 	<li>Shubho : 让我们来看这个继承的例子，这是从Uncle Bob书上弄来的。Rectangle类做了两件事，</li>
 </ul>
 <ol>
@@ -100,7 +101,7 @@ Single Responsibility Principle 单一职责原则</h3>
 	<li>Farhana: 变得有趣了，所以我们应该根据其功能把这个类分开，对吧？</li>
 	<li>Shubho : 正是，那么该如何做？</li>
 	<li>Farhana: 我来试试，也许该这样，根据职责分为两个类，比如：
-<table class="muse-table" border="2" cellpadding="5">
+<table class="muse-table" border="2" cellpadding="5" align="center">
 <tbody>
 <tr>
 <td>Rectangle</td>
@@ -119,22 +120,22 @@ Single Responsibility Principle 单一职责原则</h3>
 </ul>
 <h3><a name="sec4"></a>
 Open-closed Principle 开闭原则</h3>
-<a href="http://chenyukang.github.com/images/3.jpg"><img class="aligncenter size-medium wp-image-428" title="3" src="http://chenyukang.github.com/images/3-300x221.jpg" alt="" width="300" height="221" /></a>
 <ul>
+<p><a href="/images/3.jpg"><img class="aligncenter size-medium wp-image-428" title="3" src="/images/3-300x221.jpg" alt="" width="300" height="221" align="center"></a></p>
 	<li>Shubho : 这幅图是说开闭原则的。</li>
 	<li>Shubho : 先来解释一下:软件实体(类、模块、函数等等)应该对扩展开放，对修改封闭。最基本的层次，你应该能够在不修改一个类的基础上扩展它的行为。比如，我不需要在我的身体上做什么改变，就能穿上一件衣服，哈哈。</li>
 	<li>Farhana: 有趣，你能穿不同的衣服来改变的外貌，而不需要对你的身体做改变，所以你是对扩展开放的，对吧？</li>
 	<li>Shubho : 是的，在OOD里面，对扩展开放意味着我们能够扩张模块/类，对需求的变化添加一些新的东西。</li>
 	<li>Farhana: 而你的身体对修改是关闭的，我喜欢这个例子。那么核心的类和模块在扩展的时候是不能被修改的，你能具一些例子吗?</li>
 	<li>Shubho : 好，我们来看这副图，这是一个违反了开闭原则的例子。</li>
-	<li><a href="http://chenyukang.github.com/images/4.png"><img class="aligncenter size-medium wp-image-429" title="4" src="http://chenyukang.github.com/images/4-300x83.png" alt="" width="300" height="83" /></a></li>
+	<p><a href="/images/4.png"><img class="aligncenter size-medium wp-image-429" title="4" src="/images/4-300x83.png" alt="" width="300" height="83" align="center"></a></p>
 </ul>
 <ul>
 	<li>Shubho : 你看，服务端和客户端是直接连接的，这样不管是因为什么原因，当服务端实现改变了的时候，客户端也需要改变。</li>
 	<li>Farhana: 恩，懂了点。如果一个浏览器只是针对于特定的服务器(比如IIS)，如果因为什么原因我们需要换一个服务器(比如Apache),浏览器也需要改变，这真是恐怖。</li>
 	<li>Shubho : 对，下面这个设计应该要好。</li>
-	<li><a href="http://chenyukang.github.com/images/5.png"><img class="aligncenter size-medium wp-image-430" title="5" src="http://chenyukang.github.com/images/5-300x184.png" alt="" width="300" height="184" /></a>
-那个抽象的服务器类对修改是关闭的，而具体的子类实现对扩展是开放的。</li>
+	<li>那个抽象的服务器类对修改是关闭的，而具体的子类实现对扩展是开放的。</li>
+	<p><a href="/images/5.png"><img class="aligncenter size-medium wp-image-430" title="5" src="/images/5-300x184.png" alt="" width="300" height="184" align="center"></a></p>
 	<li>Farhana: 恩，懂了。抽象是关键，对吧？</li>
 	<li>Shubho : 对，我们应该抽象系统中那些核心的概念，如果你抽象得好，当添加新功能的时候不需要修改。比如上面服务端是个抽象概念，如果IISServer是服务器的一种实现，现在需要扩展服务端这个概念，比如说一种新的ApacheServer实现，而这些扩展对客户端程序没有任何影响。</li>
 </ul>
@@ -142,12 +143,13 @@ Open-closed Principle 开闭原则</h3>
 Liskov's Substitution Principle 里氏可替换原则</h3>
 <ul>
 	<li>Shubho : LSP原则听起来很难理解，其实含义很简单，看下面这副图。这个原则意思就是：子类必须能够替换其继承的基类。或者换一种说法：基类能使用的方法，子类也能使用。</li>
-	<li><a href="http://chenyukang.github.com/images/7.jpg"><img class="aligncenter size-medium wp-image-431" title="7" src="http://chenyukang.github.com/images/7-300x237.jpg" alt="" width="300" height="237" /></a></li>
+	
+	<p><a href="/images/7.jpg"><img class="aligncenter size-medium wp-image-431" title="7" src="/images/7-300x237.jpg" alt="" width="300" height="237" /></a></p>
 	<li>Farhana: 对不起，听起来很难懂。我认为这时OOP的基本规则，这时多态，对吗？</li>
 	<li>Shubho : 好问题，答案是：在基本OOP里面，"继承"被描述成一种"is-a"的关系，如果"开发者"是一个"软件职业者",那么"开发者"类应该继承"软件职业者",这种"is-a"的关系在类的设计中非常重要，但是这样非常容易导致一种错误的继承设计。LSP原则是一种保证正确使用继承的方法。让我们看个例子。</li>
-	<li><a href="http://chenyukang.github.com/images/8.png"><img class="size-full wp-image-432 aligncenter" title="8" src="http://chenyukang.github.com/images/8.png" alt="" width="188" height="176" /></a>
+	<p><a href="/images/8.png"><img class="size-full wp-image-432 aligncenter" title="8" src="/images/8.png" alt="" width="188" height="176" align="center"></a></p>
 KingFishera是一种能飞的鸟，它继承Bird类没问题。但是如果下面这样：</li>
-	<li><a href="http://chenyukang.github.com/images/9.png"><img class="aligncenter size-medium wp-image-433" title="9" src="http://chenyukang.github.com/images/9-300x130.png" alt="" width="300" height="130" /></a></li>
+	<p><a href="/images/9.png"><img class="aligncenter size-medium wp-image-433" title="9" src="/images/9-300x130.png" alt="" width="300" height="130" align="center"></a></p>
 </ul>
 鸵鸟是一种鸟，所以它基于鸟基类。现在能飞么？不行，所以，这个设计违反了LSP。所以，即使在真实世界中看起来很自然。但在类的设计中，鸵鸟不应该继承鸟类。应该有一种不能飞的鸟类，然后鸵鸟从这个类中继承。
 <ul>
@@ -162,8 +164,9 @@ KingFishera是一种能飞的鸟，它继承Bird类没问题。但是如果下�
 </ul>
 <h3><a name="sec6"></a>
 The Interface Segregation Principle 接口分离原则</h3>
-<a href="http://chenyukang.github.com/images/10.jpg"><img class="aligncenter size-medium wp-image-434" title="10" src="http://chenyukang.github.com/images/10-300x223.jpg" alt="" width="300" height="223" /></a>
 <ul>
+<li> </li>
+<p><a href="/images/10.jpg"><img class="aligncenter size-medium wp-image-434" title="10" src="/images/10-300x223.jpg" alt="" width="300" height="223" align="center"></a></p>
 	<li>Farhana: 这是什么意思？</li>
 	<li>Shubho : 意思如下：客户代码应该不依赖他们不使用的接口。</li>
 	<li>Farhana: 解释一下。</li>
@@ -174,17 +177,18 @@ The Interface Segregation Principle 接口分离原则</h3>
 	<li>Shubho : 对，类似的，假设你有一些类，你要暴露一些接口给外界，这样外面的代码才能利用这个类。如果一个类的接口太多，也暴露了很多接口，这对于外界来说是比较混乱的。而且，方法太多的接口也是不利于复用的，这种"大而全"的接口导致类之间的紧耦合。这也导致一个问题，任何使用这个接口的类都需要实现那些方法，而有些对于这个类是根本没用的。所以这么做也带来了不必要的复杂性，导致维护的困难和系统的健壮性问题。接口分离原则保证接口设计得合理，他们都有自己的职责，这样简明、方便理解、利于复用。</li>
 	<li>Farhana: 哦，我懂了。你的意识是指接口只含又那些必须的方法，而不包括冗余的?</li>
 	<li>Shubho : 是的，来看个例子。下面这个例子违反了ISP原则。</li>
-	<li><a href="http://chenyukang.github.com/images/11.png"><img class="aligncenter size-full wp-image-435" title="11" src="http://chenyukang.github.com/images/11.png" alt="" width="185" height="181" /></a></li>
+	<p><a href="/images/11.png"><img class="aligncenter size-full wp-image-435" title="11" src="/images/11.png" alt="" width="185" height="181" align="center"></a></p>
 </ul>
 注意，IBird接口包含很多鸟的行为，还有Fly()行为，现在一个Bird类(鸵鸟)实现这个接口，它必须实现Fly()行为，这对于鸵鸟来说是不行的。
 
 正确的设计是这个。鸵鸟实现IBird接口，而可以飞的鸟实现IFlyingBird接口。
 
-<a href="http://chenyukang.github.com/images/12.png"><img class="aligncenter size-full wp-image-436" title="12" src="http://chenyukang.github.com/images/12.png" alt="" width="202" height="234" /></a>
+<p><a href="/images/12.png"><img class="aligncenter size-full wp-image-436" title="12" src="/images/12.png" alt="" width="202" height="234" align="center"></a></p>
+<li> </li>
 <h3><a name="sec7"></a>
 The Dependency Inversion Principle 依赖倒置原则</h3>
-<a href="http://chenyukang.github.com/images/13.jpg"><img class="aligncenter size-medium wp-image-437" title="13" src="http://chenyukang.github.com/images/13-300x222.jpg" alt="" width="300" height="222" /></a>
 <ul>
+<p><a href="/images/13.jpg"><img class="aligncenter size-medium wp-image-437" title="13" src="/images/13-300x222.jpg" alt="" width="300" height="222" align="center"></a></p>
 	<li>Shubho : 是说：高层模块不依赖底层模块，两者都依赖抽象。抽象不应该依赖于细节，细节应该依赖于抽象。</li>
 	<li>让我们来看一个现实的例子，你的车子包括很多组成部分，有引擎、轮子、空调、还有其他东西，对吧？</li>
 	<li>Farhana: 是的。</li>
@@ -193,7 +197,7 @@ The Dependency Inversion Principle 依赖倒置原则</h3>
 	<li>Shubho : 是的，那么"可插拔"是如何做到的?</li>
 	<li>Farhana: "抽象"是关键，对吧？</li>
 	<li>Shubho : 是的。在现实中，汽车是一种更高层次的实体，它依赖于一些第层次的实体，像引擎和轮子。而车子不依赖于具体引擎和轮子，依赖于这些概念。这样，任何符合这个概念的引擎或者轮子都能放进车子让车子跑动起来。看看下面这幅图，注意这里车子类中，有两个属性，都是接口类，而不是具体类。引擎是"可插拔"的是因为它接受任何满足这个抽象的具体实现，而不改变其他部分。</li>
-	<li><a href="http://chenyukang.github.com/images/kkkkk.jpg"><img class="aligncenter size-medium wp-image-442" title="kkkkk" src="http://chenyukang.github.com/images/kkkkk-300x163.jpg" alt="" width="300" height="163" /></a></li>
+	<p><a href="/images/kkkkk.jpg"><img class="aligncenter size-medium wp-image-442" title="kkkkk" src="/images/kkkkk-300x163.jpg" alt="" width="300" height="163" align="center"></a></p>
 	<li>Farhana: 那么如果违反了DIP原则，将会有下面的风险。</li>
 </ul>
 <ol>
@@ -213,5 +217,5 @@ The Dependency Inversion Principle 依赖倒置原则</h3>
     * "Principle of least knowledge": This says that "the less your class knows, the better".
     * "The Common Closure principle" : This says that "related classes should be packaged together".
     * "The Stable Abstractions principle": This says that "the more stable a class is, the more it must consist of abstract classes."</pre>
-设计模式是OOD的特例，DP就像是对于特定场景的特定框架，而OOD则是说明。<a href="http://chenyukang.github.com/images/1.jpg">
+设计模式是OOD的特例，DP就像是对于特定场景的特定框架，而OOD则是说明。<a href="/images/1.jpg">
 </a>
