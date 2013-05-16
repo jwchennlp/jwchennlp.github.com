@@ -13,7 +13,7 @@
 
 &lt;p&gt;上午把Git在服务器上搭建好，主要卡在一个Git的命令上，因为一些权限问题。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;git init --bare --shared&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;group ; --shared&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;group 么有加上
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;git init --bare --shared&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;group ; --shared&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;group forget this
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 

@@ -3,7 +3,6 @@ http://cyukang.com/404.html
 http://cyukang.com/about.html
 http://cyukang.com/archive.html
 http://cyukang.com/atom.xml
-http://cyukang.com/backs/2013-04-17-lua_10_source.html
 http://cyukang.com/feed.xml
 http://cyukang.com/index.html
 http://cyukang.com/pages.html
