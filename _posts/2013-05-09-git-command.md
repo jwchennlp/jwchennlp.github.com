@@ -21,6 +21,7 @@ git init --bare --shared=group ; --shared=group forget this
 Git的web接口是用的是[ViewGit](http://viewgit.fealdia.org/)，自己做了一些修改，加上[GeShi](http://qbnz.com/highlighter/)来高亮代码，并使用了[GitStats](https://github.com/trybeee/GitStats)来做代码统计。GitStats统计的项目非常多，看起来很直观。
 
 稍微记录一下常用的一些git命令。
+
 这里有一个最直观的Git学习的地方[leanGitBranch](http://pcottle.github.io/learnGitBranching/?demo)。
 
 <table border="2" cellpadding="5" align="center">

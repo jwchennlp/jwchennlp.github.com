@@ -4,7 +4,7 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-05-17T22:55:08+08:00</updated>
+ <updated>2013-05-17T22:57:19+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
@@ -29,8 +29,9 @@
 
 &lt;p&gt;Git的web接口是用的是&lt;a href=&quot;http://viewgit.fealdia.org/&quot;&gt;ViewGit&lt;/a&gt;，自己做了一些修改，加上&lt;a href=&quot;http://qbnz.com/highlighter/&quot;&gt;GeShi&lt;/a&gt;来高亮代码，并使用了&lt;a href=&quot;https://github.com/trybeee/GitStats&quot;&gt;GitStats&lt;/a&gt;来做代码统计。GitStats统计的项目非常多，看起来很直观。&lt;/p&gt;
 
-&lt;p&gt;稍微记录一下常用的一些git命令。
-这里有一个最直观的Git学习的地方&lt;a href=&quot;http://pcottle.github.io/learnGitBranching/?demo&quot;&gt;leanGitBranch&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;稍微记录一下常用的一些git命令。&lt;/p&gt;
+
+&lt;p&gt;这里有一个最直观的Git学习的地方&lt;a href=&quot;http://pcottle.github.io/learnGitBranching/?demo&quot;&gt;leanGitBranch&lt;/a&gt;。&lt;/p&gt;
 
 &lt;table border=&quot;2&quot; cellpadding=&quot;5&quot; align=&quot;center&quot;&gt;
   &lt;tbody&gt;
