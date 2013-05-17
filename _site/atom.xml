@@ -4,7 +4,7 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-05-17T00:19:37+08:00</updated>
+ <updated>2013-05-17T22:55:08+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
@@ -29,7 +29,8 @@
 
 &lt;p&gt;Git的web接口是用的是&lt;a href=&quot;http://viewgit.fealdia.org/&quot;&gt;ViewGit&lt;/a&gt;，自己做了一些修改，加上&lt;a href=&quot;http://qbnz.com/highlighter/&quot;&gt;GeShi&lt;/a&gt;来高亮代码，并使用了&lt;a href=&quot;https://github.com/trybeee/GitStats&quot;&gt;GitStats&lt;/a&gt;来做代码统计。GitStats统计的项目非常多，看起来很直观。&lt;/p&gt;
 
-&lt;p&gt;稍微记录一下常用的一些git命令。&lt;/p&gt;
+&lt;p&gt;稍微记录一下常用的一些git命令。
+这里有一个最直观的Git学习的地方&lt;a href=&quot;http://pcottle.github.io/learnGitBranching/?demo&quot;&gt;leanGitBranch&lt;/a&gt;。&lt;/p&gt;
 
 &lt;table border=&quot;2&quot; cellpadding=&quot;5&quot; align=&quot;center&quot;&gt;
   &lt;tbody&gt;
@@ -66,6 +67,7 @@
 &lt;tr&gt;
 &lt;td&gt;撤销上一次的merge&lt;/td&gt;  &lt;td&gt;git reset --hard HEAD^&lt;/td&gt;
 &lt;/tr&gt;
+
 
 
 
@@ -539,6 +541,31 @@ Reddit上的一个得分最高的回复：&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;最近用这个插件，基本代码都会是一遍编译通过啊，哈哈。Clang错误提示也人性化一点，比如在Xcode下会提示你想的是不是”XXX”之类的。&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>move to Mac OS X</title>
+   <link href="http://cyukang.com/2012/12/13/move-to-mac-os-x.html"/>
+   <updated>2012-12-13T00:00:00+08:00</updated>
+   <id>http://cyukang.com/2012/12/13/move-to-mac-os-x</id>
+   <content type="html">
+&lt;p&gt;我本是一个铁杆的Linux用户，从06年的Ubuntu 5.04开始折腾于各种Linux系统，一直到现在工作都基本在Linux上。工作不久就开始有准备入手一个Mac，有段时间看了《乔布斯传》后对Mac的看法有些不一样了，
+或者这不是一个有更好看的界面的Linux。于是去年的11月份入手了一台RMBP，花费了不少。在这半年的时间里对于Mac有了更多认识，记录一下作为一个程序员对Mac的感受。这不是鼓吹，只是一点感受而已。&lt;/p&gt;
+
+&lt;p&gt;所以为了客观起见我先说说不好的方面：&lt;/p&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;巧克力键盘 手感不好&lt;/h3&gt;
+&lt;p&gt;这是我真的不喜欢的一点，因为作为程序员高强度的触碰键盘，没一个舒服的键盘很难受。RMBP的键程太短，敲起来感觉用不起力，和我原来的ThinkPad比起来完全不是一个手感。
+这也是可以理解的，乔老爷可能不怎么打字，更薄显然是更重要的一个考虑。这就好比你看上一个苗条细小淑女，看起来小鸟依人，那就不要嫌弃这姑娘手感可能不太好吧。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;稍微热了点&lt;/h3&gt;
+&lt;p&gt;随着夏天的到来，机器感觉还是有点热，特别是在计算量比较大的情况下，不过还能忍受。另外我觉得RMBP的风扇却是经过了重新的设计，几乎感觉不到风扇的声音和振动。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;字体不能改大小&lt;/h3&gt;
+&lt;p&gt;我确实没找到办法来修改字体的大小，在这点上你可以理解到乔老头的强烈的控制欲和固执，他会说我们为用户选择了最完美大小刚好合适的字体，用户完全不需要把精力放在这些琐碎的事情上。
+这点对于比较挑剔的程序员可能是个问题。&lt;/p&gt;
 
 </content>
  </entry>
