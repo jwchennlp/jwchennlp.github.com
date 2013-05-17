@@ -20,6 +20,7 @@ http://cyukang.com/2013/01/22/poj-500.html
 http://cyukang.com/2013/01/04/print-stack-before-exiting.html
 http://cyukang.com/2012/12/26/browser-objs-in-ruby.html
 http://cyukang.com/2012/12/16/use-clang-autocomplete-mode.html
+http://cyukang.com/2012/12/13/move-to-mac-os-x.html
 http://cyukang.com/2012/12/13/have-a-try-for-ninja.html
 http://cyukang.com/2012/11/22/ruby-robot-ai.html
 http://cyukang.com/2012/11/14/ruby_block_proc.html
