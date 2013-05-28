@@ -183,7 +183,9 @@
 随机搜索不是一种好的优化方法，为什么？因为没有充分利用已经得出的当前最好解。对于上面这个问题，最优解可能和当前最优解有一些相近之处，可能是因为某一步当前最优解走错了，最后没有演变成最优解。其意思就是，如果把当前最优解稍微改变一下，可能会向最优解的方向靠 近。那么爬山法就是通过当前的最优解，在其附近找更好的解，知道当前没有更好的解为止。而随机搜索是跳越型的，所以没有这个优势。看下面这幅图，现实中很 多问题都会像这样，如果我们把所有解都算出来，按组合排列的顺寻作为x轴，评估函数得出的值为y轴，能得出稍微连贯的曲线。随机从某个初始点出发，沿着我们想要的方向寻找，能找到优解。
 
 <p>陷入局部最小 最优解为最低点</p>
-<p><a href="http://chenyukang.github.com/images/suiji.jpg"><img class="size-medium wp-image-268" title="suiji" src="http://chenyukang.github.com/images/suiji-300x188.jpg" alt="" width="300" height="188" /></a></p>
+
+<p><img src="/images/suiji.jpg" alt="screen" class="img-center" /></p>
+
 
 
 爬山法的缺点是，如过找到某个局部最优的地方，可能就被欺骗了，因为发现没有斜率了，以为是最优解。最后可能是个次优解。所以继续改进。
@@ -197,9 +199,8 @@
 上面的优化算法都是一个算法框架，如A*算法一样，最后更多的细节比如评估函数或者参数的选择对算法的效果都有影响。 另外这些优化算法最后能生效都是基于这么一个事实:很多优化问题最优解附近的解也是比较优的解，比如上面的问题，另比如旅行商问题。但有的情况，如下图，就是一个可能不被优化的问题，最优解附近并不是好的解，对于上面的算法都有随机性，也许随机优化一下能找到这个解（概率很小），也许遗传算法能产生个变异，但这都是概率问题，不能保证。
 
 <p>难优化的例子 最优解为最低点</p>
-<p>
-<a href="http://chenyukang.github.com/images/nanyouhua.jpg"><img class="size-medium wp-image-269" title="nanyouhua" src="http://chenyukang.github.com/images/nanyouhua-300x198.jpg" alt="" width="300" height="198" /></a>
-</p>
+
+<p><img src="/images/nanyouhua.jpg" alt="screen" class="img-center" /></p>
 
 
 说明：上面的图来自《集体智慧编程》中，这是本不错的书，在网上有代码，python写的，感兴趣的同学可以仔细看看。
@@ -263,7 +264,7 @@
 
   
      
-    	<li><a href="/tags.html#Programming-ref">Programming <span>30</span></a></li>
+    	<li><a href="/tags.html#Programming-ref">Programming <span>31</span></a></li>
      
     	<li><a href="/tags.html#优化算法-ref">优化算法 <span>1</span></a></li>
     
@@ -290,7 +291,15 @@
       <ul>
            
         <li class="v-aside-li">
+          <a href="/2013/05/18/critbit.html" title="高效的Crit-bit Tree" rel="bookmark">高效的Crit-bit Tree</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2013/05/09/git-command.html" title="迁移到Git" rel="bookmark">迁移到Git</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
+          <a href="/2013/04/17/lua_10_source.html" title="看看Lua 1.0 代码" rel="bookmark">看看Lua 1.0 代码</a>
         </li>              	      	            
            
         <li class="v-aside-li">
@@ -311,14 +320,6 @@
            
         <li class="v-aside-li">
           <a href="/2013/01/27/emacs-speaking-now.html" title="Emacs会说话" rel="bookmark">Emacs会说话</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2013/01/22/poj-500.html" title="迟到的POJ 500" rel="bookmark">迟到的POJ 500</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2013/01/04/print-stack-before-exiting.html" title="获取挂掉程序的栈信息" rel="bookmark">获取挂掉程序的栈信息</a>
         </li>              	      	            
         
       </ul>  

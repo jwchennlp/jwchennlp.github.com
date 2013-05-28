@@ -30,16 +30,17 @@ tags:
 find  *.c | xargs prcc| python drawfuncs.py 来处理多个程序。
 </pre>
 
-<p><a href="http://chenyukang.github.com/images/out.jpg"><img class="aligncenter size-medium wp-image-462" title="out" src="http://chenyukang.github.com/images/out-300x300.jpg" alt="" width="300" height="300" /></a>
-</p>
+<p><img src="/images/out.jpg" alt="screen" class="img-center"  width="400", height="400" /></p>
+
 
 然后又想着可以做一个标签一样的东西，把调用深度比较潜的放大，调用深度深的缩小。不连线，位置随机画。这样一眼能看出来这个程序的主要函数是哪些。结果成这样了。
 
-<p><a href="http://chenyukang.github.com/images/out5.jpg"><img class="aligncenter size-medium wp-image-463" title="out5" src="http://chenyukang.github.com/images/out5-300x300.jpg" alt="" width="300" height="300" /></a>
-</p>
+<p><img src="/images/out5.jpg" alt="screen" class="img-center"  width="400", height="400" /></p>
+
 
 位置随便画还是不好，可以分层。然后再相邻层之间的函数有调用关系的再用直线连起来，就变成这样了。清晰一点。既然有函数关系，其实是可以做到更好的，就像上面那个prcg.c程序，不过代码要复杂些了。
-<p>
-<a href="http://chenyukang.github.com/images/out6.jpg"><img class="aligncenter size-medium wp-image-464" title="out6" src="http://chenyukang.github.com/images/out6-300x300.jpg" alt="" width="300" height="300" /></a>
-</p>
+
+<p><img src="/images/out6.jpg" alt="screen" class="img-center"  width="400", height="400" /></p>
+
+
 C要的是运行速度，Python实现速度快！
