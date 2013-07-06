@@ -4,7 +4,7 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-07-07T00:34:55+08:00</updated>
+ <updated>2013-07-07T00:43:38+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
@@ -40,11 +40,11 @@ Ruby的迅速崛起更多的还是因为Rails，所以学习Rails也是了解Rub
 
 &lt;p&gt;学习Rails的过程中这些资料是非常好的，这几本书都面向初学者，写得非常详细：&lt;/p&gt;
 
-&lt;h3 id=&quot;ruby-on-railshttprailstutorial-chinaorg&quot;&gt;&lt;a href=&quot;http://railstutorial-china.org/&quot;&gt;Ruby On Rails教程&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&quot;begining-rails-3httpbookdoubancomsubject4005707&quot;&gt;&lt;a href=&quot;http://book.douban.com/subject/4005707/&quot;&gt;Begining Rails 3&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&quot;agile-web-development-with-railshttpbookdoubancomsubject1416743&quot;&gt;&lt;a href=&quot;http://book.douban.com/subject/1416743/&quot;&gt;Agile Web Development with Rails&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://railstutorial-china.org/&quot;&gt;Ruby On Rails教程&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://book.douban.com/subject/4005707/&quot;&gt;Begining Rails 3&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://book.douban.com/subject/1416743/&quot;&gt;Agile Web Development with Rails&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;当我熟悉了一些基本概念的时候，我就可以看Github上各种Rails的代码了，约定高于配置的另外一个优点就是所有Rails开发的东西结构看起来是一样的，便于不同开发者之间的交流。&lt;/p&gt;
 

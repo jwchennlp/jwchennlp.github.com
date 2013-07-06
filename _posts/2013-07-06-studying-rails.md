@@ -30,11 +30,9 @@ Rails适合小团队的快速开发，其中的一些理念是：
 
 学习Rails的过程中这些资料是非常好的，这几本书都面向初学者，写得非常详细：
 
-### [Ruby On Rails教程](http://railstutorial-china.org/)
-
-### [Begining Rails 3](http://book.douban.com/subject/4005707/)
-
-### [Agile Web Development with Rails](http://book.douban.com/subject/1416743/)
+- [Ruby On Rails教程](http://railstutorial-china.org/)
+- [Begining Rails 3](http://book.douban.com/subject/4005707/)
+- [Agile Web Development with Rails](http://book.douban.com/subject/1416743/)
 
 当我熟悉了一些基本概念的时候，我就可以看Github上各种Rails的代码了，约定高于配置的另外一个优点就是所有Rails开发的东西结构看起来是一样的，便于不同开发者之间的交流。
 
