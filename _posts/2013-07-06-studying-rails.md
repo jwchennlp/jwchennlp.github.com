@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "初学Rails"
-description: ""
-category: 
-tags: []
+description: "初学Rails"
+category: Programming, Rails
+tags: [Programming, Rails]
 ---
 {% include JB/setup %}
 
