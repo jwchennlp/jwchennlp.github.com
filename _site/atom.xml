@@ -4,13 +4,180 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-05-17T22:57:19+08:00</updated>
+ <updated>2013-07-07T00:34:55+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
    <email>moorekang@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>初学Rails</title>
+   <link href="http://cyukang.com/2013/07/06/studying-rails.html"/>
+   <updated>2013-07-06T00:00:00+08:00</updated>
+   <id>http://cyukang.com/2013/07/06/studying-rails</id>
+   <content type="html">
+&lt;p&gt;我在2012年左右开始关注Ruby，平时有的时候会用Ruby写一些脚本。这是一个很活跃的社区，Ruby火起来也不是最近的事。可贵的这里总是有一些新的东西出来，比如我现在的这个博客是基于jekyll和Github的。
+Ruby的迅速崛起更多的还是因为Rails，所以学习Rails也是了解Ruby的一个好方法。&lt;/p&gt;
+
+&lt;p&gt;最近为公司内部所配置的GitLab是Rails开发的。另外我自己也在公司做一些Web程序，其实是很简单的东西，就是把每天晚上跑的程序各种测试结果展示出来(nightly/weekly/coverage等等)。我选用Rails来开发，果然一个最初的版本很快就做出来了。在初学Rails的过程中让我体会到了一些web开发的乐趣。&lt;/p&gt;
+
+&lt;p&gt;Rails适合小团队的快速开发，其中的一些理念是：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Encourage Agility             --鼓励敏捷开发 &lt;/li&gt;
+&lt;li&gt;Convention Over Configuration --约定高于配置 &lt;/li&gt;
+&lt;li&gt;DRY                           --不要重复自己 &lt;/li&gt;
+&lt;li&gt;Less Code                     --更短小的代码 &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;正是这些开发原则使得Rails开发如此简单明了(当然前提是你按照Rails约定的方式来)。
+我原来做过一些web开发服务器方面的工作，在那种模式下开发需要每个人各司其责。
+但是Rails不同，在ActiveModel这样的抽象层基础上你需要关注的数据库方面的东西少了，
+明确的MVC模式把你需要关注的撤离开来，这种复杂程度一个人完全能掌控下来。当然这种高度的抽象是以牺牲一部分效率为前提的，但其实在很多时候开发效率的优先级是高于实现效率的，
+这也是Ruby所选择的一个理念。 &lt;/p&gt;
+
+&lt;p&gt;学习Rails的过程中这些资料是非常好的，这几本书都面向初学者，写得非常详细：&lt;/p&gt;
+
+&lt;h3 id=&quot;ruby-on-railshttprailstutorial-chinaorg&quot;&gt;&lt;a href=&quot;http://railstutorial-china.org/&quot;&gt;Ruby On Rails教程&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&quot;begining-rails-3httpbookdoubancomsubject4005707&quot;&gt;&lt;a href=&quot;http://book.douban.com/subject/4005707/&quot;&gt;Begining Rails 3&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&quot;agile-web-development-with-railshttpbookdoubancomsubject1416743&quot;&gt;&lt;a href=&quot;http://book.douban.com/subject/1416743/&quot;&gt;Agile Web Development with Rails&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;当我熟悉了一些基本概念的时候，我就可以看Github上各种Rails的代码了，约定高于配置的另外一个优点就是所有Rails开发的东西结构看起来是一样的，便于不同开发者之间的交流。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Rails的一个比较突出的问题是版本之间的兼容性比较差。&lt;/p&gt;
+
+&lt;p&gt;比如Begining Rails里面Plugin那章的那个例子，在Rails3.1系列开始已经不支持那种方式的plugin了，其中用到的&lt;a href=&quot;http://stackoverflow.com/questions/12313621/undefined-method-class-inheritable-accessor-for-activerecordextensionssqlite&quot;&gt;class_inheritable_accessor&lt;/a&gt;也变成了class_attribute。这种问题非常多，另外据说最新的Rails4.0改动也很大。&lt;/p&gt;
+
+&lt;p&gt;这是一个老问题，在早起的版本就有人在这上面都发生过争吵。一些人说变化太频繁，不容易学习。
+其中这篇&lt;a href=&quot;http://erniemiller.org/2011/06/14/wth-is-happening-to-rails-ill-tell-you/&quot;&gt;“WTH is happening to Rails?” I’ll tell you&lt;/a&gt; 
+解释了一下Rails如此的原因，并称这种改变位『成长』。&lt;/p&gt;
+
+&lt;p&gt;学习Rails的路还比较长，后面继续。&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>高效的Crit-bit Tree</title>
+   <link href="http://cyukang.com/2013/05/18/critbit.html"/>
+   <updated>2013-05-18T00:00:00+08:00</updated>
+   <id>http://cyukang.com/2013/05/18/critbit</id>
+   <content type="html">
+&lt;p&gt;最近了解到有这么一种数据结构，想拿来在工作中做一些事情，结果效果不好。原来我的理解有一些不对。在这里记录一下。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://cr.yp.to/critbit.html&quot;&gt;Crit-bit tree&lt;/a&gt;是一种特别的树结构，一般用于存放字符串。Critbit tree是一种&lt;a href=&quot;http://en.wikipedia.org/wiki/Trie#Bitwise_tries&quot;&gt;BitWise tries&lt;/a&gt;，其树的深度为O(longest-length)，有点像二叉树，不过对于字符串做分支检测的时候代价很小。&lt;/p&gt;
+
+&lt;p&gt;Crit-bit快速高效的支持下面的一些操作：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;插入一个字符串&lt;/li&gt;
+  &lt;li&gt;测试一个字符串是否在树里&lt;/li&gt;
+  &lt;li&gt;删除一个字符串&lt;/li&gt;
+  &lt;li&gt;查找出树中所有以某个字符串开始的所有字符串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;和hash有点像，不过hash对于第四点没这么方便。
+我做了一些性能对比，测试数据是&lt;code&gt;/usr/share/dict/words&lt;/code&gt;里面的所有单词，同时做插入和查询的操作。具体测试代码看&lt;a href=&quot;https://github.com/chenyukang/critbit-perf&quot;&gt;这里&lt;/a&gt;，结果是：&lt;/p&gt;
+
+&lt;table border=&quot;2&quot; cellpadding=&quot;5&quot; align=&quot;center&quot;&gt;
+  &lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;critbit &lt;/td&gt; &lt;td&gt; 11.6 MB&lt;/td&gt; &lt;td&gt;  23.34s &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;set &lt;/td&gt;    &lt;td&gt;21.6 MB&lt;/td&gt;&lt;td&gt;   45.85s&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;trie &lt;/td&gt;   &lt;td&gt;332.3 MB&lt;/td&gt; &lt;td&gt; 17.84s&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;从中可以看到trie树的内存消耗是比较大的，但是查找速度最好。critbit的内存消耗真的非常小，如果只是把这里所有的单词存下来都要4MB的内存，其查找的速度虽然和trie树比起来差一些，但还是相当不错。&lt;/p&gt;
+
+&lt;p&gt;好好的研读了crit-bit的实现和这篇文章，里面技巧挺多的。
+critbit的结构很简单:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;uint32&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;uint8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;otherbits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critbit0_node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critbit0_tree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;其中child是void*指针，对于树的内部节点其指向的是子节点，对于叶子节点其指向的是字符串。
+byte用来表示当前节点匹配的长度，otherbits是一个mask，可以用来快速的取得不同最高位，在查询的过程中用这个来做branch。&lt;/p&gt;
+
+&lt;p&gt;具体的代码分析这里比较少，最复杂的函数是critbit0_insert。在插入过程中需要记录下来byte和otherbits,
+并且更新前面的父节点。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/critbit.png&quot; alt=&quot;critbit&quot; class=&quot;img-center&quot; height=&quot;400&quot; width=&quot;400&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后再继续插入后的结构变化是:
+&lt;img src=&quot;/images/critbit_insert.png&quot; alt=&quot;critbit&quot; class=&quot;img-center&quot; height=&quot;400&quot; width=&quot;400&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;下面记录一下其中的几个技巧。&lt;/p&gt;
+
+&lt;h4 id=&quot;align&quot;&gt;align指针最后一位用来做标志&lt;/h4&gt;
+
+&lt;p&gt;树的结构需要一个标志变量来表示是否是内部节点或者是叶子节点。这个变量如何能省掉？
+看上面的void* root和void* child, 都是即可以用来指向字符串又可以指向节点，一般申请过来的指针变量都是align好的，所以最低位为0，这是可以拿来用的。因此对于内部节点我们可以在这个位上设置为1，只是要注意在通过这个指针取值的时候需要减回去。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;a = (posix_memalign((void**)&amp;amp;x, sizeof(void*), ulen+1))&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;posix_memalign在这里用的是sizeof(void*)，其实就和malloc一样了，因为一般Linux上编译器和C库已经处理了对齐问题。&lt;/p&gt;
+
+&lt;p&gt;因此在查找的这段代码里是这样的：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;critbit0_contains&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critbit0_tree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uint8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ulen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;uint8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;intptr_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;//内部节点? &lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;critbit0_node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//取得真正的指针&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;uint8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;byte&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ulen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;otherbits&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;//叶子节点&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strcmp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;bit&quot;&gt;取最高位的非0bit&lt;/h4&gt;
+
+&lt;p&gt;在插入过程中计算最高位的不同位。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;newotherbits = p[newbyte]^ubytes[newbyte];&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;其实也可以用一个for循环来计算，不过这里是这样实现的:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;这相当于是计算不小于它的2的整数次幂，对于32bit的代码可以看看&lt;a href=&quot;http://blog.codingnow.com/cloud/CodeCollection&quot;&gt;这里&lt;/a&gt;的&lt;code&gt;next_pow_of_2&lt;/code&gt;。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/agl/critbit&quot;&gt;文章和代码&lt;/a&gt;，其中那篇文章有详细分析。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/chenyukang/critbit-perf&quot;&gt;我的测试代码,trie/set等&lt;/a&gt;。 &lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>迁移到Git</title>
@@ -24,8 +191,7 @@
 &lt;p&gt;上午把Git在服务器上搭建好，主要卡在一个Git的命令上，因为一些权限问题。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;git init --bare --shared&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;group ; --shared&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;group forget this
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Git的web接口是用的是&lt;a href=&quot;http://viewgit.fealdia.org/&quot;&gt;ViewGit&lt;/a&gt;，自己做了一些修改，加上&lt;a href=&quot;http://qbnz.com/highlighter/&quot;&gt;GeShi&lt;/a&gt;来高亮代码，并使用了&lt;a href=&quot;https://github.com/trybeee/GitStats&quot;&gt;GitStats&lt;/a&gt;来做代码统计。GitStats统计的项目非常多，看起来很直观。&lt;/p&gt;
 
@@ -73,6 +239,55 @@
 
 
 &lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>看看Lua 1.0 代码</title>
+   <link href="http://cyukang.com/2013/04/17/lua_10_source.html"/>
+   <updated>2013-04-17T00:00:00+08:00</updated>
+   <id>http://cyukang.com/2013/04/17/lua_10_source</id>
+   <content type="html">
+&lt;p&gt;最近稍微看了一些Lua方面的东西，当前的实现是5.2版本的，代码也才2w来行。不过偶然下载了1.0版本的代码，发现更精简。Lua的设计原则一直坚持着，
+作者甚至在OO盛行的年代也没有给Lua加上原生的class和object概念。这个版本虽然简陋，但还是可以稍微看看来体会Lua的设计原则，也为阅读最新的Lua代码做个预热。&lt;/p&gt;
+
+&lt;p&gt;首先来看看Lua1.0的一些基本情况：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; The implementation followed a tenet that is now central to Extreme Programming: 
+ “the simplest thing that could possibly work” . 
+ The lexical scanner was written with lex and the parser with yacc, 
+ The parser translated Lua programs into instructions for a stack-based 
+ virtual machine, which were then executed by a simple interpreter. 
+ 
+ Despite this simple implementation — or possibly because of it — 
+ Lua surpassed our expectations.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里的主要内容包含两个部分：stack based虚拟机，lex/yacc语法分析。&lt;/p&gt;
+
+&lt;p&gt;y_tab.c这个文件主要功能是语法分析，工具yacc生成的代码，没什么可读性。或者应该找文件lua.stx来看看，不过这个文件并没有被包含在1.0的代码里。&lt;/p&gt;
+
+&lt;p&gt;当执行&lt;code&gt;./lua array.lua&lt;/code&gt;类似代码的时候，首先打开文件array.lua，把io读写设置为文件读写，然后这段代码开始parse生成指令并运行。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;lua_parse&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Byte&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initcode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maincode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;yyparse&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maincode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HALT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lua_execute&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initcode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;maincode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initcode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;stack-based的虚拟机用来执行生成的虚拟指令，最重要的几个变量是pc指向当前运行的指令(也可能是数据)，top指向执行栈的顶部，base指向栈的底部。指令分为几类，Push/Store，跳转类(JMP, ONTJMP, ONFJMP,IFFJMP) 运算类(+,-,*,/ 等等)，还有和函数调用相关的(CALLFUNC,RETCODE)。
+top往下的几个指针指向的是最近计算需要的变量，而结果也往往是放在栈的顶部，最简单的四则运算执行过程如下：
+&lt;img src=&quot;/images/two_op.png&quot; alt=&quot;My code is compiling&quot; class=&quot;img-center&quot; /&gt;
+另外有一些只要一个Op的指令也类似，不过不会把top往下移动。 &lt;/p&gt;
+
+&lt;p&gt;Lua的代码风格很好，很值得学习，一些人已经在写一些源码分析方面的书籍了，比如云风的这个系列&lt;a href=&quot;http://www.codingnow.com/temp/readinglua.pdf&quot;&gt;Reading Lua&lt;/a&gt;，还有这个&lt;a href=&quot;http://www.codedump.info/?tag=lua&quot;&gt;系列&lt;/a&gt;。再挖一个坑，以后花时间好好研读新的Lua代码。我快从原来挖的那个坑里走出来了，一个Hobby OS至少可以运行了， :)。&lt;/p&gt;
+
+&lt;p&gt;另外如果你对实现一个小语言感兴趣，&lt;a href=&quot;http://www.ruby-forum.com/topic/121846#545361&quot;&gt;这里Ruby quiz #135有一个使用虚拟机实现的方式&lt;/a&gt;。&lt;/p&gt;
 </content>
  </entry>
  
@@ -150,7 +365,7 @@ brew deps   - 显示包依赖
 
 &lt;p&gt;注意最后两条，这是XOR Link List的关键，这也是通过xor操作来实现swap的关键。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xorSwap&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;xorSwap&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
          &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
          &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -158,8 +373,7 @@ brew deps   - 显示包依赖
      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;这里注意需要判断x!=y，否则如果传入的是相同的指针，最后所指向的变量被设置为0了。&lt;/p&gt;
 
@@ -169,16 +383,14 @@ brew deps   - 显示包依赖
                &lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;        
                &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;prev&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;prev&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;prev&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;        
  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;如果把next和prev用一个变量替换还能实现前向和后向遍历，那就节省了一个变量的空间。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;⊕&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;⊕&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;⊕&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&amp;gt;&lt;/span&gt;
  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;比如当前在B节点，其pointer变量为A⊕C，如果前面的A地址保存下来然后做运算(A⊕C)⊕A -&amp;gt; C，这样就得到下一个节点指针，反向遍历同样如此。当然其缺点是逻辑复杂了，删除其中的某一个节点也不方便(删除头和尾要好点)，遍历的时候需要保存上一个节点。这样看来为了省一点点空间这样实现似乎有点不值，在大部分情况下这样的一个pointer的节省并没什么用，不过这其中的细节有趣、巧妙。&lt;/p&gt;
 
@@ -207,8 +419,7 @@ brew deps   - 显示包依赖
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -311,8 +522,7 @@ brew deps   - 显示包依赖
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;define-key&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\C-cp&amp;quot;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;#39;emacsay-say-buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;define-key&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\C-ct&amp;quot;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;#39;emacsay-say-stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;setq&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;emacsay-mode-map&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;还可以有一些小的改进，比如阅读时候闪烁单词，或者say声音的选择等等。&lt;/p&gt;
 
@@ -369,9 +579,9 @@ brew deps   - 显示包依赖
 &lt;span class=&quot;cp&quot;&gt;#include &amp;lt;unistd.h&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;cp&quot;&gt;#include &amp;lt;assert.h&amp;gt;&lt;/span&gt;
 
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DumpBacktrace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pid_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dying_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getpid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pid_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fork&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;DumpBacktrace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;pid_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dying_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getpid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;pid_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fork&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;fork() while collecting backtrace:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -387,7 +597,7 @@ brew deps   - 显示包依赖
     &lt;span class=&quot;n&quot;&gt;_exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BacktraceOnSegv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;BacktraceOnSegv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sa_handler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DumpBacktrace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sigaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIGSEGV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -398,18 +608,17 @@ brew deps   - 显示包依赖
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;//assert(0);&lt;/span&gt;
     &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;BacktraceOnSegv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;另外前段时间看到这篇文章&lt;a href=&quot;http://www.runswift.ly/solving-bugs.html&quot;&gt;Solving vs. Fixing&lt;/a&gt;写得不错，在面对一个bug的时候，先不要急于立马上gdb调试，根据现有的信息好好思考为什么会出现这个情况。
 Reddit上的一个得分最高的回复：&lt;/p&gt;
@@ -453,8 +662,7 @@ Reddit上的一个得分最高的回复：&lt;/p&gt;
      &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;
    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
    
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;下面这段就能根据对象，取得class对象，建立起类的继承图。&lt;/p&gt;
 
@@ -470,8 +678,7 @@ Reddit上的一个得分最高的回复：&lt;/p&gt;
     &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;classtree&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;use this command to get image:&lt;/p&gt;
 
@@ -498,31 +705,29 @@ Reddit上的一个得分最高的回复：&lt;/p&gt;
 
 &lt;p&gt;回到正题，我最近切换到Mac下。因为在Mac OS X下编译器变成了Clang， Clang是基于LLVM的。LLVM对于分析代码是有比较方便的支持，所以基于LLVM有各种分析源程序的工具了，Xcode下的一些辅助开发的工具还是很舒服的。前些天突然想到那么会不会有个东西来作为Emacs的自动补全的后端，一搜果然有了这个&lt;a href=&quot;https://github.com/mikeandmore/auto-complete-clang&quot;&gt;auto-complete-clang&lt;/a&gt;，使用了一下非常的方便。其实看看其代码是在后面调用Clang的，比如在main.cc源文件里面写一些代码:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;    &lt;span class=&quot;cp&quot;&gt;#include &amp;lt;string&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#include &amp;lt;vector&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;    &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     
     &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Demo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;public:&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;nl&quot;&gt;private:&lt;/span&gt;
         &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
     
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;Demo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;demo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;demo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;结果还是非常精准的，不想截图了。后端运行的命令其实是:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;    cmd: clang -cc1 main.cc -fsyntax-only -code-completion-at main.cc:18:10
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;所得到的结果是:&lt;/p&gt;
 
@@ -532,14 +737,12 @@ Reddit上的一个得分最高的回复：&lt;/p&gt;
     COMPLETION: &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#void#]test()&lt;/span&gt;
     COMPLETION: value : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#int#]value&lt;/span&gt;
     COMPLETION: ~Demo : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#void#]~Demo()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;auto-complete-clang做的事情就是把这个结果再展示出来，其实这条命令也做了语法检查的，所以加上一个语法检查的功能应该也是可以的。一搜果然还是有了，看这个&lt;a href=&quot;http://duncan.mac-vicar.com/2011/08/30/realtime-syntax-checking-with-emacs/&quot;&gt;Realtime syntax checking with emacs&lt;/a&gt;，需要翻墙，不过代码在&lt;a href=&quot;https://github.com/dmacvicar/duncan-emacs-setup/tree/master/site-lisp&quot;&gt;Github上&lt;/a&gt;。其实其后端运行的命令是：&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;   cmd: clang  -fsyntax-only -fno-exceptions main.cc
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;最近用这个插件，基本代码都会是一遍编译通过啊，哈哈。Clang错误提示也人性化一点，比如在Xcode下会提示你想的是不是”XXX”之类的。&lt;/p&gt;
 
@@ -547,26 +750,45 @@ Reddit上的一个得分最高的回复：&lt;/p&gt;
  </entry>
  
  <entry>
-   <title>move to Mac OS X</title>
+   <title>Moving to Mac</title>
    <link href="http://cyukang.com/2012/12/13/move-to-mac-os-x.html"/>
    <updated>2012-12-13T00:00:00+08:00</updated>
    <id>http://cyukang.com/2012/12/13/move-to-mac-os-x</id>
    <content type="html">
-&lt;p&gt;我本是一个铁杆的Linux用户，从06年的Ubuntu 5.04开始折腾于各种Linux系统，一直到现在工作都基本在Linux上。工作不久就开始有准备入手一个Mac，有段时间看了《乔布斯传》后对Mac的看法有些不一样了，
-或者这不是一个有更好看的界面的Linux。于是去年的11月份入手了一台RMBP，花费了不少。在这半年的时间里对于Mac有了更多认识，记录一下作为一个程序员对Mac的感受。这不是鼓吹，只是一点感受而已。&lt;/p&gt;
+&lt;p&gt;我本是一个铁杆的Linux用户，从06年的Ubuntu 5.04开始折腾于各种Linux系统，一直到现在工作都基本在Linux上。有段时间看了《乔布斯传》后对Mac的看法有些不一样了，
+或者这不仅仅是一个有更好看的界面的Linux。于是去年的11月份入手了一台RMBP，在这半年的时间里对于Mac有了更多认识，记录一下作为一个程序员对Mac的感受。
+这不是鼓吹，只是一点感受而已。任何对于工具和语言的争论都是极其无聊无用的，适合自己就是最好的。很多时候也没有必要去说服别人，说服在一定程度上会给人一种征服的错觉，引起被被说服者的反感。&lt;/p&gt;
 
 &lt;p&gt;所以为了客观起见我先说说不好的方面：&lt;/p&gt;
 
-&lt;h3 id=&quot;section&quot;&gt;巧克力键盘 手感不好&lt;/h3&gt;
-&lt;p&gt;这是我真的不喜欢的一点，因为作为程序员高强度的触碰键盘，没一个舒服的键盘很难受。RMBP的键程太短，敲起来感觉用不起力，和我原来的ThinkPad比起来完全不是一个手感。
+&lt;h3 id=&quot;section&quot;&gt;键盘手感不好&lt;/h3&gt;
+&lt;p&gt;这种巧克力键盘是我真的不喜欢的一点。因为作为程序员高强度的触碰键盘，没一个舒服的键盘很难受。RMBP的键程太短，敲起来感觉用不起力，和我原来的ThinkPad比起来完全不是一个手感。
 这也是可以理解的，乔老爷可能不怎么打字，更薄显然是更重要的一个考虑。这就好比你看上一个苗条细小淑女，看起来小鸟依人，那就不要嫌弃这姑娘手感可能不太好吧。&lt;/p&gt;
 
 &lt;h3 id=&quot;section-1&quot;&gt;稍微热了点&lt;/h3&gt;
-&lt;p&gt;随着夏天的到来，机器感觉还是有点热，特别是在计算量比较大的情况下，不过还能忍受。另外我觉得RMBP的风扇却是经过了重新的设计，几乎感觉不到风扇的声音和振动。&lt;/p&gt;
+&lt;p&gt;随着夏天的到来，机器感觉还是稍微有点热。不过我觉得这都还算是在能忍受的范围内，如果你只是写编辑东西这应该不是一个问题。
+另外RMBP的风扇确实是经过了重新的设计，几乎感觉不到风扇的声音和振动。&lt;/p&gt;
 
 &lt;h3 id=&quot;section-2&quot;&gt;字体不能改大小&lt;/h3&gt;
 &lt;p&gt;我确实没找到办法来修改字体的大小，在这点上你可以理解到乔老头的强烈的控制欲和固执，他会说我们为用户选择了最完美大小刚好合适的字体，用户完全不需要把精力放在这些琐碎的事情上。
 这点对于比较挑剔的程序员可能是个问题。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;我认为好的方面:&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;生态环境好&lt;/h3&gt;
+&lt;p&gt;在使用Linux的时候我们往往会丢掉一些普通用户的基本体验，比如一款好的输入法、一些邮件客户端、一些常用的软件QQ/淘宝，一些音乐视频播放软件，等等。以前在学校我是很热衷配置各种软件的，
+不过现在还真不想去弄这些了。Linux下有这些东西，不过体验往往不怎么好。Mac下这些都有很多选择，而且质量上很不错。即使很多国内的软件在Mac上的软件广告也挺少，看起来很简洁。
+Mac下的生态环境看起来更良好。有人会在Mac上认认真真开发针对各种人群的软件，因为这是可以收到回报的。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;友好的程序员环境&lt;/h3&gt;
+&lt;p&gt;世界上很多程序员是用Mac，因此对于程序员来说好用的开发工具也不少，CodeRunner、Dash(惭愧来说这还是我购买的一个开发类工具)，Github客户端等这些软件没有Linux版本的。如果你怀念Apt那套，Mac下有HomeBrew，任何编程语言和工具在Mac下都有对应的版本。
+甚至前段时间我在折腾自己的OS，还发现已经有编译好的cross-gcc。如果你是做应用层的软件开发，Mac确实是一个更舒服的工具。Mac的界面做得不错，全屏的顶部Menu和Emacs类似，这是确实算是借鉴了Emacs的设计么? Mac的统一还体现在所有软件的快捷键上，加上Alfred这样的方便软件，效率真的很不错。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-5&quot;&gt;美感&lt;/h3&gt;
+&lt;p&gt;不得不说Mac的界面和其中的很多软件界面设计非常好，看起来舒服，堪称优美的作品。
+为什么选择美的东西，这在说得好听点为『品位』。对于程序员来说品位同样重要，参见《黑客与画家》的一章『设计者的品位』，那里有非常好的阐述。&lt;/p&gt;
 
 </content>
  </entry>
@@ -604,8 +826,7 @@ Reddit上的一个得分最高的回复：&lt;/p&gt;
     
     build all:  phony &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; app.exe
     build clean: cleanup 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;非常易懂，编译的可执行未见叫做app.exe, 其中有三条rule: cc, link, cleanup。看看这个官方的试用手册，还有一些附加参数可以加在rule的下面，比如description用来在编译的时候显示出来。Ninja还有个比较好玩的功能就是Ninja -t graph all命令，这可以用来生成编译时候的依赖关系，可以用dot来生成图片等。Ninja的实现也可以大概推测到，根据用户给的依赖关系图，&lt;em&gt;并行&lt;/em&gt; 地编译各个文件。&lt;/p&gt;
 
@@ -619,8 +840,7 @@ add_library&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;maze A_star.cpp Algorit
 
 add_executable&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Maze.exe main.cpp&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 target_link_libraries&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Maze.exe maze&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;add_library写明了生成一个叫做maze.a的库文件，然后和main.cpp编译出来的main.o生成可执行文件，写好CmakeList.txt后运行Cmake -G Ninja, 然后运行ninja all就能编译这个工程。具体的Cmake语法参考&lt;a href=&quot;http://www.cmake.org/cmake/help/cmake_tutorial.html&quot;&gt;这里&lt;/a&gt;，对于不少项目来说Cmake已经足够使用，只是我觉得Cmake还是稍微复杂了一点。&lt;/p&gt;
 
@@ -1484,8 +1704,7 @@ do_commit&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&
   &lt;span class=&quot;k&quot;&gt;esac&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;shift&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;简洁&lt;/strong&gt;&lt;/li&gt;
@@ -1518,8 +1737,7 @@ rvm install 1.9.2
 rvm use 1.9.2
 ruby -v &lt;span class=&quot;c&quot;&gt;#(use 1.9.2)&lt;/span&gt;
 gem install directory_watcher liquid open4 maruku classifier jekyll
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -1564,7 +1782,8 @@ value: 1 4 0 0 3 2&lt;/pre&gt;
 &lt;p&gt;
 其index对应value映射为为0-&amp;gt;1, 1-&amp;gt;4, 2-&amp;gt;0等等，那么把这个图画出来就是这样：
 &lt;/p&gt;
-&lt;a href=&quot;http://chenyukang.github.com/images/cycle3.png&quot;&gt;&lt;img class=&quot;img-center size-full wp-image-844&quot; title=&quot;cycle&quot; src=&quot;http://chenyukang.github.com/images/cycle3.png&quot; alt=&quot;&quot; width=&quot;275&quot; height=&quot;259&quot; /&gt;&lt;/a&gt;
+
+&lt;a href=&quot;/images/cycle3.png&quot;&gt;&lt;img class=&quot;img-center size-full wp-image-844&quot; title=&quot;cycle&quot; src=&quot;/images/cycle3.png&quot; alt=&quot;&quot; width=&quot;275&quot; height=&quot;259&quot; /&gt;&lt;/a&gt;
 
 &amp;nbsp;
 &lt;p&gt;
@@ -1709,7 +1928,7 @@ value: 0 1 2 4 5 3&lt;/pre&gt;
 最近闲暇时间用C++写了个小Demo，一个小小的篮球模拟。在学校的时候看过《人工智能编程精粹》，里面有个足球模拟，看起来还比较逼真。我这个篮球模拟是比较类似的，主要好玩的地方是在于状态机。图形方面做得很简单，还是用OpenGL来实现的，另外用了一个库glui，这个东西很好，把GUI方面琐碎的事情就简化了。整个效果图如下，这可是湖人对火箭噢。
 &lt;/p&gt;
 
-&lt;a href=&quot;http://chenyukang.github.com/images/2011-10-20-010256_1306x730_scrot.png&quot;&gt;&lt;img src=&quot;http://chenyukang.github.com/images/2011-10-20-010256_1306x730_scrot.png&quot; alt=&quot;&quot; title=&quot;BasketBall&quot; width=&quot;780&quot; height=&quot;438&quot; class=&quot;aligncenter size-full wp-image-717&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/2011-10-20-010256_1306x730_scrot.png&quot;&gt;&lt;img src=&quot;/images/2011-10-20-010256_1306x730_scrot.png&quot; alt=&quot;&quot; title=&quot;BasketBall&quot; width=&quot;780&quot; height=&quot;438&quot; class=&quot;aligncenter size-full wp-image-717&quot; /&gt;&lt;/a&gt;
 
 &lt;p&gt;
 调试状态机是个很有趣的过程，每一个球队有自己的状态机，分为进攻状态、防守状态、准备发球状态，每个球员也有自己的状态机，如下图所示。这里使用的是状态模式，把复杂的转移逻辑分散到各个状态节点，这正是状态模式的精华啊。现在这个还只是个粗糙的版本，虽然看得出来有那么点意思，规则都出来了，但是每个球员的跑位不逼真，没有多少智能的感觉。当篮球碰到边界的时候自动反弹，这点有点假，不过这也简化了不少比较繁琐的捡球和发球动作。当然现在的规则都比较简单，连三分和两分都没有分出来，罚球也没有，哈哈。现在的状态机看起来大部分时间还可以，很少的时候会出现一些比较反常规的现象。把每个状态转移过程在画面中显示出来能比较直观的去调试。
@@ -1720,7 +1939,7 @@ value: 0 1 2 4 5 3&lt;/pre&gt;
 &lt;/p&gt;
 
 &lt;p&gt;
-&lt;a href=&quot;http://chenyukang.github.com/images/statemachine.png&quot;&gt;&lt;img class=&quot;aligncenter size-large wp-image-706&quot; title=&quot;statemachine&quot; src=&quot;http://chenyukang.github.com/images/statemachine-1024x268.png&quot; alt=&quot;&quot; width=&quot;768&quot; height=&quot;200&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/statemachine.png&quot;&gt;&lt;img class=&quot;aligncenter size-large wp-image-706&quot; title=&quot;statemachine&quot; src=&quot;/images/statemachine-1024x268.png&quot; alt=&quot;&quot; width=&quot;768&quot; height=&quot;200&quot; /&gt;&lt;/a&gt;
 
 程序在这里&lt;a href=&quot;https://github.com/chenyukang/Basketball_demo&quot;&gt;GitHub:BasketBall&lt;/a&gt;，感兴趣的可以看一下，也有7000行的代码了，也有点乱:). 后面有时间再调试一下，慢慢细化，球员的站位和防守动作做到更智能些。
 &lt;/p&gt;
@@ -2066,7 +2285,9 @@ C语言里面没有语言层面的面向对象支持，那OO中的三个基本�
 &lt;p&gt;
 
 毕业之前去了青海湖，我和一个同事本来打算三天环青海湖骑行一圈的，第一天骑车148公里，第二天一早就走错了路（环行的居然走错了路），结果骑过了橡皮山，发现是已经骑了20公里左右。幸好在路上等了个回去的卡车，把我们带回黑马河。重新出发，环湖西路的路况非常好，车也很少。继续骑了120公里到达刚察，到刚察之前的最后一段感觉是最累的。第三天早上我刚出门过了个大坡，下来的时候不小心摔了一下，于是最后那一段就没骑了，真是遗憾啊。在西海镇继续住了一晚，221骑吧的店主人很好，看我摔了下巴，晚上给我做粥喝。牦牛肉粥非常好喝，嗯，非常感谢！也非常感谢同行的同事，一路给了我很多鼓励和帮助。青海一行虽然有些意外，但是也还是觉得挺不错的，那边人和风景都可以。
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img class=&quot;aligncenter&quot; title=&quot;青海湖&quot; src=&quot;http://chenyukang.github.com/images/p1065402741.jpg&quot; alt=&quot;&quot; width=&quot;600&quot; height=&quot;450&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/p1065402741.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; width=&quot;600&quot; height=&quot;450&quot; /&gt;&lt;/p&gt;
+
 更多照片在&lt;a href=&quot;http://www.douban.com/photos/album/48754388/&quot;&gt;豆瓣上面&lt;/a&gt;，照得不好，实景更漂亮，如果七月份去会更好。在从青海回成都的火车上，躺在铺上看《瓦尔登湖》，以前总没好好静下心来看完这本书，那天慢慢翻着有些入味了。&lt;strong&gt;“你们要尽可能长久地生活得自由，生活得并不执着才好。执迷于一座田园，和关在县政府的监狱之中，简直没有分别。” &lt;/strong&gt;如何生活得简单、自由，是我所难于学会的。
 
 &lt;/p&gt;
@@ -2104,10 +2325,10 @@ C语言里面没有语言层面的面向对象支持，那OO中的三个基本�
 &lt;p&gt;
 说起来复杂，来看副图。有点像挖地雷那种小游戏。有？符号的为没访问过的点，*为当前点，从14到15遇到警察死掉了。
 &lt;/p&gt;
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://chenyukang.github.com/images/known-city.dot_.png&quot;&gt;&lt;img class=&quot;aligncenter size-full wp-image-614&quot; title=&quot;known-city.dot&quot; src=&quot;http://chenyukang.github.com/images/known-city.dot_.png&quot; alt=&quot;&quot; width=&quot;416&quot; height=&quot;332&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;/images/known-city.dot_.png&quot;&gt;&lt;img class=&quot;aligncenter size-full wp-image-614&quot; title=&quot;known-city.dot&quot; src=&quot;/images/known-city.dot_.png&quot; alt=&quot;&quot; width=&quot;416&quot; height=&quot;332&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 上周末玩了好几个小时，还挺难胜，主要还是图比较大，游戏一开是整个地图是已经生成了的，要偷懒可以看看。
 
-&lt;a href=&quot;http://chenyukang.github.com/images/city.dot_.png&quot;&gt;&lt;img src=&quot;http://chenyukang.github.com/images/city.dot_.png&quot; alt=&quot;&quot; title=&quot;city.dot&quot; width=&quot;690&quot; height=&quot;430&quot; class=&quot;aligncenter size-full wp-image-617&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;/images/city.dot_.png&quot;&gt;&lt;img src=&quot;/images/city.dot_.png&quot; alt=&quot;&quot; title=&quot;city.dot&quot; width=&quot;690&quot; height=&quot;430&quot; class=&quot;aligncenter size-full wp-image-617&quot; /&gt;&lt;/a&gt;
 
 &lt;p&gt;
 来看看如何用Lisp代码来实现这个程序，程序比较短。首先是如何生成图，需要生成一个随机的连通图。设定节点数目和边的数目，以编号代表节点。random-node:随机地选一个节点。edge-pair:连接两个点表示边。make-edge-list: 重复N次，生成N条边的集合。这个随机图可能不是连通的，下面的代码找出孤立的点集，用一些边连接起来这些孤立的点集，随机图产生完成。第二步向某些点之间加警察，随机的。这其中用了各种mapcar和Lambda，这样的效果使得Lisp程序看起来全是括号。mapcar的意思就是我要在这个列表上面所有的元素上都执行这个Lambda函数。visited列表保存已经访问过的节点，know-city-nodes更新(不是纯函数式编程的风格)，know-city-edges根据访问的节点，生成已知的路径，当前已知的用dot画出来。&lt;em&gt;graphviz&lt;/em&gt;是个好东西，最近也在学习用这个来画一些流程图，效果挺好的。
@@ -2756,8 +2977,9 @@ system ,popen函数的危险&lt;/h3&gt;
 &lt;/p&gt;
 &lt;p&gt;
 
-噢，放些这东西我的博客会不会被和谐掉？&lt;a href=&quot;http://chenyukang.github.com/images/images.jpeg&quot;&gt;&lt;img class=&quot;size-full wp-image-538 alignnone&quot; title=&quot;hexie&quot; src=&quot;http://chenyukang.github.com/images/images.jpeg&quot; alt=&quot;&quot; width=&quot;259&quot; height=&quot;194&quot; /&gt;&lt;/a&gt;
-&lt;/p&gt;
+噢，放些这东西我的博客会不会被和谐掉？&lt;
+&lt;p&gt;&lt;img src=&quot;/images/images.jpeg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot;  /&gt;&lt;/p&gt;
+
 
 </content>
  </entry>
@@ -3003,18 +3225,19 @@ CCDD            state ==&amp;gt; 1100 1010 0000 0000&lt;/pre&gt;
 find  *.c | xargs prcc| python drawfuncs.py 来处理多个程序。
 &lt;/pre&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://chenyukang.github.com/images/out.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-medium wp-image-462&quot; title=&quot;out&quot; src=&quot;http://chenyukang.github.com/images/out-300x300.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/out.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot;  width=&quot;400&quot;, height=&quot;400&quot; /&gt;&lt;/p&gt;
+
 
 然后又想着可以做一个标签一样的东西，把调用深度比较潜的放大，调用深度深的缩小。不连线，位置随机画。这样一眼能看出来这个程序的主要函数是哪些。结果成这样了。
 
-&lt;p&gt;&lt;a href=&quot;http://chenyukang.github.com/images/out5.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-medium wp-image-463&quot; title=&quot;out5&quot; src=&quot;http://chenyukang.github.com/images/out5-300x300.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/out5.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot;  width=&quot;400&quot;, height=&quot;400&quot; /&gt;&lt;/p&gt;
+
 
 位置随便画还是不好，可以分层。然后再相邻层之间的函数有调用关系的再用直线连起来，就变成这样了。清晰一点。既然有函数关系，其实是可以做到更好的，就像上面那个prcg.c程序，不过代码要复杂些了。
-&lt;p&gt;
-&lt;a href=&quot;http://chenyukang.github.com/images/out6.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-medium wp-image-464&quot; title=&quot;out6&quot; src=&quot;http://chenyukang.github.com/images/out6-300x300.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;300&quot; /&gt;&lt;/a&gt;
-&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/out6.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot;  width=&quot;400&quot;, height=&quot;400&quot; /&gt;&lt;/p&gt;
+
+
 C要的是运行速度，Python实现速度快！
 </content>
  </entry>
@@ -3285,7 +3508,7 @@ The Dependency Inversion Principle 依赖倒置原则&lt;/h3&gt;
 &lt;h4&gt;结论&lt;/h4&gt;
 是个有点无聊的东西。其实可以稍微完善一下，比如加一个定时通知休息的功能、或者是上网过久的通知、便签之类的小功能也可以呵。代码 ：&lt;a href=&quot;http://moorekang.com/wp-content/uploads/2011/02/Workingtime.zip&quot;&gt;Workingtime&lt;/a&gt; ,匈牙利命名法好难看。
 
-&lt;a href=&quot;http://chenyukang.github.com/images/workingtime.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-medium wp-image-397&quot; title=&quot;workingtime&quot; src=&quot;http://chenyukang.github.com/images/workingtime-300x219.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;219&quot; /&gt;&lt;/a&gt;
+&lt;p&gt;&lt;img src=&quot;/images/workingtime.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
 </content>
  </entry>
  
@@ -3316,9 +3539,7 @@ The Dependency Inversion Principle 依赖倒置原则&lt;/h3&gt;
 
 &lt;p&gt;
 
-&lt;a href=&quot;http://chenyukang.github.com/images/IMG0101A.jpg&quot;&gt;
-&lt;img class=&quot;img-center size-medium wp-image-384&quot; title=&quot;IMG0101A&quot; src=&quot;http://chenyukang.github.com/images/IMG0101A-300x225.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;225&quot; /&gt;&lt;/a&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/IMG0101A.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; width=&quot;400&quot; height=&quot;400&quot;/&gt;&lt;/p&gt;
 
 一年就这么些天在家里，真的也想好好陪父母，常年呆在外面。可是又想回学校早点把论文写完，有点急了。
 </content>
@@ -3356,9 +3577,9 @@ The Dependency Inversion Principle 依赖倒置原则&lt;/h3&gt;
 再见，往事。你好，新年。
 &lt;/p&gt;
 
-快到家的路上 不是我拍的 不过很有家的感觉&quot;
-&lt;a href=&quot;http://chenyukang.github.com/images/huijia.jpg&quot;&gt;&lt;img class=&quot;size-full wp-image-348&quot; title=&quot;回家&quot; src=&quot;http://chenyukang.github.com/images/huijia.jpg&quot; alt=&quot;&quot; width=&quot;600&quot; height=&quot;400&quot; /&gt;&lt;/a&gt;
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;/p&gt;
+快到家的路上 不是我拍的 不过很有家的感觉
+&lt;p&gt;&lt;img src=&quot;/images/huijia.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
+
 </content>
  </entry>
  
@@ -3489,7 +3710,9 @@ mem_info mem_in[MEM_SIZE];  &lt;span style=&quot;color: #008000;&quot;&gt;//MEM_
 随机搜索不是一种好的优化方法，为什么？因为没有充分利用已经得出的当前最好解。对于上面这个问题，最优解可能和当前最优解有一些相近之处，可能是因为某一步当前最优解走错了，最后没有演变成最优解。其意思就是，如果把当前最优解稍微改变一下，可能会向最优解的方向靠 近。那么爬山法就是通过当前的最优解，在其附近找更好的解，知道当前没有更好的解为止。而随机搜索是跳越型的，所以没有这个优势。看下面这幅图，现实中很 多问题都会像这样，如果我们把所有解都算出来，按组合排列的顺寻作为x轴，评估函数得出的值为y轴，能得出稍微连贯的曲线。随机从某个初始点出发，沿着我们想要的方向寻找，能找到优解。
 
 &lt;p&gt;陷入局部最小 最优解为最低点&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://chenyukang.github.com/images/suiji.jpg&quot;&gt;&lt;img class=&quot;size-medium wp-image-268&quot; title=&quot;suiji&quot; src=&quot;http://chenyukang.github.com/images/suiji-300x188.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;188&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/suiji.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
+
 
 
 爬山法的缺点是，如过找到某个局部最优的地方，可能就被欺骗了，因为发现没有斜率了，以为是最优解。最后可能是个次优解。所以继续改进。
@@ -3503,9 +3726,8 @@ mem_info mem_in[MEM_SIZE];  &lt;span style=&quot;color: #008000;&quot;&gt;//MEM_
 上面的优化算法都是一个算法框架，如A*算法一样，最后更多的细节比如评估函数或者参数的选择对算法的效果都有影响。 另外这些优化算法最后能生效都是基于这么一个事实:很多优化问题最优解附近的解也是比较优的解，比如上面的问题，另比如旅行商问题。但有的情况，如下图，就是一个可能不被优化的问题，最优解附近并不是好的解，对于上面的算法都有随机性，也许随机优化一下能找到这个解（概率很小），也许遗传算法能产生个变异，但这都是概率问题，不能保证。
 
 &lt;p&gt;难优化的例子 最优解为最低点&lt;/p&gt;
-&lt;p&gt;
-&lt;a href=&quot;http://chenyukang.github.com/images/nanyouhua.jpg&quot;&gt;&lt;img class=&quot;size-medium wp-image-269&quot; title=&quot;nanyouhua&quot; src=&quot;http://chenyukang.github.com/images/nanyouhua-300x198.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;198&quot; /&gt;&lt;/a&gt;
-&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/nanyouhua.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
 
 
 说明：上面的图来自《集体智慧编程》中，这是本不错的书，在网上有代码，python写的，感兴趣的同学可以仔细看看。
@@ -3560,7 +3782,8 @@ Muse 来写主页和博客&lt;/h2&gt;
 然后到相应目录下撰写muse文件，快捷键C-c c-p就发布了整个工程，在Home_Page相应的目录下生成了html的文件。看起来有点复杂，其实还是很方便的，代码高亮这个程序员都喜欢的功能肯定就不用操心了，同时在本机上留有个备份。这种wiki风格的网页还是很利于浏览。不过有一个弊端，图片插入虽然在撰写过程中能直接预览的，但是上传到wordpress上路径肯定会变，所以还是要再稍微编辑一下。
 &lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://chenyukang.github.com/images/muse.jpg&quot;&gt;&lt;img class=&quot;size-medium wp-image-233&quot; title=&quot;muse&quot; src=&quot;http://chenyukang.github.com/images/muse-300x156.jpg&quot; alt=&quot;&quot; width=&quot;300&quot; height=&quot;156&quot; /&gt;&lt;/a&gt;
+&lt;p&gt;&lt;img src=&quot;/images/muse.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; width=&quot;400&quot; height=&quot;400&quot;/&gt;&lt;/p&gt;
+
 &lt;/p&gt;
 </content>
  </entry>
@@ -3571,8 +3794,12 @@ Muse 来写主页和博客&lt;/h2&gt;
    <updated>2010-11-14T00:00:00+08:00</updated>
    <id>http://cyukang.com/2010/11/14/damien-rice</id>
    <content type="html">实验室的机子要被占，要搬出来，所以得把资料整理一下。发现一个原来研一英语课上做representation的ppt,题目是介绍一位自己喜欢的歌手。那次第一次上台做英报告，呵呵。我喜欢缓慢而伤感，有些沉重的歌。在一位同学日记上看到介绍Damien Rice的，然后喜欢上了他的歌。研一那一年骑车时候基本都是这些歌，高中时最郁闷的时候经常听的是王菲和齐秦。一段时间狂听某些歌好像已经成了习惯，然后偶尔再听到的时候当时的情景自然就浮现了，音乐也是一种好的记忆载体。
+
 &lt;h2&gt;Damien Rice&lt;/h2&gt;
-&lt;p class=&quot;quoted&quot;&gt;&lt;img class=&quot;alignleft&quot; src=&quot;http://chenyukang.github.com/images/18_over.jpg&quot; alt=&quot;&quot; width=&quot;256&quot; height=&quot;295&quot; /&gt;&lt;/p&gt;
+
+
+&lt;p&gt;&lt;img src=&quot;/images/18_over.jpg&quot; alt=&quot;screen&quot; class=&quot;img-center&quot; width=&quot;256&quot; height=&quot;295&quot; /&gt;&lt;/p&gt;
+
 &lt;a href=&quot;http://www.damienrice.com/&quot;&gt;Damien Rice&lt;/a&gt; is an Irish Rock singer.Two studio albums: O in 2003, and 9  in 2006.He was born and raised in Ireland,a country which is rich in country music, poets, singers. When He was young, music and drawing attract him. Rice was a member of the  rock band Juniper.Having released the singles &quot;The World Is Dead&quot; and &quot;Weatherman&quot; in Ireland during 1998.
 
 Rice left the band to pursue a solo career. His Juniper band mates later became  Bell X1.
@@ -3581,7 +3808,9 @@ Rice's first solo album is O, which was released in 2003 and a true contender fo
 
 Rice is master of what critic called &quot;the unknown tongue&quot; — basically the musical equivalent of the  &quot;punctum&quot; in photos, Rice's emtional singing brings me a sad ,clean and sophisticated intimate space. Three years later, following extensive promotion of O in Ireland and further success worldwide, Rice released his second studio album 9 in 2006.
 
+&lt;p&gt;
 好听的专辑： 9
+&lt;/p&gt;
 &lt;pre class=&quot;example&quot;&gt;   1. 9 crimes
    2. the animals were gone
    3. elephant
@@ -3595,9 +3824,7 @@ Rice is master of what critic called &quot;the unknown tongue&quot; — basicall
 9 crimes最好听，适合半夜失眠。MV拍得很吸引人，在&lt;a href=&quot;http://www.youtube.com/watch?v=cgqOSCgc8xc&quot;&gt;这里&lt;/a&gt;，我当时课上放的就是这个MV，非常惊艳，课后还有同学问我要这个。另有个&lt;a href=&quot;http://www.douban.com/review/1244828/&quot;&gt;评论&lt;/a&gt;感觉写得非常不错。
 &lt;a href=&quot;http://friends.chyangwa.com/qq/pics/blog/mp3/coldwater.mp3&quot;&gt;Cold water&lt;/a&gt;浮躁繁杂的时候，就来听听这样一首像诗歌般的曲子，这也是电影《偷心》的片尾插曲。木吉他很有感觉，以后有时间学学，呵呵。
 
-还有这首The Blowers Daughter非常不错。
-
-[audio:http://www.mylalaland.com/hello/drice.mp3|titles=the blowers daughter|loop=yes|autostart=no ]
+还有这首&lt;a href=&quot;http://www.mylalaland.com/hello/drice.mp3&quot;&gt;The Blowers Daughter&lt;/a&gt;非常不错。
 
 &lt;hr /&gt;
 </content>
@@ -4369,19 +4596,19 @@ netstat -nr 查看内核iP路由表。
    <updated>2010-07-22T00:00:00+08:00</updated>
    <id>http://cyukang.com/2010/07/22/maze</id>
    <content type="html">上次把那个迷宫弄出来，然后想了想解法，找了些资料。再把界面上弄了一下，右边迷宫大小，然后有一个选项percent，是代表要推倒的墙占的总百分比，如果数字越小生成的迷宫就越稀疏,有可能有多条 通路从起点到终点,数字大那么生成的迷宫就越密集，但至少有一条通路。
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://chenyukang.github.com/images/gui.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-full wp-image-45&quot; title=&quot;gui&quot; src=&quot;http://chenyukang.github.com/images/gui.jpg&quot; alt=&quot;&quot; width=&quot;907&quot; height=&quot;460&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;/images/gui.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-full wp-image-45&quot; title=&quot;gui&quot; src=&quot;/images/gui.jpg&quot; alt=&quot;&quot; width=&quot;800&quot; height=&quot;460&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4&gt;单迷宫解法&lt;/h4&gt;
 迷宫第一定律：一般而言，只要在出发点单手摸住一面墙出发，手始终不离开墙面，总可以找到迷宫的出口。对于单迷宫而言，这一种万能的破解方法，即沿着某一面墙壁走。 或者换句话说，你在走的时候，左（右）手一直摸着左（右）边的墙壁，这种方法可能费时最长，也可能会使你走遍迷宫的每一个角落和每一条死路，但你绝不会永远困在里面。 直觉上好像是可以，实现一下也确实能找到终点的，也就是靠着墙，一直靠左或者一直靠右。实现的时候甚至都不用记录哪些点已经访问过了，哪些点还没访问过。 这也是一种人能来做的算法，毕竟人不可能像计算机一样dfs、bfs。
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://chenyukang.github.com/images/r_dfs.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-full wp-image-47&quot; title=&quot;r_dfs&quot; src=&quot;http://chenyukang.github.com/images/r_dfs.jpg&quot; alt=&quot;&quot; width=&quot;485&quot; height=&quot;374&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;/images/r_dfs.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-full wp-image-47&quot; title=&quot;r_dfs&quot; src=&quot;/images/r_dfs.jpg&quot; alt=&quot;&quot; width=&quot;485&quot; height=&quot;374&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4&gt;BFS&lt;/h4&gt;
 用BFS肯定也是可以的，如果是单路径的迷宫，用BFS实在是太慢了,它会把大部分的点都遍历一边。感觉就像是一颗石子掉到水中，要找岸边的终点那得等波纹波及到岸边。 非常之慢。但如果是有多条通路的迷宫，BFS是能保证找到最短路径的。也许双向BFS会好一点，不过猜想对于单迷宫，也提高不了多少。
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://chenyukang.github.com/images/bfa.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-full wp-image-49&quot; title=&quot;bfa&quot; src=&quot;http://chenyukang.github.com/images/bfa.jpg&quot; alt=&quot;&quot; width=&quot;485&quot; height=&quot;374&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;/images/bfa.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-full wp-image-49&quot; title=&quot;bfa&quot; src=&quot;/images/bfa.jpg&quot; alt=&quot;&quot; width=&quot;485&quot; height=&quot;374&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4&gt;DFS&lt;/h4&gt;
 那用DFS也是可以的。不过效率还是很差，像苍蝇一般在迷宫的各个角落转悠，直到大部分点都遍历了。稍微改变一下DFS优先搜索的方向会有一些提高，比如我这个图优先走下方或者优先走左方。
-&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;http://chenyukang.github.com/images/dfs.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-full wp-image-46&quot; title=&quot;dfs&quot; src=&quot;http://chenyukang.github.com/images/dfs.jpg&quot; alt=&quot;&quot; width=&quot;492&quot; height=&quot;377&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;a href=&quot;/images/dfs.jpg&quot;&gt;&lt;img class=&quot;aligncenter size-full wp-image-46&quot; title=&quot;dfs&quot; src=&quot;/images/dfs.jpg&quot; alt=&quot;&quot; width=&quot;492&quot; height=&quot;377&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4&gt;A*&lt;/h4&gt;
 A*是一种启发式搜索算法，在这里我用点与点的曼哈顿距离来作为启发函数，效果不好，因为曼哈顿距离也就大概的告诉了搜索路径现在应该往哪个方向走比较好。不过总得来说 这么一点启发得到的效果还是要比BFS和DFS要好些。评估函数选择合适也是能找到最短路径的，曼哈顿是可以的。如果墙比较稀疏(肯定有多条路径)，那么A*算法会快得许多。

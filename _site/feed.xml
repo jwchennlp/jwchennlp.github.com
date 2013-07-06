@@ -6,6 +6,171 @@
 		<link>http://cyukang.com</link>
 		
 			<item>
+				<title>初学Rails</title>
+				<description>
+&lt;p&gt;我在2012年左右开始关注Ruby，平时有的时候会用Ruby写一些脚本。这是一个很活跃的社区，Ruby火起来也不是最近的事。可贵的这里总是有一些新的东西出来，比如我现在的这个博客是基于jekyll和Github的。
+Ruby的迅速崛起更多的还是因为Rails，所以学习Rails也是了解Ruby的一个好方法。&lt;/p&gt;
+
+&lt;p&gt;最近为公司内部所配置的GitLab是Rails开发的。另外我自己也在公司做一些Web程序，其实是很简单的东西，就是把每天晚上跑的程序各种测试结果展示出来(nightly/weekly/coverage等等)。我选用Rails来开发，果然一个最初的版本很快就做出来了。在初学Rails的过程中让我体会到了一些web开发的乐趣。&lt;/p&gt;
+
+&lt;p&gt;Rails适合小团队的快速开发，其中的一些理念是：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Encourage Agility             --鼓励敏捷开发 &lt;/li&gt;
+&lt;li&gt;Convention Over Configuration --约定高于配置 &lt;/li&gt;
+&lt;li&gt;DRY                           --不要重复自己 &lt;/li&gt;
+&lt;li&gt;Less Code                     --更短小的代码 &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;正是这些开发原则使得Rails开发如此简单明了(当然前提是你按照Rails约定的方式来)。
+我原来做过一些web开发服务器方面的工作，在那种模式下开发需要每个人各司其责。
+但是Rails不同，在ActiveModel这样的抽象层基础上你需要关注的数据库方面的东西少了，
+明确的MVC模式把你需要关注的撤离开来，这种复杂程度一个人完全能掌控下来。当然这种高度的抽象是以牺牲一部分效率为前提的，但其实在很多时候开发效率的优先级是高于实现效率的，
+这也是Ruby所选择的一个理念。 &lt;/p&gt;
+
+&lt;p&gt;学习Rails的过程中这些资料是非常好的，这几本书都面向初学者，写得非常详细：&lt;/p&gt;
+
+&lt;h3 id=&quot;ruby-on-railshttprailstutorial-chinaorg&quot;&gt;&lt;a href=&quot;http://railstutorial-china.org/&quot;&gt;Ruby On Rails教程&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&quot;begining-rails-3httpbookdoubancomsubject4005707&quot;&gt;&lt;a href=&quot;http://book.douban.com/subject/4005707/&quot;&gt;Begining Rails 3&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&quot;agile-web-development-with-railshttpbookdoubancomsubject1416743&quot;&gt;&lt;a href=&quot;http://book.douban.com/subject/1416743/&quot;&gt;Agile Web Development with Rails&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;当我熟悉了一些基本概念的时候，我就可以看Github上各种Rails的代码了，约定高于配置的另外一个优点就是所有Rails开发的东西结构看起来是一样的，便于不同开发者之间的交流。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Rails的一个比较突出的问题是版本之间的兼容性比较差。&lt;/p&gt;
+
+&lt;p&gt;比如Begining Rails里面Plugin那章的那个例子，在Rails3.1系列开始已经不支持那种方式的plugin了，其中用到的&lt;a href=&quot;http://stackoverflow.com/questions/12313621/undefined-method-class-inheritable-accessor-for-activerecordextensionssqlite&quot;&gt;class_inheritable_accessor&lt;/a&gt;也变成了class_attribute。这种问题非常多，另外据说最新的Rails4.0改动也很大。&lt;/p&gt;
+
+&lt;p&gt;这是一个老问题，在早起的版本就有人在这上面都发生过争吵。一些人说变化太频繁，不容易学习。
+其中这篇&lt;a href=&quot;http://erniemiller.org/2011/06/14/wth-is-happening-to-rails-ill-tell-you/&quot;&gt;“WTH is happening to Rails?” I’ll tell you&lt;/a&gt; 
+解释了一下Rails如此的原因，并称这种改变位『成长』。&lt;/p&gt;
+
+&lt;p&gt;学习Rails的路还比较长，后面继续。&lt;/p&gt;
+
+</description>
+				<published>2013-07-06 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/07/06/studying-rails.html</link>
+			</item>
+		
+			<item>
+				<title>高效的Crit-bit Tree</title>
+				<description>
+&lt;p&gt;最近了解到有这么一种数据结构，想拿来在工作中做一些事情，结果效果不好。原来我的理解有一些不对。在这里记录一下。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://cr.yp.to/critbit.html&quot;&gt;Crit-bit tree&lt;/a&gt;是一种特别的树结构，一般用于存放字符串。Critbit tree是一种&lt;a href=&quot;http://en.wikipedia.org/wiki/Trie#Bitwise_tries&quot;&gt;BitWise tries&lt;/a&gt;，其树的深度为O(longest-length)，有点像二叉树，不过对于字符串做分支检测的时候代价很小。&lt;/p&gt;
+
+&lt;p&gt;Crit-bit快速高效的支持下面的一些操作：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;插入一个字符串&lt;/li&gt;
+  &lt;li&gt;测试一个字符串是否在树里&lt;/li&gt;
+  &lt;li&gt;删除一个字符串&lt;/li&gt;
+  &lt;li&gt;查找出树中所有以某个字符串开始的所有字符串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;和hash有点像，不过hash对于第四点没这么方便。
+我做了一些性能对比，测试数据是&lt;code&gt;/usr/share/dict/words&lt;/code&gt;里面的所有单词，同时做插入和查询的操作。具体测试代码看&lt;a href=&quot;https://github.com/chenyukang/critbit-perf&quot;&gt;这里&lt;/a&gt;，结果是：&lt;/p&gt;
+
+&lt;table border=&quot;2&quot; cellpadding=&quot;5&quot; align=&quot;center&quot;&gt;
+  &lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;critbit &lt;/td&gt; &lt;td&gt; 11.6 MB&lt;/td&gt; &lt;td&gt;  23.34s &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;set &lt;/td&gt;    &lt;td&gt;21.6 MB&lt;/td&gt;&lt;td&gt;   45.85s&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;trie &lt;/td&gt;   &lt;td&gt;332.3 MB&lt;/td&gt; &lt;td&gt; 17.84s&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;从中可以看到trie树的内存消耗是比较大的，但是查找速度最好。critbit的内存消耗真的非常小，如果只是把这里所有的单词存下来都要4MB的内存，其查找的速度虽然和trie树比起来差一些，但还是相当不错。&lt;/p&gt;
+
+&lt;p&gt;好好的研读了crit-bit的实现和这篇文章，里面技巧挺多的。
+critbit的结构很简单:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;uint32&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;uint8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;otherbits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critbit0_node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critbit0_tree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;其中child是void*指针，对于树的内部节点其指向的是子节点，对于叶子节点其指向的是字符串。
+byte用来表示当前节点匹配的长度，otherbits是一个mask，可以用来快速的取得不同最高位，在查询的过程中用这个来做branch。&lt;/p&gt;
+
+&lt;p&gt;具体的代码分析这里比较少，最复杂的函数是critbit0_insert。在插入过程中需要记录下来byte和otherbits,
+并且更新前面的父节点。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/critbit.png&quot; alt=&quot;critbit&quot; class=&quot;img-center&quot; height=&quot;400&quot; width=&quot;400&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后再继续插入后的结构变化是:
+&lt;img src=&quot;/images/critbit_insert.png&quot; alt=&quot;critbit&quot; class=&quot;img-center&quot; height=&quot;400&quot; width=&quot;400&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;下面记录一下其中的几个技巧。&lt;/p&gt;
+
+&lt;h4 id=&quot;align&quot;&gt;align指针最后一位用来做标志&lt;/h4&gt;
+
+&lt;p&gt;树的结构需要一个标志变量来表示是否是内部节点或者是叶子节点。这个变量如何能省掉？
+看上面的void* root和void* child, 都是即可以用来指向字符串又可以指向节点，一般申请过来的指针变量都是align好的，所以最低位为0，这是可以拿来用的。因此对于内部节点我们可以在这个位上设置为1，只是要注意在通过这个指针取值的时候需要减回去。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;a = (posix_memalign((void**)&amp;amp;x, sizeof(void*), ulen+1))&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;posix_memalign在这里用的是sizeof(void*)，其实就和malloc一样了，因为一般Linux上编译器和C库已经处理了对齐问题。&lt;/p&gt;
+
+&lt;p&gt;因此在查找的这段代码里是这样的：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;critbit0_contains&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critbit0_tree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uint8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ulen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;uint8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;intptr_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;       &lt;span class=&quot;c1&quot;&gt;//内部节点? &lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;critbit0_node&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//取得真正的指针&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;uint8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;byte&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ulen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ubytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;otherbits&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;//叶子节点&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strcmp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;bit&quot;&gt;取最高位的非0bit&lt;/h4&gt;
+
+&lt;p&gt;在插入过程中计算最高位的不同位。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;newotherbits = p[newbyte]^ubytes[newbyte];&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;其实也可以用一个for循环来计算，不过这里是这样实现的:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newotherbits&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;这相当于是计算不小于它的2的整数次幂，对于32bit的代码可以看看&lt;a href=&quot;http://blog.codingnow.com/cloud/CodeCollection&quot;&gt;这里&lt;/a&gt;的&lt;code&gt;next_pow_of_2&lt;/code&gt;。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/agl/critbit&quot;&gt;文章和代码&lt;/a&gt;，其中那篇文章有详细分析。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/chenyukang/critbit-perf&quot;&gt;我的测试代码,trie/set等&lt;/a&gt;。 &lt;/p&gt;
+</description>
+				<published>2013-05-18 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/05/18/critbit.html</link>
+			</item>
+		
+			<item>
 				<title>迁移到Git</title>
 				<description>
 &lt;p&gt;公司这群人终于打算从CVS迁徙到Git上了，CVS这套公司用了六年。CVS这是90年代的东西，我们不能因为年代久远而嫌弃这，只是CVS这东西对于一个比较大的项目来说创建分支是相当漫长，大多数程序员都没有耐心的。
@@ -14,8 +179,7 @@
 &lt;p&gt;上午把Git在服务器上搭建好，主要卡在一个Git的命令上，因为一些权限问题。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;git init --bare --shared&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;group ; --shared&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;group forget this
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Git的web接口是用的是&lt;a href=&quot;http://viewgit.fealdia.org/&quot;&gt;ViewGit&lt;/a&gt;，自己做了一些修改，加上&lt;a href=&quot;http://qbnz.com/highlighter/&quot;&gt;GeShi&lt;/a&gt;来高亮代码，并使用了&lt;a href=&quot;https://github.com/trybeee/GitStats&quot;&gt;GitStats&lt;/a&gt;来做代码统计。GitStats统计的项目非常多，看起来很直观。&lt;/p&gt;
 
@@ -66,6 +230,54 @@
 </description>
 				<published>2013-05-09 00:00:00 +0800</published>
 				<link>http://cyukang.com/2013/05/09/git-command.html</link>
+			</item>
+		
+			<item>
+				<title>看看Lua 1.0 代码</title>
+				<description>
+&lt;p&gt;最近稍微看了一些Lua方面的东西，当前的实现是5.2版本的，代码也才2w来行。不过偶然下载了1.0版本的代码，发现更精简。Lua的设计原则一直坚持着，
+作者甚至在OO盛行的年代也没有给Lua加上原生的class和object概念。这个版本虽然简陋，但还是可以稍微看看来体会Lua的设计原则，也为阅读最新的Lua代码做个预热。&lt;/p&gt;
+
+&lt;p&gt;首先来看看Lua1.0的一些基本情况：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; The implementation followed a tenet that is now central to Extreme Programming: 
+ “the simplest thing that could possibly work” . 
+ The lexical scanner was written with lex and the parser with yacc, 
+ The parser translated Lua programs into instructions for a stack-based 
+ virtual machine, which were then executed by a simple interpreter. 
+ 
+ Despite this simple implementation — or possibly because of it — 
+ Lua surpassed our expectations.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里的主要内容包含两个部分：stack based虚拟机，lex/yacc语法分析。&lt;/p&gt;
+
+&lt;p&gt;y_tab.c这个文件主要功能是语法分析，工具yacc生成的代码，没什么可读性。或者应该找文件lua.stx来看看，不过这个文件并没有被包含在1.0的代码里。&lt;/p&gt;
+
+&lt;p&gt;当执行&lt;code&gt;./lua array.lua&lt;/code&gt;类似代码的时候，首先打开文件array.lua，把io读写设置为文件读写，然后这段代码开始parse生成指令并运行。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;lua_parse&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Byte&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initcode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maincode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;yyparse&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maincode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HALT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lua_execute&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;initcode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;maincode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initcode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;stack-based的虚拟机用来执行生成的虚拟指令，最重要的几个变量是pc指向当前运行的指令(也可能是数据)，top指向执行栈的顶部，base指向栈的底部。指令分为几类，Push/Store，跳转类(JMP, ONTJMP, ONFJMP,IFFJMP) 运算类(+,-,*,/ 等等)，还有和函数调用相关的(CALLFUNC,RETCODE)。
+top往下的几个指针指向的是最近计算需要的变量，而结果也往往是放在栈的顶部，最简单的四则运算执行过程如下：
+&lt;img src=&quot;/images/two_op.png&quot; alt=&quot;My code is compiling&quot; class=&quot;img-center&quot; /&gt;
+另外有一些只要一个Op的指令也类似，不过不会把top往下移动。 &lt;/p&gt;
+
+&lt;p&gt;Lua的代码风格很好，很值得学习，一些人已经在写一些源码分析方面的书籍了，比如云风的这个系列&lt;a href=&quot;http://www.codingnow.com/temp/readinglua.pdf&quot;&gt;Reading Lua&lt;/a&gt;，还有这个&lt;a href=&quot;http://www.codedump.info/?tag=lua&quot;&gt;系列&lt;/a&gt;。再挖一个坑，以后花时间好好研读新的Lua代码。我快从原来挖的那个坑里走出来了，一个Hobby OS至少可以运行了， :)。&lt;/p&gt;
+
+&lt;p&gt;另外如果你对实现一个小语言感兴趣，&lt;a href=&quot;http://www.ruby-forum.com/topic/121846#545361&quot;&gt;这里Ruby quiz #135有一个使用虚拟机实现的方式&lt;/a&gt;。&lt;/p&gt;
+</description>
+				<published>2013-04-17 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/04/17/lua_10_source.html</link>
 			</item>
 		
 			<item>
@@ -138,7 +350,7 @@ brew deps   - 显示包依赖
 
 &lt;p&gt;注意最后两条，这是XOR Link List的关键，这也是通过xor操作来实现swap的关键。&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xorSwap&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;xorSwap&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
          &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
          &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -146,8 +358,7 @@ brew deps   - 显示包依赖
      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;这里注意需要判断x!=y，否则如果传入的是相同的指针，最后所指向的变量被设置为0了。&lt;/p&gt;
 
@@ -157,16 +368,14 @@ brew deps   - 显示包依赖
                &lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;        
                &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;prev&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;prev&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;prev&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;        
  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;如果把next和prev用一个变量替换还能实现前向和后向遍历，那就节省了一个变量的空间。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;⊕&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;⊕&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;D&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&amp;gt;&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;⊕&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;E&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&amp;gt;&lt;/span&gt;
  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;比如当前在B节点，其pointer变量为A⊕C，如果前面的A地址保存下来然后做运算(A⊕C)⊕A -&amp;gt; C，这样就得到下一个节点指针，反向遍历同样如此。当然其缺点是逻辑复杂了，删除其中的某一个节点也不方便(删除头和尾要好点)，遍历的时候需要保存上一个节点。这样看来为了省一点点空间这样实现似乎有点不值，在大部分情况下这样的一个pointer的节省并没什么用，不过这其中的细节有趣、巧妙。&lt;/p&gt;
 
@@ -194,8 +403,7 @@ brew deps   - 显示包依赖
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -296,8 +504,7 @@ brew deps   - 显示包依赖
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;define-key&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\C-cp&amp;quot;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;#39;emacsay-say-buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;define-key&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\C-ct&amp;quot;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;#39;emacsay-say-stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;setq&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;emacsay-mode-map&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;还可以有一些小的改进，比如阅读时候闪烁单词，或者say声音的选择等等。&lt;/p&gt;
 
@@ -325,208 +532,6 @@ brew deps   - 显示包依赖
 </description>
 				<published>2013-01-22 00:00:00 +0800</published>
 				<link>http://cyukang.com/2013/01/22/poj-500.html</link>
-			</item>
-		
-			<item>
-				<title>获取挂掉程序的栈信息</title>
-				<description>
-&lt;p&gt;在程序挂掉的时候最好还是留点有用的遗言，特别是对于一些比较难重现的Bug，也许这些信息会成为解决问题的关键。&lt;/p&gt;
-
-&lt;p&gt;下面这个技巧可以让程挂掉的时候打印出来栈信息。这个办法来自&lt;a href=&quot;http://neugierig.org/software/blog/2012/06/backtraces.html&quot;&gt;这里&lt;/a&gt;, 我觉得把SIGABRT、SIGBUS信号加进去也挺好的，在此做了点修改。曾经尝也试过glibc的backtrace函数，，但是给的信息不全(没有行号)，对此做得最好的还是gdb。 在终端可以用gdb获取某个进程的当前栈：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ gdb -p 5595 -batch -ex bt
-0xb7fb4410 in __kernel_vsyscall ()
-#0  0xb7fb4410 in __kernel_vsyscall ()
-#1  0xb7dc2d50 in nanosleep () from /lib/tls/i686/cmov/libc.so.6
-#2  0xb7dc2b87 in sleep () from /lib/tls/i686/cmov/libc.so.6
-#3  0x0804874f in main () at print_stack.cc:64
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;那么一个好的办法就是在程序开始的时候设置好信号，绑定SIGSEGV和SIGABRT到DumpBackTrace()函数，DumpBackTrace函数fork出来一个新进程，运行上面的命令来获取调用栈。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;signal.h&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;sys/types.h&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;sys/wait.h&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;unistd.h&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;assert.h&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DumpBacktrace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pid_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dying_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getpid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pid_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fork&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;fork() while collecting backtrace:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;sprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;gdb -p %d -batch -ex bt 2&amp;gt;/dev/null | &amp;quot;&lt;/span&gt;
-                &lt;span class=&quot;s&quot;&gt;&amp;quot;sed &amp;#39;0,/&amp;lt;signal handler/d&amp;#39;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dying_pid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;sh&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-c&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;execve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/bin/sh&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;_exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;waitpid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;child_pid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;_exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BacktraceOnSegv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sigaction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sa_handler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DumpBacktrace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sigaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIGSEGV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;sigaction(SEGV)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sigaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIGABRT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;sigaction(SEGV)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//assert(0);&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;BacktraceOnSegv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;另外前段时间看到这篇文章&lt;a href=&quot;http://www.runswift.ly/solving-bugs.html&quot;&gt;Solving vs. Fixing&lt;/a&gt;写得不错，在面对一个bug的时候，先不要急于立马上gdb调试，根据现有的信息好好思考为什么会出现这个情况。
-Reddit上的一个得分最高的回复：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt; The ability to reason about code is probably the most important skill. 
- But it is sadly rare, and doesn't seem to be taught much, if at all.
- Some things are simple, others take some more thought:
-
- * Under what conditions will this branch get taken?
- * What could cause this API to fail?
- * Are all these parameters even valid?
- * What sequence of events could lead to this situation?
- * What assumptions does this code make?
- * What side-effects does this code have?
- * What contract is this code making (or breaking)?
- 
- The most talented engineer I know, when presented with a bug, does nothing but 
- read the code and think about the code and how it could fail. 
- Most of the time,  he just figures it out in his head and fixes it. 
- Sometimes he will insert some strategic printfs and narrow it down like that. 
- I don't think I have ever seen him use a debugger, 
- even on the most complex of problems.
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-				<published>2013-01-04 00:00:00 +0800</published>
-				<link>http://cyukang.com/2013/01/04/print-stack-before-exiting.html</link>
-			</item>
-		
-			<item>
-				<title>Browser objs and class hierarchy  in Ruby</title>
-				<description>
-&lt;p&gt;Ruby里一切都是对象，如何能看到Ruby内建的对象模型呢。这里有个小程序来查看Ruby内部构建好的的对象和类。ObjectSpace可以迭代所有对象。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;    &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;no&quot;&gt;ObjectSpace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each_object&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-   &lt;span class=&quot;n&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-     &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;
-   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-   
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;下面这段就能根据对象，取得class对象，建立起类的继承图。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;ruby&quot;&gt;  &lt;span class=&quot;c1&quot;&gt;# Creates or updates a klass_tree.&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# When updating no classes or objects are removed&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;object_browser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classtree&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ClassTreeNode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Kernel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;no&quot;&gt;ObjectSpace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each_object&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;classnode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classtree&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ancestors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reverse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;\&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classtree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classnode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;classnode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;klass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;classtree&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;use this command to get image:&lt;/p&gt;
-
-&lt;p&gt;$ruby prog.rb &amp;gt; class.dot; dot -Tpng class.dot -o class.png&lt;/p&gt;
-
-&lt;p&gt;结果看起来像这样，所有对象都画出来比较多，看大图还稍微能看到一些。完整的代码在&lt;a href=&quot;https://gist.github.com/4380597&quot;&gt;这里&lt;/a&gt;。
-&lt;img src=&quot;/images/class.png&quot; alt=&quot;class in Ruby&quot; class=&quot;img-center&quot; /&gt;
-&lt;img src=&quot;/images/objs.png&quot; alt=&quot;class in Ruby&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
-</description>
-				<published>2012-12-26 00:00:00 +0800</published>
-				<link>http://cyukang.com/2012/12/26/browser-objs-in-ruby.html</link>
-			</item>
-		
-			<item>
-				<title>Clang is Making Emacs Smarter</title>
-				<description>
-&lt;p&gt;在Emacs下自动补全总是个问题，对于同一个buffer内的基于symbol补全auto-complete-mode做得非常好了，但是因为没有进行代码的分析，所以像结构体的成员变量或者类的成员函数的补全是不可能的。当然你可能试过这个号称最智能的&lt;a href=&quot;http://cx4a.org/software/gccsense/&quot;&gt;GCCSence&lt;/a&gt;,但是我觉得这个东西够复杂的，在使用之前还需要用户手动运行一个命令来用Gcc处理一遍，它还会把一些东西放在sqlite数据库里面。这大概是因为Gcc不编译做静态分析工具造成的，在&lt;a href=&quot;http://lwn.net/Articles/493599/&quot;&gt;这里&lt;/a&gt;、&lt;a href=&quot;http://lwn.net/Articles/493627/&quot;&gt;这里&lt;/a&gt;、&lt;a href=&quot;http://lwn.net/Articles/493630/&quot;&gt;这里&lt;/a&gt;有讨论，Google的一个静态分析的项目从Gcc迁移到LLVM，重点是这:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;The gcc version has been difficult to support and maintain, due mainly to the fact that the GIMPLE intermediate language was never designed for static analysis. The abstract syntax tree provided by Clang is an easier data structure to work with for front-end analyses of this kind.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;这个thread挺好玩的，后面变成了一大群人争论functional programming和Imperative Programming。这篇&lt;a href=&quot;http://fpcomplete.com/the-downfall-of-imperative-programming/&quot;&gt;The Downfall of Imperative Programming&lt;/a&gt;再好好看看。&lt;/p&gt;
-
-&lt;p&gt;回到正题，我最近切换到Mac下。因为在Mac OS X下编译器变成了Clang， Clang是基于LLVM的。LLVM对于分析代码是有比较方便的支持，所以基于LLVM有各种分析源程序的工具了，Xcode下的一些辅助开发的工具还是很舒服的。前些天突然想到那么会不会有个东西来作为Emacs的自动补全的后端，一搜果然有了这个&lt;a href=&quot;https://github.com/mikeandmore/auto-complete-clang&quot;&gt;auto-complete-clang&lt;/a&gt;，使用了一下非常的方便。其实看看其代码是在后面调用Clang的，比如在main.cc源文件里面写一些代码:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cpp&quot;&gt;    &lt;span class=&quot;cp&quot;&gt;#include &amp;lt;string&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;#include &amp;lt;vector&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    
-    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Demo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;private&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-    
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Demo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;demo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;demo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;结果还是非常精准的，不想截图了。后端运行的命令其实是:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;    cmd: clang -cc1 main.cc -fsyntax-only -code-completion-at main.cc:18:10
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;所得到的结果是:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;    COMPLETION: Demo : Demo::
-    COMPLETION: &lt;span class=&quot;nv&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#Demo &amp;amp;#]operator=(&amp;lt;#const Demo &amp;amp;#&amp;gt;)&lt;/span&gt;
-    COMPLETION: print : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#void#]print()&lt;/span&gt;
-    COMPLETION: &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#void#]test()&lt;/span&gt;
-    COMPLETION: value : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#int#]value&lt;/span&gt;
-    COMPLETION: ~Demo : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;#void#]~Demo()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;auto-complete-clang做的事情就是把这个结果再展示出来，其实这条命令也做了语法检查的，所以加上一个语法检查的功能应该也是可以的。一搜果然还是有了，看这个&lt;a href=&quot;http://duncan.mac-vicar.com/2011/08/30/realtime-syntax-checking-with-emacs/&quot;&gt;Realtime syntax checking with emacs&lt;/a&gt;，需要翻墙，不过代码在&lt;a href=&quot;https://github.com/dmacvicar/duncan-emacs-setup/tree/master/site-lisp&quot;&gt;Github上&lt;/a&gt;。其实其后端运行的命令是：&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;   cmd: clang  -fsyntax-only -fno-exceptions main.cc
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;最近用这个插件，基本代码都会是一遍编译通过啊，哈哈。Clang错误提示也人性化一点，比如在Xcode下会提示你想的是不是”XXX”之类的。&lt;/p&gt;
-
-</description>
-				<published>2012-12-16 00:00:00 +0800</published>
-				<link>http://cyukang.com/2012/12/16/use-clang-autocomplete-mode.html</link>
 			</item>
 		
 	</channel>

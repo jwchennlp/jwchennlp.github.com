@@ -204,8 +204,7 @@ critbit的结构很简单:</p>
 <span class="k">typedef</span> <span class="k">struct</span><span class="p">{</span>
     <span class="kt">void</span><span class="o">*</span> <span class="n">root</span><span class="p">;</span>
 <span class="p">}</span><span class="n">critbit0_tree</span><span class="p">;</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>其中child是void*指针，对于树的内部节点其指向的是子节点，对于叶子节点其指向的是字符串。
 byte用来表示当前节点匹配的长度，otherbits是一个mask，可以用来快速的取得不同最高位，在查询的过程中用这个来做branch。</p>
@@ -231,12 +230,12 @@ byte用来表示当前节点匹配的长度，otherbits是一个mask，可以用
 
 <p>因此在查找的这段代码里是这样的：</p>
 
-<div class="highlight"><pre><code class="cpp"><span class="kt">int</span> <span class="n">critbit0_contains</span><span class="p">(</span><span class="n">critbit0_tree</span><span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">u</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="cpp"><span class="kt">int</span> <span class="nf">critbit0_contains</span><span class="p">(</span><span class="n">critbit0_tree</span><span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">u</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">const</span> <span class="n">uint8</span><span class="o">*</span> <span class="n">ubytes</span><span class="o">=</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">u</span><span class="p">;</span>
-    <span class="k">const</span> <span class="n">size_t</span> <span class="n">ulen</span><span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+    <span class="k">const</span> <span class="kt">size_t</span> <span class="n">ulen</span><span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
     <span class="n">uint8</span><span class="o">*</span> <span class="n">p</span><span class="o">=</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">root</span><span class="p">;</span>
     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">p</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="k">while</span><span class="p">(</span> <span class="mi">1</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">intptr_t</span><span class="p">)</span><span class="n">p</span> <span class="p">){</span>       <span class="c1">//内部节点? </span>
+    <span class="k">while</span><span class="p">(</span> <span class="mi">1</span> <span class="o">&amp;</span> <span class="p">(</span><span class="kt">intptr_t</span><span class="p">)</span><span class="n">p</span> <span class="p">){</span>       <span class="c1">//内部节点? </span>
         <span class="n">critbit0_node</span><span class="o">*</span> <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>  <span class="c1">//取得真正的指针</span>
         <span class="n">uint8</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
         <span class="k">if</span><span class="p">(</span><span class="n">q</span><span class="o">-&gt;</span><span class="n">byte</span> <span class="o">&lt;</span> <span class="n">ulen</span><span class="p">)</span> <span class="n">c</span> <span class="o">=</span> <span class="n">ubytes</span><span class="p">[</span><span class="n">q</span><span class="o">-&gt;</span><span class="n">byte</span><span class="p">];</span>
@@ -246,8 +245,7 @@ byte用来表示当前节点匹配的长度，otherbits是一个mask，可以用
 	<span class="c1">//叶子节点</span>
     <span class="k">return</span> <span class="mi">0</span> <span class="o">==</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">p</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <h4 id="bit">取最高位的非0bit</h4>
 
@@ -260,8 +258,7 @@ byte用来表示当前节点匹配的长度，otherbits是一个mask，可以用
 <div class="highlight"><pre><code class="cpp"><span class="n">newotherbits</span> <span class="o">|=</span> <span class="n">newotherbits</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">;</span>
 <span class="n">newotherbits</span> <span class="o">|=</span> <span class="n">newotherbits</span><span class="o">&gt;&gt;</span><span class="mi">2</span><span class="p">;</span>
 <span class="n">newotherbits</span> <span class="o">|=</span> <span class="n">newotherbits</span><span class="o">&gt;&gt;</span><span class="mi">4</span><span class="p">;</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>这相当于是计算不小于它的2的整数次幂，对于32bit的代码可以看看<a href="http://blog.codingnow.com/cloud/CodeCollection">这里</a>的<code>next_pow_of_2</code>。</p>
 
@@ -280,6 +277,8 @@ byte用来表示当前节点匹配的长度，otherbits是一个mask，可以用
       <li class="next"><a href="/2013/05/09/git-command.html" title="迁移到Git">迁移到Git&rarr;</a></li>
       
 
+      
+      <li class="previous"><a href="/2013/07/06/studying-rails.html" title="初学Rails">&larr; 初学Rails</a></li>
       
 
 
@@ -351,6 +350,10 @@ byte用来表示当前节点匹配的长度，otherbits是一个mask，可以用
       <ul>
            
         <li class="v-aside-li">
+          <a href="/2013/07/06/studying-rails.html" title="初学Rails" rel="bookmark">初学Rails</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2013/05/18/critbit.html" title="高效的Crit-bit Tree" rel="bookmark">高效的Crit-bit Tree</a>
         </li>              	      	            
            
@@ -376,10 +379,6 @@ byte用来表示当前节点匹配的长度，otherbits是一个mask，可以用
            
         <li class="v-aside-li">
           <a href="/2013/02/15/reading-bootstrap-scheme.html" title="读bootstrap scheme" rel="bookmark">读bootstrap scheme</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2013/01/27/emacs-speaking-now.html" title="Emacs会说话" rel="bookmark">Emacs会说话</a>
         </li>              	      	            
         
       </ul>  

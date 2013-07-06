@@ -158,64 +158,51 @@
 
   <div class="row post">
     <div class="span8">
-      <h1 class="title"><a href="/2013/05/09/git-command.html" title="迁移到Git">迁移到Git</a> </h1>
+      <h1 class="title"><a href="/2013/07/06/studying-rails.html" title="初学Rails">初学Rails</a> </h1>
 
       
-<p>公司这群人终于打算从CVS迁徙到Git上了，CVS这套公司用了六年。CVS这是90年代的东西，我们不能因为年代久远而嫌弃这，只是CVS这东西对于一个比较大的项目来说创建分支是相当漫长，大多数程序员都没有耐心的。
-迁徙计划虽然纸上谈兵了很长时间，直到现在才终于打算行动。</p>
+<p>我在2012年左右开始关注Ruby，平时有的时候会用Ruby写一些脚本。这是一个很活跃的社区，Ruby火起来也不是最近的事。可贵的这里总是有一些新的东西出来，比如我现在的这个博客是基于jekyll和Github的。
+Ruby的迅速崛起更多的还是因为Rails，所以学习Rails也是了解Ruby的一个好方法。</p>
 
-<p>上午把Git在服务器上搭建好，主要卡在一个Git的命令上，因为一些权限问题。</p>
+<p>最近为公司内部所配置的GitLab是Rails开发的。另外我自己也在公司做一些Web程序，其实是很简单的东西，就是把每天晚上跑的程序各种测试结果展示出来(nightly/weekly/coverage等等)。我选用Rails来开发，果然一个最初的版本很快就做出来了。在初学Rails的过程中让我体会到了一些web开发的乐趣。</p>
 
-<div class="highlight"><pre><code class="sh">git init --bare --shared<span class="o">=</span>group ; --shared<span class="o">=</span>group forget this
-</code></pre>
-</div>
+<p>Rails适合小团队的快速开发，其中的一些理念是：</p>
 
-<p>Git的web接口是用的是<a href="http://viewgit.fealdia.org/">ViewGit</a>，自己做了一些修改，加上<a href="http://qbnz.com/highlighter/">GeShi</a>来高亮代码，并使用了<a href="https://github.com/trybeee/GitStats">GitStats</a>来做代码统计。GitStats统计的项目非常多，看起来很直观。</p>
+<ul>
+<li>Encourage Agility             --鼓励敏捷开发 </li>
+<li>Convention Over Configuration --约定高于配置 </li>
+<li>DRY                           --不要重复自己 </li>
+<li>Less Code                     --更短小的代码 </li>
+</ul>
 
-<p>稍微记录一下常用的一些git命令。</p>
+<p>正是这些开发原则使得Rails开发如此简单明了(当然前提是你按照Rails约定的方式来)。
+我原来做过一些web开发服务器方面的工作，在那种模式下开发需要每个人各司其责。
+但是Rails不同，在ActiveModel这样的抽象层基础上你需要关注的数据库方面的东西少了，
+明确的MVC模式把你需要关注的撤离开来，这种复杂程度一个人完全能掌控下来。当然这种高度的抽象是以牺牲一部分效率为前提的，但其实在很多时候开发效率的优先级是高于实现效率的，
+这也是Ruby所选择的一个理念。 </p>
 
-<p>这里有一个最直观的Git学习的地方<a href="http://pcottle.github.io/learnGitBranching/?demo">leanGitBranch</a>。</p>
+<p>学习Rails的过程中这些资料是非常好的，这几本书都面向初学者，写得非常详细：</p>
 
-<table border="2" cellpadding="5" align="center">
-  <tbody>
-<tr>
-<td>检出仓库 </td> <td>   git clone repo</td>
-</tr>
-<tr>
-<td> 更新</td>   <td> git pull</td>
-<tr>
-<td> 提交到远程</td> <td> git push</td>
-</tr>
-<tr>
-<td>提交到本地</td>  <td>git commit -am"log message" </td>
-</tr>
-<td>创建branch</td>  <td>git branch branch_name</td>
-<tr>
-<td>切换branch</td>  <td>git checkout branch_name</td>
-</tr>
-<tr>
-<td>合并branch</td>  <td>git merge branch_name</td>
-</tr>
-<tr>
-<td>图形界面</td>         <td> gitk</td>
-</tr>
-<tr>
-<td>解决冲突</td>          <td>git mergetool</td>
-</tr>
-<tr>
-<td>撤销上一次commit</td>  <td>git revert HEAD</td>
-</tr>
-<tr>
-<td>撤销上上次commit</td>  <td>git revert HEAD^ </td>
-</tr>
-<tr>
-<td>撤销上一次的merge</td>  <td>git reset --hard HEAD^</td>
-</tr>
+<h3 id="ruby-on-railshttprailstutorial-chinaorg"><a href="http://railstutorial-china.org/">Ruby On Rails教程</a></h3>
 
+<h3 id="begining-rails-3httpbookdoubancomsubject4005707"><a href="http://book.douban.com/subject/4005707/">Begining Rails 3</a></h3>
 
+<h3 id="agile-web-development-with-railshttpbookdoubancomsubject1416743"><a href="http://book.douban.com/subject/1416743/">Agile Web Development with Rails</a></h3>
 
+<p>当我熟悉了一些基本概念的时候，我就可以看Github上各种Rails的代码了，约定高于配置的另外一个优点就是所有Rails开发的东西结构看起来是一样的，便于不同开发者之间的交流。</p>
 
-</tr></tbody></table>
+<hr />
+
+<p>Rails的一个比较突出的问题是版本之间的兼容性比较差。</p>
+
+<p>比如Begining Rails里面Plugin那章的那个例子，在Rails3.1系列开始已经不支持那种方式的plugin了，其中用到的<a href="http://stackoverflow.com/questions/12313621/undefined-method-class-inheritable-accessor-for-activerecordextensionssqlite">class_inheritable_accessor</a>也变成了class_attribute。这种问题非常多，另外据说最新的Rails4.0改动也很大。</p>
+
+<p>这是一个老问题，在早起的版本就有人在这上面都发生过争吵。一些人说变化太频繁，不容易学习。
+其中这篇<a href="http://erniemiller.org/2011/06/14/wth-is-happening-to-rails-ill-tell-you/">“WTH is happening to Rails?” I’ll tell you</a> 
+解释了一下Rails如此的原因，并称这种改变位『成长』。</p>
+
+<p>学习Rails的路还比较长，后面继续。</p>
+
 
       
       <ul class="pager">
@@ -249,24 +236,8 @@
 
   <div class="span4 sidebar">
 
-    <h4 class="date">发布日期：<span>09 May 2013</span></h4>
+    <h4 class="date">发布日期：<span>06 July 2013</span></h4>
 
-    
-    <h4>标签</h4>
-    <ul class="tag_box">
-      
-      
-
-
-  
-     
-    	<li><a href="/tags.html#Tools-ref">Tools <span>1</span></a></li>
-    
-  
-
-
-
-    </ul>
       
 
     <nav class="nav">
@@ -285,7 +256,19 @@
       <ul>
            
         <li class="v-aside-li">
+          <a href="/2013/07/06/studying-rails.html" title="初学Rails" rel="bookmark">初学Rails</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
+          <a href="/2013/05/18/critbit.html" title="高效的Crit-bit Tree" rel="bookmark">高效的Crit-bit Tree</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2013/05/09/git-command.html" title="迁移到Git" rel="bookmark">迁移到Git</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
+          <a href="/2013/04/17/lua_10_source.html" title="看看Lua 1.0 代码" rel="bookmark">看看Lua 1.0 代码</a>
         </li>              	      	            
            
         <li class="v-aside-li">
@@ -302,18 +285,6 @@
            
         <li class="v-aside-li">
           <a href="/2013/02/15/reading-bootstrap-scheme.html" title="读bootstrap scheme" rel="bookmark">读bootstrap scheme</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2013/01/27/emacs-speaking-now.html" title="Emacs会说话" rel="bookmark">Emacs会说话</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2013/01/22/poj-500.html" title="迟到的POJ 500" rel="bookmark">迟到的POJ 500</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2013/01/04/print-stack-before-exiting.html" title="获取挂掉程序的栈信息" rel="bookmark">获取挂掉程序的栈信息</a>
         </li>              	      	            
         
       </ul>  

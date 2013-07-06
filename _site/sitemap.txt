@@ -10,7 +10,10 @@ http://cyukang.com/robots.txt
 http://cyukang.com/sitemap.txt
 http://cyukang.com/tags.html
 
+http://cyukang.com/2013/07/06/studying-rails.html
+http://cyukang.com/2013/05/18/critbit.html
 http://cyukang.com/2013/05/09/git-command.html
+http://cyukang.com/2013/04/17/lua_10_source.html
 http://cyukang.com/2013/04/17/apt-usage.html
 http://cyukang.com/2013/04/11/xor_link_list.html
 http://cyukang.com/2013/03/03/try-mathjax.html

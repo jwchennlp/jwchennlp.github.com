@@ -169,31 +169,29 @@
 
 <p>回到正题，我最近切换到Mac下。因为在Mac OS X下编译器变成了Clang， Clang是基于LLVM的。LLVM对于分析代码是有比较方便的支持，所以基于LLVM有各种分析源程序的工具了，Xcode下的一些辅助开发的工具还是很舒服的。前些天突然想到那么会不会有个东西来作为Emacs的自动补全的后端，一搜果然有了这个<a href="https://github.com/mikeandmore/auto-complete-clang">auto-complete-clang</a>，使用了一下非常的方便。其实看看其代码是在后面调用Clang的，比如在main.cc源文件里面写一些代码:</p>
 
-<div class="highlight"><pre><code class="cpp">    <span class="cp">#include &lt;string&gt;</span>
-    <span class="cp">#include &lt;vector&gt;</span>
+<div class="highlight"><pre><code class="cpp">    <span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
+    <span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">vector</span><span class="o">&gt;</span>
     <span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
     
     <span class="k">class</span> <span class="nc">Demo</span><span class="p">{</span>
-    <span class="k">public</span><span class="o">:</span>
+    <span class="nl">public:</span>
         <span class="kt">void</span> <span class="n">print</span><span class="p">();</span>
-        <span class="kt">void</span> <span class="n">test</span><span class="p">();</span>
-    <span class="k">private</span><span class="o">:</span>
+        <span class="kt">void</span> <span class="nf">test</span><span class="p">();</span>
+    <span class="nl">private:</span>
         <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
     <span class="p">};</span>
     
-    <span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span><span class="p">;</span>
         <span class="n">Demo</span> <span class="n">demo</span><span class="p">;</span>
         <span class="n">demo</span><span class="p">.</span>
     <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>结果还是非常精准的，不想截图了。后端运行的命令其实是:</p>
 
 <div class="highlight"><pre><code class="sh">    cmd: clang -cc1 main.cc -fsyntax-only -code-completion-at main.cc:18:10
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>所得到的结果是:</p>
 
@@ -203,14 +201,12 @@
     COMPLETION: <span class="nb">test</span> : <span class="o">[</span><span class="c">#void#]test()</span>
     COMPLETION: value : <span class="o">[</span><span class="c">#int#]value</span>
     COMPLETION: ~Demo : <span class="o">[</span><span class="c">#void#]~Demo()</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>auto-complete-clang做的事情就是把这个结果再展示出来，其实这条命令也做了语法检查的，所以加上一个语法检查的功能应该也是可以的。一搜果然还是有了，看这个<a href="http://duncan.mac-vicar.com/2011/08/30/realtime-syntax-checking-with-emacs/">Realtime syntax checking with emacs</a>，需要翻墙，不过代码在<a href="https://github.com/dmacvicar/duncan-emacs-setup/tree/master/site-lisp">Github上</a>。其实其后端运行的命令是：</p>
 
 <div class="highlight"><pre><code class="sh">   cmd: clang  -fsyntax-only -fno-exceptions main.cc
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>最近用这个插件，基本代码都会是一遍编译通过啊，哈哈。Clang错误提示也人性化一点，比如在Xcode下会提示你想的是不是”XXX”之类的。</p>
 
@@ -299,6 +295,10 @@
       <ul>
            
         <li class="v-aside-li">
+          <a href="/2013/07/06/studying-rails.html" title="初学Rails" rel="bookmark">初学Rails</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2013/05/18/critbit.html" title="高效的Crit-bit Tree" rel="bookmark">高效的Crit-bit Tree</a>
         </li>              	      	            
            
@@ -324,10 +324,6 @@
            
         <li class="v-aside-li">
           <a href="/2013/02/15/reading-bootstrap-scheme.html" title="读bootstrap scheme" rel="bookmark">读bootstrap scheme</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2013/01/27/emacs-speaking-now.html" title="Emacs会说话" rel="bookmark">Emacs会说话</a>
         </li>              	      	            
         
       </ul>  

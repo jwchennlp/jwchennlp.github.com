@@ -182,9 +182,9 @@
 <span class="cp">#include &lt;unistd.h&gt;</span>
 <span class="cp">#include &lt;assert.h&gt;</span>
 
-<span class="kt">void</span> <span class="n">DumpBacktrace</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">pid_t</span> <span class="n">dying_pid</span> <span class="o">=</span> <span class="n">getpid</span><span class="p">();</span>
-    <span class="n">pid_t</span> <span class="n">child_pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">DumpBacktrace</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">pid_t</span> <span class="n">dying_pid</span> <span class="o">=</span> <span class="n">getpid</span><span class="p">();</span>
+    <span class="kt">pid_t</span> <span class="n">child_pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">child_pid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">perror</span><span class="p">(</span><span class="s">&quot;fork() while collecting backtrace:&quot;</span><span class="p">);</span>
     <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">child_pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
@@ -200,7 +200,7 @@
     <span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="n">BacktraceOnSegv</span><span class="p">()</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="nf">BacktraceOnSegv</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">struct</span> <span class="n">sigaction</span> <span class="n">action</span> <span class="o">=</span> <span class="p">{};</span>
     <span class="n">action</span><span class="p">.</span><span class="n">sa_handler</span> <span class="o">=</span> <span class="n">DumpBacktrace</span><span class="p">;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">sigaction</span><span class="p">(</span><span class="n">SIGSEGV</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">action</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
@@ -211,18 +211,17 @@
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="n">test</span><span class="p">()</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
     <span class="c1">//assert(0);</span>
     <span class="kt">int</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">BacktraceOnSegv</span><span class="p">();</span>
     <span class="n">test</span><span class="p">();</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div>
 
 <p>另外前段时间看到这篇文章<a href="http://www.runswift.ly/solving-bugs.html">Solving vs. Fixing</a>写得不错，在面对一个bug的时候，先不要急于立马上gdb调试，根据现有的信息好好思考为什么会出现这个情况。
 Reddit上的一个得分最高的回复：</p>
@@ -329,6 +328,10 @@ Reddit上的一个得分最高的回复：</p>
       <ul>
            
         <li class="v-aside-li">
+          <a href="/2013/07/06/studying-rails.html" title="初学Rails" rel="bookmark">初学Rails</a>
+        </li>              	      	            
+           
+        <li class="v-aside-li">
           <a href="/2013/05/18/critbit.html" title="高效的Crit-bit Tree" rel="bookmark">高效的Crit-bit Tree</a>
         </li>              	      	            
            
@@ -354,10 +357,6 @@ Reddit上的一个得分最高的回复：</p>
            
         <li class="v-aside-li">
           <a href="/2013/02/15/reading-bootstrap-scheme.html" title="读bootstrap scheme" rel="bookmark">读bootstrap scheme</a>
-        </li>              	      	            
-           
-        <li class="v-aside-li">
-          <a href="/2013/01/27/emacs-speaking-now.html" title="Emacs会说话" rel="bookmark">Emacs会说话</a>
         </li>              	      	            
         
       </ul>  
