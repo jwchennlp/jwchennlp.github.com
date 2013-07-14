@@ -4,7 +4,7 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-07-14T23:58:01+08:00</updated>
+ <updated>2013-07-15T00:04:51+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
@@ -933,6 +933,15 @@ Mac下的生态环境看起来更良好。有人会在Mac上认认真真开发�
 &lt;p&gt;不得不说Mac的界面和其中的很多软件界面设计非常好，看起来舒服，堪称优美的作品。
 为什么选择美的东西，这在说得好听点为『品位』。对于程序员来说品位同样重要，参见《黑客与画家》的一章『设计者的品位』，那里有非常好的阐述。&lt;/p&gt;
 
+&lt;h3 id=&quot;section-6&quot;&gt;一些堪称精美又实用的软件&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Alfred，快速访问文件和快速打开程序，还可以自己定义一些workflow。&lt;/li&gt;
+  &lt;li&gt;Dash，方便查看各种文档和手册。&lt;/li&gt;
+  &lt;li&gt;CodeRunner，快速运行一小片代码，支持各种语言。&lt;/li&gt;
+  &lt;li&gt;NewsBar， 订阅rss，在桌面左边实时显示新的内容。&lt;/li&gt;
+  &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </content>
  </entry>
  
