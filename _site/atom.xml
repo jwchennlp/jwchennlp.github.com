@@ -4,13 +4,156 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-07-07T10:32:18+08:00</updated>
+ <updated>2013-07-14T13:16:30+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
    <email>moorekang@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Leanring Ruby with Ruby Warrior</title>
+   <link href="http://cyukang.com/2013/07/14/ruby-warrior.html"/>
+   <updated>2013-07-14T00:00:00+08:00</updated>
+   <id>http://cyukang.com/2013/07/14/ruby-warrior</id>
+   <content type="html">
+&lt;p&gt;Ruby上总有好玩的东西，偶然看到这个&lt;a href=&quot;https://github.com/ryanb/ruby-warrior&quot;&gt;RubyWarrior&lt;/a&gt;，玩了一把感觉还有些意思。这个有些像我原来介绍的&lt;a href=&quot;http://cyukang.com/2012/11/22/ruby-robot-ai.html&quot;&gt;RubyRobot&lt;/a&gt;,
+不过更像之前的&lt;a href=&quot;http://cyukang.com/2011/07/22/wumpus-and-2.html&quot;&gt;Wumpus&lt;/a&gt;，看来我对这种游戏有些兴趣。&lt;/p&gt;
+
+&lt;p&gt;Ruby新手边玩边熟悉了语言。需要代码的可以clone下来看看，如果只是玩可以gem装上，然后运行rubywarrior就开始练级了。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;gem install rubywarrior&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;我现在只是完成了初学者模式，这里的AI还比较简单，主要实现一个函数就行了。分为两种模式，第一种只用对付当前的场景，第二种为epic(史诗?)模式，要从1~9连续闯关。&lt;/p&gt;
+
+&lt;p&gt;我的平均成绩是C，所有级的代码放在&lt;a href=&quot;https://github.com/chenyukang/rubywarrior&quot;&gt;Github上&lt;/a&gt;了。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+Level Score: 27
+Time Bonus: 18
+Level Grade: F
+Total Score: 374 + 45 = 419
+Your average grade for this tower is: C
+
+Level 1: S
+Level 2: C
+Level 3: B
+Level 4: B
+Level 5: D
+Level 6: F
+Level 7: B
+Level 8: F
+Level 9: F
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;中级模式是二维的地图，所以更有挑战。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Spooner/ruby_armor&quot;&gt;这里&lt;/a&gt;有一个前端，不过我还没用过。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Sujimichi/ruby_warrior_NN_solution&quot;&gt;这还有人用神经网络的方法来做的&lt;/a&gt;，可以学习一下，:)。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Metaprogramming Ruby</title>
+   <link href="http://cyukang.com/2013/07/07/meta-programming-ruby.html"/>
+   <updated>2013-07-07T00:00:00+08:00</updated>
+   <id>http://cyukang.com/2013/07/07/meta-programming-ruby</id>
+   <content type="html">
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Meteprogramming is writing code that writes code&lt;/li&gt;
+  &lt;li&gt;鬼城和集市，很多语言的运行环境在执行的时候已经固定，一片死寂。而支持Metaprogramming的语言的执行环境是充满活力的集市。很好的比喻。&lt;/li&gt;
+  &lt;li&gt;动态元编程和静态元编程，C++的template属于静态元编程。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-ruby-object-model&quot;&gt;The Ruby Object Model&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Class定义永远是开放的，你能重新定义任何类或者给类加上一些新的东西。注意MonkeyPatch可能导致的Bug。&lt;/li&gt;
+  &lt;li&gt;分清楚instance_method和class_method，&lt;/li&gt;
+  &lt;li&gt;&lt;img src=&quot;/images/instance_method.png&quot; alt=&quot;instance_method&quot; class=&quot;img-center&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Class也是对象。与C#/Java的Class不一样的地方，Ruby允许在代码运行期间操作类相关的信息，比如增加method或者重新定义method。&lt;/li&gt;
+  &lt;li&gt;&lt;img src=&quot;/images/object_model.png&quot; alt=&quot;object_model&quot; class=&quot;img-center&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;methods&quot;&gt;Methods&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;static type checking, for example, if you call simple_talk() on Layer object that has no such method, the compiler protests loudly. &lt;/li&gt;
+  &lt;li&gt;call method dynamic using send().&lt;/li&gt;
+  &lt;li&gt;define_method generates instance method dynamically, to_s vs to_sym.&lt;/li&gt;
+  &lt;li&gt;Ghost method, method_missing.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;过多是用会不会拖慢执行效率，要顺着继承链一直查找method。&lt;/p&gt;
+
+  &lt;p&gt;注意method_missing可能导致的死循环调用。&lt;/p&gt;
+
+  &lt;p&gt;和继承过来的method之间的冲突， undef_method解决。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;blocks&quot;&gt;Blocks&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;class, module, and def change scope.&lt;/li&gt;
+  &lt;li&gt;Flat Scope.&lt;/li&gt;
+  &lt;li&gt;instacen_eval/instance_exec&lt;/li&gt;
+  &lt;li&gt;create block : lambda/proc/Proc.new&lt;/li&gt;
+  &lt;li&gt;lambda vs Proc&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;return in Proc also return from the scope.&lt;/p&gt;
+
+  &lt;p&gt;lambda’s argument checking is more strict.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A event DSL, a elegent example for blocks.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;class-definitions&quot;&gt;Class Definitions&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;A Ruby class definition is actually regular code that runs.&lt;/li&gt;
+  &lt;li&gt;class_eval vs instance_eval&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;class_eval both changes self and current class&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;Eigenclass, the metaclass of a object &lt;/li&gt;
+    &lt;li&gt;three way to define class method&lt;/li&gt;
+    &lt;li&gt;Around alias&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;code-writes-code&quot;&gt;Code writes code&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;The powerful weapon: eval&lt;/li&gt;
+  &lt;li&gt;A good example: add_attribute&lt;/li&gt;
+  &lt;li&gt;Three ways to express this idea&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;active-record&quot;&gt;Active record&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Validations&lt;/li&gt;
+  &lt;li&gt;alias_method_chain&lt;/li&gt;
+  &lt;li&gt;Dynamic attributes, define read/write/question Dynamic Methods for all the columns in databases, for performance.&lt;/li&gt;
+  &lt;li&gt;Lesson learned, performance/complexity/readable trade-offs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;metaprogramming-safely&quot;&gt;Metaprogramming safely&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Defusing Monkeypatches, make it explicit with module, check it before patche, add warning messages.&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>初学Rails</title>

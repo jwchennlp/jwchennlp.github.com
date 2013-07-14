@@ -6,6 +6,147 @@
 		<link>http://cyukang.com</link>
 		
 			<item>
+				<title>Leanring Ruby with Ruby Warrior</title>
+				<description>
+&lt;p&gt;Ruby上总有好玩的东西，偶然看到这个&lt;a href=&quot;https://github.com/ryanb/ruby-warrior&quot;&gt;RubyWarrior&lt;/a&gt;，玩了一把感觉还有些意思。这个有些像我原来介绍的&lt;a href=&quot;http://cyukang.com/2012/11/22/ruby-robot-ai.html&quot;&gt;RubyRobot&lt;/a&gt;,
+不过更像之前的&lt;a href=&quot;http://cyukang.com/2011/07/22/wumpus-and-2.html&quot;&gt;Wumpus&lt;/a&gt;，看来我对这种游戏有些兴趣。&lt;/p&gt;
+
+&lt;p&gt;Ruby新手边玩边熟悉了语言。需要代码的可以clone下来看看，如果只是玩可以gem装上，然后运行rubywarrior就开始练级了。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;gem install rubywarrior&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;我现在只是完成了初学者模式，这里的AI还比较简单，主要实现一个函数就行了。分为两种模式，第一种只用对付当前的场景，第二种为epic(史诗?)模式，要从1~9连续闯关。&lt;/p&gt;
+
+&lt;p&gt;我的平均成绩是C，所有级的代码放在&lt;a href=&quot;https://github.com/chenyukang/rubywarrior&quot;&gt;Github上&lt;/a&gt;了。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+Level Score: 27
+Time Bonus: 18
+Level Grade: F
+Total Score: 374 + 45 = 419
+Your average grade for this tower is: C
+
+Level 1: S
+Level 2: C
+Level 3: B
+Level 4: B
+Level 5: D
+Level 6: F
+Level 7: B
+Level 8: F
+Level 9: F
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;中级模式是二维的地图，所以更有挑战。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Spooner/ruby_armor&quot;&gt;这里&lt;/a&gt;有一个前端，不过我还没用过。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Sujimichi/ruby_warrior_NN_solution&quot;&gt;这还有人用神经网络的方法来做的&lt;/a&gt;，可以学习一下，:)。&lt;/p&gt;
+</description>
+				<published>2013-07-14 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/07/14/ruby-warrior.html</link>
+			</item>
+		
+			<item>
+				<title>Metaprogramming Ruby</title>
+				<description>
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Meteprogramming is writing code that writes code&lt;/li&gt;
+  &lt;li&gt;鬼城和集市，很多语言的运行环境在执行的时候已经固定，一片死寂。而支持Metaprogramming的语言的执行环境是充满活力的集市。很好的比喻。&lt;/li&gt;
+  &lt;li&gt;动态元编程和静态元编程，C++的template属于静态元编程。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-ruby-object-model&quot;&gt;The Ruby Object Model&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Class定义永远是开放的，你能重新定义任何类或者给类加上一些新的东西。注意MonkeyPatch可能导致的Bug。&lt;/li&gt;
+  &lt;li&gt;分清楚instance_method和class_method，&lt;/li&gt;
+  &lt;li&gt;&lt;img src=&quot;/images/instance_method.png&quot; alt=&quot;instance_method&quot; class=&quot;img-center&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Class也是对象。与C#/Java的Class不一样的地方，Ruby允许在代码运行期间操作类相关的信息，比如增加method或者重新定义method。&lt;/li&gt;
+  &lt;li&gt;&lt;img src=&quot;/images/object_model.png&quot; alt=&quot;object_model&quot; class=&quot;img-center&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;methods&quot;&gt;Methods&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;static type checking, for example, if you call simple_talk() on Layer object that has no such method, the compiler protests loudly. &lt;/li&gt;
+  &lt;li&gt;call method dynamic using send().&lt;/li&gt;
+  &lt;li&gt;define_method generates instance method dynamically, to_s vs to_sym.&lt;/li&gt;
+  &lt;li&gt;Ghost method, method_missing.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;过多是用会不会拖慢执行效率，要顺着继承链一直查找method。&lt;/p&gt;
+
+  &lt;p&gt;注意method_missing可能导致的死循环调用。&lt;/p&gt;
+
+  &lt;p&gt;和继承过来的method之间的冲突， undef_method解决。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;blocks&quot;&gt;Blocks&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;class, module, and def change scope.&lt;/li&gt;
+  &lt;li&gt;Flat Scope.&lt;/li&gt;
+  &lt;li&gt;instacen_eval/instance_exec&lt;/li&gt;
+  &lt;li&gt;create block : lambda/proc/Proc.new&lt;/li&gt;
+  &lt;li&gt;lambda vs Proc&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;return in Proc also return from the scope.&lt;/p&gt;
+
+  &lt;p&gt;lambda’s argument checking is more strict.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A event DSL, a elegent example for blocks.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;class-definitions&quot;&gt;Class Definitions&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;A Ruby class definition is actually regular code that runs.&lt;/li&gt;
+  &lt;li&gt;class_eval vs instance_eval&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;class_eval both changes self and current class&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;Eigenclass, the metaclass of a object &lt;/li&gt;
+    &lt;li&gt;three way to define class method&lt;/li&gt;
+    &lt;li&gt;Around alias&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;code-writes-code&quot;&gt;Code writes code&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;The powerful weapon: eval&lt;/li&gt;
+  &lt;li&gt;A good example: add_attribute&lt;/li&gt;
+  &lt;li&gt;Three ways to express this idea&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;active-record&quot;&gt;Active record&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Validations&lt;/li&gt;
+  &lt;li&gt;alias_method_chain&lt;/li&gt;
+  &lt;li&gt;Dynamic attributes, define read/write/question Dynamic Methods for all the columns in databases, for performance.&lt;/li&gt;
+  &lt;li&gt;Lesson learned, performance/complexity/readable trade-offs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;metaprogramming-safely&quot;&gt;Metaprogramming safely&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Defusing Monkeypatches, make it explicit with module, check it before patche, add warning messages.&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+				<published>2013-07-07 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/07/07/meta-programming-ruby.html</link>
+			</item>
+		
+			<item>
 				<title>初学Rails</title>
 				<description>
 &lt;p&gt;我在2012年左右开始关注Ruby，平时有的时候会用Ruby写一些脚本。这是一个很活跃的社区，Ruby火起来也不是最近的事。可贵的这里总是有一些新的东西出来，比如我现在的这个博客是基于jekyll和Github的。
@@ -474,64 +615,6 @@ brew deps   - 显示包依赖
 </description>
 				<published>2013-02-15 00:00:00 +0800</published>
 				<link>http://cyukang.com/2013/02/15/reading-bootstrap-scheme.html</link>
-			</item>
-		
-			<item>
-				<title>Emacs会说话</title>
-				<description>
-&lt;p&gt;出来工作之前我从来没认真考虑过我的英语口语问题，大学时候的四级口语考试C级也没让我意识到自己的发音比较烂。学了好多年哑巴英语，又因为本人生性有点害羞经常不好意思开口说英语，悲剧早就注定。其实我的英语阅读能力还是可以的，不过工作之后同事们都嘲笑我口语听起来像印度人，据说发音极其古怪。&lt;/p&gt;
-
-&lt;p&gt;在Mac下有一个叫做say的命令行程序，我有时候会用来听单词单词发音。这个程序加上-f参数也可以用来朗读整个文件。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt; say hello wrold
- say -f demo.txt
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;前几天突然觉得如果写个Emacs Minor Mode，能在边写单词的时候Emacs就把你写的朗读一遍就好了，Emacs号称能煮咖啡，这点小事当然不在话下。其实除了在公司我也很少写英文，不过这个想法看起来比较好玩，于是动手做了一下。预想的基本功能是实现了，我把它叫做EmacSay-mode，意为在Emacs+Mac+Say下实现的，所以这东西可能不能在Linux下运行。&lt;/p&gt;
-
-&lt;p&gt;这也是我第一次学着写一个minor mode，实现起来也很简单。整个不到100行elisp代码。&lt;/p&gt;
-
-&lt;p&gt;基本思路就是如果当前输入的字符是空白(或者其他非字母字符)，寻找前面一个字符串，格式化成一个命令行，用start-process或者shell-command来调用。
-注意start-process会fork出来一个子进程来执行命令，在书写过程中最好还是使用start-process来调用命令，因为say可能要待个一两秒才返回，如果使用shell-command来调用会造成输入有迟钝的感觉。&lt;/p&gt;
-
-&lt;p&gt;绑定的快捷键有这些，其中eamcsay-say-buffer是用来朗读当前的整个buffer，如果你想在其中中断朗读使用emacsay-say-stop。&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;cl&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;defvar&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;emacsay-mode-map&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;
-  &lt;span class=&quot;s&quot;&gt;&amp;quot;Keymap for emacsay minor mode&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;emacsay-mode-map&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;make-sparse-keymap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;define-key&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\C-cs&amp;quot;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;#39;emacsay-say-current-string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;define-key&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\C-cp&amp;quot;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;#39;emacsay-say-buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;define-key&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\C-ct&amp;quot;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&amp;#39;emacsay-say-stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;setq&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;emacsay-mode-map&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;还可以有一些小的改进，比如阅读时候闪烁单词，或者say声音的选择等等。&lt;/p&gt;
-
-&lt;p&gt;所有代码在GitHub: &lt;a href=&quot;https://github.com/chenyukang/emacSay&quot;&gt;emacSay-mode&lt;/a&gt;。 &lt;/p&gt;
-
-</description>
-				<published>2013-01-27 00:00:00 +0800</published>
-				<link>http://cyukang.com/2013/01/27/emacs-speaking-now.html</link>
-			</item>
-		
-			<item>
-				<title>迟到的POJ 500</title>
-				<description>
-&lt;p&gt;我发现自己有了很重的拖延症，一个表现就是在2011年3月定下的目标&lt;a href=&quot;http://cyukang.com/2011/03/27/fuckpaper.html&quot;&gt;POJ 500&lt;/a&gt;最近才完成。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://poj.org/userstatus?user_id=chenyukang&quot;&gt;这一页500道题&lt;/a&gt;耗费了我很多时间和精力，同样也带给了我很多知识和乐趣。&lt;/p&gt;
-
-&lt;p&gt;当然工作后毕竟还是没有学校的时间充足了，现在还花时间来做题似乎显得很悠闲，这500题最后十个是在元旦的几天假期里完成的。我是从2010年的4月份开始在Poj上做题，那天偶然发现自己原来2006年还注册过账号，于是做了两题试试，没想到后面就竟然沉迷其中，一直到自己从学校毕业出来。这两年强度还不算大，平时还是要在实验室做做项目的。我没参加过专业队的训练，不过参加过一次学校的比赛，和王骆驼两个人一个下午做出来五道，比较悲剧的是差一道没进决赛。不过当时还是挺欣慰的，毕竟自己还是不算专业选手啊。这一年多静下心来写程序收获很多，因为体会到了写程序的乐趣，有时候在睡觉的时候脑袋也在不知不觉地想问题。有时候我选择按不同的数据结构或者算法思想来选题做，有时候就在线上泡着看排我前面的人在做什么，然后自己也跟着做，这真写的是寂寞啊。不过现在回想起来这一两年算是最自由、最充实的写程序的日子了。&lt;/p&gt;
-
-&lt;p&gt;像ACM题这些东西最好还是大学开始接触，在开始学习基本算法和数据结构的时候就开始进行训练是最好的。当然如果大学能进专业队训练就更不错了，如果只是业余拿来练练手也是大有裨益的。也许我们做不到专业队哪些人写代码就像秀肌肉一样，体会到其中的乐趣就够了。在我开始做POJ之前我还是对算法充满了恐惧，感觉太高深。经过这些渐进的学习和训练，现在至少说有点入门的感受，面对一个问题多多少少会有一些思路和想法。也许平时项目和工作并没用到多少纯粹的算法部分，只是这有了这基本功还是能让你迅速上手其他东西。&lt;/p&gt;
-
-&lt;p&gt;《黑客和画家》里写到学习写程序和学习绘画的诸多相同点，这都是一门技能，除了多写、多看、多思考之外没有其他捷径可走。折腾多了自然就会有一点感觉。学习绘画的另外一个途径就是观摩经典的杰作，同样对应地看开源项目是另外一个很好的学习编程的途径。&lt;/p&gt;
-
-&lt;p&gt;幸好GitHub又被解封了。&lt;/p&gt;
-</description>
-				<published>2013-01-22 00:00:00 +0800</published>
-				<link>http://cyukang.com/2013/01/22/poj-500.html</link>
 			</item>
 		
 	</channel>
