@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Leanring Ruby with Ruby Warrior"
-description: "Leanring Ruby with Ruby Warrior"
+title: "Learning Ruby with Ruby Warrior"
+description: "Learning Ruby with Ruby Warrior"
 category: programming
 tags: [programming]
 ---
