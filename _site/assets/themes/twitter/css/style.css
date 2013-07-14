@@ -80,7 +80,9 @@ header{
     text-indent: 2em;
     font-size: 14px;
     line-height: 1.8;
-    font-family: "微软雅黑", "Arial","Helvetica","sans-serif";
+    /* font-family: "微软雅黑", "Arial","Helvetica","sans-serif";*/
+    font-family: "Georgia", "Microsoft YaHei",sans-serif;
+    font-size: 16px;
 }
 
 .post .sidebar {
@@ -268,7 +270,9 @@ pre {
 
 body {
     color: #102536;
-    font-family: Tahoma, "Lucida Grande", Arial, sans-serif;
+    /*font-family: Tahoma, "Lucida Grande", Arial, sans-serif;*/
+    font-family: "Georgia", sans-serif, "Microsoft YaHei",sans-serif;
+    font-size: 15px;
 }
 
 h1 {
