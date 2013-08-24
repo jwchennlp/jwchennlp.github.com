@@ -10,8 +10,8 @@ http://cyukang.com/robots.txt
 http://cyukang.com/sitemap.txt
 http://cyukang.com/tags.html
 
+http://cyukang.com/2013/08/24/meta-programming-ruby.html
 http://cyukang.com/2013/07/14/ruby-warrior.html
-http://cyukang.com/2013/07/07/meta-programming-ruby.html
 http://cyukang.com/2013/07/06/studying-rails.html
 http://cyukang.com/2013/05/18/critbit.html
 http://cyukang.com/2013/05/09/git-command.html

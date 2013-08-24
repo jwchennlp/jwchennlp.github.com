@@ -7,9 +7,9 @@
   <header>
     <meta charset="utf-8">
     
-    <title>一个小题目 | Yukang's Page</title>
+    <title>Metaprogramming Ruby | Yukang's Page</title>
     
-    
+    <meta name="description" content="">
     <meta name="author" content="Yukang">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -157,85 +157,106 @@
 
 <div class="row post">
   <div class="span8">
-    <h1 class="title">一个小题目</h1>
+    <h1 class="title">Metaprogramming Ruby</h1>
 
-    前些天在班级群里看到一个笔试题：
+    
+<p>『Metaprogramming Ruby』这本书看了两遍，从这本书里获取了一些乐趣。技术书籍就应该这样简明扼要，寓理于事。通过一个显示中的例子引入问题，展示元编程的解决办法， 顺带介绍一下用到相关技术的gems。</p>
+
+<p>下面这些不是书评，只是我在看第二遍的时候的一些简单的择要，用于自己的记忆和检索。</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<ul>
+  <li>Meteprogramming is writing code that writes code</li>
+  <li>鬼城和集市，很多语言的运行环境在执行的时候已经固定，一片死寂。而支持Metaprogramming的语言的执行环境是充满活力的集市。很好的比喻。</li>
+  <li>动态元编程和静态元编程，C++的template属于静态元编程。</li>
+</ul>
+
+<h2 id="the-ruby-object-model">The Ruby Object Model</h2>
+
+<ol>
+  <li>Class定义永远是开放的，你能重新定义任何类或者给类加上一些新的东西。注意MonkeyPatch可能导致的Bug。</li>
+  <li>分清楚instance_method和class_method，</li>
+  <li><img src="/images/instance_method.png" alt="instance_method" class="img-center" /></li>
+  <li>Class也是对象。与C#/Java的Class不一样的地方，Ruby允许在代码运行期间操作类相关的信息，比如增加method或者重新定义method。</li>
+  <li><img src="/images/object_model.png" alt="object_model" class="img-center" /></li>
+</ol>
+
+<h2 id="methods">Methods</h2>
+<ul>
+  <li>static type checking, for example, if you call simple_talk() on Layer object that has no such method, the compiler protests loudly.</li>
+  <li>call method dynamic using send().</li>
+  <li>define_method generates instance method dynamically, to_s vs to_sym.</li>
+  <li>Ghost method, method_missing.</li>
+</ul>
+
 <blockquote>
-<p class="quoted">从1到100000中任意拿掉两个数字，把剩下的99998个数顺序打乱，并且放入数组A中。要求只扫描一遍，把这两个数找出来；可以使用最多不超过5个局部变量，不能使用数组变量，并且不能改变原数组的值。</p>
+  <p>过多是用会不会拖慢执行效率，要顺着继承链一直查找method。</p>
+
+  <p>注意method_missing可能导致的死循环调用。</p>
+
+  <p>和继承过来的method之间的冲突， undef_method解决。</p>
 </blockquote>
-也想不到什么更好的解法，原解法是顺序扫一边求得所有数的乘积(mul_res)、和(sum_res)。用(N!)/mul_res得到两个数的乘积，1到100000的和减去sum_res得到两个数之和。 解这个方程得到两个数。关键是N!太大了，C会溢出。刚开始想想乘积每次模100000，后来写了一下还是不对的，因为模100000中可能就出现了0，后面全为0了。最后想到这么一个办法，不过中间 除法和比较多。也许有更快的解法。
-<div id="_mcePaste" style="overflow: hidden; position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px;">file:///home/heipang/document/wiki/Home_Page/Computer/笔试题.html</div>
-<pre class="src"><span style="color: #5f9ea0; font-style: italic;">//</span><span style="color: #5f9ea0; font-style: italic;">1到100 000
-</span><span style="color: #ffd700;">#include</span> <span style="color: #deb887;">&lt;iostream&gt;</span>
-<span style="color: #ffd700;">#include</span> <span style="color: #deb887;">&lt;math.h&gt;</span>
 
-<span style="color: #00bfff; font-weight: bold;">using</span> <span style="color: #00bfff; font-weight: bold;">namespace</span> <span style="color: #ffd700;">std</span>;
-<span style="color: #ffd700;">#define</span> <span style="color: #4eee94;">N</span> 100000
-<span style="color: #00bfff; font-weight: bold;">typedef</span> <span style="color: #98f5ff;">long</span> <span style="color: #98f5ff;">long</span> <span style="color: #98f5ff;">LL</span>;
+<h2 id="blocks">Blocks</h2>
+<ul>
+  <li>class, module, and def change scope.</li>
+  <li>Flat Scope.</li>
+  <li>instacen_eval/instance_exec</li>
+  <li>create block : lambda/proc/Proc.new</li>
+  <li>lambda vs Proc</li>
+</ul>
 
-<span style="color: #98f5ff;">LL</span> <span style="color: #4eee94;">a</span>;
-<span style="color: #98f5ff;">LL</span> <span style="color: #4eee94;">b</span>;
-<span style="color: #98f5ff;">LL</span> <span style="color: #4eee94;">vec</span>[N];
-<span style="color: #98f5ff;">int</span> <span style="color: #4eee94;">cnt</span>;
-<span style="color: #98f5ff;">LL</span>  <span style="color: #4eee94;">MAX_MUL</span>;
+<blockquote>
+  <p>return in Proc also return from the scope.</p>
 
-<span style="color: #98f5ff;">void</span> <span style="color: #daa520; font-weight: bold;">Find</span>(<span style="color: #00bfff; font-weight: bold;">const</span> <span style="color: #98f5ff;">LL</span>* <span style="color: #4eee94;">vec</span>)
-{
-    <span style="color: #98f5ff;">int</span> <span style="color: #4eee94;">sum</span>=0;
-    <span style="color: #98f5ff;">LL</span>  <span style="color: #4eee94;">mul</span>=1;
-    <span style="color: #98f5ff;">LL</span>  <span style="color: #4eee94;">Now</span>=1;
-    <span style="color: #00bfff; font-weight: bold;">for</span>(<span style="color: #98f5ff;">int</span> <span style="color: #4eee94;">i</span>=0;i&lt;cnt;i++)
-    {
-        sum+=vec[i];
-        <span style="color: #00bfff; font-weight: bold;">while</span>(mul%vec[i]!=0)
-            mul*=(++Now);
-        mul/=vec[i];
-    }
-<span style="color: #00bfff; font-weight: bold;">    while</span>(Now&lt;100000)
-         mul*=(++Now);
-    <span style="color: #98f5ff;">LL</span> <span style="color: #4eee94;">diff</span>=((1+N)*N)/2-sum;
-    cout&lt;&lt;diff&lt;&lt;<span style="color: #deb887;">" "</span>&lt;&lt;mul&lt;&lt;endl;
-    <span style="color: #98f5ff;">LL</span> <span style="color: #4eee94;">a</span>=(diff+sqrt(diff*diff-4*mul))/2;
-    cout&lt;&lt;a&lt;&lt;<span style="color: #deb887;">" "</span>&lt;&lt;diff-a&lt;&lt;endl;
-}
+  <p>lambda’s argument checking is more strict.</p>
+</blockquote>
 
-<span style="color: #98f5ff;">int</span> <span style="color: #daa520; font-weight: bold;">main</span>()
-{
-    srand(time(<span style="color: #ffd700;">NULL</span>));
-    a=(rand()%100000)+1;
-    b=(rand()%100000)+1;
-    cnt=0;
-    <span style="color: #00bfff; font-weight: bold;">for</span>(<span style="color: #98f5ff;">int</span> <span style="color: #4eee94;">i</span>=1;i&lt;=N;i++)
-    {
-        <span style="color: #00bfff; font-weight: bold;">if</span>(i!=a&amp;&amp;i!=b)
-            vec[cnt++]=i;
-    }
-    cout&lt;&lt;a&lt;&lt;<span style="color: #deb887;">" "</span>&lt;&lt;b&lt;&lt;<span style="color: #deb887;">" "</span>&lt;&lt;endl;
-    cout&lt;&lt;a+b&lt;&lt;<span style="color: #deb887;">" "</span>&lt;&lt;a*b&lt;&lt;endl;
-    Find(vec);
-}
-</pre>
-----------------------------------------------------------
-经熊师兄指点，上面的解法还是不对，如果vec前面刚好为比较大的素数，mul就溢出了。正确的解法应该为求x+y=B, x^2+y^2=A, 1-100000的平方和可以用double存下来，然后减去vec里面的平方和就得到x^2+y^2的值。
-<pre class="src"><span style="color: #98f5ff;">void</span> <span style="color: #daa520; font-weight: bold;">Find</span>(<span style="color: #00bfff; font-weight: bold;">const</span> <span style="color: #98f5ff;">LL</span>* <span style="color: #4eee94;">vec</span>)
-{
-    <span style="color: #98f5ff;">double</span> <span style="color: #4eee94;">sum</span>=0;
-    <span style="color: #98f5ff;">double</span>  <span style="color: #4eee94;">square_sum</span>=0;
-    <span style="color: #00bfff; font-weight: bold;">for</span>(<span style="color: #98f5ff;">int</span> <span style="color: #4eee94;">i</span>=0;i&lt;cnt;i++)
-    {
-        sum+=vec[i];
-        square_sum+=(vec[i]*vec[i]);
-    }
-    <span style="color: #98f5ff;">double</span> <span style="color: #4eee94;">diff</span>=((1+N)*N)/2-sum;
-    <span style="color: #98f5ff;">double</span> <span style="color: #4eee94;">square_sum_diff</span>=
-        ((<span style="color: #98f5ff;">double</span>)N*(N+1)*(2*(<span style="color: #98f5ff;">double</span>)N+1))/6 - square_sum;
-    cout&lt;&lt;diff&lt;&lt;<span style="color: #deb887;">" "</span>&lt;&lt;square_sum_diff&lt;&lt;endl;
-    a=(2*(diff)+sqrt(8*square_sum_diff-4*diff*diff))/4;
-    cout&lt;&lt;a&lt;&lt;<span style="color: #deb887;">" "</span>&lt;&lt;diff-a&lt;&lt;endl;
-}
+<ul>
+  <li>A event DSL, a elegent example for blocks.</li>
+</ul>
 
+<h2 id="class-definitions">Class Definitions</h2>
+<ul>
+  <li>A Ruby class definition is actually regular code that runs.</li>
+  <li>class_eval vs instance_eval</li>
+</ul>
 
-</pre>
+<blockquote>
+  <p>class_eval both changes self and current class</p>
+
+  <ul>
+    <li>Eigenclass, the metaclass of a object</li>
+    <li>three way to define class method</li>
+    <li>Around alias</li>
+  </ul>
+</blockquote>
+
+<h2 id="code-writes-code">Code writes code</h2>
+<ul>
+  <li>The powerful weapon: eval</li>
+  <li>A good example: add_attribute</li>
+  <li>Three ways to express this idea</li>
+</ul>
+
+<h2 id="active-record">Active record</h2>
+<ul>
+  <li>Validations</li>
+  <li>alias_method_chain</li>
+</ul>
+
+<hr />
+
+<ul>
+  <li>Dynamic attributes, define read/write/question Dynamic Methods for all the columns in databases, for performance.</li>
+  <li>Lesson learned, performance/complexity/readable trade-offs.</li>
+</ul>
+
+<h2 id="metaprogramming-safely">Metaprogramming safely</h2>
+<ul>
+  <li>Defusing Monkeypatches, make it explicit with module, check it before patche, add warning messages.</li>
+</ul>
 
 
     <p class="meta"> -- EOF -- </p>
@@ -243,18 +264,16 @@
     <ul class="pager">
 
       
-      <li class="next"><a href="/2010/08/02/astart-k-shortest-path.html" title="A*算法与K-shortest path问题">A*算法与K-shortest path问题&rarr;</a></li>
+      <li class="next"><a href="/2013/07/14/ruby-warrior.html" title="Learning Ruby with Ruby Warrior">Learning Ruby with Ruby Warrior&rarr;</a></li>
       
 
-      
-      <li class="previous"><a href="/2010/08/04/nba-kids.html" title="孩子们眼中的NBA球员薪水">&larr; 孩子们眼中的NBA球员薪水</a></li>
       
 
 
     </ul>
 
     <div class="span8">
-      <p>声明: 本文采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="nofollow" title="署名-非商业性使用-相同方式共享">BY-NC-SA</a> 协议进行授权. 转载请注明转自: <a href="/2010/08/02/findsum.html" title="一个小题目" rel="nofollow">一个小题目</a></p>
+      <p>声明: 本文采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="nofollow" title="署名-非商业性使用-相同方式共享">BY-NC-SA</a> 协议进行授权. 转载请注明转自: <a href="/2013/08/24/meta-programming-ruby.html" title="Metaprogramming Ruby" rel="nofollow">Metaprogramming Ruby</a></p>
     </div>
 
 
@@ -279,26 +298,10 @@
   
 
   <div class="span4 sidebar">
-    <h4 class="date">发布日期：<span>02 August 2010</span></h4>
+    <h4 class="date">发布日期：<span>24 August 2013</span></h4>
     <!-- <p class="meta">By <a href="/about.html" class="author" title="author">Yukang</a><g:plusone size="small"></g:plusone></p> -->
 
 
-    
-    <h4>标签</h4>
-    <ul class="tag_box">
-      
-      
-
-
-  
-     
-    	<li><a href="/tags.html#Programming-ref">Programming <span>32</span></a></li>
-    
-  
-
-
-
-    </ul>
       
 
     <nav class="nav">

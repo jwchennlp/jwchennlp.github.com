@@ -6,52 +6,12 @@
 		<link>http://cyukang.com</link>
 		
 			<item>
-				<title>Learning Ruby with Ruby Warrior</title>
-				<description>
-&lt;p&gt;Ruby上总有好玩的东西，偶然看到这个&lt;a href=&quot;https://github.com/ryanb/ruby-warrior&quot;&gt;RubyWarrior&lt;/a&gt;，玩了一把感觉还有些意思。这个有些像我原来介绍的&lt;a href=&quot;http://cyukang.com/2012/11/22/ruby-robot-ai.html&quot;&gt;RubyRobot&lt;/a&gt;,
-不过更像之前的&lt;a href=&quot;http://cyukang.com/2011/07/22/wumpus-and-2.html&quot;&gt;Wumpus&lt;/a&gt;，看来我对这种游戏有些兴趣。&lt;/p&gt;
-
-&lt;p&gt;Ruby新手边玩边熟悉了语言。需要代码的可以clone下来看看，如果只是玩可以gem装上，然后运行rubywarrior就开始练级了。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;gem install rubywarrior&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;我现在只是完成了初学者模式，这里的AI还比较简单，主要实现一个函数就行了。分为两种模式，第一种只用对付当前的场景，第二种为epic(史诗?)模式，要从1~9连续闯关。&lt;/p&gt;
-
-&lt;p&gt;我的平均成绩是C，所有级的代码放在&lt;a href=&quot;https://github.com/chenyukang/rubywarrior&quot;&gt;Github上&lt;/a&gt;了。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-Level Score: 27
-Time Bonus: 18
-Level Grade: F
-Total Score: 374 + 45 = 419
-Your average grade for this tower is: C
-
-Level 1: S
-Level 2: C
-Level 3: B
-Level 4: B
-Level 5: D
-Level 6: F
-Level 7: B
-Level 8: F
-Level 9: F
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;中级模式是二维的地图，所以更有挑战。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/Spooner/ruby_armor&quot;&gt;这里&lt;/a&gt;有一个前端，不过我还没用过。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/Sujimichi/ruby_warrior_NN_solution&quot;&gt;这还有人用神经网络的方法来做的&lt;/a&gt;，可以学习一下，:)。&lt;/p&gt;
-</description>
-				<published>2013-07-14 00:00:00 +0800</published>
-				<link>http://cyukang.com/2013/07/14/ruby-warrior.html</link>
-			</item>
-		
-			<item>
 				<title>Metaprogramming Ruby</title>
 				<description>
+&lt;p&gt;『Metaprogramming Ruby』这本书看了两遍，从这本书里获取了一些乐趣。技术书籍就应该这样简明扼要，寓理于事。通过一个显示中的例子引入问题，展示元编程的解决办法， 顺带介绍一下用到相关技术的gems。&lt;/p&gt;
+
+&lt;p&gt;下面这些不是书评，只是我在看第二遍的时候的一些简单的择要，用于自己的记忆和检索。&lt;/p&gt;
+
 &lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;ul&gt;
@@ -72,7 +32,7 @@ Level 9: F
 
 &lt;h2 id=&quot;methods&quot;&gt;Methods&lt;/h2&gt;
 &lt;ul&gt;
-  &lt;li&gt;static type checking, for example, if you call simple_talk() on Layer object that has no such method, the compiler protests loudly. &lt;/li&gt;
+  &lt;li&gt;static type checking, for example, if you call simple_talk() on Layer object that has no such method, the compiler protests loudly.&lt;/li&gt;
   &lt;li&gt;call method dynamic using send().&lt;/li&gt;
   &lt;li&gt;define_method generates instance method dynamically, to_s vs to_sym.&lt;/li&gt;
   &lt;li&gt;Ghost method, method_missing.&lt;/li&gt;
@@ -115,7 +75,7 @@ Level 9: F
   &lt;p&gt;class_eval both changes self and current class&lt;/p&gt;
 
   &lt;ul&gt;
-    &lt;li&gt;Eigenclass, the metaclass of a object &lt;/li&gt;
+    &lt;li&gt;Eigenclass, the metaclass of a object&lt;/li&gt;
     &lt;li&gt;three way to define class method&lt;/li&gt;
     &lt;li&gt;Around alias&lt;/li&gt;
   &lt;/ul&gt;
@@ -132,6 +92,11 @@ Level 9: F
 &lt;ul&gt;
   &lt;li&gt;Validations&lt;/li&gt;
   &lt;li&gt;alias_method_chain&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
   &lt;li&gt;Dynamic attributes, define read/write/question Dynamic Methods for all the columns in databases, for performance.&lt;/li&gt;
   &lt;li&gt;Lesson learned, performance/complexity/readable trade-offs.&lt;/li&gt;
 &lt;/ul&gt;
@@ -140,10 +105,53 @@ Level 9: F
 &lt;ul&gt;
   &lt;li&gt;Defusing Monkeypatches, make it explicit with module, check it before patche, add warning messages.&lt;/li&gt;
 &lt;/ul&gt;
-
 </description>
-				<published>2013-07-07 00:00:00 +0800</published>
-				<link>http://cyukang.com/2013/07/07/meta-programming-ruby.html</link>
+				<published>2013-08-24 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/08/24/meta-programming-ruby.html</link>
+			</item>
+		
+			<item>
+				<title>Learning Ruby with Ruby Warrior</title>
+				<description>
+&lt;p&gt;Ruby上总有好玩的东西，偶然看到这个&lt;a href=&quot;https://github.com/ryanb/ruby-warrior&quot;&gt;RubyWarrior&lt;/a&gt;，玩了一把感觉还有些意思。这个有些像我原来介绍的&lt;a href=&quot;http://cyukang.com/2012/11/22/ruby-robot-ai.html&quot;&gt;RubyRobot&lt;/a&gt;,
+不过更像之前的&lt;a href=&quot;http://cyukang.com/2011/07/22/wumpus-and-2.html&quot;&gt;Wumpus&lt;/a&gt;，看来我对这种游戏有些兴趣。&lt;/p&gt;
+
+&lt;p&gt;Ruby新手边玩边熟悉了语言。需要代码的可以clone下来看看，如果只是玩可以gem装上，然后运行rubywarrior就开始练级了。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;gem install rubywarrior&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;我现在只是完成了初学者模式，这里的AI还比较简单，主要实现一个函数就行了。分为两种模式，第一种只用对付当前的场景，第二种为epic(史诗?)模式，要从1~9连续闯关。&lt;/p&gt;
+
+&lt;p&gt;我的平均成绩是C，所有级的代码放在&lt;a href=&quot;https://github.com/chenyukang/rubywarrior&quot;&gt;Github上&lt;/a&gt;了。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+Level Score: 27
+Time Bonus: 18
+Level Grade: F
+Total Score: 374 + 45 = 419
+Your average grade for this tower is: C
+
+Level 1: S
+Level 2: C
+Level 3: B
+Level 4: B
+Level 5: D
+Level 6: F
+Level 7: B
+Level 8: F
+Level 9: F
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;中级模式是二维的地图，所以更有挑战。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Spooner/ruby_armor&quot;&gt;这里&lt;/a&gt;有一个前端，不过我还没用过。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Sujimichi/ruby_warrior_NN_solution&quot;&gt;这还有人用神经网络的方法来做的&lt;/a&gt;，可以学习一下，:)。&lt;/p&gt;
+</description>
+				<published>2013-07-14 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/07/14/ruby-warrior.html</link>
 			</item>
 		
 			<item>

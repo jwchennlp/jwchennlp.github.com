@@ -158,45 +158,106 @@
 
   <div class="row post">
     <div class="span8">
-      <h1 class="title"><a href="/2013/07/14/ruby-warrior.html" title="Learning Ruby with Ruby Warrior">Learning Ruby with Ruby Warrior</a> </h1>
+      <h1 class="title"><a href="/2013/08/24/meta-programming-ruby.html" title="Metaprogramming Ruby">Metaprogramming Ruby</a> </h1>
 
       
-<p>Ruby上总有好玩的东西，偶然看到这个<a href="https://github.com/ryanb/ruby-warrior">RubyWarrior</a>，玩了一把感觉还有些意思。这个有些像我原来介绍的<a href="http://cyukang.com/2012/11/22/ruby-robot-ai.html">RubyRobot</a>,
-不过更像之前的<a href="http://cyukang.com/2011/07/22/wumpus-and-2.html">Wumpus</a>，看来我对这种游戏有些兴趣。</p>
+<p>『Metaprogramming Ruby』这本书看了两遍，从这本书里获取了一些乐趣。技术书籍就应该这样简明扼要，寓理于事。通过一个显示中的例子引入问题，展示元编程的解决办法， 顺带介绍一下用到相关技术的gems。</p>
 
-<p>Ruby新手边玩边熟悉了语言。需要代码的可以clone下来看看，如果只是玩可以gem装上，然后运行rubywarrior就开始练级了。</p>
+<p>下面这些不是书评，只是我在看第二遍的时候的一些简单的择要，用于自己的记忆和检索。</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<ul>
+  <li>Meteprogramming is writing code that writes code</li>
+  <li>鬼城和集市，很多语言的运行环境在执行的时候已经固定，一片死寂。而支持Metaprogramming的语言的执行环境是充满活力的集市。很好的比喻。</li>
+  <li>动态元编程和静态元编程，C++的template属于静态元编程。</li>
+</ul>
+
+<h2 id="the-ruby-object-model">The Ruby Object Model</h2>
+
+<ol>
+  <li>Class定义永远是开放的，你能重新定义任何类或者给类加上一些新的东西。注意MonkeyPatch可能导致的Bug。</li>
+  <li>分清楚instance_method和class_method，</li>
+  <li><img src="/images/instance_method.png" alt="instance_method" class="img-center" /></li>
+  <li>Class也是对象。与C#/Java的Class不一样的地方，Ruby允许在代码运行期间操作类相关的信息，比如增加method或者重新定义method。</li>
+  <li><img src="/images/object_model.png" alt="object_model" class="img-center" /></li>
+</ol>
+
+<h2 id="methods">Methods</h2>
+<ul>
+  <li>static type checking, for example, if you call simple_talk() on Layer object that has no such method, the compiler protests loudly.</li>
+  <li>call method dynamic using send().</li>
+  <li>define_method generates instance method dynamically, to_s vs to_sym.</li>
+  <li>Ghost method, method_missing.</li>
+</ul>
 
 <blockquote>
-  <p>gem install rubywarrior</p>
+  <p>过多是用会不会拖慢执行效率，要顺着继承链一直查找method。</p>
+
+  <p>注意method_missing可能导致的死循环调用。</p>
+
+  <p>和继承过来的method之间的冲突， undef_method解决。</p>
 </blockquote>
 
-<p>我现在只是完成了初学者模式，这里的AI还比较简单，主要实现一个函数就行了。分为两种模式，第一种只用对付当前的场景，第二种为epic(史诗?)模式，要从1~9连续闯关。</p>
+<h2 id="blocks">Blocks</h2>
+<ul>
+  <li>class, module, and def change scope.</li>
+  <li>Flat Scope.</li>
+  <li>instacen_eval/instance_exec</li>
+  <li>create block : lambda/proc/Proc.new</li>
+  <li>lambda vs Proc</li>
+</ul>
 
-<p>我的平均成绩是C，所有级的代码放在<a href="https://github.com/chenyukang/rubywarrior">Github上</a>了。</p>
-<pre><code>
-Level Score: 27
-Time Bonus: 18
-Level Grade: F
-Total Score: 374 + 45 = 419
-Your average grade for this tower is: C
+<blockquote>
+  <p>return in Proc also return from the scope.</p>
 
-Level 1: S
-Level 2: C
-Level 3: B
-Level 4: B
-Level 5: D
-Level 6: F
-Level 7: B
-Level 8: F
-Level 9: F
-</code></pre>
+  <p>lambda’s argument checking is more strict.</p>
+</blockquote>
+
+<ul>
+  <li>A event DSL, a elegent example for blocks.</li>
+</ul>
+
+<h2 id="class-definitions">Class Definitions</h2>
+<ul>
+  <li>A Ruby class definition is actually regular code that runs.</li>
+  <li>class_eval vs instance_eval</li>
+</ul>
+
+<blockquote>
+  <p>class_eval both changes self and current class</p>
+
+  <ul>
+    <li>Eigenclass, the metaclass of a object</li>
+    <li>three way to define class method</li>
+    <li>Around alias</li>
+  </ul>
+</blockquote>
+
+<h2 id="code-writes-code">Code writes code</h2>
+<ul>
+  <li>The powerful weapon: eval</li>
+  <li>A good example: add_attribute</li>
+  <li>Three ways to express this idea</li>
+</ul>
+
+<h2 id="active-record">Active record</h2>
+<ul>
+  <li>Validations</li>
+  <li>alias_method_chain</li>
+</ul>
+
 <hr />
 
-<p>中级模式是二维的地图，所以更有挑战。</p>
+<ul>
+  <li>Dynamic attributes, define read/write/question Dynamic Methods for all the columns in databases, for performance.</li>
+  <li>Lesson learned, performance/complexity/readable trade-offs.</li>
+</ul>
 
-<p><a href="https://github.com/Spooner/ruby_armor">这里</a>有一个前端，不过我还没用过。</p>
-
-<p><a href="https://github.com/Sujimichi/ruby_warrior_NN_solution">这还有人用神经网络的方法来做的</a>，可以学习一下，:)。</p>
+<h2 id="metaprogramming-safely">Metaprogramming safely</h2>
+<ul>
+  <li>Defusing Monkeypatches, make it explicit with module, check it before patche, add warning messages.</li>
+</ul>
 
       
       <ul class="pager">
@@ -230,24 +291,8 @@ Level 9: F
 
   <div class="span4 sidebar">
 
-    <h4 class="date">发布日期：<span>14 July 2013</span></h4>
+    <h4 class="date">发布日期：<span>24 August 2013</span></h4>
 
-    
-    <h4>标签</h4>
-    <ul class="tag_box">
-      
-      
-
-
-  
-     
-    	<li><a href="/tags.html#programming-ref">programming <span>1</span></a></li>
-    
-  
-
-
-
-    </ul>
       
 
     <nav class="nav">
@@ -266,11 +311,11 @@ Level 9: F
       <ul>
            
         <li class="v-aside-li">
-          <a href="/2013/07/14/ruby-warrior.html" title="Learning Ruby with Ruby Warrior" rel="bookmark">Learning Ruby with Ruby Warrior</a>
+          <a href="/2013/08/24/meta-programming-ruby.html" title="Metaprogramming Ruby" rel="bookmark">Metaprogramming Ruby</a>
         </li>              	      	            
            
         <li class="v-aside-li">
-          <a href="/2013/07/07/meta-programming-ruby.html" title="Metaprogramming Ruby" rel="bookmark">Metaprogramming Ruby</a>
+          <a href="/2013/07/14/ruby-warrior.html" title="Learning Ruby with Ruby Warrior" rel="bookmark">Learning Ruby with Ruby Warrior</a>
         </li>              	      	            
            
         <li class="v-aside-li">
