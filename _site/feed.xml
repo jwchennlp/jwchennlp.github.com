@@ -6,6 +6,46 @@
 		<link>http://cyukang.com</link>
 		
 			<item>
+				<title>初到美国</title>
+				<description>
+&lt;p&gt;很久没有更新了，这段时间挺忙的。公司让在美国待一段时间，所以7月份开始办理相关签证，由于自己粗心大意导致跑签证馆好几次。
+第一次是因为没有填写完教育信息，
+签证馆挂着个牌子写着&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The main difference between a cat and a lie is that a cat only has nine lives. - Mark Twain&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;我这还不算撒谎吧，他们还算通情达理给我个纸条让回来重新填写表。&lt;/p&gt;
+
+&lt;p&gt;终于费劲周折前两天到了湾区，我穿着沙滩裤下了飞机，一时特别的困。这边温度19度左右，风又特别的大，感觉有点冷。&lt;/p&gt;
+
+&lt;p&gt;当地时间上午11点到的，为了倒时差那天就不能睡觉，所以吃了午饭我和同事骑车到处逛了逛。&lt;/p&gt;
+
+&lt;p&gt;这边风景不错，最让人羡慕的是各种树比较多，而且高大茂盛，树上有果子，天上有老鹰。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/sanjose1.jpg&quot; alt=&quot;Sanjose&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;作为土鳖虽然以前在电视和Google街景上看过美国的房子，不过亲眼来看看还是忍不住羡慕嫉妒，
+可恶的美帝，这让我们这些省吃俭用买个小笼子的共产主义奋斗者情何以堪。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/sanjose.jpg&quot; alt=&quot;Sanjose&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这边亚洲人多，华人占的比例应该也很大。跑去大华超市附近买东西，那一片和上海没什么区别。&lt;/p&gt;
+
+&lt;p&gt;在这边待到11月中旬回去，打算周末再出去溜达一下，主要是自己还不会开车，在这边没车就基本残废。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;我前一两个月开始看本书&lt;a href=&quot;http://www.eopl3.com/&quot;&gt;《Essentials of Programming Languages》&lt;/a&gt;，
+顺便做做里面的练习，写了不少Scheme代码，这些习题基本都是往一个解释器里面添加一些东西。总得来说挺好玩的，
+做到第五章了。代码在Github上：&lt;a href=&quot;https://github.com/chenyukang/eopl&quot;&gt;https://github.com/chenyukang/eopl&lt;/a&gt;。&lt;/p&gt;
+</description>
+				<published>2013-09-26 00:00:00 +0800</published>
+				<link>http://cyukang.com/2013/09/26/gotous.html</link>
+			</item>
+		
+			<item>
 				<title>Metaprogramming Ruby</title>
 				<description>
 &lt;p&gt;『Metaprogramming Ruby』这本书看了两遍，从这本书里获取了一些乐趣。技术书籍就应该这样简明扼要，寓理于事。通过一个显示中的例子引入问题，展示元编程的解决办法， 顺带介绍一下用到相关技术的gems。&lt;/p&gt;
@@ -602,27 +642,6 @@ brew deps   - 显示包依赖
 </description>
 				<published>2013-03-03 00:00:00 +0800</published>
 				<link>http://cyukang.com/2013/03/03/try-mathjax.html</link>
-			</item>
-		
-			<item>
-				<title>读bootstrap scheme</title>
-				<description>
-&lt;p&gt;&lt;img src=&quot;/images/scheme_car_cdr.png&quot; alt=&quot;scheme-car-cdr&quot; class=&quot;img-center&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;For a List in Lisp, Car is the First, Cdr is the Rest, and Lisp means List-Proccessing.&lt;/p&gt;
-
-&lt;p&gt;前段时间偶然在网上看到这个&lt;a href=&quot;https://github.com/petermichaux/bootstrap-scheme&quot;&gt;bootstrap scheme这个开源程序&lt;/a&gt;，读来简洁明了，十分有趣。我对scheme有一点了解，毕竟以前看过一段时间SICP，自己做练习的代码也是scheme写的。scheme本身属于Lisp方言，语法也极其简单，学习起来非常快的。&lt;/p&gt;
-
-&lt;p&gt;看看这个简单的scheme实现，不禁再次感叹递归的优美。Lisp这样的语言直接使用语法树结构来表示程序，不仅使得表示出来的程序异常简洁，就是用C语言来实现这种语言的解释器代码也看起来非常优美。在这里区区2000行的C语言代码，当然没有完整地实现scheme所有的内容，甚至只支持了整数。但是包含scheme的基本语法层面的东西，还有lambda。抛开实现的效率不说，递归是易于编写和理解代码的一种方式，这里语法是递归的，parser是递归的，eval也是递归的。在这里所有的东西都是object，没有显示的列表结构，但是嵌套的pair里蕴含着列表和树的关系。在parse阶段建立好一个以object为基本元素的树结构，做eval的时候顺着往下走就是了。&lt;/p&gt;
-
-&lt;p&gt;推荐对语言实现感兴趣的同学阅读一下这个代码，如果对scheme不了解也没关系，用一个小时看几个scheme程序基本就了解了。再看这个解释器，你就懂了代码是如何被运行的。&lt;/p&gt;
-
-&lt;p&gt;参考&lt;a href=&quot;http://peter.michaux.ca/articles/scheme-from-scratch-introduction&quot;&gt;scheme-from-scratch-introduction&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;图片来自&lt;a href=&quot;http://www.cs.utah.edu/~draperg/cartoons/&quot;&gt;Draperg’s cartoons&lt;/a&gt;&lt;/p&gt;
-</description>
-				<published>2013-02-15 00:00:00 +0800</published>
-				<link>http://cyukang.com/2013/02/15/reading-bootstrap-scheme.html</link>
 			</item>
 		
 	</channel>
