@@ -1,0 +1,12 @@
+---
+published: false
+---
+
+## This is just a testing
+
+I have just found this [prose.io](prose.io) website for online editing GitPage Blog,
+this is just a post for testing.
+
+Pretty cool, it support the emacs key-binding!
+
+
