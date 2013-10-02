@@ -6,18 +6,11 @@
 		<link>http://cyukang.com</link>
 		
 			<item>
-				<title>Testing Prose Io</title>
+				<title>Testing Prose-io</title>
 				<description>
-&lt;hr /&gt;
-&lt;p&gt;layout: post
-title: “Testing Prose-io”
-description: “have a nice try on prose-io”
-published: true
-—&lt;/p&gt;
-
 &lt;h2 id=&quot;this-is-just-a-testing&quot;&gt;This is just a testing&lt;/h2&gt;
 
-&lt;p&gt;I have just found this &lt;a href=&quot;prose.io&quot;&gt;prose.io&lt;/a&gt; website for online editing GitPage Blog,
+&lt;p&gt;I have just found this &lt;a href=&quot;http://prose.io&quot;&gt;prose.io&lt;/a&gt; website for online editing GitPage Blog,
 this is just a post for testing.&lt;/p&gt;
 
 &lt;p&gt;Pretty cool, it supports the emacs key-binding!&lt;/p&gt;
@@ -30,9 +23,9 @@ this is just a post for testing.&lt;/p&gt;
   &lt;p&gt;layout: post&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;at the meta part? Haven’t found any other good solution.&lt;/p&gt;
+&lt;p&gt;at the meta part? Haven&amp;#8217;t found any other good solution.&lt;/p&gt;
 
-&lt;p&gt;and also uploading images seems not working, that’s a problem really hurt.&lt;/p&gt;
+&lt;p&gt;and also uploading images seems not working, that&amp;#8217;s a problem really hurt.&lt;/p&gt;
 
 &lt;h2 id=&quot;my-new-gravatar&quot;&gt;My new gravatar&lt;/h2&gt;
 
