@@ -4,7 +4,7 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-10-03T06:41:05+08:00</updated>
+ <updated>2013-10-03T06:41:11+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
@@ -33,9 +33,8 @@ this is just a post for testing.&lt;/p&gt;
   &lt;p&gt;layout: post&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;at the meta part? Haven&amp;#8217;t found any other good solution.&lt;/p&gt;
-
-&lt;p&gt;and also uploading images seems not working, that&amp;#8217;s a problem really hurt.&lt;/p&gt;
+&lt;p&gt;at the meta part? Haven&amp;#8217;t found any other good solution.
+and also uploading images seems not working, that&amp;#8217;s a problem really hurt.&lt;/p&gt;
 
 &lt;h2 id=&quot;my-new-gravatar&quot;&gt;My new gravatar&lt;/h2&gt;
 
