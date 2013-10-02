@@ -22,4 +22,10 @@ For the Jekyll blog, you need manully add a line
 
 at the meta part? Haven't found any other good solution.
 
-![jobs](/_posts/jobs.jpg)
+and also uploading images seems not working, that's a problem really hurt.
+
+## My new gravatar
+
+This will be my new gravatar!
+
+![jobs](/images/jobs.jpg)
