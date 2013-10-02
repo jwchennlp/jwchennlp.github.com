@@ -15,12 +15,13 @@ Pretty cool, it supports the emacs key-binding!
 
 ## Work with Jekyll
 
-For the Jekyll blog, you need manully add a line
+For the Jekyll blog, you need manully add a line at the meta part.
 
 > layout: post
 
-at the meta part? Haven't found any other good solution.
-and also uploading images seems not working, that's a problem really hurt.
+I haven't found any other good solution.
+
+And also uploading images seems not working, that's a problem really hurt.
 
 ## My new gravatar
 
