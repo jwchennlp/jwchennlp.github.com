@@ -21,3 +21,5 @@ For the Jekyll blog, you need manully add a line
 > layout: post
 
 at the meta part? Haven't found any other good solution.
+
+![jobs](/_posts/jobs.jpg)
