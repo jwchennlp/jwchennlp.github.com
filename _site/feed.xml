@@ -6,7 +6,7 @@
 		<link>http://cyukang.com</link>
 		
 			<item>
-				<title>Testing Prose Io</title>
+				<title>Testing Prose-io</title>
 				<description>
 &lt;h2 id=&quot;this-is-just-a-testing&quot;&gt;This is just a testing&lt;/h2&gt;
 
@@ -14,6 +14,16 @@
 this is just a post for testing.&lt;/p&gt;
 
 &lt;p&gt;Pretty cool, it supports the emacs key-binding!&lt;/p&gt;
+
+&lt;h2 id=&quot;work-with-jekyll&quot;&gt;Work with Jekyll&lt;/h2&gt;
+
+&lt;p&gt;For the Jekyll blog, you need manully add a line&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;layout: post&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;at the meta part? Haven&amp;#8217;t found any other good solution.&lt;/p&gt;
 </description>
 				<published>2013-10-02 00:00:00 +0800</published>
 				<link>http://cyukang.com/2013/10/02/testing-prose-io.html</link>
