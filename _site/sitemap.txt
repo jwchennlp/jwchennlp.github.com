@@ -10,6 +10,7 @@ http://cyukang.com/robots.txt
 http://cyukang.com/sitemap.txt
 http://cyukang.com/tags.html
 
+http://cyukang.com/2013/10/02/testing-prose-io.html
 http://cyukang.com/2013/09/26/gotous.html
 http://cyukang.com/2013/08/24/meta-programming-ruby.html
 http://cyukang.com/2013/07/14/ruby-warrior.html

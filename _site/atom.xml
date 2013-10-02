@@ -4,13 +4,28 @@
  <title>Yukang's Page</title>
  <link href="http://cyukang.com/atom.xml" rel="self"/>
  <link href="http://cyukang.com"/>
- <updated>2013-09-26T16:16:05+08:00</updated>
+ <updated>2013-10-03T04:49:53+08:00</updated>
  <id>http://cyukang.com</id>
  <author>
    <name>Yukang</name>
    <email>moorekang@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Testing Prose Io</title>
+   <link href="http://cyukang.com/2013/10/02/testing-prose-io.html"/>
+   <updated>2013-10-02T00:00:00+08:00</updated>
+   <id>http://cyukang.com/2013/10/02/testing-prose-io</id>
+   <content type="html">
+&lt;h2 id=&quot;this-is-just-a-testing&quot;&gt;This is just a testing&lt;/h2&gt;
+
+&lt;p&gt;I have just found this &lt;a href=&quot;prose.io&quot;&gt;prose.io&lt;/a&gt; website for online editing GitPage Blog,
+this is just a post for testing.&lt;/p&gt;
+
+&lt;p&gt;Pretty cool, it supports the emacs key-binding!&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>初到美国</title>
