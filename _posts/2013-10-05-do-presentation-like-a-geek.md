@@ -10,7 +10,7 @@ tags: [tool, Ruby]
 很多程序员不喜欢做PPT之类的东西，我也不喜欢。这有另外的原因是一直没找到一个合适的工具，Linux下PPT是个悲剧，Latex学习成本又大了点。
 上次在公司分享的时候偶然找到了这个叫做[showoff](https://github.com/schacon/showoff)的工具，熟悉了大概半个小时就上手了，迅速把自己的PPT完成。
 
-showoff是Ruby写的一个适合程序员写PPT的工具，你可以用类似Markdown的语法编辑文本文件，同时在terminal下开一个服务，浏览器访问[localhost:9090](localhost:9090)可以预览的成果。这个过程非常类似用Jekyll来写博客。
+showoff是Ruby写的一个适合程序员写PPT的工具，你可以用类似Markdown的语法编辑文本文件，同时在terminal下开一个服务，浏览器访问[localhost:9090](localhost:9090)可以预览的成果。这个过程非常类似用Jekyll来写博客。当然最后可以导出成PDF格式的，或者直接在浏览器上展示。
 
 ## 安装
 
