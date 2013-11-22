@@ -37,17 +37,17 @@ void xorSwap (int *x, int *y) {
 
 {% highlight cpp %}
       ...  A       B         C         D         E  ...
-               –>  next –>  next  –>  next  –>        
-               <–  prev <–  prev  <–  prev  <–        
+               –>  next –>  next  –>  next  –>
+               <–  prev <–  prev  <–  prev  <–
  {% endhighlight %}
- 
+
  如果把next和prev用一个变量替换还能实现前向和后向遍历，那就节省了一个变量的空间。
- 
+
 {% highlight cpp %}
 ...  A        B         C         D         E  ...
         <–>  A⊕C  <->  B⊕D  <->  C⊕E  <->
  {% endhighlight %}
- 
+
 比如当前在B节点，其pointer变量为A⊕C，如果前面的A地址保存下来然后做运算(A⊕C)⊕A -> C，这样就得到下一个节点指针，反向遍历同样如此。当然其缺点是逻辑复杂了，删除其中的某一个节点也不方便(删除头和尾要好点)，遍历的时候需要保存上一个节点。这样看来为了省一点点空间这样实现似乎有点不值，在大部分情况下这样的一个pointer的节省并没什么用，不过这其中的细节有趣、巧妙。
 
 同样上面的xorSwap[对于现代的CPU来说也没什么优化](http://stackoverflow.com/questions/249423/how-does-xor-variable-swapping-work)，这样的代码只是更加不便于编译器来实现指令级别的优化。这种类型trick的东西还是要避免使用才好。
