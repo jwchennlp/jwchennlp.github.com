@@ -20,7 +20,7 @@ cbaa
 这些都是anagrams的。如果两个字符串是满足这种关系的，那么把字符串排序后的结果一定相同。因此想到用一个map去存来。
 
 
-{% highlight cpp %}
+{% highlight c++ %}
 class Solution {
 public:
     vector<string> anagrams(vector<string> &strs) {
