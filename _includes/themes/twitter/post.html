@@ -41,9 +41,9 @@
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    
+
   </div>
-  
+
 
   <div class="span4 sidebar">
     <h4 class="date">发布日期：<span>{{ page.date | date_to_long_string }}</span></h4>
@@ -56,28 +56,28 @@
       {% assign tags_list = page.tags %}
       {% include JB/tags_list %}
     </ul>
-    {% endunless %}  
+    {% endunless %}
 
-    <nav class="nav">
-      <ul>
+
+    <ul>
 	<li><a href="/" >首页</a></li>
 	<li><a href="/archive.html" >归档</a></li>
 	<li><a href="/tags.html" >标签</a></li>
 	<li><a href="/about.html" >关于</a></li>
 	<li><a href="/atom.xml" target="_blank" >RSS</a></li>
       </ul>
-    </nav> 
+    </nav>
 
 
     <div class="violet-aside-post">
       <h4 class="v-section-tit">最近</h4>
       <ul>
-        {% for rpost in site.posts limit:8  %}   
+        {% for rpost in site.posts limit:8  %}
         <li class="v-aside-li">
           <a href="{{ rpost.url }}" title="{{ rpost.title }}" rel="bookmark">{{ rpost.title }}</a>
-        </li>              	      	            
+        </li>
         {% endfor %}
-      </ul>  
+      </ul>
     </div>
 
 
@@ -91,7 +91,7 @@
 	<li><a href="http://www.cguage.com/" target="_blank" rel="nofollow">C瓜</a></li>
 	<li><a href="http://www.crazyshell.org/blog/" target="_blank" rel="nofollow">狂Shell</a></li>
       </ul>
-    </nav> 
+    </nav>
 
 
   </div>

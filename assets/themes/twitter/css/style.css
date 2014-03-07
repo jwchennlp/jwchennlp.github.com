@@ -285,8 +285,8 @@ h2 {
     margin-bottom: 5px;
 }
 
-h2 span { 
-    position:absolute; 
+h2 span {
+    position:absolute;
     margin-top:100px;
 }
 
@@ -334,7 +334,7 @@ p {
 }
 
 /*{{{  Table */
-table { 
+table {
     border-collapse: collapse;
     font-family: "Century Gothic", "Gill Sans", Arial, sans-serif;
 }
