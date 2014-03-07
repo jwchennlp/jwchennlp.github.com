@@ -3,7 +3,8 @@
 permalink: /:year/:month/:day/:title.html
 
 
-exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
+exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "*.txt"]
+
 pygments: true
 
 # Themes are encouraged to use these universal variables
