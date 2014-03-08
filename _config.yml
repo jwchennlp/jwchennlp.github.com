@@ -10,6 +10,7 @@ pygments: true
 # Themes are encouraged to use these universal variables
 # so be sure to set them if your theme uses them.
 #
+
 title : Yukang's Page
 tagline: Don't Panic
 author :
@@ -18,9 +19,9 @@ author :
   github : chenyukang
   name: Yukang
   description: "Something noted by Yukang(Linux, C/C++, Algorithms)"
+
 #markdown: rdiscount
 markdown: kramdown
-#url: http://www.moorekang.com
 url: http://cyukang.com
 
 # The production_url is only used when full-domain names are needed
