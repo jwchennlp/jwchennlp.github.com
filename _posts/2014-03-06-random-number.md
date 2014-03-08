@@ -66,7 +66,7 @@ unsigned long Random(long max)
 	 shuffle that you go ahead and do so."
 	  —Robert Sedgewick, Professor of Computer Science, Princeton
 
-比如公司在多年前写的一个流行的扑克游戏，其中的洗牌程序是这段Pascal代码：
+比如ASF Software在多年前写的一个流行的网上扑克游戏，其中的洗牌程序是这段Pascal代码：
 
 {% highlight pascal %}
 procedure TDeck.Shuffle;
