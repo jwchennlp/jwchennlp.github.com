@@ -1,0 +1,23 @@
+---
+layout: post
+title: "Heartbleed简单分析"
+description: ""
+category:
+tags: [Programming]
+---
+{% include JB/setup %}
+
+这几天不断听到一个词“心血漏洞”，近年来影响最严重的漏洞。今天小小地研究了一把，顺便把引起一些思考记录下来。
+
+## 到底是什么样的代码
+
+有一些C语言和开发经验的朋友看看这个[Fix](https://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=96db9023b881d7cd9f379b0c154650d6c108e9a3;hp=0d7717fc9c83dafab8153cbd5e2180e6e04cc802)就能了解些具体细节了。
+在网络传输中有一个叫做心跳的概念，简单来件就是客户端发送一个简单的东西给服务端，服务端又返回给客户端，然后客户端检查传回来的内容是否是预期，这样就知道了当前的网络连接是否正常。这个Bug不是协议的问题，而是具体实现的时候的遗漏了相关的逻辑。
+
+这个函数dtls1_process_heartbeat就是处理这块代码的，
+
+
+## 影响有多大
+
+
+## 如何避免这样的Bug
