@@ -70,6 +70,14 @@ int main(int argc,char **argv)
 }   
 ```   
 
+```py
+  def a():
+    for i in range(10):
+      b += 1
+    return b
+```   
+
+
 
 **参考资料**
 [倒排索引-维基百科](http://zh.wikipedia.org/wiki/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95#.E4.BE.8B.E5.AD.90)
