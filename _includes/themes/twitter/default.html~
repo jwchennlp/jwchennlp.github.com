@@ -15,7 +15,7 @@
     {% if page.description %}
     <meta name="description" content="{{ page.description }}">
     {% endif %}
-    <meta name="author" content="awen" >
+    <meta name="author" content="{{ site.author.name }}">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -70,6 +70,17 @@
       </footer>
     </div> <!-- /container -->
 
+    <!--*********************************************************-->
+    <!--****** 看见这个时候，删掉下面的统计代码啊~ ******-->
+    <!--*********************************************************-->
+    {% include JB/analytics %}
+    <div class="hide">
+      <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fba1315646a61cc7bd6f574a6b5221640' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+    </div>
+    <!--*********************************************************-->
 
   </body>
 
