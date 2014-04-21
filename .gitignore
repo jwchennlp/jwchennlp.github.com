@@ -1,5 +1,6 @@
 _theme_packages/*
 
+.md~
 Thumbs.db
 .DS_Store
 
