@@ -20,7 +20,8 @@ author :
   description: "写写代码，看看武侠"
 
 #markdown: rdiscount
-markdown: kramdown
+#markdown: kramdown
+markdown: redcarpet
 url: http://jwchennlp.github.com
 
 # The production_url is only used when full-domain names are needed
