@@ -14,4 +14,13 @@ share: true
 
 你好，哈尔滨！
 
-$$a^2 + b^2 = c^2$$
+##why
+----------
+怎么感觉有些问题呢    
+
+{% highlight c %}
+for(int i = 0;i<n;i++)  
+
+i = 1
+
+{% endhighlight %}
