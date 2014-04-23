@@ -98,16 +98,6 @@ EditDistance(S1,S2)
    for i <— 1 to |S1|      
     
    do for j <— 1 to |S2|    
-       
-    	if S1[i] == S2[j]    
-           
-            k =1    
-            
-        else      
-          
-            k = 0     
-              
-        do m[i,j] = min{m[i-1,j-1] +k,m[i-1,j]+1,m[i,j-1]+1}   
              
    return m[|S1|,|S2|]      
 ```		    
