@@ -204,7 +204,7 @@
 <p>可以在O(S1*S2）的时间复杂度下计算S1和S2之间的编辑距离，主要方法是采用动态规划的思想（类似于动态规划中的求最长公共子串问题），其中S1和S2以字符数组方式进行存放。整数矩阵m的行数和列书分表代表两个字符串的长度，算法在运行过程中不断填写矩阵元素。例如，在算法结束时，m[i,j]表示S1的前i个字符和S2的前j个字符的编辑距离。其代码实现如下：</p>
 
 <div class="highlight"><pre><code class="python"> 
-
+       
 <span class="n">EditDistance</span><span class="p">(</span><span class="n">S1</span><span class="p">,</span><span class="n">S2</span><span class="p">)</span> 
 <span class="nb">int</span> <span class="n">m</span><span class="p">[</span><span class="o">|</span><span class="n">S1</span><span class="o">|</span><span class="p">,</span><span class="o">|</span><span class="n">S2</span><span class="o">|</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>    
 <span class="k">for</span> <span class="n">i</span> <span class="o">&lt;</span><span class="err">—</span> <span class="mi">1</span> <span class="n">to</span> <span class="o">|</span><span class="n">S1</span><span class="o">|</span>      
