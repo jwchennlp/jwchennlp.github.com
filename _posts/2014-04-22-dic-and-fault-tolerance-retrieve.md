@@ -83,6 +83,7 @@ k-gram索引是如下的倒排索引机制，它将原始词典中的所有词�
 
 
 ```		
+
 EditDistance(S1,S2)   
   
    int m[|S1|,|S2|] = 0    
@@ -99,7 +100,9 @@ EditDistance(S1,S2)
     
    do for j <— 1 to |S2|    
              
-   return m[|S1|,|S2|]      
+   return m[|S1|,|S2|]    	
+   
+
 ```		    
 
 
