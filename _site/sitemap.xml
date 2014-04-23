@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>http://jwchennlp.github.com</loc>
+    </url>
+    
+    
+    <url>
+        <loc>http://jwchennlp.github.com/about/</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/sitemap.xml</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/posts/</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/404.html</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/index.html</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/theme-setup/</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/feed.xml</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/tags/</loc>
+    </url>
+    
+
+    
+    <url>
+        <loc>http://jwchennlp.github.com/highlight/</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/dic-and-fault-tolerance-retrieve/</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/ir-dic-inverted-index/</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/ir-inverted-index/</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/hello-world/</loc>
+    </url>
+    
+</urlset>

@@ -20,55 +20,6 @@ share: true
 * 关键字的数目是经常变化还是相对固定，在变化的情况下，是只插入新关键字还是同时要删除某些旧关键字。  
 * 不同关键字的相对访问频率如何。   
 
-{% highlight css %} 
-#container {
-    float: left;
-    margin: 0 -240px 0 0;
-    width: 100%;
-}   
-   
-{% endhighlight %}
-
-
-{% highlight html linenos %}    
-
-{% raw %}  
-
-<nav class="pagination" role="navigation">  
-    {% if page.previous %}  
-        <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous article</a>  
-    {% endif %} 
-    {% if page.next %}  
-        <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next article</a>  
-    {% endif %} 
-</nav><!-- /.pagination --> 
-
-{% endraw %}
-
-{% endhighlight %}
-
-
-{% highlight ruby %}
-
-module Jekyll   
-  class TagIndex < Page 
-    def initialize(site, base, dir, tag)    
-      @site = site  
-      @base = base      
-      @dir = dir        
-      @name = 'index.html'      
-      self.process(@name)       
-      self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')     
-      self.data['tag'] = tag        
-      tag_title_prefix = site.config['tag_title_prefix'] || 'Tagged: '      
-      tag_title_suffix = site.config['tag_title_suffix'] || '&#8211;'       
-      self.data['title'] = "#{tag_title_prefix}#{tag}"      
-      self.data['description'] = "An archive of posts tagged #{tag}."       
-    end     
-  end       
-end         
-
-{% endhighlight %}
 
 对于哈希表，词汇表中的每个词通过哈希函数映射成一个数，可以认为这个数代表这个词的存储地址。所以对于query里面的查询词来说，同样通过哈希函数应查看查询词映射到的地址，如果此地址存在数，则表示该查询词存在词典中。采用哈希表方式时，存在以下问题：          
     
@@ -137,7 +88,7 @@ k-gram索引是如下的倒排索引机制，它将原始词典中的所有词�
 可以在O(S1*S2）的时间复杂度下计算S1和S2之间的编辑距离，主要方法是采用动态规划的思想（类似于动态规划中的求最长公共子串问题），其中S1和S2以字符数组方式进行存放。整数矩阵m的行数和列书分表代表两个字符串的长度，算法在运行过程中不断填写矩阵元素。例如，在算法结束时，m[i,j]表示S1的前i个字符和S2的前j个字符的编辑距离。其代码实现如下：
    
    
-{% hightlight python %} 
+``` 
 
 EditDistance(S1,S2) 
 int m[|S1|,|S2|] = 0    
@@ -154,7 +105,7 @@ do for j <— 1 to |S2|
     m[i,j] = min{m[i-1,j-1]+k,m[i-1,j]+1,m[i,j-1]+1}        
 return m    
 
-{% endhighlight %}      
+```    
 
 
 
