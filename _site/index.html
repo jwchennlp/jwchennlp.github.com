@@ -232,24 +232,23 @@
 
 <p>可以在O(S1*S2）的时间复杂度下计算S1和S2之间的编辑距离，主要方法是采用动态规划的思想（类似于动态规划中的求最长公共子串问题），其中S1和S2以字符数组方式进行存放。整数矩阵m的行数和列书分表代表两个字符串的长度，算法在运行过程中不断填写矩阵元素。例如，在算法结束时，m[i,j]表示S1的前i个字符和S2的前j个字符的编辑距离。其代码实现如下：</p>
 
-<p>``` </p>
+<div class="highlight"><pre><code class="python"> 
 
-<p>EditDistance(S1,S2) 
-int m[|S1|,|S2|] = 0  <br />
-for i &lt;— 1 to |S1|    <br />
-do m[i,o] = i     <br />
-for j &lt;— 1 to |S2|    <br />
-do m[0,j] = j
-for i &lt;— 1 to |S1|    <br />
-do for j &lt;— 1 to |S2|     <br />
-    if S1[i] == S2[j]     <br />
-        k = 1     <br />
-    else      <br />
-        k = 0     <br />
-    m[i,j] = min{m[i-1,j-1]+k,m[i-1,j]+1,m[i,j-1]+1}      <br />
-return m    </p>
-
-<p>```    </p>
+<span class="n">EditDistance</span><span class="p">(</span><span class="n">S1</span><span class="p">,</span><span class="n">S2</span><span class="p">)</span> 
+<span class="nb">int</span> <span class="n">m</span><span class="p">[</span><span class="o">|</span><span class="n">S1</span><span class="o">|</span><span class="p">,</span><span class="o">|</span><span class="n">S2</span><span class="o">|</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>    
+<span class="k">for</span> <span class="n">i</span> <span class="o">&lt;</span><span class="err">—</span> <span class="mi">1</span> <span class="n">to</span> <span class="o">|</span><span class="n">S1</span><span class="o">|</span>      
+<span class="n">do</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">o</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>       
+<span class="k">for</span> <span class="n">j</span> <span class="o">&lt;</span><span class="err">—</span> <span class="mi">1</span> <span class="n">to</span> <span class="o">|</span><span class="n">S2</span><span class="o">|</span>      
+<span class="n">do</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">&lt;</span><span class="err">—</span> <span class="mi">1</span> <span class="n">to</span> <span class="o">|</span><span class="n">S1</span><span class="o">|</span>      
+<span class="n">do</span> <span class="k">for</span> <span class="n">j</span> <span class="o">&lt;</span><span class="err">—</span> <span class="mi">1</span> <span class="n">to</span> <span class="o">|</span><span class="n">S2</span><span class="o">|</span>       
+    <span class="k">if</span> <span class="n">S1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">S2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>       
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>       
+    <span class="k">else</span>        
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>       
+    <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">{</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">k</span><span class="p">,</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">}</span>        
+<span class="k">return</span> <span class="n">m</span>    
+</code></pre></div>
 
 <p>加入对于某个拼写错误查询q，我们需要从词典W中找出与q相邻最近的正确词项，最简单的方法是便利W中的所有词项wi，计算wi和q之间的编辑距离，最后返回和q最近编辑距离的词项wi，并返回wi所指向的文档。很显然，这种遍历的方法是十分低效的，我们可以采用如下的启发式优化策略，我们将搜索限定在首字母相同的词典词项上，对于查询q，我们认为错误不出现在首字符上，这样对于词典W，我们只计算与q有相同首字符的词项与q之间的编辑距离。当然在此基础上更复杂的方法是加入轮排索引，对于词错误拼写查询helo，忽略词的终结符$,构建词的轮排索引{helo，ohel，lohe，eloh}，对轮排索引中的每个词，按照上述的启发式规则与词典W中查找最近编辑距离的正确拼写。（个人理解）</p>
 
