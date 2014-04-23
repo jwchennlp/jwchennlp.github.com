@@ -1,19 +1,19 @@
-title:            Site Title
-description:      Describe your website here.
+title:            My blog
+description:      good good study,day day up
 disqus_shortname: jwchennlp
 #Your site's domain goes here. Leave localhost server or blank when working locally.
 url:             http://jwchennlp.github.com
 
 # Owner/author information
 owner:
-  name:           Your Name
+  name:           jwchen
   avatar:         avatar.jpg
-  bio:            "Your bio goes here. It shouldn't be super long but a good two sentences or two should suffice."
-  email:          you@email.com
+  bio:            "不积跬步，无以至千里;不积小流，无以成江海"
+  email:          hit1093710417@email.com
   # Social networking links used in footer. Update and remove as you like.
   twitter:        
   facebook:       
-  github:         
+  github:  jwchennlp.github.com       
   stackexchange:  
   linkedin:       
   instagram:      
