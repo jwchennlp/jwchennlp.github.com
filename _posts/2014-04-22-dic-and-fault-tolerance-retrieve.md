@@ -20,22 +20,47 @@ share: true
 * 关键字的数目是经常变化还是相对固定，在变化的情况下，是只插入新关键字还是同时要删除某些旧关键字。  
 * 不同关键字的相对访问频率如何。   
 
-
-{% highlight html %}    
-
-<a href="#" class="btn btn-success">Success Button</a>  
-
+{% highlight css %}
+#container {
+    float: left;
+    margin: 0 -240px 0 0;
+    width: 100%;
+}
 {% endhighlight %}
 
 
-{% highlight css %}     
+{% highlight html linenos %}
+{% raw %}
+<nav class="pagination" role="navigation">
+    {% if page.previous %}
+        <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous article</a>
+    {% endif %}
+    {% if page.next %}
+        <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next article</a>
+    {% endif %}
+</nav><!-- /.pagination -->
+{% endraw %}
+{% endhighlight %}
 
-#container {
-  float: left;
-  margin: 0 -240px 0 0;
-  width: 100%;
-}   
 
+{% highlight ruby %}
+module Jekyll
+  class TagIndex < Page
+    def initialize(site, base, dir, tag)
+      @site = site
+      @base = base
+      @dir = dir
+      @name = 'index.html'
+      self.process(@name)
+      self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')
+      self.data['tag'] = tag
+      tag_title_prefix = site.config['tag_title_prefix'] || 'Tagged: '
+      tag_title_suffix = site.config['tag_title_suffix'] || '&#8211;'
+      self.data['title'] = "#{tag_title_prefix}#{tag}"
+      self.data['description'] = "An archive of posts tagged #{tag}."
+    end
+  end
+end
 {% endhighlight %}
 
 对于哈希表，词汇表中的每个词通过哈希函数映射成一个数，可以认为这个数代表这个词的存储地址。所以对于query里面的查询词来说，同样通过哈希函数应查看查询词映射到的地址，如果此地址存在数，则表示该查询词存在词典中。采用哈希表方式时，存在以下问题：          
