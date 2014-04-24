@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-04-24T04:59:59-04:00</updated>
+<updated>2014-04-24T05:29:59-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
@@ -124,6 +124,11 @@ SPIMI（single-pass in-memory indexing,内存式单遍扫描索引构建算法�
 
 &lt;h2 id=&quot;section-4&quot;&gt;动态索引构建方法&lt;/h2&gt;
 &lt;hr /&gt;
+&lt;p&gt;上述建立索引的方法都是基于静态文档的，在很多情况下，文档都会随着时间动态变化的。那么，当文档更新速度很慢时，我们可以采用定期更新索引的策略。如果文档更新速度很快时，则实时更新索引的方法将十分耗时。&lt;/p&gt;
+
+&lt;p&gt;可以采用如下方法实现动态索引的构建，这里我们主要维护两个索引，第一个主索引是对初始的文档集构建的索引，第二个辅助索引是在主索引建立之后随着时间推移，而更新的索引，辅助索引存放在内存中，这样实时检索时通过查询主索引和辅助索引实现。如果是对主索引在未来时间的更新，可以通过一个无效位向量实现，用无效位向量来标致文档的删除，同时在辅助索引中加入此文档的更新，便实现了主索引内容的更新。同时随着时间的推移，辅助索引的容量是不断增大的。当辅助索引长度大一某一值时，我们可以将辅助索引并入到主索引中。&lt;/p&gt;
+
+&lt;p&gt;将辅助索引并入主索引的开销主要取决于索引为文件中的存储方式。如果将每个词项对应的倒排记录表存储为一个文件，则此词项的辅助索引和主索引的合并通过简单的将辅助索引扩展到主索引的倒排记录表即可。显示情况是因为文件管理的各种限制，将所有词项的倒排记录表分别存储为文件是不可行的。替代方案是将所有词项的倒排记录表存储为一个大的文件。&lt;/p&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/index-construction/&quot;&gt;索引构建&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on April 24, 2014.&lt;/p&gt;</content>
