@@ -2,15 +2,10 @@
 layout: post
 title: "词典和倒排记录表的建立"
 description: "词项词典及倒排记录表"
-modified: 2014-04-18
+category: 
 tags: [信息检索,倒排记录表]
-image:
-  feature: abstract-5.jpg
-  credit: dargadgetz
-  creditlink: http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/
-comments: true
-share: true
 ---
+
 
 建立倒排索引的过程可概括为:  
 * 收集用于建立索引的文档  

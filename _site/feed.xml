@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-04-23T06:00:28-04:00</updated>
+<updated>2014-04-24T04:59:59-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
@@ -14,31 +14,119 @@
 
 
 <entry>
-  <title type="html"><![CDATA[IR ]]></title>
- <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/highlight/" />
-  <id>http://jwchennlp.github.com/highlight</id>
-  <updated>2014-04-23T00:00:00-00:00</updated>
-  <published>2014-04-23T00:00:00-04:00</published>
+  <title type="html"><![CDATA[索引构建]]></title>
+ <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/index-construction/" />
+  <id>http://jwchennlp.github.com/index-construction</id>
+  <updated>2014-04-24 02:09:41 -0400T00:00:00-00:00</updated>
+  <published>2014-04-24T00:00:00-04:00</published>
   
   <author>
     <name>jwchen</name>
     <uri>http://jwchennlp.github.com</uri>
     <email>hit1093710417@email.com</email>
   </author>
-  <content type="html">&lt;h2 id=&quot;whydont-know-why&quot;&gt;why,don’t know why&lt;/h2&gt;
+  <content type="html">&lt;p&gt;索引构建主要是对建立好的词典中的每个词项，构建词项关于文档集合的索引记录表。一般索引构建算法会受硬件设施的制约。    &lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;硬件基础&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;构建信息检索系统时，很多决策都依赖于系统所运行的硬件环境。与信息检索系统相关的硬件基本性能参数如下：      &lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;系统访问内存中数据的速度比访问硬盘中数据要快的多，访问内存中的一个字节只需要几个时钟周期（大约5×10-9s），从磁盘传输一个字节的时间则长得多（大概2×10-8s）。因此，为了更快的响应速度，我们应该尽可能将数据放在内存中，特别是那种频繁访问的数据。这种将频繁使用的数据放入内存中的机制称为caching（缓存）。    &lt;/li&gt;
+  &lt;li&gt;进行磁盘读写时，磁头移动到数据所在的磁道需要一定的时间，该时间称为寻道时间，对典型的磁盘来说平均在5ms左右。寻道过程中并不进行数据的传输。于是，为了时数据传输率最大，连续读取的数据块也应该在磁盘上连续存放。      &lt;/li&gt;
+  &lt;li&gt;操作系统往往以数据块为单位进行读写。因此，从磁盘读取一个字节和一个数据块所耗费的时间可能一样多。我们将内存中保存读写块的那块区域称之为缓冲区（buffer）。       &lt;/li&gt;
+  &lt;li&gt;数据从磁盘传输到内存是由系统总线而不是处理器来实现的，这以为着在磁盘I/O时处理器仍然可以处理数据。我们可以利用这一点来加速数据的传输过程，比如将数据压缩后存储在磁盘上。假定采用一种高效的解压缩算法的话，那么从磁盘读取压缩数据再解压缩所花时间往往比直接读取未压缩数据所花时间少。       &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;基于块的排序索引方法&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;第一章建立倒排索引时，所有的处理过程都是在内存中完成的。我们将文档一次性读入内存，而后建立文档的词典，并建立词典中的词项的倒排记录表。如果当文档集过大，大到难以一次性读入内存时，上述方法便失效。   &lt;/p&gt;
+
+&lt;p&gt;由于内存的不足，我们可以采用磁盘的外部排序的方法（external sorting algorithm）。我们知道读取数据过程中的寻道时间与数据传输相比是十分耗时的，所以我们应该尽量将数据按块的方式存储以减少寻道的次数。BSBI（blocked sort-based indexing algorithm，基于块的排序索引算法）是一种解决的方法。算法实现如下：     &lt;br /&gt;
+第1步：将文档切分成均匀的若干个部分。   &lt;br /&gt;
+第2步：对每个部分的词项ID-文档ID对排序。  &lt;br /&gt;
+第3步：将中间产生的临时排序结果存储在磁盘上。   &lt;br /&gt;
+第4步：将所有的中间文件合并形成最终结果。   &lt;/p&gt;
+
+&lt;p&gt;在第2步中我们将词项用词项id代替，词项id是能代表词项的唯一标识，这样做能提高索引构建效率。&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;      
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;        
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;     
-        &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;      
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;      
-      
+           
+&lt;span class=&quot;n&quot;&gt;BSBIndex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;construction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;     
+&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;      
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;all&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;documents&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;have&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;been&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;processed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        
+&lt;span class=&quot;n&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;                 
+    &lt;span class=&quot;n&quot;&gt;block&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ParseNextBlock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;       
+    &lt;span class=&quot;n&quot;&gt;BSBI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;INVERT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;            
+    &lt;span class=&quot;n&quot;&gt;WriteBlockToDisk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;      
+    &lt;span class=&quot;n&quot;&gt;MergeBlocks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;....&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fmerge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;      
+             
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;why&quot;&gt;why&lt;/h2&gt;
-&lt;p&gt;a littlt puzzled&lt;/p&gt;
+&lt;p&gt;合并时，同时打开所有块对应的文件，内存中维护10个块的读缓冲区和一个为最终合并索引准备的写缓冲区。每次迭代中，利用优先级队列（即堆结构）或者类似的数据结构选择最小的未处理词项id进行处理。读入该词项的倒排记录表进行合并，合并结果返回磁盘中。需要时，再次从文件中读入数据到每个读缓冲区。  &lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/highlight/&quot;&gt;IR &lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on April 23, 2014.&lt;/p&gt;</content>
+&lt;p&gt;由于该算法主要的时间耗费在排序上，因此其时间复杂度为O（T*logT),其中T是要排序的项目数的上界（即词项ID-文档—ID对的个数），然而，实际的索引构建的时间往往取决与文档温习（ParseNextBlock）和最后合并（MergeBlocks）。&lt;/p&gt;
+
+&lt;p&gt;由于我们知道，为了提高索引构建效率，我们将词项映射成词项ID，初始的倒排记录表形式为：     &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;      
+    &lt;span class=&quot;n&quot;&gt;wordi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;doc1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;doc2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.....|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;docn&lt;/span&gt;                    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;在进行词项id的映射之后，每个词项ID-文档ID对就是简单的（wid,did）的形式了。这样做为什么能提高效率呢？虽然映射过程需要话费一定的时间，可是映射之后，每个块得到的都是这样的二值对，这样可以以词项ID为主键，以文档ID为次键按照快速排序一类方法进行排序，这样使得倒排记录的构建变得简单。     &lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;内存式单遍扫描索引构建方法&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;BSBI方法需要将词项映射成词项ID，所以必须在内存中维护一个（词项，词项ID）表的数据结构。当对大规模文档来说，这种数据结构的大小将超过内存大小。
+SPIMI（single-pass in-memory indexing,内存式单遍扫描索引构建算法）使用词项而不是词项ID作为词典，它将为个块的词典读入磁盘，对于下一个块则采用新的词典。只要硬盘空间足够大，SPIMI就能够索引任何大小的文档集。     &lt;/p&gt;
+
+&lt;p&gt;SPIMI算法流程如下所示：      &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;c&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SPIMI&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Invert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;      
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output_file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NewFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;     
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NewHash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;      
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;free&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memory&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;available&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;      
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;term&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;        
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;posting_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AddToDictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;term&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;     
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;posting_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GetPostingList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;term&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;      
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;full&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;posting_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;posting_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DoublePostingList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;term&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;       
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;AddToPostingList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;posting_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dicID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;     
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sorted_term&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SortTerms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WriteBlockToDisk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sorted_term&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dictionary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;        
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output_file&lt;/span&gt;      
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;bsbispimi&quot;&gt;BSBI和SPIMI的区别&lt;/h4&gt;
+&lt;p&gt;BSBI在读入一块内存中的文档内容时，会构建这块文档的词项ID—文档ID对序列，在对序列进行排序后，构建这块文档的倒排索引表，也就是说倒排索引的构建是对读入的整个文件块这个整体。SPIMI当然也是将初始大规模文档划分成等大小的块，并按块读入内存，新建一个初始为空的字典，首先他直接以词项作为词典单位，也就是说在遍历内存中的文档时，对文档进行词条话和词干化后，查看每个词，如果这个词不再字典中，则将词加如词典中，并新建一个关于此词项的倒排记录表，如果词项在字典中存在，则需要在此词项的到拍记录表的基础上进行添加操作。由于实现并不清楚每个词项的倒排记录表的长度，所以初始设定倒排记录表的长度为某个较小的值，当倒排记录表已满时，可以按倍数进行扩展。&lt;/p&gt;
+
+&lt;p&gt;SPIMI的倒排记录表是动态增长的，同时立刻就可以实现全体倒排记录表的收集。这样做有两个好处： &lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;由于不需要排序操作，所以处理的速度更快。  &lt;/li&gt;
+  &lt;li&gt;由于保留了倒排记录表对词项的归属关系，因此能够节省内存，词项的ID也不需要保存。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;SPIMI算法的时间负责度是O（T），因为它不需要对词项ID-文档ID排序，所以操作最多和文档集大小成线性关系。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;分布式索引构建方法&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;实际中，文档集合一般相当大，一台计算机很难实现高效的实现索引构建。尤其是对于万维网来说。因此Web搜索引擎通常使用分布式索引构建（distribuction index）算法来构建索引，其索引结果也是分布式的，它往往按照词项或是文档分割后分布在多台计算机上。   &lt;/p&gt;
+
+&lt;p&gt;这里介绍的分布式索引构建方法是MapReduce的一个应用。MapReduce是一个分布式的计算框架，它面向大规模计算机集群而设计。集群中有一个主控节点（master node）,主要负责任务在工作节点的分配和重分配。重分配是实现分布式框架的鲁棒性，因为集群在工作当中，可能工作节点会出现故障，这个时候主节点应当能识别这些故障并将故障机器的任务重新分配给其它可工作的工作节点。    &lt;/p&gt;
+
+&lt;p&gt;一般来说MapReduce会通过键-值对（Key-Value pair）的转换处理，将一个大型的计算问题转换成较小的子问题。在索引构建中，键-值对就是（词项ID,文档ID）。在分布式索引构建中，词项到词项ID的映射同样要分布式进行，因此分布式的索引构建方法要比单机上的索引构建方法复杂的多。一种简单方法就是维护一张高频词到其ID的映射表，并将它复制到所有节点的计算机上，而对低频词则直接使用词项本身。&lt;/p&gt;
+
+&lt;p&gt;MapReduce的Map过程将输入的数据片映射成键值对，这个映射过程对英语BSBI和SPIMI算法中的分析任务，执行Map过程的机器也称之为分析器（parser）。每个分析器将输出结果保存在本地的中间文件。&lt;/p&gt;
+
+&lt;p&gt;Reduce主要是对中间结果进行合并，形成最终的索引。对每个词项（键值），获取此词项的所有文档集合并构建词项的倒排记录表主要通过倒排器来实现。   &lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;动态索引构建方法&lt;/h2&gt;
+&lt;hr /&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/index-construction/&quot;&gt;索引构建&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on April 24, 2014.&lt;/p&gt;</content>
 </entry>
 
 
@@ -180,9 +268,8 @@
   <title type="html"><![CDATA[词典和倒排记录表的建立]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/ir-dic-inverted-index/" />
   <id>http://jwchennlp.github.com/ir-dic-inverted-index</id>
-  <updated>2014-04-18T00:00:00-00:00</updated>
   <published>2014-04-18T00:00:00-04:00</published>
-  
+  <updated>2014-04-18T00:00:00-04:00</updated>
   <author>
     <name>jwchen</name>
     <uri>http://jwchennlp.github.com</uri>
