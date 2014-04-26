@@ -123,6 +123,48 @@
   
 <article class="hentry">
   <header>
+    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-04-26T00:00:00-04:00"><a href="http://jwchennlp.github.com/odps-sql/">April 26, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/odps-sql/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://jwchennlp.github.com/odps-sql/" rel="bookmark" title="odps_sql" itemprop="url">odps_sql</a></h1>
+    
+  </header>
+  <div class="entry-content">
+    <p>odps(open data processing service，开源数据处理服务)是阿里巴巴的分布式计算平台。</p>
+
+<p>数据以sql表格的形式存放在odps中，我们可以是使用类似与sql命令的方式对数据进行操作。当让sql中嵌入了odps平台自己的函数和命令。</p>
+
+<p>文档学习ing…</p>
+
+<h2 id="section">表格建立</h2>
+
+<p>创建表格语句如下：   </p>
+
+<div class="highlight"><pre><code class="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="n">exist</span> <span class="n">sales</span><span class="p">(</span>
+<span class="n">shop_name</span>  <span class="n">string</span><span class="p">,</span>      
+<span class="p">...</span>     
+<span class="n">partitioned</span> <span class="k">by</span> <span class="p">(</span><span class="n">sale_date</span> <span class="n">string</span><span class="p">,</span><span class="n">region</span> <span class="n">string</span><span class="p">);</span>     
+    <span class="c1">--创建一张分区表sales</span>
+</code></pre></div>
+
+<p>partitioned by指定了分区字段，采用分区字段主要是在跟新，新增和读取分区数据时不需要做全表扫描，可以提高效率。       </p>
+
+<p>可以用命令create table…as select…来新建表格，如：        </p>
+
+<div class="highlight"><pre><code class="sql"><span class="lineno">1</span> <span class="k">create</span> <span class="k">table</span> <span class="n">sales1</span> <span class="k">as</span>      
+<span class="lineno">2</span>     <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">sales</span><span class="p">;</span>    
+</code></pre></div>
+
+<p>这样在建立表格的同时，将sales的数据复制到新表中，但是原表格的分区字段没有复制到新表中。如果希望新表格和原表格有相同的数据和表结构（分区属性）.可以用create table… like …命令：    </p>
+
+<div class="highlight"><pre><code class="sql"><span class="lineno">1</span> <span class="k">create</span> <span class="k">table</span> <span class="n">sales1</span> <span class="k">like</span> <span class="n">sales</span>  
+</code></pre></div>
+
+
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
     <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-04-24T00:00:00-04:00"><a href="http://jwchennlp.github.com/index-construction/">April 24, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/index-construction/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
     
       <h1 class="entry-title"><a href="http://jwchennlp.github.com/index-construction/" rel="bookmark" title="索引构建" itemprop="url">索引构建</a></h1>
@@ -528,29 +570,6 @@ SPIMI（single-pass in-memory indexing,内存式单遍扫描索引构建算法�
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 
-<article class="hentry">
-  <header>
-    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-04-13T00:00:00-04:00"><a href="http://jwchennlp.github.com/hello-world/">April 13, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/hello-world/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://jwchennlp.github.com/hello-world/" rel="bookmark" title="Sample Post" itemprop="url">Sample Post</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    <p>你好，哈尔滨！</p>
-
-<h2 id="why">why</h2>
-<hr />
-<p>怎么感觉有些问题呢    </p>
-
-<div class="highlight"><pre><code class="c"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>  
-
-<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
-</code></pre></div>
-
-
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
 
 <div class="pagination">
   
@@ -563,9 +582,15 @@ SPIMI（single-pass in-memory indexing,内存式单遍扫描索引构建算法�
       
     </li>
     
+      <li>
+        
+          <a href="http://jwchennlp.github.com/page2">2</a>
+        
+      </li>
+    
   </ul>
   
-    Next
+    <a href="http://jwchennlp.github.com/page2" class="btn">Next</a>
   
 </div><!-- /.pagination -->
 </div><!-- /#main -->

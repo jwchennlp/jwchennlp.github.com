@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-04-24T05:29:59-04:00</updated>
+<updated>2014-04-26T11:02:50-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
@@ -14,10 +14,57 @@
 
 
 <entry>
+  <title type="html"><![CDATA[odps_sql]]></title>
+ <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/odps-sql/" />
+  <id>http://jwchennlp.github.com/odps-sql</id>
+  <updated>2014-04-26 14:45:37 UTCT00:00:00-00:00</updated>
+  <published>2014-04-26T00:00:00-04:00</published>
+  
+  <author>
+    <name>jwchen</name>
+    <uri>http://jwchennlp.github.com</uri>
+    <email>hit1093710417@email.com</email>
+  </author>
+  <content type="html">&lt;p&gt;odps(open data processing service，开源数据处理服务)是阿里巴巴的分布式计算平台。&lt;/p&gt;
+
+&lt;p&gt;数据以sql表格的形式存放在odps中，我们可以是使用类似与sql命令的方式对数据进行操作。当让sql中嵌入了odps平台自己的函数和命令。&lt;/p&gt;
+
+&lt;p&gt;文档学习ing…&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;表格建立&lt;/h2&gt;
+
+&lt;p&gt;创建表格语句如下：   &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exist&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sales&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;shop_name&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;      
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;     
+&lt;span class=&quot;n&quot;&gt;partitioned&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sale_date&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;region&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;     
+    &lt;span class=&quot;c1&quot;&gt;--创建一张分区表sales&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;partitioned by指定了分区字段，采用分区字段主要是在跟新，新增和读取分区数据时不需要做全表扫描，可以提高效率。       &lt;/p&gt;
+
+&lt;p&gt;可以用命令create table…as select…来新建表格，如：        &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sales1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt;      
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sales&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;这样在建立表格的同时，将sales的数据复制到新表中，但是原表格的分区字段没有复制到新表中。如果希望新表格和原表格有相同的数据和表结构（分区属性）.可以用create table… like …命令：    &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sales1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;like&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sales&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/odps-sql/&quot;&gt;odps_sql&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on April 26, 2014.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
   <title type="html"><![CDATA[索引构建]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/index-construction/" />
   <id>http://jwchennlp.github.com/index-construction</id>
-  <updated>2014-04-24 02:09:41 -0400T00:00:00-00:00</updated>
+  <updated>2014-04-24 06:09:41 UTCT00:00:00-00:00</updated>
   <published>2014-04-24T00:00:00-04:00</published>
   
   <author>
