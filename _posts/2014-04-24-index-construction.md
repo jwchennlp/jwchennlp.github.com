@@ -2,7 +2,7 @@
 layout: post
 title: "索引构建"
 modified: 2014-04-24 14:09:41 +0800
-tags: [信息检索，索引构建，基于块的索引构建，内存式单遍扫描索引构建]
+tags: [信息检索,索引构建,基于块的索引构建,内存式单遍扫描索引构建]
 image:
   feature: abstract-4.jpg
   credit: dargadgetz

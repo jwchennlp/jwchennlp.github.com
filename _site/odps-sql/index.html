@@ -58,6 +58,15 @@
 
 
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+                  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+                          });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 </head>
 
 <body id="post" class="feature">
@@ -134,11 +143,11 @@
 
 <p>创建表格语句如下：   </p>
 
-<div class="highlight"><pre><code class="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="n">exist</span> <span class="n">sales</span><span class="p">(</span>
-<span class="n">shop_name</span>  <span class="n">string</span><span class="p">,</span>      
-<span class="p">...</span>     
-<span class="n">partitioned</span> <span class="k">by</span> <span class="p">(</span><span class="n">sale_date</span> <span class="n">string</span><span class="p">,</span><span class="n">region</span> <span class="n">string</span><span class="p">);</span>     
-    <span class="c1">--创建一张分区表sales</span>
+<div class="highlight"><pre><code class="sql"><span class="lineno">1</span> <span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="n">exist</span> <span class="n">sales</span><span class="p">(</span>
+<span class="lineno">2</span> <span class="n">shop_name</span>  <span class="n">string</span><span class="p">,</span>      
+<span class="lineno">3</span> <span class="p">...</span>     
+<span class="lineno">4</span> <span class="n">partitioned</span> <span class="k">by</span> <span class="p">(</span><span class="n">sale_date</span> <span class="n">string</span><span class="p">,</span><span class="n">region</span> <span class="n">string</span><span class="p">);</span>     
+<span class="lineno">5</span>     <span class="c1">--创建一张分区表sales</span>
 </code></pre></div>
 
 <p>partitioned by指定了分区字段，采用分区字段主要是在跟新，新增和读取分区数据时不需要做全表扫描，可以提高效率。       </p>
@@ -177,20 +186,20 @@
           <a href="http://jwchennlp.github.com/index-construction/" class="read-more-btn">Read More</a>
         </div><!-- /.read-more-header -->
         <div class="read-more-content">
-          <h3><a href="http://jwchennlp.github.com/index-construction/" title="索引构建">索引构建</a></h3>
-          <p>索引构建主要是对建立好的词典中的每个词项，构建词项关于文档集合的索引记录表。一般索引构建算法会受硬件设施的制约。    硬件基础构建信息检索系统时，很多决策都依赖于系统所运行的硬件环境。与信息检索系统相关的硬件基本性能参数如下：        系统访问内存中数据的速度比访问...&hellip; <a href="http://jwchennlp.github.com/index-construction/">Continue reading</a></p>
+          <h3><a href="http://jwchennlp.github.com/index-compress/" title="索引压缩">索引压缩</a></h3>
+          <p>###为什么要进行索引压缩？------进行索引压缩有以下优点：    * 节省磁盘空间．   * 增加高速缓存(cache)的利用率.     倒排索引词典是放在内存中的，倒排记录表放在磁盘上．对与到拍记录上的某些词项ｔ，我们是需要经常访问的，如果将这次词项ｔ所对应的到拍...&hellip; <a href="http://jwchennlp.github.com/index-compress/">Continue reading</a></p>
         </div><!-- /.read-more-content -->
       
       <div class="read-more-list">
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/dic-and-fault-tolerance-retrieve/" title="词典及容错式检索">词典及容错式检索</a></h4>
-            <span>Published on April 22, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/index-construction/" title="索引构建">索引构建</a></h4>
+            <span>Published on April 24, 2014</span>
           </div><!-- /.list-item -->
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/ir-dic-inverted-index/" title="词典和倒排记录表的建立">词典和倒排记录表的建立</a></h4>
-            <span>Published on April 18, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/dic-and-fault-tolerance-retrieve/" title="词典及容错式检索">词典及容错式检索</a></h4>
+            <span>Published on April 22, 2014</span>
           </div><!-- /.list-item -->
         
       </div><!-- /.read-more-list -->

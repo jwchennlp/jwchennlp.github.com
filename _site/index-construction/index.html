@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <title>索引构建 &#8211; My blog</title>
 <meta name="description" content="good good study,day day up">
-<meta name="keywords" content="信息检索，索引构建，基于块的索引构建，内存式单遍扫描索引构建">
+<meta name="keywords" content="信息检索, 索引构建, 基于块的索引构建, 内存式单遍扫描索引构建">
 
 
 
@@ -57,6 +57,15 @@
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://jwchennlp.github.com/images/apple-touch-icon-144x144-precomposed.png">
 
 
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+                  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+                          });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 </head>
 
@@ -231,7 +240,7 @@ SPIMI（single-pass in-memory indexing,内存式单遍扫描索引构建算法�
 
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://jwchennlp.github.com/tags/#信息检索，索引构建，基于块的索引构建，内存式单遍扫描索引构建" title="Pages tagged 信息检索，索引构建，基于块的索引构建，内存式单遍扫描索引构建" class="tag">信息检索，索引构建，基于块的索引构建，内存式单遍扫描索引构建</a></span>
+        <span class="entry-tags"><a href="http://jwchennlp.github.com/tags/#信息检索" title="Pages tagged 信息检索" class="tag">信息检索</a><a href="http://jwchennlp.github.com/tags/#索引构建" title="Pages tagged 索引构建" class="tag">索引构建</a><a href="http://jwchennlp.github.com/tags/#基于块的索引构建" title="Pages tagged 基于块的索引构建" class="tag">基于块的索引构建</a><a href="http://jwchennlp.github.com/tags/#内存式单遍扫描索引构建" title="Pages tagged 内存式单遍扫描索引构建" class="tag">内存式单遍扫描索引构建</a></span>
         <span><a href="http://jwchennlp.github.com/index-construction/" rel="bookmark" title="索引构建">索引构建</a> was published on <span class="entry-date date published updated"><time datetime="2014-04-24T00:00:00-04:00">April 24, 2014</time></span></span>
         (revised: <span class="entry-date date modified"><time datetime="2014-04-24 06:09:41 UTC">04/24/2014</time></span>)
         <span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>
@@ -252,20 +261,20 @@ SPIMI（single-pass in-memory indexing,内存式单遍扫描索引构建算法�
           <a href="http://jwchennlp.github.com/dic-and-fault-tolerance-retrieve/" class="read-more-btn">Read More</a>
         </div><!-- /.read-more-header -->
         <div class="read-more-content">
-          <h3><a href="http://jwchennlp.github.com/odps-sql/" title="odps_sql">odps_sql</a></h3>
-          <p>odps(open data processing service，开源数据处理服务)是阿里巴巴的分布式计算平台。数据以sql表格的形式存放在odps中，我们可以是使用类似与sql命令的方式对数据进行操作。当让sql中嵌入了odps平台自己的函数和命令。文档学习ing......&hellip; <a href="http://jwchennlp.github.com/odps-sql/">Continue reading</a></p>
+          <h3><a href="http://jwchennlp.github.com/index-compress/" title="索引压缩">索引压缩</a></h3>
+          <p>###为什么要进行索引压缩？------进行索引压缩有以下优点：    * 节省磁盘空间．   * 增加高速缓存(cache)的利用率.     倒排索引词典是放在内存中的，倒排记录表放在磁盘上．对与到拍记录上的某些词项ｔ，我们是需要经常访问的，如果将这次词项ｔ所对应的到拍...&hellip; <a href="http://jwchennlp.github.com/index-compress/">Continue reading</a></p>
         </div><!-- /.read-more-content -->
       
       <div class="read-more-list">
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/dic-and-fault-tolerance-retrieve/" title="词典及容错式检索">词典及容错式检索</a></h4>
-            <span>Published on April 22, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/odps-sql/" title="odps_sql">odps_sql</a></h4>
+            <span>Published on April 26, 2014</span>
           </div><!-- /.list-item -->
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/ir-dic-inverted-index/" title="词典和倒排记录表的建立">词典和倒排记录表的建立</a></h4>
-            <span>Published on April 18, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/dic-and-fault-tolerance-retrieve/" title="词典及容错式检索">词典及容错式检索</a></h4>
+            <span>Published on April 22, 2014</span>
           </div><!-- /.list-item -->
         
       </div><!-- /.read-more-list -->

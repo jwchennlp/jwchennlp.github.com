@@ -58,6 +58,15 @@
 
 
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+                  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+                          });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 </head>
 
 <body id="post-index" class="feature">
@@ -121,6 +130,77 @@
 
 <div id="main" role="main">
   
+<article class="hentry">
+  <header>
+    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-04-16T00:00:00-04:00"><a href="http://jwchennlp.github.com/ir-inverted-index/">April 16, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/ir-inverted-index/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://jwchennlp.github.com/ir-inverted-index/" rel="bookmark" title="IR 倒排索引和布尔查询" itemprop="url">IR 倒排索引和布尔查询</a></h1>
+    
+  </header>
+  <div class="entry-content">
+    <p><strong>信息检索</strong>的定义是从大规模非结构化数据(通常为文本)的集合中找出满足用户需求的资料(通常是文档)的过程.
+检索的过程可理解为用户输入query,从文档集合中找出与query相关的文档并展示.最简单的检索方式是线性查询,根据query遍历所有的文档集合,	查找出那些文档集合与query是相关的.这种方式存在以下问题:                                                                  <br />
+  1. 文档规模很大时,对所有文档的遍历查找是个费时的过程<br />
+  2. 不能满足灵活匹配方式的要求(如两个词在同一句话中出现).<br />
+  3. 无法对结果进行排序.检索结果应该按照相关性等需求返回最佳答案.  </p>
+
+<p>可以采用如下方法替代线性扫描方式,对于所有的文档集合,构建一个词项-文档的矩阵,其中词项表示文档集合中的所有词列表,
+文档表示所有集合中的文档,矩阵中的元素M(i,j)则表示词i是否在文档j中出现(M(i,j)为1时表示出现).矩阵的每一行表示词在文档集合中的出现情况,矩阵的没一列表示相应的文档中的词的集合.这样当检索query的时候,只需要根据query中的词在矩阵中查找词在文档中的出现情况,最后进行结果合并便可的出结果.</p>
+
+<p>上述方法相对现行扫描在时间效率上有了很大提升.如果文档集合有1000万,文档集合的词集合有50万个,则需要维护一个50万*1000万的矩阵,		真实情况是这个矩阵会非常洗漱,因为一篇文档只包含50万词表中的少数词,同时一个词只在少数的文档中出现.而我们关心的只是M(i,j)不为0的元素.采用只存储词项-文档矩阵中元素不为0的数据结构效果会更好.</p>
+
+<p><strong>倒排索引</strong>是一种索引方法,被用来存储在全文搜索下某个单词在一个文档或一组文档中的存储位置的映射.
+假设有三个检索文本:   <br />
+* $T_0$=”it is what it is”<br />
+* $T_1$=”what is it”    <br />
+* $T_2$=”it is a banana” <br />
+根据以上文档当初的到拍索引为:   </p>
+
+<p>```
+ “a”:      {2}    </p>
+
+<p>“banana”: {2}   </p>
+
+<p>“is”:     {0, 1, 2}    </p>
+
+<p>“it”:     {0, 1, 2}  <br />
+```   </p>
+
+<p>倒排索引的建立规则如下,首先要建立词典,词典中的词为文档中词的集合,对于词典中的每个词都有一个记录该词在文档中的出现列表,这个表成为倒排记录.倒排索引的词典部分存放在内存中,而每个词指向的倒排记录表存放在词典中.</p>
+
+<p>**用倒排索引和基本布尔检索模型来处理一个查询 **
+一般的检索的query由若干个词组成,可以用基本的布尔查询(与,或,非)在连接这些词.
+对于查询 word1 And word2
+其检索过程如下:
+  * 在词典中定位world1
+  * 返回词word1的倒排记录表
+  * 在词典中定位word2
+  * 返回词word2的倒排记录表
+  * 对倒排记录表求交集,所对应的文档既为结果</p>
+
+<p><strong>交集处理:</strong>对于倒排索引表求交集的过程,可以通过以下方法进行优化<br />
+  * 构建倒排索引时,倒排记录表是有序构建的,如对文档进行编号,,倒排记录表按照文档标号从小到达顺序生成<br />
+  * 在求交集的过程中,对两个倒排记录表分别维护一个指针,当指针所指元素相同时,保留元素并同时指针后移,当指针所指元素不同时,将元素较小指针向后移动,最后保留的元素既为交集,时间复杂度为O($N_1$+$N_2$),N为两个索引记录表的长度.<br />
+  * 对于多个倒排索引表,可以按照倒排记录表的长度从小到大进行处理,优先对两个最短的倒排记录表求交集.</p>
+
+<p><strong>布尔检索优缺点</strong> </p>
+
+<p><strong>优点:</strong>
+  1.布尔检索表达上精确,文档要么满足,要么不满足,可以让用户对返回结果拥有更好的控制力和透明度.
+  2.对某些领域信息,布尔检索内部也可以提供排序机制
+<strong>缺点:</strong>
+  1.布尔检索不能满足灵活匹配方式的要求.<br />
+  2.采用AND操作符产生的结果正确率高而召回率低,采用OR操作符召回率高而正确率低.<br />
+  3.只记录词项存在文档中存在或不存在,但是我们往往需要累加各种证据来得到文档相关性的可信度.<br />
+  4.布尔模型返回的是一个无序的结果,但是我们往往需要对返回的结果进行排序.  </p>
+
+<p><strong>参考资料</strong>
+<a href="http://zh.wikipedia.org/wiki/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95#.E4.BE.8B.E5.AD.90">倒排索引-维基百科</a>
+<a href="https://www.google.com.hk/search?q=%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E5%AF%BC%E8%AE%BA&amp;oq=%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E5%AF%BC%E8%AE%BA&amp;aqs=chrome..69i57j69i65j69i61l3j0.3218j0j1&amp;sourceid=chrome&amp;ie=UTF-8">信息检索导论-布尔检索</a></p>
+
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
 <article class="hentry">
   <header>
     <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-04-13T00:00:00-04:00"><a href="http://jwchennlp.github.com/hello-world/">April 13, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/hello-world/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
