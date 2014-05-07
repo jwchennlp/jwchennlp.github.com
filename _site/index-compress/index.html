@@ -163,19 +163,20 @@ MathJax.Hub.Config({
 
 <h2 id="section-1">词典压缩</h2>
 <hr />
-<p>###为什么要进行词典压缩
-理想情况下在建立好索引后，我们希望将词典存放在内存中，但是这往往很难实现，尤其是对于实用的搜索引擎和嵌入式系统．限制IR系统的响应之间的一个因素包多对磁盘的访问次数．所以，如果通过压缩来讲所有的或大部分的词典存入内存，将大大加快IR系统的响应速度．    </p>
 
-<h3 id="section-2">将词典看作单一字符串的压缩方法</h3>
+<h3 id="section-2">为什么要进行词典压缩</h3>
+<p>理想情况下在建立好索引后，我们希望将词典存放在内存中，但是这往往很难实现，尤其是对于实用的搜索引擎和嵌入式系统．限制IR系统的响应之间的一个因素包多对磁盘的访问次数．所以，如果通过压缩来讲所有的或大部分的词典存入内存，将大大加快IR系统的响应速度．    </p>
+
+<h3 id="section-3">将词典看作单一字符串的压缩方法</h3>
 <p>采用如下的数据结构进行存储：一个定长的数组用于存储词项（２０Ｂ），４Ｂ的空间用于存储文档频率，４Ｂ的空间用于存储指向倒排记录表的指针．对于一个包含Ｍ个词项的文档空间来说，词典的总空间为M*(20+4+4),当Ｍ＝400,000时，占用空间为11.2MB.
 <img src="../images/1/dic_compress_1.png" alt="image" /></p>
 
 <p>这种方法存在很大的不足，首先大部分的英文词平均长度为8B,这显然造成了大部分的空间浪费，其次也存在有些词的长度超过20B,导致的结果便是不能存储这些词．</p>
 
-<p>我们可以采用如下的改进措施，我们建立一个字符串在存储字典中的所有词项,4B的空间存储文档频率,4B的空间存储倒排记录表的指针，这个指针指向前面所有词典构成的长字符串，在长字符串中我们需要每一个词加入一个定位指针，用于指定下一个词的开始位置和当前词的结束位置，由于有400,000个词，每个词为８B,所以寻址空间为400,000<em>8=3.2</em>$10^6$,所以可以用一个长为$\log{3.2<em>10^6}\approx22b$，即３Ｂ的指针来表示．词典的总空间为M</em>(4+4+3+8)=7.6MB．  <br />
+<p>我们可以采用如下的改进措施，我们建立一个字符串在存储字典中的所有词项,4B的空间存储文档频率,4B的空间存储倒排记录表的指针，这个指针指向前面所有词典构成的长字符串，在长字符串中我们需要每一个词加入一个定位指针，用于指定下一个词的开始位置和当前词的结束位置，由于有400,000个词，每个词为８B,所以寻址空间为400,000<em>8=3.2</em>$10^6$,所以可以用一个长为$\log{3.2<em>10^6}$$\approx$22b，即３Ｂ的指针来表示．词典的总空间为M</em>(4+4+3+8)=7.6MB．  <br />
 <img src="../images/1/1.png" alt="image" /></p>
 
-<h3 id="section-3">按块存储</h3>
+<h3 id="section-4">按块存储</h3>
 <p>对上面的压缩方法进行一个变形，这里不再对每个词项都维护一个指向字符串(所有词的组合)的指针．我们首先将我们的词典按块进行划分，例如每５个词为一块，这样对没一个块只需要维护一个这个块指向字符串的指针，同时在长字符串中，我们需要加入一个空间用于指定当前词的长度．在这种机制下，假设一个块内有ｋ个词，我们减少了(k-1)个指针的空间，但是我们需要在字符串中对没个词增加空间以记录其词的长度．假设每个块内有４个词，减少的指针空间为9B,同时对４个词需要增加４Ｂ的空间用于记录词的长度，所以没４个词产生了5B的压缩，所以压缩的空间为400,000*$\frac{1}{4}$*5=0.5MB.    </p>
 
 <p><strong>注意：</strong>我们在这里维护了两个指针，一个用于指向倒排记录表，一个指向字符串用词项的位置，我们压缩的部分是词项指针．   </p>
@@ -184,18 +185,18 @@ MathJax.Hub.Config({
 
 <p>我们发现，每个块内的词越多时，则可以压缩的空间越大．但是并非块内词越多越好，在进行词项查找时，对于块间的词我们可以通过二分查找快速定位，但是在快内查找时则是简单的线性遍历，所以我们必须在查找速度和空间压缩见进行权衡．    </p>
 
-<h2 id="section-4">倒排记录表的压缩</h2>
+<h2 id="section-5">倒排记录表的压缩</h2>
 <hr />
 
 <p>倒排记录表的压缩基于下面一个前提，当用文档ID来表示倒排记录表，对与高频词来说，倒排记录表中的记录多并且相邻的记录之间差距会很小，当某高频词出现在某篇文档中时，将其相近的文档中出现高频词的概率会很大．这就给我们提供了对倒排记录表进行压缩的灵感，正常情况下我们对到拍记录表中的每个文档id,都是用定长的空间来存储的，那么对那些高频词的话，我可以通过存储他们倒排记录表相邻的距离（明显小于存储文档id的长度）来达到压缩的目的．     </p>
 
-<h3 id="section-5">可变字节码</h3>
+<h3 id="section-6">可变字节码</h3>
 <p>VB(Variable byte,可变字节)码的思想为，我们采用整数个字节来存储文档id,每个字节的后７位为有效编码，第一位为延续位，表示本次编码的结束与否,’1’表示结束．     </p>
 
 <p>可变字节码的解码过程如下，根据延续位（一直获取字节直到字节的首位为１）来获取编码结果，对编码结果进行以下处理，去除所有的延续位，剩余有效编码表示间隔位，将此编码值与前一个编码的结果进行累加即表示文档的ID. 
 <img src="../images/1/3.png" alt="image" /></p>
 
-<h3 id="section-6">γ编码</h3>
+<h3 id="section-7">γ编码</h3>
 
 <p>一元编码：将数值为ｎ的数用ｎ个１并在之后加上一个０来表示的编码方式．  </p>
 
@@ -210,7 +211,7 @@ MathJax.Hub.Config({
 
 <p>我的理解是这样的，我们有对倒排记录表的实现一般也是通过链表或是定长数组来实现的，当采用定长的编码格式来存储每个文档ＩＤ时，必然会产生很大的浪费．那么如何通过变长的编码格式并且不需要额外的数组或指针来表明文档的长度，这边是γ编码所做的事了，让我们看一下γ编码的的解码过程：11001,我们首先遍历该编码，知道遇到０时停止，发现长度为２，剩下的偏移量为01,我们知道实际的二进制数为101,也就是说我们通过编码本身可以确定文档id,不需要进行额外的存储．</p>
 
-<h4 id="section-7">参考资料</h4>
+<h4 id="section-8">参考资料</h4>
 <p><a href="https://www.google.com.hk/search?q=%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E5%AF%BC%E8%AE%BA&amp;oq=%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E5%AF%BC%E8%AE%BA&amp;aqs=chrome..69i57j69i65j69i61l3j0.3218j0j1&amp;sourceid=chrome&amp;ie=UTF-8">索引压缩</a>     <br />
 <strong>说明：</strong>文章主要内容和图片来自信息检索导论一书。</p>
 
@@ -237,20 +238,20 @@ MathJax.Hub.Config({
           <a href="http://jwchennlp.github.com/odps-sql/" class="read-more-btn">Read More</a>
         </div><!-- /.read-more-header -->
         <div class="read-more-content">
-          <h3><a href="http://jwchennlp.github.com/odps-sql/" title="odps_sql">odps_sql</a></h3>
-          <p>odps(open data processing service，开源数据处理服务)是阿里巴巴的分布式计算平台。数据以sql表格的形式存放在odps中，我们可以是使用类似与sql命令的方式对数据进行操作。当让sql中嵌入了odps平台自己的函数和命令。文档学习ing…表格...&hellip; <a href="http://jwchennlp.github.com/odps-sql/">Continue reading</a></p>
+          <h3><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" title="生成模型和判别模型">生成模型和判别模型</a></h3>
+          <p>##定义-------->生成方法由数据学习联合概率分布P(x,y)，然后求出条件概率分布P(y｜ｘ)作为预测的模>型，即成生模型    >![image](../images/140507/1.png)   >这样的方法成为生成方法，是因为模型表示了给定输入ｘ产生输出ｙ的...&hellip; <a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/">Continue reading</a></p>
         </div><!-- /.read-more-content -->
       
       <div class="read-more-list">
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/index-construction/" title="索引构建">索引构建</a></h4>
-            <span>Published on April 24, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/odps-sql/" title="odps_sql">odps_sql</a></h4>
+            <span>Published on April 26, 2014</span>
           </div><!-- /.list-item -->
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/dic-and-fault-tolerance-retrieve/" title="词典及容错式检索">词典及容错式检索</a></h4>
-            <span>Published on April 22, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/index-construction/" title="索引构建">索引构建</a></h4>
+            <span>Published on April 24, 2014</span>
           </div><!-- /.list-item -->
         
       </div><!-- /.read-more-list -->

@@ -5,25 +5,25 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Sample Post &#8211; My blog</title>
-<meta name="description" content="">
-<meta name="keywords" content="Hello world">
+<title>生成模型和判别模型 &#8211; My blog</title>
+<meta name="description" content="good good study,day day up">
+<meta name="keywords" content="生成模型, 判别模型">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sample Post">
-<meta property="og:description" content="">
-<meta property="og:url" content="http://jwchennlp.github.com/hello-world/">
+<meta property="og:title" content="生成模型和判别模型">
+<meta property="og:description" content="good good study,day day up">
+<meta property="og:url" content="http://jwchennlp.github.com/generative-model-and-discriminative-model/">
 <meta property="og:site_name" content="My blog">
 
 
 
 
 
-<link rel="canonical" href="http://jwchennlp.github.com/hello-world/">
+<link rel="canonical" href="http://jwchennlp.github.com/generative-model-and-discriminative-model/">
 <link href="http://jwchennlp.github.com/feed.xml" type="application/atom+xml" rel="alternate" title="My blog Feed">
 
 
@@ -117,7 +117,7 @@ MathJax.Hub.Config({
 <div class="entry-header">
   <div class="image-credit">Image source: <a href="http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/">dargadgetz</a></div><!-- /.image-credit -->
   <div class="entry-image">
-    <img src="http://jwchennlp.github.com/images/abstract-3.jpg" alt="Sample Post">
+    <img src="http://jwchennlp.github.com/images/abstract-7.jpg" alt="生成模型和判别模型">
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
 
@@ -127,34 +127,54 @@ MathJax.Hub.Config({
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="http://jwchennlp.github.com/hello-world/" rel="bookmark" title="Sample Post">Sample Post</a></h1>
+          <h1 class="entry-title"><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" rel="bookmark" title="生成模型和判别模型">生成模型和判别模型</a></h1>
         
-        <h2>April 13, 2014</h2>
+        <h2>May 07, 2014</h2>
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p>你好，哈尔滨！</p>
-
-<h2 id="why">why</h2>
+      <h2 id="section">定义</h2>
 <hr />
-<p>怎么感觉有些问题呢    </p>
+<blockquote>
+  <p>生成方法由数据学习联合概率分布P(x,y)，然后求出条件概率分布P(y｜ｘ)作为预测的模
+型，即成生模型  <br />
+<img src="../images/140507/1.png" alt="image" /> <br />
+这样的方法成为生成方法，是因为模型表示了给定输入ｘ产生输出ｙ的生成关系．典型的生成模型有，朴素贝叶斯和隐马尔可夫模型．  <br />
+判别方法是由数据直接学习决策函数ｆ(x)或者条件概率分布P(y｜x)作为预测的模型，即判别模型，判别方法关心的是对给定的输入x,应该预测什么样的输出ｙ，典型的方法包括感知机，决策树，逻辑回归． <br />
+ -统计学习方法</p>
+</blockquote>
 
-<div class="highlight"><pre><code class="c"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>  
+<p>在面对猫狗分类问题时，我们该如何实现呢？  <br />
+方法一：当我们利用逻辑回归或是感知机模型时，我们需要数据集所投射的空间中，找到一个决策边界，在决策边界一边的属于一类动物，在决策边界另一边的属于另一种动物．当来一个我们不知道的动物时，我们将它放入空间中，通过判断它在决策边界的那一侧来判断是猫还是狗． <br />
+方法二：将数据集中的猫都拿出来，建立一个关于猫的特征的模型．按同样的方法建立一个关于狗的模型．这样，当判断一个动物时，我们分别查看它在猫模型中属于猫的概率和在狗模型中属于狗的概率，哪个值大，便说明属于哪个模型．   </p>
 
-<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
-</code></pre></div>
+<p>方法一通过对数据集训练出一个模型，并通过判断P(y|x)下的条件概率来判断ｙ的类别．这种方法成为判别方法，对应建立的模型属于判别模型．   <br />
+方法二对数据集的每一个类别建立一个模型，并通过联合概率P(x,y)来判断ｘ特征所应对应的类别．这种方法成为生成方法．  </p>
+
+<p>其实通过联合概率来判断类别进行了一个变形，一般我们是要判断P(y|x)下的概率，可以进行如下转换： <br />
+<img src="../images/140507/1.png" alt="image" />  <br />
+对于某个参数ｘ，其概率值P(x)值在所有类别下都是相同的，所以问题便等同于如下问题：            <br />
+<img src="../images/140507/2.png" alt="image" />        </p>
+
+<p>不妨通过一个朴素贝叶斯生成模型来了解生成模型的判定过程．
+如图，训练集包含４篇文档，我们需要验证测试集中的文档类别： <br />
+<img src="../images/140507/3.png" alt="iamge" />    </p>
+
+<p>我们需要计算每一个类别下P(x｜y)P(y)的概率，并且概率最大的那一类便是文档所属类别．即计算P((Chinese,chinese,Chinese,Tokyo,Japan)｜y=c)P(y=c)和P((Chinese,chinese,Chinese,Tokyo,Japan)｜y=$\bar{c}$)P(y=$\bar{c}$)．</p>
+
+<p>之后利用朴素贝叶斯的的条件独立定义进行求解便能获知测试及属于哪个类别．</p>
 
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://jwchennlp.github.com/tags/#Hello world" title="Pages tagged Hello world" class="tag">Hello world</a></span>
-        <span><a href="http://jwchennlp.github.com/hello-world/" rel="bookmark" title="Sample Post">Sample Post</a> was published on <span class="entry-date date published updated"><time datetime="2014-04-13T00:00:00-04:00">April 13, 2014</time></span></span>
-        (revised: <span class="entry-date date modified"><time datetime="2014-04-13">04/13/2014</time></span>)
+        <span class="entry-tags"><a href="http://jwchennlp.github.com/tags/#生成模型" title="Pages tagged 生成模型" class="tag">生成模型</a><a href="http://jwchennlp.github.com/tags/#判别模型" title="Pages tagged 判别模型" class="tag">判别模型</a></span>
+        <span><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" rel="bookmark" title="生成模型和判别模型">生成模型和判别模型</a> was published on <span class="entry-date date published updated"><time datetime="2014-05-07T00:00:00-04:00">May 07, 2014</time></span></span>
+        (revised: <span class="entry-date date modified"><time datetime="2014-05-07 11:40:02 UTC">05/07/2014</time></span>)
         <span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>
         <div class="social-share">
           <ul class="socialcount socialcount-small inline-list">
-            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://jwchennlp.github.com/hello-world/" title="Share on Facebook"><span class="count"><i class="icon-facebook-sign"></i> Like</span></a></li>
-            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://jwchennlp.github.com/hello-world/" title="Share on Twitter"><span class="count"><i class="icon-twitter-sign"></i> Tweet</span></a></li>
-            <li class="googleplus"><a href="https://plus.google.com/share?url=http://jwchennlp.github.com/hello-world/" title="Share on Google Plus"><span class="count"><i class="icon-google-plus-sign"></i> +1</span></a></li>
+            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://jwchennlp.github.com/generative-model-and-discriminative-model/" title="Share on Facebook"><span class="count"><i class="icon-facebook-sign"></i> Like</span></a></li>
+            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://jwchennlp.github.com/generative-model-and-discriminative-model/" title="Share on Twitter"><span class="count"><i class="icon-twitter-sign"></i> Tweet</span></a></li>
+            <li class="googleplus"><a href="https://plus.google.com/share?url=http://jwchennlp.github.com/generative-model-and-discriminative-model/" title="Share on Google Plus"><span class="count"><i class="icon-google-plus-sign"></i> +1</span></a></li>
           </ul>
         </div><!-- /.social-share -->
       </footer>
@@ -164,23 +184,23 @@ MathJax.Hub.Config({
     <div class="read-more">
       
         <div class="read-more-header">
-          <a href="http://jwchennlp.github.com" class="read-more-btn">Read More</a>
+          <a href="http://jwchennlp.github.com/index-compress/" class="read-more-btn">Read More</a>
         </div><!-- /.read-more-header -->
         <div class="read-more-content">
-          <h3><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" title="生成模型和判别模型">生成模型和判别模型</a></h3>
-          <p>##定义-------->生成方法由数据学习联合概率分布P(x,y)，然后求出条件概率分布P(y｜ｘ)作为预测的模>型，即成生模型    >![image](../images/140507/1.png)   >这样的方法成为生成方法，是因为模型表示了给定输入ｘ产生输出ｙ的...&hellip; <a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/">Continue reading</a></p>
+          <h3><a href="http://jwchennlp.github.com/index-compress/" title="索引压缩">索引压缩</a></h3>
+          <p>为什么要进行索引压缩？进行索引压缩有以下优点：    节省磁盘空间．    增加高速缓存(cache)的利用率.倒排索引词典是放在内存中的，倒排记录表放在磁盘上．对与到拍记录上的某些词项ｔ，我们是需要经常访问的，如果将这次词项ｔ所对应的到拍记录表压缩后放在高速缓存中，只要采...&hellip; <a href="http://jwchennlp.github.com/index-compress/">Continue reading</a></p>
         </div><!-- /.read-more-content -->
       
       <div class="read-more-list">
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/index-compress/" title="索引压缩">索引压缩</a></h4>
-            <span>Published on May 06, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/odps-sql/" title="odps_sql">odps_sql</a></h4>
+            <span>Published on April 26, 2014</span>
           </div><!-- /.list-item -->
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/odps-sql/" title="odps_sql">odps_sql</a></h4>
-            <span>Published on April 26, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/index-construction/" title="索引构建">索引构建</a></h4>
+            <span>Published on April 24, 2014</span>
           </div><!-- /.list-item -->
         
       </div><!-- /.read-more-list -->
