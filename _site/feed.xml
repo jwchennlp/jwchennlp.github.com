@@ -4,13 +4,37 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-05-07T08:45:23-04:00</updated>
+<updated>2014-05-08T11:29:18-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
   <uri>http://jwchennlp.github.com/</uri>
   <email>hit1093710417@email.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[支持向量机]]></title>
+ <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/support-vector-machine/" />
+  <id>http://jwchennlp.github.com/support-vector-machine</id>
+  <updated>2014-05-08 06:22:02 UTCT00:00:00-00:00</updated>
+  <published>2014-05-08T00:00:00-04:00</published>
+  
+  <author>
+    <name>jwchen</name>
+    <uri>http://jwchennlp.github.com</uri>
+    <email>hit1093710417@email.com</email>
+  </author>
+  <content type="html">&lt;h2 id=&quot;section&quot;&gt;问题引出&lt;/h2&gt;
+&lt;p&gt;在面对一个最简单的二分类问题，并且假设数据集可分的情况下．具体如下图所示．当我们采用逻辑回归实现分类时，我们用一个分类超平面（决策边界）对数据进行数据进行划分，并在划分后，不同类别的数据分布在分类超平面的两边，这分类成功．其实，在数据可分的情况下，我们发现可以有很多条这样的分类超平面，并且都能达到正确分类的效果,这个时候我们可能要问，这些分类超平面的效果一样吗？是否存在一个最优的分类超平面．
+&lt;img src=&quot;../images/140508/1.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;函数间隔和几何间隔&lt;/h2&gt;
+&lt;p&gt;###函数间隔
+对于上面数据集，我们计算出了一个超平面$w^T&lt;em&gt;x+b=0$,当某一个数据点x．如果$w^T&lt;/em&gt;x+b＞0$，则其类ｙ=1，并且如果$w^T&lt;em&gt;x+b＞0$并且$w^T&lt;/em&gt;x+b$值越大，则这个点的类别为正例的置信度就越高．当$w^T&lt;em&gt;x+b＜0$时，点所属类别为－１，并且$w^T&lt;/em&gt;x+b$值越小，这这个点类别为负例的置信度就越高．并且当点ｘ被正确分类时，$y*(w^T+b)$为正数．&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/support-vector-machine/&quot;&gt;支持向量机&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 08, 2014.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -29,13 +53,14 @@
 &lt;hr /&gt;
 &lt;blockquote&gt;
   &lt;p&gt;生成方法由数据学习联合概率分布P(x,y)，然后求出条件概率分布P(y｜ｘ)作为预测的模
-型，即成生模型  &lt;br /&gt;
+型，即成生模型:  &lt;br /&gt;
 &lt;img src=&quot;../images/140507/1.png&quot; alt=&quot;image&quot; /&gt; &lt;br /&gt;
 这样的方法成为生成方法，是因为模型表示了给定输入ｘ产生输出ｙ的生成关系．典型的生成模型有，朴素贝叶斯和隐马尔可夫模型．  &lt;br /&gt;
-判别方法是由数据直接学习决策函数ｆ(x)或者条件概率分布P(y｜x)作为预测的模型，即判别模型，判别方法关心的是对给定的输入x,应该预测什么样的输出ｙ，典型的方法包括感知机，决策树，逻辑回归． &lt;br /&gt;
- -统计学习方法&lt;/p&gt;
+判别方法是由数据直接学习决策函数ｆ(x)或者条件概率分布P(y｜x)作为预测的模型，即判别模型，判别方法关心的是对给定的输入x,应该预测什么样的输出ｙ，典型的方法包括感知机，决策树，逻辑回归．   &lt;/p&gt;
 &lt;/blockquote&gt;
 
+&lt;h2 id=&quot;section-1&quot;&gt;理解&lt;/h2&gt;
+&lt;hr /&gt;
 &lt;p&gt;在面对猫狗分类问题时，我们该如何实现呢？  &lt;br /&gt;
 方法一：当我们利用逻辑回归或是感知机模型时，我们需要数据集所投射的空间中，找到一个决策边界，在决策边界一边的属于一类动物，在决策边界另一边的属于另一种动物．当来一个我们不知道的动物时，我们将它放入空间中，通过判断它在决策边界的那一侧来判断是猫还是狗． &lt;br /&gt;
 方法二：将数据集中的猫都拿出来，建立一个关于猫的特征的模型．按同样的方法建立一个关于狗的模型．这样，当判断一个动物时，我们分别查看它在猫模型中属于猫的概率和在狗模型中属于狗的概率，哪个值大，便说明属于哪个模型．   &lt;/p&gt;
