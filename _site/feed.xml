@@ -4,13 +4,47 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-05-08T11:29:18-04:00</updated>
+<updated>2014-05-09T08:47:45-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
   <uri>http://jwchennlp.github.com/</uri>
   <email>hit1093710417@email.com</email>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[阿里大数据竞赛方法总结]]></title>
+ <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/odps-model/" />
+  <id>http://jwchennlp.github.com/odps-model</id>
+  <updated>2014-05-09 06:17:38 UTCT00:00:00-00:00</updated>
+  <published>2014-05-09T00:00:00-04:00</published>
+  
+  <author>
+    <name>jwchen</name>
+    <uri>http://jwchennlp.github.com</uri>
+    <email>hit1093710417@email.com</email>
+  </author>
+  <content type="html">&lt;h2 id=&quot;section&quot;&gt;逻辑回归&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;特征抽取&lt;/h3&gt;
+&lt;p&gt;将前四个月的数据切分成4:1,为了训练模型，前一部分数据用于抽取特征ｘ，后一部分用于获取类别ｙ．具体描述为，根据每个用户对每个物品的行为没一个数据，如果行为在第一部分，但是在第二部分没有购买行为，这类别为负例，若在第二部分出现购买行为，这此行为为正例．如果行为只在第二部分产生，则次用户对物品的行为无效，直接剔除．  &lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;模型训练&lt;/h3&gt;
+&lt;p&gt;在得出了模型的正例和负例之后，因为正例负例差很多，不能直接进行训练．这里采取的策略是按比例对负例进行采样，采样后结合正例进行训练．模型训练直接用xlab平台的逻辑回归进行训练．    &lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;预测结果&lt;/h3&gt;
+&lt;p&gt;在训练完模型之后，我们按照相同的方法对所有前４个月的数据进行特征抽取．并用训练好的模型进行预测．预测后，会返回每个数据属于哪一类别的概率，我们可以通过限定概率值得到最终结果．&lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;存在改进的地方&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;没有对数据进行去噪声操作．     &lt;/li&gt;
+  &lt;li&gt;对负例的采样比例的设定．      &lt;/li&gt;
+  &lt;li&gt;模型训练时的迭代次数，及是否可以通过多次采样对多次结果进行加权获取最终结果．&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/odps-model/&quot;&gt;阿里大数据竞赛方法总结&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 09, 2014.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -30,8 +64,115 @@
 &lt;img src=&quot;../images/140508/1.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;section-1&quot;&gt;函数间隔和几何间隔&lt;/h2&gt;
-&lt;p&gt;###函数间隔
-对于上面数据集，我们计算出了一个超平面$w^T&lt;em&gt;x+b=0$,当某一个数据点x．如果$w^T&lt;/em&gt;x+b＞0$，则其类ｙ=1，并且如果$w^T&lt;em&gt;x+b＞0$并且$w^T&lt;/em&gt;x+b$值越大，则这个点的类别为正例的置信度就越高．当$w^T&lt;em&gt;x+b＜0$时，点所属类别为－１，并且$w^T&lt;/em&gt;x+b$值越小，这这个点类别为负例的置信度就越高．并且当点ｘ被正确分类时，$y*(w^T+b)$为正数．&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;函数间隔&lt;/h3&gt;
+
+&lt;p&gt;对于上面数据集，我们计算出了一个超平面$w^Tx+b=1$.对于某一个数据点x我们需要判断其内别,如果$w^Tx+b＞0$，则其类ｙ=1，并且如果$w^Tx+b＞0$并且$w^Tx+b$值越大，则这个点的类别为正例的置信度就越高．当$w^Tx+b＜0$时,点所属类别为－１，并且$w^Tx+b$值越小，这这个点类别为负例的置信度就越高．并且当点ｘ被正确分类时，$y(w^T+b)$为正数．从上面图中可以看出，我们设定分类超平面的上部为正例，A,B,C三个的点都被标记为正例，但是C离决策边界最近，可能稍微变化决策边界就可能导致分类错误，所以C分类正确的置信读低．A离决策边界最远，所以Ｃ被分为正例的置信读高.对于点$\left(x^\left(i\right),y^\left(i\right)\right)$为了获得更好的分类效果，我们希望$y\left(i\right)(w^Tx+b)$尽量大，则分类的置信度就越高．&lt;/p&gt;
+
+&lt;p&gt;所以，对数据$\left(x^\left(i\right),y^\left(i\right)\right)$，我们就定义$y\left(i\right)(w^Tx+b)$为此数据点的函数间隔，并且如果使得每个点的函数间隔都倾向于一个大值，则分类置信度越高，分类效果越好．   &lt;/p&gt;
+
+&lt;p&gt;给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,…m},我们需要计算每一个样本点到分类超平面的几何距离.在这里，我们需要求出最小的几何距离，并且通过修改分类超平面使得最小几何距离尽可能大，则分类效果更好．      &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\widehat{\gamma}=\min_{i=1,...,m}\widehat\gamma^\left(i\right)&lt;/script&gt;  &lt;/p&gt;
+
+&lt;p&gt;利用函数间隔来衡量分类效果的置信度有一个缺陷，当我们确定某一个分类超平面$w^Tx+b=0$，我们对ｗ,b同时增加ｋ倍,函数间隔由原来的$y\left(w^Tx+b\right)$变成$ky\left(w^Tx+b\right)$．也就是说某一数据点的函数间隔可以可以任意的缩放或增加．&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;几何间隔&lt;/h2&gt;
+
+&lt;p&gt;在确定分类超平面之后，任一数据点到分类超平面的距离应该是不变的．如果我们用这个距离来衡量分类置信度的话，效果会很好．    &lt;br /&gt;
+&lt;img src=&quot;../images/140508/2.png&quot; alt=&quot;image&quot; /&gt;  &lt;br /&gt;
+点A到平面的距离设为$\gamma$,知道分类超平面的法向量为ｗ，那么将A投影到分类超平面上的点B的坐标为$x-\frac{w}{\left|w\right|}\gamma$,$w^Tx+b=0$上，所以有:      &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;w^T\left(x-\frac{w}{\left|w\right|}\gamma\right)+b=0&lt;/script&gt;
+求解得$\gamma=\frac{w}{|w|}x+\frac{b}{|w|}$,所以对所有的样本点点$\left(x^\left(i\right),y^\left(i\right)\right)$,我们求得每个样本点的几何边界为:     &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\gamma^\left(i\right)=y^\left(i\right)\left(\frac{w}{|w|}x^\left(i\right)+\frac{b}{|w|}\right)&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,…m},我们需要计算每一个样本点到分类超平面的几何距离.在这里，我们需要求出最小的几何距离，并且通过修改分类超平面使得最小几何距离尽可能大，则分类效果更好．      &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\gamma=\min_{i=1,...,m}\gamma^\left(i\right)&lt;/script&gt;    &lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;最优间隔分类器&lt;/h2&gt;
+
+&lt;p&gt;当给定训练集之后，按照前面分析直观上最好的分类效果是找到决策边界使得(几何)间隔最大化.因为我们的决策是使得最小几何间隔最大化，则显然对所有点的分类的置信度很高．所以当对于一个线性可分的数据集，我们要通过一个分类超平面来分割所有的正例和负例．那么我们的问题可以转化成下面的优化问题: &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\max_{\gamma,w,b}   \gamma \\
+ s.t.    y^\left(i\right)\left(\frac{w}{|w|}x^\left(i\right)+\frac{b}{|w|}\right)\geq\gamma,i=1,...,m
+&lt;/script&gt;    &lt;br /&gt;
+由于我们知道在确定了(w,b)之后，我们可以通过同比例的缩放或增加(w,b),所以我们可以通过相应的扩张比例使得|w|的值为１．所以优化问题转化成如下形式：   &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\max_{\gamma,w,b}   \gamma \\
+ s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq\gamma,i=1,...,m　\\
+ |w|=1
+&lt;/script&gt;  &lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;通过约束&lt;/td&gt;
+      &lt;td&gt;w&lt;/td&gt;
+      &lt;td&gt;=1,使得函数间隔等于几何间隔．但是因为如上的优化问题是非凸问题，我们很难通过软件来进行求解．所以我们将第一个问题转化成如下问题:&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\max_{\gamma,w,b}:  \frac{\widehat\gamma}{|w|} \\
+ s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq\widehat\gamma,i=1,...,m
+&lt;/script&gt;    &lt;br /&gt;
+其中$\widehat\gamma$代表的是最小函数间隔，我们知道函数间隔是可以通过(w,b)的同比例变化而变化，这里为了为了简化计算，我们将$\widehat\gamma$设为１．那么如上的优化问题变为: &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\max_{\gamma,w,b}:  \frac{1}{|w|} \\
+ s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
+&lt;/script&gt;
+进一步转变，优化问题变成如下格式：    &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\min_{\gamma,w,b}: \frac{1}{2}w^2 \\
+ s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
+&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-5&quot;&gt;拉格朗日算子&lt;/h2&gt;
+
+&lt;p&gt;对于如下的原始优化问题：      &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt; \min_w:f(w) \\
+s.t.:g_i(w)\leq0,i=1,...k  \\
+h_i(w)=0,i=1,...l   
+&lt;/script&gt;    &lt;br /&gt;
+其拉格朗日算子为$L(w,\alpha,\beta)=f(w)+\sum&lt;em&gt;\left(i=1\right)^k\alpha_ig_i(w)+\sum&lt;/em&gt;\left(i=1\right)^l\beta_ih_i(w)
+$,其中$\alpha_i,\beta_i$为拉格朗日乘数．      &lt;br /&gt;
+考虑如下等式：&lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\theta_p(w)=\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)&lt;/script&gt;  &lt;br /&gt;
+其中ｐ表示原始的,我们发现当给定ｗ，并且ｗ满足我们原始问题的约束（$g_i(w)\leq0，h_i(w)=0$），如果ｗ违背这些约束，则显然$\theta_p(w)=\infty$,当ｗ满足原始问题约束时，$\theta_p(w)=０$．那么可以的出如下结论：      &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\min_w\theta_p(w)=\min_w\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)&lt;/script&gt;  &lt;br /&gt;
+同时我们定义$p^*=\min_w\theta_p(w)$为原始问题的解．   &lt;br /&gt;
+现在对应它的对偶问题：
+&lt;script type=&quot;math/tex&quot;&gt;\max_\left(\alpha,\beta:\alpha_i\geq0\right)\theta_d(p)=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)&lt;/script&gt; &lt;br /&gt;
+我们知道，最大最小问题的解小于最小最大问题的解：      &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;d^*=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)\leq\min_w\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)=p^*&lt;/script&gt;    &lt;/p&gt;
+
+&lt;p&gt;当ｆ和$g_i$为凸函数时，$h_i$为仿射函数(仿射变换的定义是在几何空间中，一个向量空间进行一次线性变换并接上一个平移，变换成另一个向量空间)，有$d^＊=p^＊$，在这些约束下，一定存在一个$w^＊$是原始问题的解，$\alpha^＊,\beta^＊$是对偶问题的解，并且有$d^＊=p^＊=L(w^＊,\alpha^＊,\beta^＊)$,同时这３个参数满足KKT条件，KKT条件描述如下：    &lt;br /&gt;
+&lt;img src=&quot;../images/140508/3.png&quot; alt=&quot;image&quot; /&gt;
+其中第三个约束称为对偶互补条件，并且当$a_i＞０$时，$g_i(w^*)=0$,满足这些条件的点所对应的几何间隔便是最小几何间隔．这些点称为支持向量.&lt;/p&gt;
+
+&lt;p&gt;现在回到优化边界分类器部分,我们的原始问题定义为：     &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\min_{\gamma,w,b}: \frac{1}{2}w^2 \\
+ s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
+&lt;/script&gt;    &lt;br /&gt;
+约束条件可以表示为：      &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;g_i(w)=-y^\left(i\right)(w^Tx\left(i\right)+b)+1\leq0&lt;/script&gt;  &lt;br /&gt;
+&lt;img src=&quot;../images/140508/4.png&quot; alt=&quot;image&quot; /&gt;    &lt;/p&gt;
+
+&lt;p&gt;我们可以看到，有最小几何间隔的点离决策边界最近．我们知道这些点$\left(x^\left(i\right),y\left(i\right)\right)$满足$g_i(w)=0$.我们将这些点称之为支持向量．从上图知道，数据集中有３个支持向量，一般来说支持向量的个数会明显小于数据集的大小，这在后面会相当有用．      &lt;/p&gt;
+
+&lt;p&gt;原始问题的拉格朗日算子可以表示为：    &lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;L(w,b,\alpha)=\frac{1}{2}w^2-\sum_{i=1}^m\alpha_i[y^\left(i\right)(w^Tx\left(i\right)+b)+1]&lt;/script&gt;
+这个时候我们通过求对偶问题$\theta_p(w)$来求原始问题的解．具体方法是对Ｌ函数关于参数ｗ和ｂ求偏导数：    &lt;br /&gt;
+&lt;img src=&quot;../images/140508/5.png&quot; alt=&quot;image&quot; /&gt;
+&lt;img src=&quot;../images/140508/6.png&quot; alt=&quot;image&quot; /&gt;
+&lt;img src=&quot;../images/140508/7.png&quot; alt=&quot;image&quot; /&gt;
+将得到的约束代回到上面的拉格朗日算子中．得到：    &lt;br /&gt;
+&lt;img src=&quot;../images/140508/8.png&quot; alt=&quot;image&quot; /&gt;
+&lt;img src=&quot;../images/140508/9.png&quot; alt=&quot;image&quot; /&gt;
+最后原始问题的对偶优化问题可以定义为：    &lt;br /&gt;
+&lt;img src=&quot;../images/140508/10.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;现在假定我们已经求得对偶问题最优解的$\alpha_i$，那么我们是如何做预测的呢？对于一个新的数据点ｘ，我们知道预测是通过判断$w^Tx+b$的值来判定的，如果大于０，类别为正例，如果小于０，类别为负例,我们将上面求解的ｗ值代入：         &lt;br /&gt;
+&lt;img src=&quot;../images/140508/11.png&quot; alt=&quot;image&quot; /&gt;
+我们知道$\alpha_i\geq0$,且根据KKT约束条件中的对偶互补条件$\alpha_ig_i(w)\geq0$,并且$\alpha&amp;gt;0$时，$g_i(w)=0$,表示这些点有最小的几何间隔，也就是说这些点表示支持向量．我们知道，在判断ｘ类别的时候，我们只需要考虑$\alpha_i&amp;gt;0$的情况，也对应的我们只需要考虑数据集中的支持向量．同时，支持向量想对于数据集来说是小很多的．这样很显然可以进行高效求解.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mbox{对任意的$x&gt;0$}, \mbox{有 }f(x)&gt;0. &lt;/script&gt;
+
 
   &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/support-vector-machine/&quot;&gt;支持向量机&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 08, 2014.&lt;/p&gt;</content>
 </entry>
