@@ -24,7 +24,8 @@ share: true
 
 所以，对数据$\left(x^\left(i\right),y^\left(i\right)\right)$，我们就定义$y\left(i\right)(w^Tx+b)$为此数据点的函数间隔，并且如果使得每个点的函数间隔都倾向于一个大值，则分类置信度越高，分类效果越好．   
 
-给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,...m},我们需要计算每一个样本点到分类超平面的几何距离.在这里，我们需要求出最小的几何距离，并且通过修改分类超平面使得最小几何距离尽可能大，则分类效果更好．        
+给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,...m},我们需要计算每一个样本点到分类超平面的几何距离.在这里，我们需要求出最小的几何距离，并且通过修改分类超平面使得最小几何距离尽可能大，则分类效果更好．     
+     
 $$\widehat{\gamma}=\min_{i=1,...,m}\widehat\gamma^\left(i\right)$$  
 
 利用函数间隔来衡量分类效果的置信度有一个缺陷，当我们确定某一个分类超平面$w^Tx+b=0$，我们对ｗ,b同时增加ｋ倍,函数间隔由原来的$y\left(w^Tx+b\right)$变成$ky\left(w^Tx+b\right)$．也就是说某一数据点的函数间隔可以可以任意的缩放或增加．
@@ -34,20 +35,27 @@ $$\widehat{\gamma}=\min_{i=1,...,m}\widehat\gamma^\left(i\right)$$
 在确定分类超平面之后，任一数据点到分类超平面的距离应该是不变的．如果我们用这个距离来衡量分类置信度的话，效果会很好．      
 ![image](../images/140508/2.png)    
 点A到平面的距离设为$\gamma$,知道分类超平面的法向量为ｗ，那么将A投影到分类超平面上的点B的坐标为$x-\frac{w}{\left|w\right|}\gamma$,$w^Tx+b=0$上，所以有:        
-$$w^T\left(x-\frac{w}{\left|w\right|}\gamma\right)+b=0$$
-求解得$\gamma=\frac{w}{|w|}x+\frac{b}{|w|}$,所以对所有的样本点点$\left(x^\left(i\right),y^\left(i\right)\right)$,我们求得每个样本点的几何边界为:       
-$$\gamma^\left(i\right)=y^\left(i\right)\left(\frac{w}{|w|}x^\left(i\right)+\frac{b}{|w|}\right)$$
+
+$$w^T\left(x-\frac{w}{\left|w\right|}\gamma\right)+b=0$$        
+
+求解得$\gamma=\frac{w}{|w|}x+\frac{b}{|w|}$,所以对所有的样本点点$\left(x^\left(i\right),y^\left(i\right)\right)$,我们求得每个样本点的几何边界为:      
+ 
+$$\gamma^\left(i\right)=y^\left(i\right)\left(\frac{w}{|w|}x^\left(i\right)+\frac{b}{|w|}\right)$$      
 
 给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,...m},我们需要计算每一个样本点到分类超平面的几何距离.在这里，我们需要求出最小的几何距离，并且通过修改分类超平面使得最小几何距离尽可能大，则分类效果更好．        
+
 $$\gamma=\min_{i=1,...,m}\gamma^\left(i\right)$$    
 
 ##最优间隔分类器    
 
 当给定训练集之后，按照前面分析直观上最好的分类效果是找到决策边界使得(几何)间隔最大化.因为我们的决策是使得最小几何间隔最大化，则显然对所有点的分类的置信度很高．所以当对于一个线性可分的数据集，我们要通过一个分类超平面来分割所有的正例和负例．那么我们的问题可以转化成下面的优化问题:   
+
 $$\max_{\gamma,w,b}   \gamma \\
  s.t.    y^\left(i\right)\left(\frac{w}{|w|}x^\left(i\right)+\frac{b}{|w|}\right)\geq\gamma,i=1,...,m
 $$      
+
 由于我们知道在确定了(w,b)之后，我们可以通过同比例的缩放或增加(w,b),所以我们可以通过相应的扩张比例使得|w|的值为１．所以优化问题转化成如下形式：     
+
 $$\max_{\gamma,w,b}   \gamma \\
  s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq\gamma,i=1,...,m　\\
  |w|=1
@@ -59,11 +67,15 @@ $$
 $$\max_{\gamma,w,b}:  \frac{\widehat\gamma}{|w|} \\
  s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq\widehat\gamma,i=1,...,m
 $$      
-其中$\widehat\gamma$代表的是最小函数间隔，我们知道函数间隔是可以通过(w,b)的同比例变化而变化，这里为了为了简化计算，我们将$\widehat\gamma$设为１．那么如上的优化问题变为:   
+
+其中$\widehat\gamma$代表的是最小函数间隔，我们知道函数间隔是可以通过(w,b)的同比例变化而变化，这里为了为了简化计算，我们将$\widehat\gamma$设为１．那么如上的优化问题变为:     
+
 $$\max_{\gamma,w,b}:  \frac{1}{|w|} \\
  s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
-$$
-进一步转变，优化问题变成如下格式：      
+$$          
+
+进一步转变，优化问题变成如下格式：       
+     
 $$\min_{\gamma,w,b}: \frac{1}{2}w^2 \\
  s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
 $$
@@ -75,16 +87,22 @@ $$ \min_w:f(w) \\
 s.t.:g_i(w)\leq0,i=1,...k  \\
 h_i(w)=0,i=1,...l   
 $$      
-其拉格朗日算子为$L(w,\alpha,\beta)=f(w)+\sum_\left(i=1\right)^k\alpha_ig_i(w)+\sum_\left(i=1\right)^l\beta_ih_i(w)
-$,其中$\alpha_i,\beta_i$为拉格朗日乘数．        
-考虑如下等式：  
+其拉格朗日算子为$$L(w,\alpha,\beta)=f(w)+\sum_\left(i=1\right)^k\alpha_ig_i(w)+\sum_\left(i=1\right)^l\beta_ih_i(w)$$,其中$\alpha_i,\beta_i$为拉格朗日乘数．        
+考虑如下等式：     
+
 $$\theta_p(w)=\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)$$    
-其中ｐ表示原始的,我们发现当给定ｗ，并且ｗ满足我们原始问题的约束（$g_i(w)\leq0，h_i(w)=0$），如果ｗ违背这些约束，则显然$\theta_p(w)=\infty$,当ｗ满足原始问题约束时，$\theta_p(w)=０$．那么可以的出如下结论：        
-$$\min_w\theta_p(w)=\min_w\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)$$    
+
+其中ｐ表示原始的,我们发现当给定ｗ，并且ｗ满足我们原始问题的约束（$g_i(w)\leq0，h_i(w)=0$），如果ｗ违背这些约束，则显然$\theta_p(w)=\infty$,当ｗ满足原始问题约束时，$\theta_p(w)=０$．那么可以的出如下结论：  
+       
+$$\min_w\theta_p(w)=\min_w\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)$$       
+
 同时我们定义$p^*=\min_w\theta_p(w)$为原始问题的解．     
-现在对应它的对偶问题：
-$$\max_\left(\alpha,\beta:\alpha_i\geq0\right)\theta_d(p)=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)$$   
-我们知道，最大最小问题的解小于最小最大问题的解：        
+现在对应它的对偶问题：     
+
+$$\max_\left(\alpha,\beta:\alpha_i\geq0\right)\theta_d(p)=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)$$     
+
+我们知道，最大最小问题的解小于最小最大问题的解：     
+   
 $$d^*=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)\leq\min_w\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)=p^*$$    
 
 当ｆ和$g_i$为凸函数时，$h_i$为仿射函数(仿射变换的定义是在几何空间中，一个向量空间进行一次线性变换并接上一个平移，变换成另一个向量空间)，有$d^＊=p^＊$，在这些约束下，一定存在一个$w^＊$是原始问题的解，$\alpha^＊,\beta^＊$是对偶问题的解，并且有$d^＊=p^＊=L(w^＊,\alpha^＊,\beta^＊)$,同时这３个参数满足KKT条件，KKT条件描述如下：      
@@ -92,17 +110,22 @@ $$d^*=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)\leq\mi
 其中第三个约束称为对偶互补条件，并且当$a_i＞０$时，$g_i(w^*)=0$,满足这些条件的点所对应的几何间隔便是最小几何间隔．这些点称为支持向量.
 
 现在回到优化边界分类器部分,我们的原始问题定义为：       
+    
 $$\min_{\gamma,w,b}: \frac{1}{2}w^2 \\
  s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
-$$      
+$$          
+
 约束条件可以表示为：        
+
 $$g_i(w)=-y^\left(i\right)(w^Tx\left(i\right)+b)+1\leq0$$    
 ![image](../images/140508/4.png)    
 
 我们可以看到，有最小几何间隔的点离决策边界最近．我们知道这些点$\left(x^\left(i\right),y\left(i\right)\right)$满足$g_i(w)=0$.我们将这些点称之为支持向量．从上图知道，数据集中有３个支持向量，一般来说支持向量的个数会明显小于数据集的大小，这在后面会相当有用．      
 
 原始问题的拉格朗日算子可以表示为：      
-$$L(w,b,\alpha)=\frac{1}{2}w^2-\sum_{i=1}^m\alpha_i[y^\left(i\right)(w^Tx\left(i\right)+b)+1]$$
+
+$$L(w,b,\alpha)=\frac{1}{2}w^2-\sum_{i=1}^m\alpha_i[y^\left(i\right)(w^Tx\left(i\right)+b)+1]$$ 
+
 这个时候我们通过求对偶问题$\theta_p(w)$来求原始问题的解．具体方法是对Ｌ函数关于参数ｗ和ｂ求偏导数：      
 ![image](../images/140508/5.png)
 ![image](../images/140508/6.png)
