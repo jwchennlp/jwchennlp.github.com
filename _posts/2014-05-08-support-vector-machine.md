@@ -34,13 +34,14 @@ $$\widehat{\gamma}=\min_{i=1,...,m}\widehat\gamma^\left(i\right)$$
 
 在确定分类超平面之后，任一数据点到分类超平面的距离应该是不变的．如果我们用这个距离来衡量分类置信度的话，效果会很好．      
 ![image](../images/140508/2.png)    
-点A到平面的距离设为$\gamma$,知道分类超平面的法向量为ｗ，那么将A投影到分类超平面上的点B的坐标为$x-\frac{w}{\left|w\right|}\gamma$,$w^Tx+b=0$上，所以有:        
+点A到平面的距离设为$\gamma$,知道分类超平面的法向量为ｗ，那么将A投影到分类超平面上的点B的坐标为$x-\frac{w}{\left|w\right|}\gamma$,且点在决策边界$w^Tx+b=0$上，所以有:        
+            
 
-$$w^T\left(x-\frac{w}{\left|w\right|}\gamma\right)+b=0$$        
+$$w^T\left(x-\frac{w}{｜w｜}\gamma\right)+b=0$$        
 
-求解得$\gamma=\frac{w}{|w|}x+\frac{b}{|w|}$,所以对所有的样本点点$\left(x^\left(i\right),y^\left(i\right)\right)$,我们求得每个样本点的几何边界为:      
+求解得$\gamma=\frac{w}{｜w｜}x+\frac{b}{｜w｜}$,所以对所有的样本点点$\left(x^\left(i\right),y^\left(i\right)\right)$,我们求得每个样本点的几何边界为:      
  
-$$\gamma^\left(i\right)=y^\left(i\right)\left(\frac{w}{|w|}x^\left(i\right)+\frac{b}{|w|}\right)$$      
+$$\gamma^\left(i\right)=y^\left(i\right)\left(\frac{w}{｜w｜}x^\left(i\right)+\frac{b}{｜w｜}\right)$$             
 
 给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,...m},我们需要计算每一个样本点到分类超平面的几何距离.在这里，我们需要求出最小的几何距离，并且通过修改分类超平面使得最小几何距离尽可能大，则分类效果更好．        
 
@@ -82,11 +83,13 @@ $$
 
 ##拉格朗日算子  
 
-对于如下的原始优化问题：        
+对于如下的原始优化问题：    
+      
 $$ \min_w:f(w) \\
 s.t.:g_i(w)\leq0,i=1,...k  \\
 h_i(w)=0,i=1,...l   
-$$      
+$$          
+        
 其拉格朗日算子为$$L(w,\alpha,\beta)=f(w)+\sum_\left(i=1\right)^k\alpha_ig_i(w)+\sum_\left(i=1\right)^l\beta_ih_i(w)$$,其中$\alpha_i,\beta_i$为拉格朗日乘数．        
 考虑如下等式：     
 
