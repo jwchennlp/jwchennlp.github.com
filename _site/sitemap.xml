@@ -41,7 +41,15 @@
         <loc>http://jwchennlp.github.com/page2/index.html</loc>
     </url>
     
+    <url>
+        <loc>http://jwchennlp.github.com/page3/index.html</loc>
+    </url>
+    
 
+    
+    <url>
+        <loc>http://jwchennlp.github.com/test-classification/</loc>
+    </url>
     
     <url>
         <loc>http://jwchennlp.github.com/odps-model/</loc>

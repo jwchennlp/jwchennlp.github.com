@@ -99,7 +99,7 @@ MathJax.Hub.Config({
 				
 				
 				<li>
-					<a href="http://github.com/jwchennlp.github.com"><i class="icon-github"></i> GitHub</a>
+					<a href="http://github.com/jwchennlp"><i class="icon-github"></i> GitHub</a>
 				</li>
 				
 				
@@ -141,7 +141,7 @@ MathJax.Hub.Config({
     <div class="entry-content">
       <h2 id="section">问题引出</h2>
 <hr />
-<p>在面对一个最简单的二分类问题，并且假设数据集可分的情况下．具体如下图所示．当我们采用逻辑回归实现分类时，我们用一个分类超平面（决策边界）对数据进行数据进行划分，并在划分后，不同类别的数据分布在分类超平面的两边，这分类成功．其实，在数据可分的情况下，我们发现可以有很多条这样的分类超平面，并且都能达到正确分类的效果,这个时候我们可能要问，这些分类超平面的效果一样吗？是否存在一个最优的分类超平面．
+<p>在面对一个最简单的二分类问题，并且假设数据集可分的情况下．具体如下图所示．当我们采用逻辑回归实现分类时，我们用一个分类超平面（决策边界）对数据进行数据进行划分，并在划分后，不同类别的数据分布在分类超平面的两边，这表示分类成功．其实，在数据可分的情况下，我们发现可以有很多条这样的分类超平面，并且都能达到正确分类的效果,这个时候我们可能要问，这些分类超平面的效果一样吗？是否存在一个最优的分类超平面．
 <img src="../images/140508/1.png" alt="image" /></p>
 
 <h2 id="section-1">函数间隔和几何间隔</h2>
@@ -149,11 +149,11 @@ MathJax.Hub.Config({
 
 <h3 id="section-2">函数间隔</h3>
 
-<p>对于上面数据集，我们计算出了一个超平面$w^Tx+b=1$.对于某一个数据点x我们需要判断其内别,如果$w^Tx+b＞0$，则其类ｙ=1，并且如果$w^Tx+b＞0$并且$w^Tx+b$值越大，则这个点的类别为正例的置信度就越高．当$w^Tx+b＜0$时,点所属类别为－１，并且$w^Tx+b$值越小，这这个点类别为负例的置信度就越高．并且当点ｘ被正确分类时，$y(w^T+b)$为正数．从上面图中可以看出，我们设定分类超平面的上部为正例，A,B,C三个的点都被标记为正例，但是C离决策边界最近，可能稍微变化决策边界就可能导致分类错误，所以C分类正确的置信读低．A离决策边界最远，所以Ｃ被分为正例的置信读高.对于点$\left(x^\left(i\right),y^\left(i\right)\right)$为了获得更好的分类效果，我们希望$y\left(i\right)(w^Tx+b)$尽量大，则分类的置信度就越高．</p>
+<p>对于上面数据集，我们计算出了一个超平面$w^Tx+b=０$.对于某一个数据点x我们需要判断其内别,如果$w^Tx+b＞0$，则其类ｙ=1，并且如果$w^Tx+b＞0$并且$w^Tx+b$值越大，则这个点的类别为正例的置信度就越高．当$w^Tx+b＜0$时,点所属类别为－１，并且$w^Tx+b$值越小，这这个点类别为负例的置信度就越高．并且当点ｘ被正确分类时，$y(w^T+b)$为正数．从上面图中可以看出，我们设定分类超平面的上部为正例，A,B,C三个的点都被标记为正例，但是C离决策边界最近，可能稍微变化决策边界就可能导致分类错误，所以C分类正确的置信读低．A离决策边界最远，所以Ｃ被分为正例的置信读高.对于点$\left(x^\left(i\right),y^\left(i\right)\right)$为了获得更好的分类效果，我们希望$y\left(i\right)(w^Tx+b)$尽量大，则分类的置信度就越高．</p>
 
 <p>所以，对数据$\left(x^\left(i\right),y^\left(i\right)\right)$，我们就定义$y\left(i\right)(w^Tx+b)$为此数据点的函数间隔，并且如果使得每个点的函数间隔都倾向于一个大值，则分类置信度越高，分类效果越好．   </p>
 
-<p>给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,…m},我们需要计算每一个样本点到分类超平面的几何距离.在这里，我们需要求出最小的几何距离，并且通过修改分类超平面使得最小几何距离尽可能大，则分类效果更好．     </p>
+<p>给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,…m},我们需要计算每一个样本点到分类超平面的函数间隔.在这里，我们需要求出最小的函数间隔，并且通过修改分类超平面使得最小函数间隔尽可能大，则分类效果更好．     </p>
 
 <script type="math/tex; mode=display">\widehat{\gamma}=\min_{i=1,...,m}\widehat\gamma^\left(i\right)</script>
 
@@ -167,9 +167,7 @@ MathJax.Hub.Config({
 
 <script type="math/tex; mode=display">w^T\left(x-\frac{w}{｜w｜}\gamma\right)+b=0</script>
 
-<script type="math/tex; mode=display">w^T\left(x-\frac{w}{｜w｜}\gamma\right)+b=0</script>
-
-<p>求解得$\gamma=\frac{w}{｜w｜}x+\frac{b}{｜w｜}$,所以对所有的样本点点$\left(x^\left(i\right),y^\left(i\right)\right)$,我们求得每个样本点的几何边界为:      </p>
+<p>求解得$\gamma=\frac{w}{｜w｜}x+\frac{b}{｜w｜}$,所以对所有的样本点点$\left(x^\left(i\right),y^\left(i\right)\right)$,我们求得每个样本点的几何间隔为:      </p>
 
 <script type="math/tex; mode=display">\gamma^\left(i\right)=y^\left(i\right)\left(\frac{w}{｜w｜}x^\left(i\right)+\frac{b}{｜w｜}\right)</script>
 
@@ -185,15 +183,7 @@ MathJax.Hub.Config({
  s.t.    y^\left(i\right)\left(\frac{w}{|w|}x^\left(i\right)+\frac{b}{|w|}\right)\geq\gamma,i=1,...,m
 </script>
 
-<table>
-  <tbody>
-    <tr>
-      <td>由于我们知道在确定了(w,b)之后，我们可以通过同比例的缩放或增加(w,b),所以我们可以通过相应的扩张比例使得</td>
-      <td>w</td>
-      <td>的值为１．所以优化问题转化成如下形式：</td>
-    </tr>
-  </tbody>
-</table>
+<p>由于我们知道在确定了(w,b)之后，我们可以通过同比例的缩放或增加(w,b),所以我们可以通过相应的扩张比例使得｜w｜的值为１．所以优化问题转化成如下形式：     </p>
 
 <script type="math/tex; mode=display">\max_{\gamma,w,b}   \gamma \\
  s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq\gamma,i=1,...,m　\\
@@ -254,8 +244,9 @@ h_i(w)=0,i=1,...l
 <script type="math/tex; mode=display">d^*=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)\leq\min_w\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)=p^*</script>
 
 <p>当ｆ和$g_i$为凸函数时，$h_i$为仿射函数(仿射变换的定义是在几何空间中，一个向量空间进行一次线性变换并接上一个平移，变换成另一个向量空间)，有$d^＊=p^＊$，在这些约束下，一定存在一个$w^＊$是原始问题的解，$\alpha^＊,\beta^＊$是对偶问题的解，并且有$d^＊=p^＊=L(w^＊,\alpha^＊,\beta^＊)$,同时这３个参数满足KKT条件，KKT条件描述如下：    <br />
-<img src="../images/140508/3.png" alt="image" />
-其中第三个约束称为对偶互补条件，并且当$a_i＞０$时，$g_i(w^*)=0$,满足这些条件的点所对应的几何间隔便是最小几何间隔．这些点称为支持向量.</p>
+<img src="../images/140508/3.png" alt="image" />		</p>
+
+<p>其中第三个约束称为对偶互补条件，并且当$a_i＞０$时，$g_i(w^*)=0$,满足这些条件的点所对应的几何间隔便是最小几何间隔．这些点称为支持向量.</p>
 
 <p>现在回到优化边界分类器部分,我们的原始问题定义为：       </p>
 
@@ -265,8 +256,9 @@ h_i(w)=0,i=1,...l
 
 <p>约束条件可以表示为：        </p>
 
-<p><script type="math/tex">g_i(w)=-y^\left(i\right)(w^Tx\left(i\right)+b)+1\leq0</script>  <br />
-<img src="../images/140508/4.png" alt="image" />    </p>
+<script type="math/tex; mode=display">g_i(w)=-y^\left(i\right)(w^Tx\left(i\right)+b)+1\leq0</script>
+
+<p><img src="../images/140508/4.png" alt="image" />    </p>
 
 <p>我们可以看到，有最小几何间隔的点离决策边界最近．我们知道这些点$\left(x^\left(i\right),y\left(i\right)\right)$满足$g_i(w)=0$.我们将这些点称之为支持向量．从上图知道，数据集中有３个支持向量，一般来说支持向量的个数会明显小于数据集的大小，这在后面会相当有用．      </p>
 
@@ -285,8 +277,9 @@ h_i(w)=0,i=1,...l
 <img src="../images/140508/10.png" alt="image" /></p>
 
 <p>现在假定我们已经求得对偶问题最优解的$\alpha_i$，那么我们是如何做预测的呢？对于一个新的数据点ｘ，我们知道预测是通过判断$w^Tx+b$的值来判定的，如果大于０，类别为正例，如果小于０，类别为负例,我们将上面求解的ｗ值代入：         <br />
-<img src="../images/140508/11.png" alt="image" />
-我们知道$\alpha_i\geq0$,且根据KKT约束条件中的对偶互补条件$\alpha_ig_i(w)\geq0$,并且$\alpha&gt;0$时，$g_i(w)=0$,表示这些点有最小的几何间隔，也就是说这些点表示支持向量．我们知道，在判断ｘ类别的时候，我们只需要考虑$\alpha_i&gt;0$的情况，也对应的我们只需要考虑数据集中的支持向量．同时，支持向量想对于数据集来说是小很多的．这样很显然可以进行高效求解.</p>
+<img src="../images/140508/11.png" alt="image" />		</p>
+
+<p>我们知道$\alpha_i\geq0$,且根据KKT约束条件中的对偶互补条件$\alpha_ig_i(w)\geq0$,并且$\alpha&gt;0$时，$g_i(w)=0$,表示这些点有最小的几何间隔，也就是说这些点表示支持向量．我们知道，在判断ｘ类别的时候，我们只需要考虑$\alpha_i&gt;0$的情况，也对应的我们只需要考虑数据集中的支持向量．同时，支持向量想对于数据集来说是小很多的．这样很显然可以进行高效求解.</p>
 
 
       <footer class="entry-meta">
@@ -311,20 +304,20 @@ h_i(w)=0,i=1,...l
           <a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" class="read-more-btn">Read More</a>
         </div><!-- /.read-more-header -->
         <div class="read-more-content">
-          <h3><a href="http://jwchennlp.github.com/odps-model/" title="阿里大数据竞赛方法总结">阿里大数据竞赛方法总结</a></h3>
-          <p>##逻辑回归      ###特征抽取       将前四个月的数据切分成4:1,为了训练模型，前一部分数据用于抽取特征ｘ，后一部分用于获取类别ｙ．具体描述为，根据每个用户对每个物品的行为没一个数据，如果行为在第一部分，但是在第二部分没有购买行为，这类别为负例，若在第二部分...&hellip; <a href="http://jwchennlp.github.com/odps-model/">Continue reading</a></p>
+          <h3><a href="http://jwchennlp.github.com/test-classification/" title="test-classification">test-classification</a></h3>
+          <p>文本分类问题在机器学习和信息检索领域都有比较广泛的运用．这里将主要介绍自己实现的一些分类模型和实践过程中应该注意的地方．##朴素贝叶斯-----------朴素贝叶斯模型在很多问题的处理过程中都相当有效，因为其过程和想法都很简单，只需要对数据集进行处理而不存在训练的过程，在...&hellip; <a href="http://jwchennlp.github.com/test-classification/">Continue reading</a></p>
         </div><!-- /.read-more-content -->
       
       <div class="read-more-list">
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" title="生成模型和判别模型">生成模型和判别模型</a></h4>
-            <span>Published on May 07, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/odps-model/" title="阿里大数据竞赛方法总结">阿里大数据竞赛方法总结</a></h4>
+            <span>Published on May 09, 2014</span>
           </div><!-- /.list-item -->
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/index-compress/" title="索引压缩">索引压缩</a></h4>
-            <span>Published on May 06, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" title="生成模型和判别模型">生成模型和判别模型</a></h4>
+            <span>Published on May 07, 2014</span>
           </div><!-- /.list-item -->
         
       </div><!-- /.read-more-list -->

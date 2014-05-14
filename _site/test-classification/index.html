@@ -5,25 +5,25 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Sample Post &#8211; My blog</title>
-<meta name="description" content="">
-<meta name="keywords" content="Hello world">
+<title>test-classification &#8211; My blog</title>
+<meta name="description" content="good good study,day day up">
+<meta name="keywords" content="文本分类, 贝叶斯, 模型选择, 特征抽取">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sample Post">
-<meta property="og:description" content="">
-<meta property="og:url" content="http://jwchennlp.github.com/hello-world/">
+<meta property="og:title" content="test-classification">
+<meta property="og:description" content="good good study,day day up">
+<meta property="og:url" content="http://jwchennlp.github.com/test-classification/">
 <meta property="og:site_name" content="My blog">
 
 
 
 
 
-<link rel="canonical" href="http://jwchennlp.github.com/hello-world/">
+<link rel="canonical" href="http://jwchennlp.github.com/test-classification/">
 <link href="http://jwchennlp.github.com/feed.xml" type="application/atom+xml" rel="alternate" title="My blog Feed">
 
 
@@ -123,7 +123,7 @@ MathJax.Hub.Config({
 <div class="entry-header">
   <div class="image-credit">Image source: <a href="http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/">dargadgetz</a></div><!-- /.image-credit -->
   <div class="entry-image">
-    <img src="http://jwchennlp.github.com/images/abstract-3.jpg" alt="Sample Post">
+    <img src="http://jwchennlp.github.com/images/abstract-4.jpg" alt="test-classification">
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
 
@@ -133,34 +133,68 @@ MathJax.Hub.Config({
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="http://jwchennlp.github.com/hello-world/" rel="bookmark" title="Sample Post">Sample Post</a></h1>
+          <h1 class="entry-title"><a href="http://jwchennlp.github.com/test-classification/" rel="bookmark" title="test-classification">test-classification</a></h1>
         
-        <h2>April 13, 2014</h2>
+        <h2>May 14, 2014</h2>
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p>你好，哈尔滨！</p>
+      <p>文本分类问题在机器学习和信息检索领域都有比较广泛的运用．这里将主要介绍自己实现的一些分类模型和实践过程中应该注意的地方．</p>
 
-<h2 id="why">why</h2>
+<h2 id="section">朴素贝叶斯</h2>
 <hr />
-<p>怎么感觉有些问题呢    </p>
 
-<div class="highlight"><pre><code class="c"><span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>  
+<p>朴素贝叶斯模型在很多问题的处理过程中都相当有效，因为其过程和想法都很简单，只需要对数据集进行处理而不存在训练的过程，在很多场合下都作为解决问题的一个基线.</p>
 
-<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
-</code></pre></div>
+<p>对于某一文本x,x表示文本的所有词，我们需要求文档所属的类别p(y｜x),我们可以进行如下转换:</p>
+
+<script type="math/tex; mode=display"> p(y｜x) = \frac{p(x,y)}{p(x)} ＝arg\max_yp(x｜y)P(y)　\\
+          =arg\max_y\prod^n_\left(i=1\right)p(x_i｜y)P(y)
+</script>
+
+<p>公式从第一步到第二步我们做了一个假设，也就是说在给定ｙ的情况下，$x_i$的出现与否对$x_j$的出现与否没有影响，即：      <br />
+<script type="math/tex">p(x_j|x_i,y)=P(x_j|y)</script></p>
+
+<p>在实现朴素贝叶斯方法有两种操作，一种是贝努利模型，一种是事件模型，下面分开讨论.</p>
+
+<h3 id="section-1">贝努利模型</h3>
+
+<p>我们用ｘ来表示文档，那么对文档中的词，只要出现，无论出现多少次，我们都标记词的出现次数为１．可以认为贝努利模型对文档进行了单词的去重操作.如文档为＂i like you,you like me＂，那么ｘ为{i,like,you,me}     </p>
+
+<p>在进行文档处理的时候，我们应该进行词条化，去除标点符号，这里我用nltk工具包进行了词的小写处理.（实验数据是路透社的新闻语料）．下图为贝努利模型下朴素贝叶斯的分类结果. </p>
+
+<p><img src="../images/140514/1.png" alt="image" />        </p>
+
+<h3 id="section-2">事件模型</h3>
+
+<p>正常情况下，文档中有些词是出现多次的，对于这些词，我们不单考虑词是否出现，并且在计算的过程中考虑词出现的次数，这便是朴素贝叶斯的事件模型，这个时候的词可以表示为{$word_i:count_i,…,word_n:count_n$},上面的文档用事件模型应该表示为{i:1,like:2,you:2,me:1}.下图为事件模型下朴素贝叶斯的分类结果.        </p>
+
+<p><img src="../images/140514/2.png" alt="image" />        </p>
+
+<h4 id="section-3">拉普拉斯平滑</h4>
+
+<p>我们在计算$p(x_i｜y)$的时候，如果在某一类被$y_i$中，词$x_i$没有在任何一篇文档中出现，那么显然属于此类别的概率为０．并且我们知道已经标记好的训练集不可能涵盖所有的词，所以这种情况出现的概率很高．这里我们一般运用拉普拉斯平滑来处理. 
+所以$p(x_i｜y)=\frac{count(x_i)+1}{count(allwords)+v}$.      </p>
+
+<p>当我们使用贝努利模型的时候，$count(x_i)$表示在训练集类别ｙ的所有文档中出现词$x_i$的文档个数，$count(allwords)$表示类别ｙ的所有文档中词典的大小（文档所有词去重）.V表示类别ｙ的文档的大小．      </p>
+
+<p>当使用事件模型的时候，$count(x_i)$表示在训练集类别ｙ的所有文档中出现词$x_i$的次数，$count(allwords)$表示类别ｙ的所有文档中总共的词数（不去重）.V表示类别ｙ的文档的词典的大小．      </p>
+
+<h3 id="section-4">总结</h3>
+
+<p>我们发现，采用朴素贝叶斯模型的分类效果还不错，在事件模型下F_1值能达到83%．但是贝努利模型和事件模型的效果差别比较大，并且在不同类别上的分类效果上差别比较大．我们知道事件模型考虑到了文档中词出现的次数，这是造成差异的原因，文档中的词不能单纯的只考虑词是否出现，文档中词出现的次数对文档主旨和类别的贡献还是有很大差异的．尤其是在长文档中，词频繁出现的概率会很大，所以采用贝努利模型的话会造成很大的误差．      </p>
 
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://jwchennlp.github.com/tags/#Hello world" title="Pages tagged Hello world" class="tag">Hello world</a></span>
-        <span><a href="http://jwchennlp.github.com/hello-world/" rel="bookmark" title="Sample Post">Sample Post</a> was published on <span class="entry-date date published updated"><time datetime="2014-04-13T00:00:00-04:00">April 13, 2014</time></span></span>
-        (revised: <span class="entry-date date modified"><time datetime="2014-04-13">04/13/2014</time></span>)
+        <span class="entry-tags"><a href="http://jwchennlp.github.com/tags/#文本分类" title="Pages tagged 文本分类" class="tag">文本分类</a><a href="http://jwchennlp.github.com/tags/#贝叶斯" title="Pages tagged 贝叶斯" class="tag">贝叶斯</a><a href="http://jwchennlp.github.com/tags/#模型选择" title="Pages tagged 模型选择" class="tag">模型选择</a><a href="http://jwchennlp.github.com/tags/#特征抽取" title="Pages tagged 特征抽取" class="tag">特征抽取</a></span>
+        <span><a href="http://jwchennlp.github.com/test-classification/" rel="bookmark" title="test-classification">test-classification</a> was published on <span class="entry-date date published updated"><time datetime="2014-05-14T00:00:00-04:00">May 14, 2014</time></span></span>
+        (revised: <span class="entry-date date modified"><time datetime="2014-05-14 11:01:12 UTC">05/14/2014</time></span>)
         <span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>
         <div class="social-share">
           <ul class="socialcount socialcount-small inline-list">
-            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://jwchennlp.github.com/hello-world/" title="Share on Facebook"><span class="count"><i class="icon-facebook-sign"></i> Like</span></a></li>
-            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://jwchennlp.github.com/hello-world/" title="Share on Twitter"><span class="count"><i class="icon-twitter-sign"></i> Tweet</span></a></li>
-            <li class="googleplus"><a href="https://plus.google.com/share?url=http://jwchennlp.github.com/hello-world/" title="Share on Google Plus"><span class="count"><i class="icon-google-plus-sign"></i> +1</span></a></li>
+            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://jwchennlp.github.com/test-classification/" title="Share on Facebook"><span class="count"><i class="icon-facebook-sign"></i> Like</span></a></li>
+            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://jwchennlp.github.com/test-classification/" title="Share on Twitter"><span class="count"><i class="icon-twitter-sign"></i> Tweet</span></a></li>
+            <li class="googleplus"><a href="https://plus.google.com/share?url=http://jwchennlp.github.com/test-classification/" title="Share on Google Plus"><span class="count"><i class="icon-google-plus-sign"></i> +1</span></a></li>
           </ul>
         </div><!-- /.social-share -->
       </footer>
@@ -170,23 +204,23 @@ MathJax.Hub.Config({
     <div class="read-more">
       
         <div class="read-more-header">
-          <a href="http://jwchennlp.github.com" class="read-more-btn">Read More</a>
+          <a href="http://jwchennlp.github.com/odps-model/" class="read-more-btn">Read More</a>
         </div><!-- /.read-more-header -->
         <div class="read-more-content">
-          <h3><a href="http://jwchennlp.github.com/test-classification/" title="test-classification">test-classification</a></h3>
-          <p>文本分类问题在机器学习和信息检索领域都有比较广泛的运用．这里将主要介绍自己实现的一些分类模型和实践过程中应该注意的地方．##朴素贝叶斯-----------朴素贝叶斯模型在很多问题的处理过程中都相当有效，因为其过程和想法都很简单，只需要对数据集进行处理而不存在训练的过程，在...&hellip; <a href="http://jwchennlp.github.com/test-classification/">Continue reading</a></p>
+          <h3><a href="http://jwchennlp.github.com/odps-model/" title="阿里大数据竞赛方法总结">阿里大数据竞赛方法总结</a></h3>
+          <p>逻辑回归特征抽取将前四个月的数据切分成4:1,为了训练模型，前一部分数据用于抽取特征ｘ，后一部分用于获取类别ｙ．具体描述为，根据每个用户对每个物品的行为没一个数据，如果行为在第一部分，但是在第二部分没有购买行为，这类别为负例，若在第二部分出现购买行为，这此行为为正例．如果行...&hellip; <a href="http://jwchennlp.github.com/odps-model/">Continue reading</a></p>
         </div><!-- /.read-more-content -->
       
       <div class="read-more-list">
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/odps-model/" title="阿里大数据竞赛方法总结">阿里大数据竞赛方法总结</a></h4>
-            <span>Published on May 09, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/support-vector-machine/" title="支持向量机">支持向量机</a></h4>
+            <span>Published on May 08, 2014</span>
           </div><!-- /.list-item -->
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/support-vector-machine/" title="支持向量机">支持向量机</a></h4>
-            <span>Published on May 08, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" title="生成模型和判别模型">生成模型和判别模型</a></h4>
+            <span>Published on May 07, 2014</span>
           </div><!-- /.list-item -->
         
       </div><!-- /.read-more-list -->
