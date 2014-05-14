@@ -140,7 +140,7 @@ MathJax.Hub.Config({
   <header>
     <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-14T00:00:00-04:00"><a href="http://jwchennlp.github.com/test-classification/">May 14, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/test-classification/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://jwchennlp.github.com/test-classification/" rel="bookmark" title="test-classification" itemprop="url">test-classification</a></h1>
+      <h1 class="entry-title"><a href="http://jwchennlp.github.com/test-classification/" rel="bookmark" title="文本分类" itemprop="url">文本分类</a></h1>
     
   </header>
   <div class="entry-content">
@@ -161,6 +161,14 @@ MathJax.Hub.Config({
 <script type="math/tex">p(x_j|x_i,y)=P(x_j|y)</script></p>
 
 <p>在实现朴素贝叶斯方法有两种操作，一种是贝努利模型，一种是事件模型，下面分开讨论.</p>
+
+<p><strong>注意：</strong>在计算$arg\max_y\prod^n_\left(i=1\right)p(x_i｜y)$因为分母很大，经常会出现数据过小超出所能表示的范围而使得结果为０，这里有两种处理方法:        </p>
+
+<ul>
+  <li>上式中分母一般为某一类别下文档数和文档类别的累加（平滑）或某一类别下文档的词数和词典大小的累加，我们可以初始设定每次都用一个常熟(100或1000)来代某一类别i的分母，而后其余类别，其分母则可以表示为100*(文档ｊ对应的词数)／（文档ｉ类别的词数）.     <br />
+*　也可以对上述公式<script type="math/tex">arg\max_y\prod^n_\left(i=1\right)p(x_i｜y)P(y)</script>     <br />
+转换成对数公式$arg\max_y\sum^n_\left(i=1\right)\log{p(x_i｜y)}+\log{P(y)}$</li>
+</ul>
 
 <h3 id="section-1">贝努利模型</h3>
 

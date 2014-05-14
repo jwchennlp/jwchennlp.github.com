@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-05-14T08:59:22-04:00</updated>
+<updated>2014-05-14T09:51:49-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
@@ -14,10 +14,10 @@
 
 
 <entry>
-  <title type="html"><![CDATA[test-classification]]></title>
+  <title type="html"><![CDATA[文本分类]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/test-classification/" />
   <id>http://jwchennlp.github.com/test-classification</id>
-  <updated>2014-05-14 11:01:12 UTCT00:00:00-00:00</updated>
+  <updated>2014-05-14 07:01:12 -0400T00:00:00-00:00</updated>
   <published>2014-05-14T00:00:00-04:00</published>
   
   <author>
@@ -42,6 +42,14 @@
 &lt;script type=&quot;math/tex&quot;&gt;p(x_j|x_i,y)=P(x_j|y)&lt;/script&gt;&lt;/p&gt;
 
 &lt;p&gt;在实现朴素贝叶斯方法有两种操作，一种是贝努利模型，一种是事件模型，下面分开讨论.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;在计算$arg\max_y\prod^n_\left(i=1\right)p(x_i｜y)$因为分母很大，经常会出现数据过小超出所能表示的范围而使得结果为０，这里有两种处理方法:        &lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;上式中分母一般为某一类别下文档数和文档类别的累加（平滑）或某一类别下文档的词数和词典大小的累加，我们可以初始设定每次都用一个常熟(100或1000)来代某一类别i的分母，而后其余类别，其分母则可以表示为100*(文档ｊ对应的词数)／（文档ｉ类别的词数）.     &lt;br /&gt;
+*　也可以对上述公式&lt;script type=&quot;math/tex&quot;&gt;arg\max_y\prod^n_\left(i=1\right)p(x_i｜y)P(y)&lt;/script&gt;     &lt;br /&gt;
+转换成对数公式$arg\max_y\sum^n_\left(i=1\right)\log{p(x_i｜y)}+\log{P(y)}$&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h3 id=&quot;section-1&quot;&gt;贝努利模型&lt;/h3&gt;
 
@@ -71,7 +79,7 @@
 &lt;p&gt;我们发现，采用朴素贝叶斯模型的分类效果还不错，在事件模型下F_1值能达到83%．但是贝努利模型和事件模型的效果差别比较大，并且在不同类别上的分类效果上差别比较大．我们知道事件模型考虑到了文档中词出现的次数，这是造成差异的原因，文档中的词不能单纯的只考虑词是否出现，文档中词出现的次数对文档主旨和类别的贡献还是有很大差异的．尤其是在长文档中，词频繁出现的概率会很大，所以采用贝努利模型的话会造成很大的误差．      &lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/test-classification/&quot;&gt;test-classification&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 14, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/test-classification/&quot;&gt;文本分类&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 14, 2014.&lt;/p&gt;</content>
 </entry>
 
 
@@ -79,7 +87,7 @@
   <title type="html"><![CDATA[阿里大数据竞赛方法总结]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/odps-model/" />
   <id>http://jwchennlp.github.com/odps-model</id>
-  <updated>2014-05-09 06:17:38 UTCT00:00:00-00:00</updated>
+  <updated>2014-05-09 02:17:38 -0400T00:00:00-00:00</updated>
   <published>2014-05-09T00:00:00-04:00</published>
   
   <author>
@@ -113,7 +121,7 @@
   <title type="html"><![CDATA[支持向量机]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/support-vector-machine/" />
   <id>http://jwchennlp.github.com/support-vector-machine</id>
-  <updated>2014-05-08 06:22:02 UTCT00:00:00-00:00</updated>
+  <updated>2014-05-08 02:22:02 -0400T00:00:00-00:00</updated>
   <published>2014-05-08T00:00:00-04:00</published>
   
   <author>
@@ -272,7 +280,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[生成模型和判别模型]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" />
   <id>http://jwchennlp.github.com/generative-model-and-discriminative-model</id>
-  <updated>2014-05-07 11:40:02 UTCT00:00:00-00:00</updated>
+  <updated>2014-05-07 07:40:02 -0400T00:00:00-00:00</updated>
   <published>2014-05-07T00:00:00-04:00</published>
   
   <author>
@@ -321,7 +329,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[索引压缩]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/index-compress/" />
   <id>http://jwchennlp.github.com/index-compress</id>
-  <updated>2014-05-06 09:01:16 UTCT00:00:00-00:00</updated>
+  <updated>2014-05-06 05:01:16 -0400T00:00:00-00:00</updated>
   <published>2014-05-06T00:00:00-04:00</published>
   
   <author>
@@ -420,7 +428,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[odps_sql]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/odps-sql/" />
   <id>http://jwchennlp.github.com/odps-sql</id>
-  <updated>2014-04-26 14:45:37 UTCT00:00:00-00:00</updated>
+  <updated>2014-04-26 10:45:37 -0400T00:00:00-00:00</updated>
   <published>2014-04-26T00:00:00-04:00</published>
   
   <author>
@@ -467,7 +475,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[索引构建]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/index-construction/" />
   <id>http://jwchennlp.github.com/index-construction</id>
-  <updated>2014-04-24 06:09:41 UTCT00:00:00-00:00</updated>
+  <updated>2014-04-24 02:09:41 -0400T00:00:00-00:00</updated>
   <published>2014-04-24T00:00:00-04:00</published>
   
   <author>
