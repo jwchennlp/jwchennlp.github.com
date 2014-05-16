@@ -238,7 +238,7 @@ MathJax.Hub.Config({
 <p>其中，Ｕ是一个二值随机变量，当文档包含词项t时，$e_t=1$,否则取值为0．而c也是一个二值随机变量，当文档属于类别c时，$e_c=1$,否则为0.   <br />
 当我们采用MLE(maximize likehood estimate，极大似然估计),公式等价于:      </p>
 
-<script type="math/tex; mode=display">I(U;C)=\frac{N_11}{N}\log\frac{NN_11}{N_1N_1}+\frac{N_01}{N}\log\frac{NN_01}{N_0N_1}+\frac{N_10}{N}\log\frac{NN_10}{N_1N_0}+\frac{N_00}{N}\log\frac{NN_00}{N_0N_0}</script>
+<script type="math/tex; mode=display">I(U;C)=\frac{N_{11}}{N}\log\frac{NN_{11}}{N_1N_1}+\frac{N_{01}}{N}\log\frac{NN_{01}}{N_0N_1}+\frac{N_{10}}{N}\log\frac{NN_{10}}{N_1N_0}+\frac{N_{00}}{N}\log\frac{NN_{00}}{N_0N_0}</script>
 
 <p>其实可以这么理解，$N_11$表示的是类别为正例，且词项出现的文档数目，而对数中的$N_1N_1$表示的是类别问正例的文档数和词项在文档中出现的文档数，为了简化，表示符号一样，但是前者用于表示类别，后者用于表示词项．        </p>
 
@@ -251,7 +251,7 @@ I(X;Y) = H(X) - H(X｜Y)=H(Y) - H(Y｜X) = H(Y)+H(X) - H(X,Y)</p>
 
 <p>我们可以发现，每个类别下的词与此类别都是很相关的．      </p>
 
-<p>在实验过程中我们对每个类别取用互信息最高的100个词进行特征，这里采用贝努利事件模型进行训练，分类结果如下：      </p>
+<p>在实验过程中我们对每个类别取用互信息最高的100个词进行特征，这里采用贝努利事件模型进行训练，分类结果如下,实验结果好像有错,咱们用支持向量机来验证一下吧：      </p>
 
 <p><img src="../images/140515/2.png" alt="image" /></p>
 
