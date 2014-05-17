@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-05-16T07:50:14-04:00</updated>
+<updated>2014-05-17T06:29:06-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
@@ -17,7 +17,7 @@
   <title type="html"><![CDATA[文本分类]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/test-classification/" />
   <id>http://jwchennlp.github.com/test-classification</id>
-  <updated>2014-05-14 07:01:12 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-14 11:01:12 UTCT00:00:00-00:00</updated>
   <published>2014-05-14T00:00:00-04:00</published>
   
   <author>
@@ -176,7 +176,48 @@ I(X;Y) = H(X) - H(X｜Y)=H(Y) - H(Y｜X) = H(Y)+H(X) - H(X,Y)&lt;/p&gt;
 &lt;h3 id=&quot;x2&quot;&gt;$X^2$统计量&lt;/h3&gt;
 
 &lt;p&gt;在统计学中，$X^2$统计量常常用于检测两个事件的独立性。两个事件A和B独立，是指A和B两个事件的概率满足P(AB)=P(A)P(B)或者P(B|A)=P(B).在特征选择中，两个事件分别表示词项的出现和类别的出现。此时我们按照如下公式计算：     &lt;br /&gt;
-&lt;script type=&quot;math/tex&quot;&gt;X^2(D,t,c)=\sum_{e_t\in{0,1}}\sum_{e_c\in{0,1}}\frac{(N_{e_te_c}-E_{e_te_c})^2}{E_{e_te_c}}&lt;/script&gt;&lt;/p&gt;
+&lt;script type=&quot;math/tex&quot;&gt;X^2(D,t,c)=\sum_{e_t\in{0,1}}\sum_{e_c\in{0,1}}\frac{(N_{e_te_c}-E_{e_te_c})^2}{E_{e_te_c}}&lt;/script&gt;     &lt;/p&gt;
+
+&lt;p&gt;$X^2$度量的是期望值N和观测值E的偏离程度。$X^2$统计量大则意味着独立性假设不成立，此时期望值和观测值相差不大。如果两个事件独立，那么词项的出现也会使得某个类别的出现更加可能或更加不可能，因此它适合于作为特征被选出来。这就是$X^2$特征选择方法的基本原理。       &lt;/p&gt;
+
+&lt;p&gt;如P($X^2$&amp;gt;6.63)&amp;lt;0.01,也就是说如果两个事件的$X^2$统计量大于6.63,那么有99%的可能性来拒绝两个事件的独立性假设。      &lt;/p&gt;
+
+&lt;p&gt;我们用P($X^2$&amp;gt;6.63)&amp;lt;0.01来做特征选择，采用朴素贝叶斯时间模型的分类效果如下： &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/140515/x.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-8&quot;&gt;基于频度的特征选择方法&lt;/h3&gt;
+
+&lt;p&gt;基于频度的特征选择方法是选择那些在类别中出现频率较高的词项作为特征，这里的频度可以定义为文档频率(类别c中包含词项t的文档数目)或文档集频率(类别c中所包含的文档中t出现的总次数)，文档频率适合于贝努利模型，而文档集频率更适合于多项式模型。&lt;/p&gt;
+
+&lt;p&gt;这里要注意一点，我们知道在用互信息或卡方检验来实现特征抽取时，我们的参考点是类别c和词项t之间的关系，也就是说对文档集来说可能有多个类别，每个类别都维护一个词典，那么现在便是对每个类别及这个类别中的词典中的词来计算互信息或卡方统计量，并且将每个类别中取出一些特征最后所有这些特征进行融合，组成整个文档的特征。那我们用频率统计的时候，便不用这么麻烦了，我们需要维护整个文档集的词典，并且在整个文档集下进行计算，找出频度最高的k个词作为文档集的特征。&lt;/p&gt;
+
+&lt;p&gt;采用基于文档频率的方法可能会将很多常用词当作特征抽取出现，但是这些词对类别的贡献很小，如i,he，she，如果对文档进行那个预处理，去除停用词后在用基于频度的方法选取特征，效果会更好。		&lt;/p&gt;
+
+&lt;h3 id=&quot;section-9&quot;&gt;信息增益&lt;/h3&gt;
+
+&lt;p&gt;熵是随机变量不确定性的度量，设X是一个取有限个值的离散随机变量，其概率分布为：		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(X=x_i)=P_i,i=1,2,...,n&lt;/script&gt;
+
+&lt;p&gt;则随机变量X的熵定义为：		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;H(X)=-\sum_{i=1}^np_i\log(p_i)&lt;/script&gt;
+
+&lt;p&gt;若$p_i=0$,则定义$0log0=0$,熵只依赖于X的分布，与X的取值无关。熵越大，随机变量的不确定性就越大。条件熵H(Y｜X)表示在已知随机变量X的条件下Y的不确定性，随机变量X给定条件下Y的条件熵H（Y｜X）定义为X给定条件下Y的概率分布的熵对X的数学期望。&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;H(Y｜X)=\sum_{i=1}^np_iH(Y｜X=x_i),这里p_i=P(X=x_i),i=1,2...n&lt;/script&gt;
+
+&lt;p&gt;信息增益（information gain）表示得知X的特征信息而使得类Y的信息不确定性减少的程度。		&lt;/p&gt;
+
+&lt;p&gt;特征A对训练数据集D的信息增益g(D,A)，定义为数据集D的经验熵H(D)与特征A给定条件下的经验条件熵H(D｜A)之差，即：			&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;g(D,A)=H(D)-H(D｜A)&lt;/script&gt;
+
+&lt;p&gt;具体到文本分类过程中某一词项ｔ的信息增益可以表述为：      &lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;H(C｜t)=P_tH(C｜t)+P_{\negt}H(C｜t) \\
+        =-P_t\sum_{i=1}^{k}P(C_i｜t)-P_{\negt}\sum_{i=1}{k}P(C_i｜\neg{t})&lt;/script&gt;
 
 
   &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/test-classification/&quot;&gt;文本分类&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 14, 2014.&lt;/p&gt;</content>
@@ -187,7 +228,7 @@ I(X;Y) = H(X) - H(X｜Y)=H(Y) - H(Y｜X) = H(Y)+H(X) - H(X,Y)&lt;/p&gt;
   <title type="html"><![CDATA[阿里大数据竞赛方法总结]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/odps-model/" />
   <id>http://jwchennlp.github.com/odps-model</id>
-  <updated>2014-05-09 02:17:38 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-09 06:17:38 UTCT00:00:00-00:00</updated>
   <published>2014-05-09T00:00:00-04:00</published>
   
   <author>
@@ -221,7 +262,7 @@ I(X;Y) = H(X) - H(X｜Y)=H(Y) - H(Y｜X) = H(Y)+H(X) - H(X,Y)&lt;/p&gt;
   <title type="html"><![CDATA[支持向量机]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/support-vector-machine/" />
   <id>http://jwchennlp.github.com/support-vector-machine</id>
-  <updated>2014-05-08 02:22:02 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-08 06:22:02 UTCT00:00:00-00:00</updated>
   <published>2014-05-08T00:00:00-04:00</published>
   
   <author>
@@ -380,7 +421,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[生成模型和判别模型]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" />
   <id>http://jwchennlp.github.com/generative-model-and-discriminative-model</id>
-  <updated>2014-05-07 07:40:02 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-07 11:40:02 UTCT00:00:00-00:00</updated>
   <published>2014-05-07T00:00:00-04:00</published>
   
   <author>
@@ -429,7 +470,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[索引压缩]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/index-compress/" />
   <id>http://jwchennlp.github.com/index-compress</id>
-  <updated>2014-05-06 05:01:16 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-06 09:01:16 UTCT00:00:00-00:00</updated>
   <published>2014-05-06T00:00:00-04:00</published>
   
   <author>
@@ -528,7 +569,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[odps_sql]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/odps-sql/" />
   <id>http://jwchennlp.github.com/odps-sql</id>
-  <updated>2014-04-26 10:45:37 -0400T00:00:00-00:00</updated>
+  <updated>2014-04-26 14:45:37 UTCT00:00:00-00:00</updated>
   <published>2014-04-26T00:00:00-04:00</published>
   
   <author>
@@ -575,7 +616,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[索引构建]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/index-construction/" />
   <id>http://jwchennlp.github.com/index-construction</id>
-  <updated>2014-04-24 02:09:41 -0400T00:00:00-00:00</updated>
+  <updated>2014-04-24 06:09:41 UTCT00:00:00-00:00</updated>
   <published>2014-04-24T00:00:00-04:00</published>
   
   <author>
