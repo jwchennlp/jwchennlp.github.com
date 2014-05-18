@@ -2,7 +2,7 @@
 layout: post
 title: "逻辑回归"
 modified: 2014-05-18 19:25:41 +0800
-tags: [,机器学习，梯度下降，正则化]
+tags: [逻辑回归,机器学习，梯度下降，正则化]
 image:
   feature: abstract-.jpg
   credit: dargadgetz
@@ -26,9 +26,11 @@ $$P(Y=1｜Ｘ;\theta)=h_\theta(x) \\
 上面公式我们可以合并成：		
 
 
-$$P(Y｜Ｘ;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y} $$		
+$$P(Y｜Ｘ;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y} $$		   
+
 
 假设有ｍ个训练集并且相互独立，这参数的似然方程可以表述为：		
+
 
 $$L(\theta)=p(y｜x;\theta) \\
 		   =\prod_{i=1}^mP(y^{(i)}｜x^{(i)};\theta) \\
