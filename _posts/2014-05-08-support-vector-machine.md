@@ -2,7 +2,7 @@
 layout: post
 title: "支持向量机"
 modified: 2014-05-08 14:22:02 +0800
-tags: [机器学,支持向量机,对偶问题,核函数]
+tags: [机器学习,支持向量机,对偶问题,核函数]
 image:
   feature: abstract-8.jpg
   credit: dargadgetz

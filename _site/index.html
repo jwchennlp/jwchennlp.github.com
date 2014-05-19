@@ -138,9 +138,9 @@ MathJax.Hub.Config({
   
 <article class="hentry">
   <header>
-    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-18T00:00:00-04:00"><a href="http://jwchennlp.github.com/logistic-regression/">May 18, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span></div><!-- /.entry-meta -->
+    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-18T00:00:00-04:00"><a href="http://jwchennlp.github.com/logistic-regression/">May 18, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/logistic-regression/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
     
-      <h1 class="entry-title"><a href="http://jwchennlp.github.com/logistic-regression/" rel="bookmark" title="Logistic Regression" itemprop="url">Logistic Regression</a></h1>
+      <h1 class="entry-title"><a href="http://jwchennlp.github.com/logistic-regression/" rel="bookmark" title="逻辑回归" itemprop="url">逻辑回归</a></h1>
     
   </header>
   <div class="entry-content">
@@ -200,8 +200,9 @@ MathJax.Hub.Config({
 
 <p><img src="../images/0518/2.png" alt="image" />		</p>
 
-<p>当ｙ＝１时，如果假设方程$h<em>\theta(x)=1$,代价函数为０，如果代假设方程越接近０，则代价函数越大．		
-当ｙ＝０时，如果假设方程$h</em>\theta(x)=０$,代价函数为０，如果代假设方程越接近１，则代价函数越大．		</p>
+<p>当ｙ＝１时，如果假设方程$h_\theta(x)=1$,代价函数为０，如果代假设方程越接近０，则代价函数越大．			</p>
+
+<p>当ｙ＝０时，如果假设方程$h_\theta(x)=０$,代价函数为０，如果代假设方程越接近１，则代价函数越大．		</p>
 
 <p>可以将代价方程组合为如下格式：		</p>
 
@@ -216,9 +217,47 @@ MathJax.Hub.Config({
 <script type="math/tex; mode=display">\theta_j  =  \theta_j-\alpha\frac{\partial}{\partial\theta_j}J(\theta) \\
 		   =  \theta_j-\alpha\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}</script>
 
-<p>在之前讨论过的文本分类问题中，我们对每一类别用互信息特征选择方法选择100个特征，文档集的特征总数为741个，用这些特征构建向量空间模型，用逻辑回归进行测试，Ｆ_1值能达到86.6%,具体如下图所示：		</p>
+<p>在之前讨论过的文本分类问题中，我们对每一类别用互信息特征选择方法选择100个特征，文档集的特征总数为741个，用这些特征构建向量空间模型，用逻辑回归进行测试（用scikit-learn工具包），Ｆ_1值能达到86.6%,具体如下图所示：		</p>
 
 <p><img src="../images/0518/3.png" alt="image" /></p>
+
+<h2 id="section-1">正则化</h2>
+<hr />
+
+<p>为了避免过拟合现象,可以采用正则化方法.正则化方法是结构风险最小化策略的实现,是在经验风险上加上一个正则化项(regularizer)或罚项(penalty).正则化项一般是模型复杂度的单调递增函数,模型越复杂,正则化值就越大.		</p>
+
+<p>$L_2$正则化代价函数定义为:		</p>
+
+<p><img src="../images/0518/4.png" alt="image" />		</p>
+
+<p>当我们采用梯度下降发求解参数时,$\theta$按如下方式进行迭代:		</p>
+
+<p><img src="../images/0518/5.png" alt="image" />		</p>
+
+<p>$L_1$正则化代价函数定义为:		</p>
+
+<script type="math/tex; mode=display">J(\theta)=\frac{1}{m}[\sum_{i=1}^m-y^{(i)}\log{h_\theta(x^{(i)})}-(1-y^{(i)})\log{(1-h_\theta(x^{(i)}))}]+\frac{\lambda}{2m}\sum_{i=i}^n｜\theta_j｜</script>
+
+<p>采用$L_1$正则化一般可以产生稀疏解,也就是说我们得到的参数解$\theta中会有很多位为0,这这可以理解为\theta_j=0$对应的特征的贡献为0,我们可以直接忽略这些特征.		</p>
+
+<p>为了避免模型的过拟合,我们还可以通过减少特征数目,只选取对模型有很强分类能力或贡献的强特征,从而提出那些表示能力较差的弱特征.这在特征选择中有讲解.同时,我们也可以通过交叉验证的方式进行来查模型是否产生过拟合.		</p>
+
+<h2 id="section-2">随机梯度下降法</h2>
+
+<p>从上面的梯度下降可以知道,在每次对$\theta进行迭代的过程中,我们要通过整个训练集更新\theta值$.那么当训练集非常大的时候,显然更新参数将变得非常耗时.随机梯度下降法可以弥补这些缺点.</p>
+
+<p>在随机梯度下降法中,我们定义代价函数为一个单一训练实例的代价:		</p>
+
+<script type="math/tex; mode=display">cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_theta(x^{(i)})-y^{(i)})^2</script>
+
+<p>伪代码如下:		</p>
+
+<div class="highlight"><pre><code class="python"><span class="lineno">1</span> <span class="n">Loop</span><span class="p">{</span>
+<span class="lineno">2</span> 	<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span> <span class="n">to</span> <span class="n">m</span><span class="p">,{</span>
+<span class="lineno">3</span> 	<span class="err">$$</span>\<span class="n">theta_j</span><span class="o">=</span>\<span class="n">theta_j</span><span class="o">-</span>\<span class="n">alpha</span><span class="p">(</span><span class="n">h_</span>\<span class="n">theta</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="p">{(</span><span class="n">i</span><span class="p">)})</span><span class="o">-</span><span class="n">y</span><span class="o">^</span><span class="p">{(</span><span class="n">i</span><span class="p">)})</span><span class="n">x_j</span><span class="o">^</span><span class="p">{(</span><span class="n">i</span><span class="p">)}</span> <span class="p">(</span><span class="k">for</span> <span class="n">every</span> <span class="n">j</span><span class="p">)</span><span class="err">$$</span>
+<span class="lineno">4</span> <span class="p">}</span>
+<span class="lineno">5</span> <span class="p">}</span>		
+</code></pre></div>
 
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
