@@ -39,7 +39,7 @@ $$l(\theta) = \sum_{i=1}^m\log{p(x^{(i)};\theta)} \\
 
 其中$z^{(i)}是隐含随机变量,如果z^{(i)}是可观测的$,那么通过极大似然估计便可以求得参数解.		
 
-$$EM算法给出了实现参数评估的一种有效的方法,精确的最大化l(\theta)可能很困难,这里我们可以采用如下的替代策略:在E步不断的建立l(\theta)的下界,并且在M步优化下界.通过这两个步骤的迭代过程来实现l(\theta)的最大化.$$
+EM算法给出了实现参数评估的一种有效的方法,精确的最大化$l(\theta)可能很困难,这里我们可以采用如下的替代策略:在E步不断的建立l(\theta)的下界$,并且在M步优化下界.通过这两个步骤的迭代过程来实现$l(\theta)的最大化$.
 
 假设$Q_i是变量z的分布,则有\sum_zQ_i(z)=1,_i(z)\geq0$,则可以得到:
 	
@@ -48,9 +48,9 @@ $$l(\theta) = \sum_{i=1}^m\log{p(x^{(i)};\theta)}  \\
 			=\sum_{i=1}^m\log\sum_{z^{(i)}}Q_i{z^{(i)}}\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}  \\
 			\geq\sum_{i=1}^m\sum_{z^{(i)}}Q_i{z^{(i)}}\log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}$$		
 
-$$公式的第三步到第四步运用到了Jesen不等式,\log(x)函数是严格凹函数,所以E[f(X)]\leq{f(EX)},其中Q_i{z^{(i)}}表示变量z^{i}的概率分布,\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}表示变量为z^{i}的函数,第三步表示的是函数的期望,又由于函数是凹函数,所以其值要大于等于期望的函数.$$
+公式的第三步到第四步运用到了Jesen不等式,$\log(x)函数是严格凹函数,所以E[f(X)]\leq{f(EX)},其中Q_i{z^{(i)}}表示变量z^{i}$的概率分布,$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}表示变量为z^{i}的函数$,第三步表示的是函数的期望,又由于函数是凹函数,所以其值要大于等于期望的函数.
 
-$$现在给定了关于隐含变量的分布Q_i,我们可以得知l(\theta)的下界,对于Q_i有许多选择,我们该如何选择呢?当我们猜测一个初始的\theta值时,E步所要实现的就是希望我们的替换的l(\theta)不断的贴近真实l(\theta)的下界,我们从Jesen不等式可以知道E[f(X)]={f(EX)}$的充分必要条件是x为一个常数,也就是说:	$$	
+现在给定了关于隐含变量的分布$Q_i,我们可以得知l(\theta)的下界,对于Q_i有许多选择,我们该如何选择呢?当我们猜测一个初始的\theta值时$,E步所要实现的就是希望我们的替换的$l(\theta)不断的贴近真实l(\theta)的下界,我们从Jesen不等式可以知道E[f(X)]={f(EX)}$的充分必要条件是x为一个常数,也就是说:		
 
 $$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}=c(常数)$$		
 
@@ -71,7 +71,7 @@ $$Q_i(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum_{z}p(x^{(i)},z^{(i)};\theta
 ##证明收敛
 ---------------
 
-$$这里需要证明算法最终是否会收敛,假设\theta^{(t)}和\theta^{(t+1))}为两个EM算法成功迭代的参数值,我们需要证明l(\theta^{(t)})\leq{l(\theta^{(t)})},如果不等式成立的话,也就是说每次迭代都使得似然估计的值变大.当我们已经通过迭代获得了\theta^{(i)},我们将通过E步选择$Q_i(z^{(i)})=p(z^{(i)}｜x^{(i)};\theta),由于我们知道在E步的时候因为要建立l(\theta^{(t)})的下界,所有根据Jesen不等式必须有:	$$	
+这里需要证明算法最终是否会收敛,假设$\theta^{(t)}和\theta^{(t+1))}为两个EM算法成功迭代的参数值,我们需要证明l(\theta^{(t)})\leq{l(\theta^{(t)})}$,如果不等式成立的话,也就是说每次迭代都使得似然估计的值变大.当我们已经通过迭代获得了$\theta^{(i)}$,我们将通过E步选择$Q_i(z^{(i)})=p(z^{(i)}｜x^{(i)};\theta),由于我们知道在E步的时候因为要建立l(\theta^{(t)})的下界$,所有根据Jesen不等式必须有:		
 
 
 ![images](../images/0520/3.png)
@@ -95,7 +95,10 @@ $$这里需要证明算法最终是否会收敛,假设\theta^{(t)}和\theta^{(t+
 
 通过之前的推导我们知道$l(\theta)\geq{J(Q,\theta)}$,那么EM算法也可以看作是J函数上的坐标上升算法,E步相当依据猜测或上步迭代的$\theta来最大化Q_i,M步相当于根据根据Q_i优化\theta$
 	
-**参考内容**			
-[JeeryLead(EM算法)](http://www.cnblogs.com/jerrylead/archive/2011/04/06/2006936.html)			
-[Rachel-Zhang(EM算法原理)](http://blog.csdn.net/abcjennifer/article/details/8170378)			
+**参考内容**		
+
+[JeeryLead(EM算法)](http://www.cnblogs.com/jerrylead/archive/2011/04/06/2006936.html)	
+
+[Rachel-Zhang(EM算法原理)](http://blog.csdn.net/abcjennifer/article/details/8170378)		
+	
 [zouxy09(从最大似然到EM算法浅析)](http://blog.csdn.net/zouxy09/article/details/8537620)			
