@@ -138,6 +138,96 @@ MathJax.Hub.Config({
   
 <article class="hentry">
   <header>
+    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-04-18T00:00:00-04:00"><a href="http://jwchennlp.github.com/ir-dic-inverted-index/">April 18, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span></div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://jwchennlp.github.com/ir-dic-inverted-index/" rel="bookmark" title="词典和倒排记录表的建立" itemprop="url">词典和倒排记录表的建立</a></h1>
+    
+  </header>
+  <div class="entry-content">
+    <p>建立倒排索引的过程可概括为:<br />
+* 收集用于建立索引的文档<br />
+* 词条化<br />
+* 对词条进行处理,得到词项<br />
+* 根据词项和文档建立索引  </p>
+
+<h4 id="section">文档单位的选择</h4>
+<p>在收集索引文档的过程中,会比较直观的理解每篇文档是便是用于建立索引的索引单位.但很多情况下并非如此,如传统的Unix文件系统将某个目录下的文件都放在一个文件中,我们更倾向以对每个邮件建立一个文档索引,其中邮件中存在附件时,我们希望将附件解压缩并将解压缩文件中的每个文件作为文档建立索引.所以,对收集的文档集合我们应该确定用于建立索引的最小单位(文档).
+在长文档中,更一般的说法是存在一个<strong>“索引粒度”</strong>的问题,对一个书库而言,将一本书当作索引单位(文档)效果会很不理想.例如,查询query是”chinese toys”,那么可能返回这样一本书,第一章中出现”chinese”,最后一章中出现”toys”词,但是这本书跟query的相关性应该是很低的.所以,一个比较可取的方法是对书的每一章或每一段看作文档来建立索引,这样的匹配结果会跟query更相关.当然,索引粒度也不是越小越好,比如,如果我们以句子作为索引单位时,可能要查找的query的分布在几个句子中,这样这几个句子形成的段落是比较相关的结果.这种细粒度的索引会使得准确率升高而召回率降低,索引粒度太效果相反.所以为了权衡召回率和准确率,我们应该设选择合理的索引粒度.</p>
+
+<h4 id="section-1">词条化</h4>
+<p>词条化主要是将文档中的字符序列才分成一系列子序列的过程,其中每个子序列称之为(token).在这个过程中会进行一系列特殊处理,如删除标点符号等. <br />
+<code>
+      输入: I hava a dream,become a good programer!       
+      输出: I have a dream become a good programer
+</code></p>
+
+<ul>
+  <li>词条指的是文档集合中出现的字符序列的实例,词条类是指相同词条构成的集合.  </li>
+  <li>词项指的是在信息检索系统词典中所包含的某个经过归一化处理的词条类</li>
+</ul>
+
+<p>词项集合和词条集合可以完全不同,例如词条集合是篮球,足球一类的词汇,此类词条集合的词项可以表示为体育.在实际的信息检索系统中,词项往往和词条密切相关.但是,词项未必就是原始的词条,实际上它往往需要对词条进行归一化处理来得到.</p>
+
+<p>词条化的主要任务是确定哪些才是正确的词条.在英文文档中,大多是简单的按空格将字符序列进行划分生成词条.可是在有些情况处理会变得复杂,如应为中的上撇号”’“,它可以用来代表所有关系,也有用来代表缩写.如:<br />
+<code>
+		Mr.O'Neill thinks that the boy's stories about the Chile's capital aren't amusing.  
+</code>
+对于O’Neill来说,词条化结果可以是:{neil},{oneill},{o’neill},{o’,neil},{o,neil}.   <br />
+这里就需要采用词条化工具来对这类情况进行字符序列的词条化,应该注意的是,<strong>对query的词条化处理和对文档集合的词条化处理应该采用相同的机制</strong>.  </p>
+
+<p>在进行词条化的时候要考虑”C++”,”C#”等一类的特定领域词,”New York”,”Los Angle”名称词,新出现的词或连字符连接的词.</p>
+
+<p><strong>停用词:</strong>指的是在文档中出现频率高,但是与文档主题关系不大的词.在某些情况下,停用词在文档和用户query进行匹配时价值不大,可以用词汇表中去除.</p>
+
+<h4 id="section-2">词条归一化</h4>
+<p>词条归一化(token normalization)是指将看起来不完全一致,但表述意思相近的多个词条归纳成一个等价类,以便在它们之间进行匹配的过程.主要有以下两种方法:  </p>
+
+<ul>
+  <li>隐式的建立等价类:例如,采用去掉链接字符的映射规则来建立等价类,将moto-car和motocar映射成词项motocar,这样,对任何一个词进行查询,都会返回包含另一个词的文档.  </li>
+  <li>维护多个非归一化词条之间的关联关系,可以进一步扩展为构建同义词词表的手工构建.比如将car和automobile归为同义词.有以下两种方法: <br />
+    <ul>
+      <li>采用非归一化的词条建立索引,并为某个查询词项维护一个有多个词组成的查询扩展词表.当输入一个查询词项时,则根据扩展词表进行扩展并将扩展后得到的所有词的倒排记录表进行合并.   </li>
+      <li>在索引构建时就对词进行扩展.比如对于包含automobile的文档(文档中不包括词car),正常只建立automobile的索引,此时需要同时建立
+  automobilt和car的索引.第一种方法需要维护一个词的扩展词表,在查询时需要访问该词表,更耗时.第二个则实在建立索引时便已经构建扩展词表的索引,更好空间.   </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="section-3">词干还原和词形归并</h4>
+<p>词干还原和词形归并是为了减少词的曲折变化的形式，并且有时候会将派生词转化成基本形式。因为在语法中，有些词在不同的语境中包含不同的形态，如origanize，oraginizes，originizing。同时语言中也存在大量的同源词，如democracy，democratic，democratization。那么，在检索过程同，如果根据搜索词返回其同源词的文档，能返回更多相关的结果。	
+<strong>词干还原</strong>通常是用启发式的规则对词两端的词缀进行粗略进行处理的过程。<strong>词形归并</strong>通常是利用词汇表和词形分析来去除屈折词缀，从而返回词的原型或词典中的词的过程，返回的结果称为词元。两者的<em>区别</em>还在于：词干还原一般情况下会将多个派生相关词合并在一起，词形归并通常只将同一词元的不同曲折形式进行合并。	</p>
+
+<h3 id="section-4">基于跳表的倒排记录表快速合并算法</h3>
+<p>我们知道，初始的最两个排序好的倒排记录表进行合并（求交集）时，只要维护倒排记录表的指针，并遍历两个表，时间复杂度为O（m+n），（m，n为表的长度）。
+跳表的主要思想时，我们在表中加入一些位置加入一些跳表指针，这样在比较的过程中可以考虑是否从当前的条表指针直接跳到下一个跳表指针，忽略中间的那些倒排记录。这里需要考虑的问题是条表步长的问题（相邻条表指针间元素个数），步长短，则所需的存储空间大，能通过跳转指针进行跳转的机会变大。步长长，所需存储空间小，在遍历过程中进行跳转的几率小。主要以空间换取时间来提高合并效率。		</p>
+
+<p>索引相对固定时，建立有效的跳表比较固定。但是如果倒排记录表由于经常更新而发生变化，那么条表指针的建立比较困难。		</p>
+
+<h4 id="section-5">处理短语查询</h4>
+<p><strong>二元词索引</strong>是将检索短语且分成相邻两个词的元组，并对这些元组当做词项进行检索，将所有词项检索所的结果通过布尔查询的与操作获取结果。如：		
+<code>
+	短语：$w_1$,$w_2$,...,$w_m$	
+	二元词词项：$w_1$$w_2$,$w_2$$W_3$,...,$w_m-1$$w_m$	
+</code>
+其实，在检索过程中，用名词或名词短语来表示用户查询的概念具有相当特殊的地位。但是相关的名词往往被各种虚词隔开，所以在处理短语查询时，可以先对短语进行词条化，之后再进行词性标注，这样在对里面的名词按照二元词索引的思想来查找结果。	</p>
+
+<p><strong>位置信息索引</strong>,采用位置信息索引时，需要建立每个文档中的每个词在文档中出现的位置的索引。词wi在dj中的倒排索引可以表述为：		
+<code>
+	文档dj：（位置1,位置2,....）
+</code>
+那么利用位置信息索引如何实现短语查询呢？对于相邻的两个词，我们首先计算出他们的倒排记录表并进行合并，对合并的结果进行如下处理，对结果中的每一个文档，我们需要查找两个词在文档中的位置索引表，如果两个词各自的位置索引表中存在两个词的位置也是相邻的并且次序准确的话（计算词之间的偏移距离），这这个文档符合要求。如此往复便能得到结果。		
+采用位置索引会增加存储空间，并且会使倒排记录表的合并复杂性增加。	</p>
+
+<p><strong>混合索引机制</strong>，对有些查询使用二元词索引，而对其它短语查询使用位置信息索引。二元词索引中的短语可以根据用户日志统计得出。处理开销最大的短语往往是这样的短语，短语中的每个词在文档中十分常见，但是组合起来却很少见。	</p>
+
+<p><strong>参考资料</strong>		
+<a href="https://www.google.com.hk/search?q=%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E5%AF%BC%E8%AE%BA&amp;oq=%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E5%AF%BC%E8%AE%BA&amp;aqs=chrome..69i57j69i65j69i61l3j0.3218j0j1&amp;sourceid=chrome&amp;ie=UTF-8">信息检索-词项词典及倒排索引表</a>		</p>
+
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
     <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-04-16T00:00:00-04:00"><a href="http://jwchennlp.github.com/ir-inverted-index/">April 16, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/ir-inverted-index/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
     
       <h1 class="entry-title"><a href="http://jwchennlp.github.com/ir-inverted-index/" rel="bookmark" title="IR 倒排索引和布尔查询" itemprop="url">IR 倒排索引和布尔查询</a></h1>

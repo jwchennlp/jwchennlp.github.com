@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-05-19T03:05:28-04:00</updated>
+<updated>2014-05-20T04:36:21-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
@@ -14,10 +14,115 @@
 
 
 <entry>
+  <title type="html"><![CDATA[EM算法]]></title>
+ <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/em-algorithm/" />
+  <id>http://jwchennlp.github.com/em-algorithm</id>
+  <updated>2014-05-20 02:57:12 UTCT00:00:00-00:00</updated>
+  <published>2014-05-20T00:00:00-04:00</published>
+  
+  <author>
+    <name>jwchen</name>
+    <uri>http://jwchennlp.github.com</uri>
+    <email>hit1093710417@email.com</email>
+  </author>
+  <content type="html">&lt;p&gt;EM算法可以用于含有隐含变量的参数评估问题.		&lt;/p&gt;
+
+&lt;h2 id=&quot;jesen-&quot;&gt;Jesen 不等式&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;当函数f为凸函数时,我们知道$f^{\prime\prime}(x)\geq0,如果函数f的输入为向量时,则其半正定矩阵H\geq0$Jesen不等式可以描述为:		&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;定理&lt;/strong&gt;  f是一个凸函数,X是一个随机变量,则:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;E[f(X)]\geq{f(EX)}&lt;/script&gt;
+
+&lt;p&gt;并且如果f是严格凸函数($f^{\prime\prime}(x)&amp;gt;0),则E[f(X)]\geq{f(EX)}$当且仅当p(X)=P(EX)=1,即X是一个常数.		&lt;/p&gt;
+
+&lt;p&gt;通过下面的图可以有个更清晰的认知:			&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/0520/1.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如图可知f为严格凸函数,假设x有0.5的概率取值为a(p(x=a)=0.5),有0.5的概率取值为b,则变量x的期望应当为E[X]=$\frac{a+b}{2}$,期望x值应该是a和b的中点,E(f(x))=$\frac{f(a)+f(b)}{2}$,可以知道$E[f(X)]\geq{f(EX)}$,并且我们知道,只有当X取一个值的概率为1时,有$E[f(X)]={f(EX)}$&lt;/p&gt;
+
+&lt;h2 id=&quot;em&quot;&gt;EM算法&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;假设我们有一个关于m个独立样本集${x^{(i)},…,x^{(m)}}$的参数评估问题,样本集中包含了隐含变量z,我们需要估计模型P(x,z)的参数$\theta,参数\theta$的最大似然估计为:		
+&lt;script type=&quot;math/tex&quot;&gt;l(\theta) = \sum_{i=1}^m\log{p(x^{(i)};\theta)} \\
+			=\sum_{i=1}^m\log\sum_{z^{(i)}}p(x^{(i)},z^{(i)};\theta)&lt;/script&gt;		&lt;/p&gt;
+
+&lt;p&gt;其中$z^{(i)}是隐含随机变量,如果z^{(i)}是可观测的$,那么通过极大似然估计便可以求得参数解.		&lt;/p&gt;
+
+&lt;p&gt;EM算法给出了实现参数评估的一种有效的方法,精确的最大化$l(\theta)可能很困难,这里我们可以采用如下的替代策略:在E步不断的建立l(\theta)的下界$,并且在M步优化下界.通过这两个步骤的迭代过程来实现$l(\theta)的最大化$.&lt;/p&gt;
+
+&lt;p&gt;假设$Q_i是变量z的分布,则有\sum_zQ_i(z)=1,_i(z)\geq0$,则可以得到:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;l(\theta) = \sum_{i=1}^m\log{p(x^{(i)};\theta)}  \\
+			=\sum_{i=1}^m\log\sum_{z^{(i)}}p(x^{(i)},z^{(i)};\theta) \\
+			=\sum_{i=1}^m\log\sum_{z^{(i)}}Q_i{z^{(i)}}\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}  \\
+			\geq\sum_{i=1}^m\sum_{z^{(i)}}Q_i{z^{(i)}}\log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}&lt;/script&gt;
+
+&lt;p&gt;公式的第三步到第四步运用到了Jesen不等式,$\log(x)函数是严格凹函数,所以E[f(X)]\leq{f(EX)},其中Q_i{z^{(i)}}表示变量z^{i}$的概率分布,$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}表示变量为z^{i}的函数$,第三步表示的是函数的期望,又由于函数是凹函数,所以其值要大于等于期望的函数.&lt;/p&gt;
+
+&lt;p&gt;现在给定了关于隐含变量的分布$Q_i,我们可以得知l(\theta)的下界,对于Q_i有许多选择,我们该如何选择呢?当我们猜测一个初始的\theta值时$,E步所要实现的就是希望我们的替换的$l(\theta)不断的贴近真实l(\theta)的下界,我们从Jesen不等式可以知道E[f(X)]={f(EX)}$的充分必要条件是x为一个常数,也就是说:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}=c(常数)&lt;/script&gt;
+
+&lt;p&gt;又$\sum_{z}Q_i(z^{(i)})=1$		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum_{z}p(x^{(i)},z^{(i)};\theta)=c\sum_{z}Q_i(z^{(i)})=c&lt;/script&gt;
+
+&lt;p&gt;可以得到:			&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Q_i(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum_{z}p(x^{(i)},z^{(i)};\theta)} \\
+			  =\frac{p(x^{(i)},z^{(i)};\theta)}{p(x^{(i)};\theta)} \\
+			  = p(z^{(i)}｜x^{(i)};\theta)&lt;/script&gt;
+
+&lt;p&gt;这样在初始猜测一个参数$\theta后,的出z^{(i)}在x^{(i)}和参数\theta下的后验概率分布,即可以得到隐含变量的分布Q^{(i)}$.		&lt;/p&gt;
+
+&lt;center&gt;![image](../images/0520/2.png)&lt;/center&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;证明收敛&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;这里需要证明算法最终是否会收敛,假设$\theta^{(t)}和\theta^{(t+1))}为两个EM算法成功迭代的参数值,我们需要证明l(\theta^{(t)})\leq{l(\theta^{(t)})}$,如果不等式成立的话,也就是说每次迭代都使得似然估计的值变大.当我们已经通过迭代获得了$\theta^{(i)}$,我们将通过E步选择$Q_i(z^{(i)})=p(z^{(i)}｜x^{(i)};\theta),由于我们知道在E步的时候因为要建立l(\theta^{(t)})的下界$,所有根据Jesen不等式必须有:		&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/0520/3.png&quot; alt=&quot;images&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;对上面等式的右边通过极大似然估计获得$\theta^{(t+1)}$,并且:			&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/0520/4.png&quot; alt=&quot;images&quot; /&gt;		&lt;/p&gt;
+
+&lt;p&gt;第一个不等式是是由于:		&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/0520/5.png&quot; alt=&quot;images&quot; /&gt;	&lt;/p&gt;
+
+&lt;p&gt;对任意的$Q^{(i)}和\theta都成立,这里设定Q^{(i)}=Q_t{(t)},\theta=\theta^{(t+1)},第二个不等式成立是因为\theta^{(t+1)}$是通过如下计算获得:			&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/0520/6.png&quot; alt=&quot;images&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果我们定义:		&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/0520/7.png&quot; alt=&quot;images&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;通过之前的推导我们知道$l(\theta)\geq{J(Q,\theta)}$,那么EM算法也可以看作是J函数上的坐标上升算法,E步相当依据猜测或上步迭代的$\theta来最大化Q_i,M步相当于根据根据Q_i优化\theta$&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;参考内容&lt;/strong&gt;		
+&lt;a href=&quot;http://www.cnblogs.com/jerrylead/archive/2011/04/06/2006936.html&quot;&gt;JeeryLead(EM算法)&lt;/a&gt;			&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/abcjennifer/article/details/8170378&quot;&gt;Rachel-Zhang(EM算法原理)&lt;/a&gt;			&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/zouxy09/article/details/8537620&quot;&gt;zouxy09(从最大似然到EM算法浅析)&lt;/a&gt;			&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/em-algorithm/&quot;&gt;EM算法&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 20, 2014.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
   <title type="html"><![CDATA[逻辑回归]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/logistic-regression/" />
   <id>http://jwchennlp.github.com/logistic-regression</id>
-  <updated>2014-05-18 07:25:41 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-18 11:25:41 UTCT00:00:00-00:00</updated>
   <published>2014-05-18T00:00:00-04:00</published>
   
   <author>
@@ -129,16 +234,18 @@
 
 &lt;p&gt;在随机梯度下降法中,我们定义代价函数为一个单一训练实例的代价:		&lt;/p&gt;
 
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_theta(x^{(i)})-y^{(i)})^2&lt;/script&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_{theta}(x^{(i)})-y^{(i)})^2&lt;/script&gt;
 
 &lt;p&gt;伪代码如下:		&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Loop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; 	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,{&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 	&lt;span class=&quot;err&quot;&gt;$$&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;theta_j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;theta_j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h_&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)})&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)})&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x_j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;every&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$$&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;		
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;../images/0518/6.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;随机梯度下降算法在每一次计算之后便更新参数$\theta$,而不需要在整个训练集上进行迭代.随机梯度法比梯度下降法运算速度要快,但是缺点是,随机梯度下降法不是每一步都朝着”正确”的方向迈出的,因此,算法虽然会逐渐走向全局最小值的位置,但是无法达到全局最优解,而是在最优解附近振荡.		&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;在线算法和批处理算法&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;批处理和在线学习算法都是基于梯度下降原理实现的,批处理需要每次计算时都要考虑整个训练集的数据,并找到一个最快下降方向进行迭代.而在线学习算法只着眼于当前的某一观测值.前者的优点是收敛速度快,缺点是计算复杂.后者的优点是计算量小,收敛速度慢.&lt;/p&gt;
 
   &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/logistic-regression/&quot;&gt;逻辑回归&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 18, 2014.&lt;/p&gt;</content>
 </entry>
@@ -148,7 +255,7 @@
   <title type="html"><![CDATA[文本分类]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/test-classification/" />
   <id>http://jwchennlp.github.com/test-classification</id>
-  <updated>2014-05-14 07:01:12 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-14 11:01:12 UTCT00:00:00-00:00</updated>
   <published>2014-05-14T00:00:00-04:00</published>
   
   <author>
@@ -366,7 +473,7 @@ I(X;Y) = H(X) - H(X｜Y)=H(Y) - H(Y｜X) = H(Y)+H(X) - H(X,Y)&lt;/p&gt;
   <title type="html"><![CDATA[阿里大数据竞赛方法总结]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/odps-model/" />
   <id>http://jwchennlp.github.com/odps-model</id>
-  <updated>2014-05-09 02:17:38 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-09 06:17:38 UTCT00:00:00-00:00</updated>
   <published>2014-05-09T00:00:00-04:00</published>
   
   <author>
@@ -400,7 +507,7 @@ I(X;Y) = H(X) - H(X｜Y)=H(Y) - H(Y｜X) = H(Y)+H(X) - H(X,Y)&lt;/p&gt;
   <title type="html"><![CDATA[支持向量机]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/support-vector-machine/" />
   <id>http://jwchennlp.github.com/support-vector-machine</id>
-  <updated>2014-05-08 02:22:02 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-08 06:22:02 UTCT00:00:00-00:00</updated>
   <published>2014-05-08T00:00:00-04:00</published>
   
   <author>
@@ -559,7 +666,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[生成模型和判别模型]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" />
   <id>http://jwchennlp.github.com/generative-model-and-discriminative-model</id>
-  <updated>2014-05-07 07:40:02 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-07 11:40:02 UTCT00:00:00-00:00</updated>
   <published>2014-05-07T00:00:00-04:00</published>
   
   <author>
@@ -608,7 +715,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[索引压缩]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/index-compress/" />
   <id>http://jwchennlp.github.com/index-compress</id>
-  <updated>2014-05-06 05:01:16 -0400T00:00:00-00:00</updated>
+  <updated>2014-05-06 09:01:16 UTCT00:00:00-00:00</updated>
   <published>2014-05-06T00:00:00-04:00</published>
   
   <author>
@@ -707,7 +814,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[odps_sql]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/odps-sql/" />
   <id>http://jwchennlp.github.com/odps-sql</id>
-  <updated>2014-04-26 10:45:37 -0400T00:00:00-00:00</updated>
+  <updated>2014-04-26 14:45:37 UTCT00:00:00-00:00</updated>
   <published>2014-04-26T00:00:00-04:00</published>
   
   <author>
@@ -754,7 +861,7 @@ h_i(w)=0,i=1,...l
   <title type="html"><![CDATA[索引构建]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/index-construction/" />
   <id>http://jwchennlp.github.com/index-construction</id>
-  <updated>2014-04-24 02:09:41 -0400T00:00:00-00:00</updated>
+  <updated>2014-04-24 06:09:41 UTCT00:00:00-00:00</updated>
   <published>2014-04-24T00:00:00-04:00</published>
   
   <author>

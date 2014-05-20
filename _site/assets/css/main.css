@@ -26,6 +26,11 @@ section {
   display: block;
 }
 
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+
 audio,
 canvas,
 video {

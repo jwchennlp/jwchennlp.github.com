@@ -138,6 +138,106 @@ MathJax.Hub.Config({
   
 <article class="hentry">
   <header>
+    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-20T00:00:00-04:00"><a href="http://jwchennlp.github.com/em-algorithm/">May 20, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/em-algorithm/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://jwchennlp.github.com/em-algorithm/" rel="bookmark" title="EM算法" itemprop="url">EM算法</a></h1>
+    
+  </header>
+  <div class="entry-content">
+    <p>EM算法可以用于含有隐含变量的参数评估问题.		</p>
+
+<h2 id="jesen-">Jesen 不等式</h2>
+<hr />
+
+<p>当函数f为凸函数时,我们知道$f^{\prime\prime}(x)\geq0,如果函数f的输入为向量时,则其半正定矩阵H\geq0$Jesen不等式可以描述为:		</p>
+
+<p><strong>定理</strong>  f是一个凸函数,X是一个随机变量,则:		</p>
+
+<script type="math/tex; mode=display">E[f(X)]\geq{f(EX)}</script>
+
+<p>并且如果f是严格凸函数($f^{\prime\prime}(x)&gt;0),则E[f(X)]\geq{f(EX)}$当且仅当p(X)=P(EX)=1,即X是一个常数.		</p>
+
+<p>通过下面的图可以有个更清晰的认知:			</p>
+
+<p><img src="../images/0520/1.png" alt="image" /></p>
+
+<p>如图可知f为严格凸函数,假设x有0.5的概率取值为a(p(x=a)=0.5),有0.5的概率取值为b,则变量x的期望应当为E[X]=$\frac{a+b}{2}$,期望x值应该是a和b的中点,E(f(x))=$\frac{f(a)+f(b)}{2}$,可以知道$E[f(X)]\geq{f(EX)}$,并且我们知道,只有当X取一个值的概率为1时,有$E[f(X)]={f(EX)}$</p>
+
+<h2 id="em">EM算法</h2>
+<hr />
+
+<p>假设我们有一个关于m个独立样本集${x^{(i)},…,x^{(m)}}$的参数评估问题,样本集中包含了隐含变量z,我们需要估计模型P(x,z)的参数$\theta,参数\theta$的最大似然估计为:		
+<script type="math/tex">l(\theta) = \sum_{i=1}^m\log{p(x^{(i)};\theta)} \\
+			=\sum_{i=1}^m\log\sum_{z^{(i)}}p(x^{(i)},z^{(i)};\theta)</script>		</p>
+
+<p>其中$z^{(i)}是隐含随机变量,如果z^{(i)}是可观测的$,那么通过极大似然估计便可以求得参数解.		</p>
+
+<p>EM算法给出了实现参数评估的一种有效的方法,精确的最大化$l(\theta)可能很困难,这里我们可以采用如下的替代策略:在E步不断的建立l(\theta)的下界$,并且在M步优化下界.通过这两个步骤的迭代过程来实现$l(\theta)的最大化$.</p>
+
+<p>假设$Q_i是变量z的分布,则有\sum_zQ_i(z)=1,_i(z)\geq0$,则可以得到:</p>
+
+<script type="math/tex; mode=display">l(\theta) = \sum_{i=1}^m\log{p(x^{(i)};\theta)}  \\
+			=\sum_{i=1}^m\log\sum_{z^{(i)}}p(x^{(i)},z^{(i)};\theta) \\
+			=\sum_{i=1}^m\log\sum_{z^{(i)}}Q_i{z^{(i)}}\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}  \\
+			\geq\sum_{i=1}^m\sum_{z^{(i)}}Q_i{z^{(i)}}\log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}</script>
+
+<p>公式的第三步到第四步运用到了Jesen不等式,$\log(x)函数是严格凹函数,所以E[f(X)]\leq{f(EX)},其中Q_i{z^{(i)}}表示变量z^{i}$的概率分布,$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}表示变量为z^{i}的函数$,第三步表示的是函数的期望,又由于函数是凹函数,所以其值要大于等于期望的函数.</p>
+
+<p>现在给定了关于隐含变量的分布$Q_i,我们可以得知l(\theta)的下界,对于Q_i有许多选择,我们该如何选择呢?当我们猜测一个初始的\theta值时$,E步所要实现的就是希望我们的替换的$l(\theta)不断的贴近真实l(\theta)的下界,我们从Jesen不等式可以知道E[f(X)]={f(EX)}$的充分必要条件是x为一个常数,也就是说:		</p>
+
+<script type="math/tex; mode=display">\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}=c(常数)</script>
+
+<p>又$\sum_{z}Q_i(z^{(i)})=1$		</p>
+
+<script type="math/tex; mode=display">\sum_{z}p(x^{(i)},z^{(i)};\theta)=c\sum_{z}Q_i(z^{(i)})=c</script>
+
+<p>可以得到:			</p>
+
+<script type="math/tex; mode=display">Q_i(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum_{z}p(x^{(i)},z^{(i)};\theta)} \\
+			  =\frac{p(x^{(i)},z^{(i)};\theta)}{p(x^{(i)};\theta)} \\
+			  = p(z^{(i)}｜x^{(i)};\theta)</script>
+
+<p>这样在初始猜测一个参数$\theta后,的出z^{(i)}在x^{(i)}和参数\theta下的后验概率分布,即可以得到隐含变量的分布Q^{(i)}$.		</p>
+
+<center>![image](../images/0520/2.png)</center>
+
+<h2 id="section">证明收敛</h2>
+<hr />
+
+<p>这里需要证明算法最终是否会收敛,假设$\theta^{(t)}和\theta^{(t+1))}为两个EM算法成功迭代的参数值,我们需要证明l(\theta^{(t)})\leq{l(\theta^{(t)})}$,如果不等式成立的话,也就是说每次迭代都使得似然估计的值变大.当我们已经通过迭代获得了$\theta^{(i)}$,我们将通过E步选择$Q_i(z^{(i)})=p(z^{(i)}｜x^{(i)};\theta),由于我们知道在E步的时候因为要建立l(\theta^{(t)})的下界$,所有根据Jesen不等式必须有:		</p>
+
+<p><img src="../images/0520/3.png" alt="images" /></p>
+
+<p>对上面等式的右边通过极大似然估计获得$\theta^{(t+1)}$,并且:			</p>
+
+<p><img src="../images/0520/4.png" alt="images" />		</p>
+
+<p>第一个不等式是是由于:		</p>
+
+<p><img src="../images/0520/5.png" alt="images" />	</p>
+
+<p>对任意的$Q^{(i)}和\theta都成立,这里设定Q^{(i)}=Q_t{(t)},\theta=\theta^{(t+1)},第二个不等式成立是因为\theta^{(t+1)}$是通过如下计算获得:			</p>
+
+<p><img src="../images/0520/6.png" alt="images" /></p>
+
+<p>如果我们定义:		</p>
+
+<p><img src="../images/0520/7.png" alt="images" /></p>
+
+<p>通过之前的推导我们知道$l(\theta)\geq{J(Q,\theta)}$,那么EM算法也可以看作是J函数上的坐标上升算法,E步相当依据猜测或上步迭代的$\theta来最大化Q_i,M步相当于根据根据Q_i优化\theta$</p>
+
+<p><strong>参考内容</strong>		
+<a href="http://www.cnblogs.com/jerrylead/archive/2011/04/06/2006936.html">JeeryLead(EM算法)</a>			</p>
+
+<p><a href="http://blog.csdn.net/abcjennifer/article/details/8170378">Rachel-Zhang(EM算法原理)</a>			</p>
+
+<p><a href="http://blog.csdn.net/zouxy09/article/details/8537620">zouxy09(从最大似然到EM算法浅析)</a>			</p>
+
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
     <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-18T00:00:00-04:00"><a href="http://jwchennlp.github.com/logistic-regression/">May 18, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/logistic-regression/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
     
       <h1 class="entry-title"><a href="http://jwchennlp.github.com/logistic-regression/" rel="bookmark" title="逻辑回归" itemprop="url">逻辑回归</a></h1>
@@ -248,16 +348,18 @@ MathJax.Hub.Config({
 
 <p>在随机梯度下降法中,我们定义代价函数为一个单一训练实例的代价:		</p>
 
-<script type="math/tex; mode=display">cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_theta(x^{(i)})-y^{(i)})^2</script>
+<script type="math/tex; mode=display">cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_{theta}(x^{(i)})-y^{(i)})^2</script>
 
 <p>伪代码如下:		</p>
 
-<div class="highlight"><pre><code class="python"><span class="lineno">1</span> <span class="n">Loop</span><span class="p">{</span>
-<span class="lineno">2</span> 	<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span> <span class="n">to</span> <span class="n">m</span><span class="p">,{</span>
-<span class="lineno">3</span> 	<span class="err">$$</span>\<span class="n">theta_j</span><span class="o">=</span>\<span class="n">theta_j</span><span class="o">-</span>\<span class="n">alpha</span><span class="p">(</span><span class="n">h_</span>\<span class="n">theta</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="p">{(</span><span class="n">i</span><span class="p">)})</span><span class="o">-</span><span class="n">y</span><span class="o">^</span><span class="p">{(</span><span class="n">i</span><span class="p">)})</span><span class="n">x_j</span><span class="o">^</span><span class="p">{(</span><span class="n">i</span><span class="p">)}</span> <span class="p">(</span><span class="k">for</span> <span class="n">every</span> <span class="n">j</span><span class="p">)</span><span class="err">$$</span>
-<span class="lineno">4</span> <span class="p">}</span>
-<span class="lineno">5</span> <span class="p">}</span>		
-</code></pre></div>
+<p><img src="../images/0518/6.png" alt="image" /></p>
+
+<p>随机梯度下降算法在每一次计算之后便更新参数$\theta$,而不需要在整个训练集上进行迭代.随机梯度法比梯度下降法运算速度要快,但是缺点是,随机梯度下降法不是每一步都朝着”正确”的方向迈出的,因此,算法虽然会逐渐走向全局最小值的位置,但是无法达到全局最优解,而是在最优解附近振荡.		</p>
+
+<h2 id="section-3">在线算法和批处理算法</h2>
+<hr />
+
+<p>批处理和在线学习算法都是基于梯度下降原理实现的,批处理需要每次计算时都要考虑整个训练集的数据,并找到一个最快下降方向进行迭代.而在线学习算法只着眼于当前的某一观测值.前者的优点是收敛速度快,缺点是计算复杂.后者的优点是计算量小,收敛速度慢.</p>
 
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
@@ -653,50 +755,6 @@ h_i(w)=0,i=1,...l
 <img src="../images/140508/11.png" alt="image" />		</p>
 
 <p>我们知道$\alpha_i\geq0$,且根据KKT约束条件中的对偶互补条件$\alpha_ig_i(w)\geq0$,并且$\alpha&gt;0$时，$g_i(w)=0$,表示这些点有最小的几何间隔，也就是说这些点表示支持向量．我们知道，在判断ｘ类别的时候，我们只需要考虑$\alpha_i&gt;0$的情况，也对应的我们只需要考虑数据集中的支持向量．同时，支持向量想对于数据集来说是小很多的．这样很显然可以进行高效求解.</p>
-
-
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-07T00:00:00-04:00"><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/">May 07, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" rel="bookmark" title="生成模型和判别模型" itemprop="url">生成模型和判别模型</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    <h2 id="section">定义</h2>
-<hr />
-<blockquote>
-  <p>生成方法由数据学习联合概率分布P(x,y)，然后求出条件概率分布P(y｜ｘ)作为预测的模
-型，即成生模型:  <br />
-<img src="../images/140507/1.png" alt="image" /> <br />
-这样的方法成为生成方法，是因为模型表示了给定输入ｘ产生输出ｙ的生成关系．典型的生成模型有，朴素贝叶斯和隐马尔可夫模型．  <br />
-判别方法是由数据直接学习决策函数ｆ(x)或者条件概率分布P(y｜x)作为预测的模型，即判别模型，判别方法关心的是对给定的输入x,应该预测什么样的输出ｙ，典型的方法包括感知机，决策树，逻辑回归．   </p>
-</blockquote>
-
-<h2 id="section-1">理解</h2>
-<hr />
-<p>在面对猫狗分类问题时，我们该如何实现呢？  <br />
-方法一：当我们利用逻辑回归或是感知机模型时，我们需要数据集所投射的空间中，找到一个决策边界，在决策边界一边的属于一类动物，在决策边界另一边的属于另一种动物．当来一个我们不知道的动物时，我们将它放入空间中，通过判断它在决策边界的那一侧来判断是猫还是狗． <br />
-方法二：将数据集中的猫都拿出来，建立一个关于猫的特征的模型．按同样的方法建立一个关于狗的模型．这样，当判断一个动物时，我们分别查看它在猫模型中属于猫的概率和在狗模型中属于狗的概率，哪个值大，便说明属于哪个模型．   </p>
-
-<p>方法一通过对数据集训练出一个模型，并通过判断P(y|x)下的条件概率来判断ｙ的类别．这种方法成为判别方法，对应建立的模型属于判别模型．   <br />
-方法二对数据集的每一个类别建立一个模型，并通过联合概率P(x,y)来判断ｘ特征所应对应的类别．这种方法成为生成方法．  </p>
-
-<p>其实通过联合概率来判断类别进行了一个变形，一般我们是要判断P(y|x)下的概率，可以进行如下转换： <br />
-<img src="../images/140507/1.png" alt="image" />  <br />
-对于某个参数ｘ，其概率值P(x)值在所有类别下都是相同的，所以问题便等同于如下问题：            <br />
-<img src="../images/140507/2.png" alt="image" />        </p>
-
-<p>不妨通过一个朴素贝叶斯生成模型来了解生成模型的判定过程．
-如图，训练集包含４篇文档，我们需要验证测试集中的文档类别： <br />
-<img src="../images/140507/3.png" alt="iamge" />    </p>
-
-<p>我们需要计算每一个类别下P(x｜y)P(y)的概率，并且概率最大的那一类便是文档所属类别．即计算P((Chinese,chinese,Chinese,Tokyo,Japan)｜y=c)P(y=c)和P((Chinese,chinese,Chinese,Tokyo,Japan)｜y=$\bar{c}$)P(y=$\bar{c}$)．</p>
-
-<p>之后利用朴素贝叶斯的的条件独立定义进行求解便能获知测试及属于哪个类别．</p>
 
 
   </div><!-- /.entry-content -->

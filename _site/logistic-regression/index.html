@@ -243,21 +243,23 @@ MathJax.Hub.Config({
 
 <p>在随机梯度下降法中,我们定义代价函数为一个单一训练实例的代价:		</p>
 
-<script type="math/tex; mode=display">cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_theta(x^{(i)})-y^{(i)})^2</script>
+<script type="math/tex; mode=display">cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_{theta}(x^{(i)})-y^{(i)})^2</script>
 
 <p>伪代码如下:		</p>
 
-<div class="highlight"><pre><code class="python"><span class="lineno">1</span> <span class="n">Loop</span><span class="p">{</span>
-<span class="lineno">2</span> 	<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span> <span class="n">to</span> <span class="n">m</span><span class="p">,{</span>
-<span class="lineno">3</span> 	<span class="err">$$</span>\<span class="n">theta_j</span><span class="o">=</span>\<span class="n">theta_j</span><span class="o">-</span>\<span class="n">alpha</span><span class="p">(</span><span class="n">h_</span>\<span class="n">theta</span><span class="p">(</span><span class="n">x</span><span class="o">^</span><span class="p">{(</span><span class="n">i</span><span class="p">)})</span><span class="o">-</span><span class="n">y</span><span class="o">^</span><span class="p">{(</span><span class="n">i</span><span class="p">)})</span><span class="n">x_j</span><span class="o">^</span><span class="p">{(</span><span class="n">i</span><span class="p">)}</span> <span class="p">(</span><span class="k">for</span> <span class="n">every</span> <span class="n">j</span><span class="p">)</span><span class="err">$$</span>
-<span class="lineno">4</span> <span class="p">}</span>
-<span class="lineno">5</span> <span class="p">}</span>		
-</code></pre></div>
+<p><img src="../images/0518/6.png" alt="image" /></p>
+
+<p>随机梯度下降算法在每一次计算之后便更新参数$\theta$,而不需要在整个训练集上进行迭代.随机梯度法比梯度下降法运算速度要快,但是缺点是,随机梯度下降法不是每一步都朝着”正确”的方向迈出的,因此,算法虽然会逐渐走向全局最小值的位置,但是无法达到全局最优解,而是在最优解附近振荡.		</p>
+
+<h2 id="section-3">在线算法和批处理算法</h2>
+<hr />
+
+<p>批处理和在线学习算法都是基于梯度下降原理实现的,批处理需要每次计算时都要考虑整个训练集的数据,并找到一个最快下降方向进行迭代.而在线学习算法只着眼于当前的某一观测值.前者的优点是收敛速度快,缺点是计算复杂.后者的优点是计算量小,收敛速度慢.</p>
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="http://jwchennlp.github.com/tags/#逻辑回归" title="Pages tagged 逻辑回归" class="tag">逻辑回归</a><a href="http://jwchennlp.github.com/tags/#机器学习" title="Pages tagged 机器学习" class="tag">机器学习</a><a href="http://jwchennlp.github.com/tags/#梯度下降" title="Pages tagged 梯度下降" class="tag">梯度下降</a><a href="http://jwchennlp.github.com/tags/#正则化" title="Pages tagged 正则化" class="tag">正则化</a></span>
         <span><a href="http://jwchennlp.github.com/logistic-regression/" rel="bookmark" title="逻辑回归">逻辑回归</a> was published on <span class="entry-date date published updated"><time datetime="2014-05-18T00:00:00-04:00">May 18, 2014</time></span></span>
-        (revised: <span class="entry-date date modified"><time datetime="2014-05-18 07:25:41 -0400">05/18/2014</time></span>)
+        (revised: <span class="entry-date date modified"><time datetime="2014-05-18 11:25:41 UTC">05/18/2014</time></span>)
         <span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>
         <div class="social-share">
           <ul class="socialcount socialcount-small inline-list">
@@ -276,20 +278,20 @@ MathJax.Hub.Config({
           <a href="http://jwchennlp.github.com/test-classification/" class="read-more-btn">Read More</a>
         </div><!-- /.read-more-header -->
         <div class="read-more-content">
-          <h3><a href="http://jwchennlp.github.com/test-classification/" title="文本分类">文本分类</a></h3>
-          <p>文本分类问题在机器学习和信息检索领域都有比较广泛的运用．这里将主要介绍自己实现的一些分类模型和实践过程中应该注意的地方．朴素贝叶斯朴素贝叶斯模型在很多问题的处理过程中都相当有效，因为其过程和想法都很简单，只需要对数据集进行处理而不存在训练的过程，在很多场合下都作为解决问题的...&hellip; <a href="http://jwchennlp.github.com/test-classification/">Continue reading</a></p>
+          <h3><a href="http://jwchennlp.github.com/em-algorithm/" title="EM算法">EM算法</a></h3>
+          <p>EM算法可以用于含有隐含变量的参数评估问题.		##Jesen 不等式		-------------当函数f为凸函数时,我们知道$f^{\prime\prime}(x)\geq0,如果函数f的输入为向量时,则其半正定矩阵H\geq0$Jesen不等式可以描述为:		**定理...&hellip; <a href="http://jwchennlp.github.com/em-algorithm/">Continue reading</a></p>
         </div><!-- /.read-more-content -->
       
       <div class="read-more-list">
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/odps-model/" title="阿里大数据竞赛方法总结">阿里大数据竞赛方法总结</a></h4>
-            <span>Published on May 09, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/test-classification/" title="文本分类">文本分类</a></h4>
+            <span>Published on May 14, 2014</span>
           </div><!-- /.list-item -->
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/support-vector-machine/" title="支持向量机">支持向量机</a></h4>
-            <span>Published on May 08, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/odps-model/" title="阿里大数据竞赛方法总结">阿里大数据竞赛方法总结</a></h4>
+            <span>Published on May 09, 2014</span>
           </div><!-- /.list-item -->
         
       </div><!-- /.read-more-list -->
