@@ -66,7 +66,7 @@ $$Q_i(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum_{z}p(x^{(i)},z^{(i)};\theta
 
 这样在初始猜测一个参数$\theta后,的出z^{(i)}在x^{(i)}和参数\theta下的后验概率分布,即可以得到隐含变量的分布Q^{(i)}$.		
 
-<center>![image](../images/0520/2.png)</center>
+![image](../images/0520/2.png)
 
 ##证明收敛
 ---------------
@@ -100,5 +100,5 @@ $$Q_i(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum_{z}p(x^{(i)},z^{(i)};\theta
 [JeeryLead(EM算法)](http://www.cnblogs.com/jerrylead/archive/2011/04/06/2006936.html)	
 
 [Rachel-Zhang(EM算法原理)](http://blog.csdn.net/abcjennifer/article/details/8170378)		
-	
+
 [zouxy09(从最大似然到EM算法浅析)](http://blog.csdn.net/zouxy09/article/details/8537620)			

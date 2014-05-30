@@ -138,6 +138,160 @@ MathJax.Hub.Config({
   
 <article class="hentry">
   <header>
+    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-08T00:00:00-04:00"><a href="http://jwchennlp.github.com/support-vector-machine/">May 08, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/support-vector-machine/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://jwchennlp.github.com/support-vector-machine/" rel="bookmark" title="支持向量机" itemprop="url">支持向量机</a></h1>
+    
+  </header>
+  <div class="entry-content">
+    <h2 id="section">问题引出</h2>
+<hr />
+<p>在面对一个最简单的二分类问题，并且假设数据集可分的情况下．具体如下图所示．当我们采用逻辑回归实现分类时，我们用一个分类超平面（决策边界）对数据进行数据进行划分，并在划分后，不同类别的数据分布在分类超平面的两边，这表示分类成功．其实，在数据可分的情况下，我们发现可以有很多条这样的分类超平面，并且都能达到正确分类的效果,这个时候我们可能要问，这些分类超平面的效果一样吗？是否存在一个最优的分类超平面．
+<img src="../images/140508/1.png" alt="image" /></p>
+
+<h2 id="section-1">函数间隔和几何间隔</h2>
+<hr />
+
+<h3 id="section-2">函数间隔</h3>
+
+<p>对于上面数据集，我们计算出了一个超平面$w^Tx+b=０$.对于某一个数据点x我们需要判断其内别,如果$w^Tx+b＞0$，则其类ｙ=1，并且如果$w^Tx+b＞0$并且$w^Tx+b$值越大，则这个点的类别为正例的置信度就越高．当$w^Tx+b＜0$时,点所属类别为－１，并且$w^Tx+b$值越小，这这个点类别为负例的置信度就越高．并且当点ｘ被正确分类时，$y(w^T+b)$为正数．从上面图中可以看出，我们设定分类超平面的上部为正例，A,B,C三个的点都被标记为正例，但是C离决策边界最近，可能稍微变化决策边界就可能导致分类错误，所以C分类正确的置信读低．A离决策边界最远，所以Ｃ被分为正例的置信读高.对于点$\left(x^\left(i\right),y^\left(i\right)\right)$为了获得更好的分类效果，我们希望$y\left(i\right)(w^Tx+b)$尽量大，则分类的置信度就越高．</p>
+
+<p>所以，对数据$\left(x^\left(i\right),y^\left(i\right)\right)$，我们就定义$y\left(i\right)(w^Tx+b)$为此数据点的函数间隔，并且如果使得每个点的函数间隔都倾向于一个大值，则分类置信度越高，分类效果越好．   </p>
+
+<p>给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,…m},我们需要计算每一个样本点到分类超平面的函数间隔.在这里，我们需要求出最小的函数间隔，并且通过修改分类超平面使得最小函数间隔尽可能大，则分类效果更好．     </p>
+
+<script type="math/tex; mode=display">\widehat{\gamma}=\min_{i=1,...,m}\widehat\gamma^\left(i\right)</script>
+
+<p>利用函数间隔来衡量分类效果的置信度有一个缺陷，当我们确定某一个分类超平面$w^Tx+b=0$，我们对ｗ,b同时增加ｋ倍,函数间隔由原来的$y\left(w^Tx+b\right)$变成$ky\left(w^Tx+b\right)$．也就是说某一数据点的函数间隔可以可以任意的缩放或增加．</p>
+
+<h3 id="section-3">几何间隔</h3>
+
+<p>在确定分类超平面之后，任一数据点到分类超平面的距离应该是不变的．如果我们用这个距离来衡量分类置信度的话，效果会很好．    <br />
+<img src="../images/140508/2.png" alt="image" />  <br />
+点A到平面的距离设为$\gamma$,知道分类超平面的法向量为ｗ，那么将A投影到分类超平面上的点B的坐标为$x-\frac{w}{\left|w\right|}\gamma$,且点在决策边界$w^Tx+b=0$上，所以有:        </p>
+
+<script type="math/tex; mode=display">w^T\left(x-\frac{w}{｜w｜}\gamma\right)+b=0</script>
+
+<p>求解得$\gamma=\frac{w}{｜w｜}x+\frac{b}{｜w｜}$,所以对所有的样本点点$\left(x^\left(i\right),y^\left(i\right)\right)$,我们求得每个样本点的几何间隔为:      </p>
+
+<script type="math/tex; mode=display">\gamma^\left(i\right)=y^\left(i\right)\left(\frac{w}{｜w｜}x^\left(i\right)+\frac{b}{｜w｜}\right)</script>
+
+<p>给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,…m},我们需要计算每一个样本点到分类超平面的几何距离.在这里，我们需要求出最小的几何距离，并且通过修改分类超平面使得最小几何距离尽可能大，则分类效果更好．        </p>
+
+<script type="math/tex; mode=display">\gamma=\min_{i=1,...,m}\gamma^\left(i\right)</script>
+
+<h2 id="section-4">最优间隔分类器</h2>
+
+<p>当给定训练集之后，按照前面分析直观上最好的分类效果是找到决策边界使得(几何)间隔最大化.因为我们的决策是使得最小几何间隔最大化，则显然对所有点的分类的置信度很高．所以当对于一个线性可分的数据集，我们要通过一个分类超平面来分割所有的正例和负例．那么我们的问题可以转化成下面的优化问题:   </p>
+
+<script type="math/tex; mode=display">\max_{\gamma,w,b}   \gamma \\
+ s.t.    y^\left(i\right)\left(\frac{w}{|w|}x^\left(i\right)+\frac{b}{|w|}\right)\geq\gamma,i=1,...,m
+</script>
+
+<p>由于我们知道在确定了(w,b)之后，我们可以通过同比例的缩放或增加(w,b),所以我们可以通过相应的扩张比例使得｜w｜的值为１．所以优化问题转化成如下形式：     </p>
+
+<script type="math/tex; mode=display">\max_{\gamma,w,b}   \gamma \\
+ s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq\gamma,i=1,...,m　\\
+ |w|=1
+</script>
+
+<table>
+  <tbody>
+    <tr>
+      <td>通过约束</td>
+      <td>w</td>
+      <td>=1,使得函数间隔等于几何间隔．但是因为如上的优化问题是非凸问题，我们很难通过软件来进行求解．所以我们将第一个问题转化成如下问题:</td>
+    </tr>
+  </tbody>
+</table>
+
+<script type="math/tex; mode=display">\max_{\gamma,w,b}:  \frac{\widehat\gamma}{|w|} \\
+ s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq\widehat\gamma,i=1,...,m
+</script>
+
+<p>其中$\widehat\gamma$代表的是最小函数间隔，我们知道函数间隔是可以通过(w,b)的同比例变化而变化，这里为了为了简化计算，我们将$\widehat\gamma$设为１．那么如上的优化问题变为:     </p>
+
+<script type="math/tex; mode=display">\max_{\gamma,w,b}:  \frac{1}{|w|} \\
+ s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
+</script>
+
+<p>进一步转变，优化问题变成如下格式：       </p>
+
+<script type="math/tex; mode=display">\min_{\gamma,w,b}: \frac{1}{2}w^2 \\
+ s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
+</script>
+
+<h2 id="section-5">拉格朗日算子</h2>
+
+<p>对于如下的原始优化问题：    </p>
+
+<script type="math/tex; mode=display"> \min_w:f(w) \\
+s.t.:g_i(w)\leq0,i=1,...k  \\
+h_i(w)=0,i=1,...l   
+</script>
+
+<p>其拉格朗日算子为<script type="math/tex">L(w,\alpha,\beta)=f(w)+\sum_\left(i=1\right)^k\alpha_ig_i(w)+\sum_\left(i=1\right)^l\beta_ih_i(w)</script>,其中$\alpha_i,\beta_i$为拉格朗日乘数．      <br />
+考虑如下等式：     </p>
+
+<script type="math/tex; mode=display">\theta_p(w)=\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)</script>
+
+<p>其中ｐ表示原始的,我们发现当给定ｗ，并且ｗ满足我们原始问题的约束（$g_i(w)\leq0，h_i(w)=0$），如果ｗ违背这些约束，则显然$\theta_p(w)=\infty$,当ｗ满足原始问题约束时，$\theta_p(w)=０$．那么可以的出如下结论：  </p>
+
+<script type="math/tex; mode=display">\min_w\theta_p(w)=\min_w\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)</script>
+
+<p>同时我们定义$p^*=\min_w\theta_p(w)$为原始问题的解．   <br />
+现在对应它的对偶问题：     </p>
+
+<script type="math/tex; mode=display">\max_\left(\alpha,\beta:\alpha_i\geq0\right)\theta_d(p)=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)</script>
+
+<p>我们知道，最大最小问题的解小于最小最大问题的解：     </p>
+
+<script type="math/tex; mode=display">d^*=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)\leq\min_w\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)=p^*</script>
+
+<p>当ｆ和$g_i$为凸函数时，$h_i$为仿射函数(仿射变换的定义是在几何空间中，一个向量空间进行一次线性变换并接上一个平移，变换成另一个向量空间)，有$d^＊=p^＊$，在这些约束下，一定存在一个$w^＊$是原始问题的解，$\alpha^＊,\beta^＊$是对偶问题的解，并且有$d^＊=p^＊=L(w^＊,\alpha^＊,\beta^＊)$,同时这３个参数满足KKT条件，KKT条件描述如下：    <br />
+<img src="../images/140508/3.png" alt="image" />		</p>
+
+<p>其中第三个约束称为对偶互补条件，并且当$a_i＞０$时，$g_i(w^*)=0$,满足这些条件的点所对应的几何间隔便是最小几何间隔．这些点称为支持向量.</p>
+
+<p>现在回到优化边界分类器部分,我们的原始问题定义为：       </p>
+
+<script type="math/tex; mode=display">\min_{\gamma,w,b}: \frac{1}{2}w^2 \\
+ s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
+</script>
+
+<p>约束条件可以表示为：        </p>
+
+<script type="math/tex; mode=display">g_i(w)=-y^\left(i\right)(w^Tx\left(i\right)+b)+1\leq0</script>
+
+<p><img src="../images/140508/4.png" alt="image" />    </p>
+
+<p>我们可以看到，有最小几何间隔的点离决策边界最近．我们知道这些点$\left(x^\left(i\right),y\left(i\right)\right)$满足$g_i(w)=0$.我们将这些点称之为支持向量．从上图知道，数据集中有３个支持向量，一般来说支持向量的个数会明显小于数据集的大小，这在后面会相当有用．      </p>
+
+<p>原始问题的拉格朗日算子可以表示为：      </p>
+
+<script type="math/tex; mode=display">L(w,b,\alpha)=\frac{1}{2}w^2-\sum_{i=1}^m\alpha_i[y^\left(i\right)(w^Tx\left(i\right)+b)+1]</script>
+
+<p>这个时候我们通过求对偶问题$\theta_p(w)$来求原始问题的解．具体方法是对Ｌ函数关于参数ｗ和ｂ求偏导数：    <br />
+<img src="../images/140508/5.png" alt="image" />
+<img src="../images/140508/6.png" alt="image" />
+<img src="../images/140508/7.png" alt="image" />      <br />
+将得到的约束代回到上面的拉格朗日算子中．得到：          <br />
+<img src="../images/140508/8.png" alt="image" />
+<img src="../images/140508/9.png" alt="image" />      <br />
+最后原始问题的对偶优化问题可以定义为：            <br />
+<img src="../images/140508/10.png" alt="image" /></p>
+
+<p>现在假定我们已经求得对偶问题最优解的$\alpha_i$，那么我们是如何做预测的呢？对于一个新的数据点ｘ，我们知道预测是通过判断$w^Tx+b$的值来判定的，如果大于０，类别为正例，如果小于０，类别为负例,我们将上面求解的ｗ值代入：         <br />
+<img src="../images/140508/11.png" alt="image" />		</p>
+
+<p>我们知道$\alpha_i\geq0$,且根据KKT约束条件中的对偶互补条件$\alpha_ig_i(w)\geq0$,并且$\alpha&gt;0$时，$g_i(w)=0$,表示这些点有最小的几何间隔，也就是说这些点表示支持向量．我们知道，在判断ｘ类别的时候，我们只需要考虑$\alpha_i&gt;0$的情况，也对应的我们只需要考虑数据集中的支持向量．同时，支持向量想对于数据集来说是小很多的．这样很显然可以进行高效求解.</p>
+
+
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
     <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-07T00:00:00-04:00"><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/">May 07, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
     
       <h1 class="entry-title"><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" rel="bookmark" title="生成模型和判别模型" itemprop="url">生成模型和判别模型</a></h1>
@@ -428,135 +582,6 @@ SPIMI（single-pass in-memory indexing,内存式单遍扫描索引构建算法�
 <p>可以采用如下方法实现动态索引的构建，这里我们主要维护两个索引，第一个主索引是对初始的文档集构建的索引，第二个辅助索引是在主索引建立之后随着时间推移，而更新的索引，辅助索引存放在内存中，这样实时检索时通过查询主索引和辅助索引实现。如果是对主索引在未来时间的更新，可以通过一个无效位向量实现，用无效位向量来标致文档的删除，同时在辅助索引中加入此文档的更新，便实现了主索引内容的更新。同时随着时间的推移，辅助索引的容量是不断增大的。当辅助索引长度大一某一值时，我们可以将辅助索引并入到主索引中。</p>
 
 <p>将辅助索引并入主索引的开销主要取决于索引为文件中的存储方式。如果将每个词项对应的倒排记录表存储为一个文件，则此词项的辅助索引和主索引的合并通过简单的将辅助索引扩展到主索引的倒排记录表即可。显示情况是因为文件管理的各种限制，将所有词项的倒排记录表分别存储为文件是不可行的。替代方案是将所有词项的倒排记录表存储为一个大的文件。</p>
-
-
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-04-22T00:00:00-04:00"><a href="http://jwchennlp.github.com/dic-and-fault-tolerance-retrieve/">April 22, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/dic-and-fault-tolerance-retrieve/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://jwchennlp.github.com/dic-and-fault-tolerance-retrieve/" rel="bookmark" title="词典及容错式检索" itemprop="url">词典及容错式检索</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    <h2 id="section">词典搜索的数据结构</h2>
-
-<p>在给定倒排索引和查询，首要任务是确定查询中的各个查询词是否在词汇表中，如果在则返回该词所对应的倒排记录表的指针。词汇表的查找操作通常采用一种称之为词典的数据结构，主要有两种解决方案：<strong>哈希表方式</strong>和<strong>搜索树方式</strong>。通常在选择选用何种解决方式时，我们需要考虑如下问题：                       </p>
-
-<ul>
-  <li>关键字的数目    </li>
-  <li>关键字的数目是经常变化还是相对固定，在变化的情况下，是只插入新关键字还是同时要删除某些旧关键字。  </li>
-  <li>不同关键字的相对访问频率如何。   </li>
-</ul>
-
-<p>对于哈希表，词汇表中的每个词通过哈希函数映射成一个数，可以认为这个数代表这个词的存储地址。所以对于query里面的查询词来说，同样通过哈希函数应查看查询词映射到的地址，如果此地址存在数，则表示该查询词存在词典中。采用哈希表方式时，存在以下问题：          </p>
-
-<ul>
-  <li>哈希函数的空间要足够大，并且不易扩展。哈希函数必须要有足够大的空间来               存储字典，同时它的空间很难实时扩展，如需扩展，需要更改哈希映射函数，使得整个数据结构都发生变化。 </li>
-  <li>冲突问题的解决，因为哈希函数可能使得两个不同的词映射到统一地址，如何减少映射冲突也是一个要考虑的问题。   </li>
-  <li>哈希表方式很难解决前缀式查询，因为在不知道整体词的情况下，哈希映射函数是失效的。  </li>
-</ul>
-
-<p>搜索树可以很好的解决上述问题，它支持前缀式查询。最出名的搜索树是二叉树，每个内部节点都有两个字节点。在二叉树中搜索词要从根节点开始，每个内部节点代表一个二值测试，测试的结果用于确定下一步应该搜索的子树。二叉树的平衡性是实现高效搜索的关键，，平衡二叉树指的是任何节点的两个子树的高度相差小于等于1.下图为一个二叉树表示的词典的例子。为了实现搜索树的平衡性，我们必须在加入增加或删除节点时对树进行处理以保持树的平衡性，这里用B-树实现。</p>
-
-<p><img src="../images/binary-tree.png" alt="image" />   	</p>
-
-<h2 id="section-1">通配符查询</h2>
-
-<p>通配符通常用于以下情形：  <br />
-1. 用户不确定查询查询词的拼写。 <br />
-2. 用户知道某个查询词项可能有不同的拼写版本，并且要把包含这些版本的文档都查找出来。       <br />
-3. 用户查找某个查询词项的所有变形，这些词项还做了词干还原，但是用户并不知道搜索引擎是否做了词干还原。  <br />
-4. 用户不确定一个外来词或者短语的正确拼写形式。   </p>
-
-<p>当通配符出现在一个查询词的尾部时，如ca<em>，则是需要查找词典中所有词前两个字母是ca的所有词的文档。我们可以通过搜索树来实现这一查找，在搜索树的根（root）节点,首先我们确定首字母为c所指定的分支，而后在以分支作为搜索树查询a所对应的分支，这样这个分支下的所有单词都为符号ca</em>查询的单词。   <br />
-然后，当通配符出现在词的首部时，如<em>ay,需要查找词典中后两个字母是ay的所有词项，显然用之前的搜索树不能实现这一查询。这里我们可以引入词典的反向B-树结构。前面的词典的B-树的构建是从词项的首字母开始，接着词的第二个字母知道最后一个字母构建B-树。反向B-树恰恰相反，它是从词典的尾字母开始，依次到倒数第二个字母直到第一个字母构建B-树。这样的反向B-树便能匹配通配符出现在词首部的查询。
-那么对于通配符出现在查询词中间的查询，如t</em>o,我们可以采用如下策略，首先用构建的B-树查找t<em>的所有词，而后采用构建的反向B-树查找符合</em>o的所有词，最后两个查询的词求交集便是所查找的词。</p>
-
-<h3 id="section-2">轮排索引</h3>
-<p>轮排索引是一种用于一般通配符查询的索引，它是倒排索引的一种特殊方式。它的工作原理为，首先引入一终结符$，对词项集合中的每个词在其末尾增加$符号。如词项hello扩展成hello$,随后我们需要按如下方式建立词的轮排索引，对词hello$连续进行首位翻转，将出现的所有形式记录的集合称之为轮排词汇表。hello$的轮排索引如图所示: <br />
-<img src="../images/permutern-index.png" alt="image" />   <br />
-那么如何用轮排索引实现通配符查询呢，由上图我们知道轮排索引中的任何一个状态都指向词项hello，也就是说ello$h或者llo$he的查询过程都会通过轮排索引指向词项hello的查询过程。所以例如查询通配符h<em>llo,处理的关键是将通配符</em>移动到词的尾部，将h<em>llo转换成h</em>llo$,接着进行翻转得到llo$h<em>,接着在轮排索引中查找该字符串，我们发现llo$h</em>与hello词的轮排索引中的llo$he一致，所以hello是满足条件的查询结果。     <br />
-对于查询中存在多个通配符的情况，如查询（fi<em>mo</em>er）,我们可以按如下方式进行处理，首先查找er$fi*的所有结果，接着可以通过穷举法过滤出包含mo的词，这些词便是符合通配符查询的结果。 </p>
-
-<h3 id="k-gram">支持通配符查询的k-gram索引</h3>
-<p>上面介绍的轮排索引结构简单，但是在构建轮排索引的过程中，我们需要对词进行旋转并记录所有旋转的结果，这会引起存储空间的急剧增加。     </p>
-
-<p>k-gram索引是如下的倒排索引机制，它将原始词典中的所有词项进行拆分，每个词项都拆分成若干个长度为k的新的词项，并根据这些新的词项构建倒排索引，如happy按照3-gram拆分成的新词词项有$ha,hap,app,ppy,py$,这里用$来对词的开始和结束进行标记。这里倒排索引的构建方式与第一章提到的略微不同，之前的倒排索引是词典是文档中经过词条化和语言话处理的所有词，而倒排记录表是这些词所出现的文档。而这里词典则是文档中的所有词根据k-gram拆分的所有新词，倒排记录表这是包含这些长度为k的新词的原始词。如3-gram的新词etr对应的倒排记录表为,词项为etr，倒排记录表为所有包含etr的词：    </p>
-
-<p><img src="../images/k-gram-index.png" alt="image" />    </p>
-
-<p>那么k-gram是如何实现通配符查询的呢，如查询he<em>lo,是要查询首字符为he，尾字符为lo的所有词，根据3-gram索引，我们可以够找如下的布尔查询$heANDlo$,则3-gram的查询词便是所期望的
-结果。k-gram索引有时也会导致非预期的结果，如查询red</em>,根据3-gram索引构建的布尔查询为$reANDred,其返回结果可能包含retired，但显然这个词并不符合初始期望。为了解决这一问题，我们可以引入一个后过滤的步骤，实现方式很简单，用初始的查询词与返回的词进行匹配，那些成功匹配的词便是符合要求的词。<br />
-通配符查找往往是非常耗时的，对于单个通配符查询，我们可能要构建轮排索引或者k-gram索引来返回中间结果，并且对这中间结果要求交集来返回确切的要查找的词，最后才依据这些词通过倒排索引来查找这些词所对应的文档。    </p>
-
-<h2 id="section-3">拼写校正</h2>
-<p>拼写校正是在用户输入某个查询词或查询短语时，用户能识别其中词的拼写错误并返回正确词的查询结果。</p>
-
-<h3 id="section-4">拼写校正的实现</h3>
-
-<p>对于大多数拼写校正算法而言，有以下两条基本规则：        </p>
-
-<ul>
-  <li>对于一个错误拼写的查询中，则需要在其所有正确的拼写中，返回最近的正确拼写的查询。</li>
-  <li>当两个正确拼写查询临近度相等时，则需要返回更常见的那个正确查询。更常见可以通过以下两个方式衡量，可以统计文档集合中两个查询出现的次数，出现次数高的标记为“更常见”。也可以统计用户查询日志中两个查询的出现次数，出现次数更高的标记为”更常见”。  </li>
-</ul>
-
-<h3 id="section-5">拼写校正的方法</h3>
-<p>词独立校正:不管查询是单个词还是多个词构成的短语，对查询的词的拼写校正是独立进行的，也就是说是上下文独立的，即某个词是否校正与上下文语境没有关联。校正方法主要有编辑距离方法和k-gram重合度方法。 <br />
-上下文敏感校正:则是在校正过程中，会根据上下文信息来决定词的校正。</p>
-
-<h4 id="section-6">编辑距离</h4>
-
-<p>给定两个字符串S1和S2，两者的编辑距离定义为由S1转换成S2的最小编辑操作数。通常这些编辑操作包括：     </p>
-
-<ul>
-  <li>将一个字符插入字符串   </li>
-  <li>将一个字符从字符串中删除  </li>
-  <li>将字符串中的一个字符替换成另一个字符    </li>
-</ul>
-
-<p>可以在O(S1*S2）的时间复杂度下计算S1和S2之间的编辑距离，主要方法是采用动态规划的思想（类似于动态规划中的求最长公共子串问题），其中S1和S2以字符数组方式进行存放。整数矩阵m的行数和列书分表代表两个字符串的长度，算法在运行过程中不断填写矩阵元素。例如，在算法结束时，m[i,j]表示S1的前i个字符和S2的前j个字符的编辑距离。其代码实现如下：</p>
-
-<div class="highlight"><pre><code class="python"> 
-       
-<span class="n">EditDistance</span><span class="p">(</span><span class="n">S1</span><span class="p">,</span><span class="n">S2</span><span class="p">)</span> 
-<span class="nb">int</span> <span class="n">m</span><span class="p">[</span><span class="o">|</span><span class="n">S1</span><span class="o">|</span><span class="p">,</span><span class="o">|</span><span class="n">S2</span><span class="o">|</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>    
-<span class="k">for</span> <span class="n">i</span> <span class="o">&lt;</span><span class="err">—</span> <span class="mi">1</span> <span class="n">to</span> <span class="o">|</span><span class="n">S1</span><span class="o">|</span>      
-<span class="n">do</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">o</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>       
-<span class="k">for</span> <span class="n">j</span> <span class="o">&lt;</span><span class="err">—</span> <span class="mi">1</span> <span class="n">to</span> <span class="o">|</span><span class="n">S2</span><span class="o">|</span>      
-<span class="n">do</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
-<span class="k">for</span> <span class="n">i</span> <span class="o">&lt;</span><span class="err">—</span> <span class="mi">1</span> <span class="n">to</span> <span class="o">|</span><span class="n">S1</span><span class="o">|</span>      
-<span class="n">do</span> <span class="k">for</span> <span class="n">j</span> <span class="o">&lt;</span><span class="err">—</span> <span class="mi">1</span> <span class="n">to</span> <span class="o">|</span><span class="n">S2</span><span class="o">|</span>       
-    <span class="k">if</span> <span class="n">S1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">S2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>       
-        <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>       
-    <span class="k">else</span>        
-        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>       
-    <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">{</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">k</span><span class="p">,</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">}</span>        
-<span class="k">return</span> <span class="n">m</span>    
-</code></pre></div>
-
-<p>加入对于某个拼写错误查询q，我们需要从词典W中找出与q相邻最近的正确词项，最简单的方法是便利W中的所有词项wi，计算wi和q之间的编辑距离，最后返回和q最近编辑距离的词项wi，并返回wi所指向的文档。很显然，这种遍历的方法是十分低效的，我们可以采用如下的启发式优化策略，我们将搜索限定在首字母相同的词典词项上，对于查询q，我们认为错误不出现在首字符上，这样对于词典W，我们只计算与q有相同首字符的词项与q之间的编辑距离。当然在此基础上更复杂的方法是加入轮排索引，对于词错误拼写查询helo，忽略词的终结符$,构建词的轮排索引{helo，ohel，lohe，eloh}，对轮排索引中的每个词，按照上述的启发式规则与词典W中查找最近编辑距离的正确拼写。（个人理解）</p>
-
-<h4 id="k-gram-1">拼写校正中的k-gram索引</h4>
-
-<p>对与某一个错误拼写查询，我们可以根据之前的构建k-gram索引来实现拼写校正，过程如下：
-对于错误的拼写单词，我们可以将此单词拆分成长度为k的多个字符串，并查找这些字符串所对应的倒排索引表，这些倒排索引表分别表示包含这些字符串的拼写正确的单词，这里我们认为，只要一个单词在在写倒排索引表中出现次数超过某一阀值m，则认为这个词是原错误拼写的正确拼写结果。例如错误拼写bord，其2-gram索引拆分成的新词有{$b,bo,or,rd,d$},这里去除词$b和d$,从文档集合中查找bo，or，rd对应的倒排记录表，如下所示：    </p>
-
-<p><img src="../images/sc-k-gram-index.png" alt="image" /> </p>
-
-<p>随后，我们只要遍历这些倒排记录表，找到那些在倒排记录表中出现次数高的词，便是正确的拼写词。k-gram索引的缺点像boardroom这种不可能是bord的正确拼写形式的词也会被检索出来。所以我们需要计算词汇表中词项与查询q之间的更精确的重合度计算方法。可以采用雅可比系数对先前的线性扫描合并方法进行修正。雅可比系数的计算公式是length(AandB)/length(AorB)，其中A和B分别表示查询q和词汇表词项中的k-gram集合。当扫描到词t时，计算出q和t的雅可比系数，如果系数大于某一阀值，则将词t返回。
-采用雅可比系数进行验证的时候，我们需要知道q和t的k-gram索引，首先q的k-gram索引是已知的，那么在验证的过程中我们需要遍历所有q的k-gram索引中出现的词t的k-gram索引，如果穷举词t的k-gram索引是个缓慢的过程。我们可以通过一下方式来进行简化处理，当我们知道词t的长度时，可以认为他的k-gram长度为length(t)-k+1,这样能快速计算出雅可比系数。</p>
-
-<h4 id="section-7">上下文敏感的拼写校正</h4>
-
-<p>当查询的短语中每个单词都是正确的单词，但是返回的查询结果很少时，我们可以认为单词中存在拼写错误，并对其中的单词查找其正确的拼写结果，并返回修正后的短语的查询结果。当采用这种穷举法对词语中的词进行拼写校正时，工作量大，效率低。这时可以采用启发式的方法通过用户的查询日志来统计最有查询短语拼写校正后最有可能出现的短语。</p>
-
-<h4 id="section-8">参考资料</h4>
-<p><a href="https://www.google.com.hk/search?q=%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E5%AF%BC%E8%AE%BA&amp;oq=%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E5%AF%BC%E8%AE%BA&amp;aqs=chrome..69i57j69i65j69i61l3j0.3218j0j1&amp;sourceid=chrome&amp;ie=UTF-8">信息检索导论-词典及容错式检索</a><br />
-<strong>说明：</strong>文章主要内容和图片来自信息检索导论一书。</p>
 
 
   </div><!-- /.entry-content -->
