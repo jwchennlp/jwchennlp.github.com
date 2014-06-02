@@ -48,6 +48,10 @@
 
     
     <url>
+        <loc>http://jwchennlp.github.com/plsa/</loc>
+    </url>
+    
+    <url>
         <loc>http://jwchennlp.github.com/lsa-topic-model/</loc>
     </url>
     

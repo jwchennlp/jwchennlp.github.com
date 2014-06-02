@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-05-30T10:23:41-04:00</updated>
+<updated>2014-06-02T04:35:00-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
@@ -14,7 +14,139 @@
 
 
 <entry>
-  <title type="html"><![CDATA[Latent Semantic Analysis(LSA/LSI)]]></title>
+  <title type="html"><![CDATA[pLSA]]></title>
+ <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/plsa/" />
+  <id>http://jwchennlp.github.com/plsa</id>
+  <updated>2014-06-02 01:28:01 UTCT00:00:00-00:00</updated>
+  <published>2014-06-02T00:00:00-04:00</published>
+  
+  <author>
+    <name>jwchen</name>
+    <uri>http://jwchennlp.github.com</uri>
+    <email>hit1093710417@email.com</email>
+  </author>
+  <content type="html">&lt;p&gt;在对LSA的介绍中,我们知道LSA的核心思想是将建立的文档-词项矩阵运用SVD将高维空间映射到到隐语义空间,这样可以较好的解决同义词的问题.但语义的权重不好解释.&lt;/p&gt;
+
+&lt;h2 id=&quot;aspect-model&quot;&gt;1.层面模型(aspect model)&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;pLSA是以层面模型进行建模,层面模型是一个统计模型.它是关联于潜在类别Z的共现数据(co-occurence)的潜在变量模型.关于D*W(文档-词项)的联合概率定义如下:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(d,w) = p(d)p(w｜d),p(w｜d)=\sum_{z\in Z}p(w｜z)p(z｜d)&lt;/script&gt;
+
+&lt;p&gt;当然我们也可以对P(w,d)做如下变化:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(d,w) =\sum_{z\in Z}p(z)p(w｜z)p(d｜z)&lt;/script&gt;
+
+&lt;p&gt;用概率图表示为:		&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/140530/plsa-1.png&quot; align=&quot;center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;对于图(a),d代表文档,Z代表隐变量(文档主题),W为观察到的单词.$p(d_i)表示单词出现在文档d_i的概率$,$p(z_k｜d_i)表示在文档d_i中$,		
+出现$主题z_k下的单词的序列(可以理解为主题z_k也是有一系列表现此主题的单词构成),P(w_j｜z_k)表示在主题z_k下出现单词w_j的$			
+概率.并且每个主题上的所有词服从多项式分布,每个文档上的所有主题服从多项式分布.整个文档的生成过程为:		&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;以$p(d_i)的概率选中文档d_i$		&lt;/li&gt;
+  &lt;li&gt;以$p(z_k｜d_i)的概率选中主题z_k$		&lt;/li&gt;
+  &lt;li&gt;以$p(w_j｜z_k)的概率选中词w_j$		&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;其中$(d_i,w_j)是可以可观测值,z_k是隐变量,我们的工作便是估计P(w_j｜z_k)和p(z_k｜d_i)的参数$.&lt;/p&gt;
+
+&lt;p&gt;假设$\theta_i表示所有主题在文档d_i的一个多项式分布,则\theta_i可以表示成一个向量,每个元素\theta_{ik}$表示主题k在出现在文档i的概率,即:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(z_k｜d_i) = \theta_{ik}, \sum_{z_k\in Z}\theta_{ik}=1&lt;/script&gt;
+
+&lt;p&gt;假设$\phi_k表示所有词在主题z_k上的一个多项式分布,则\phi_k可以表示成一个向量,每个元素\phi_{kj}$表示单词j出现在主题k的概率,即:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(w_j｜z_k) = \phi_{kj},\sum_{w_j\in W}\phi_{kj} = 1&lt;/script&gt;
+
+&lt;p&gt;所以参数评估可以形式化表现为评估参数$\varTheta,\varPhi$:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\varTheta=[\theta_1,\theta_2,...,\theta_N],d_i\in D&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\varPhi = [\phi_1,\phi_2,...,\phi_k],z_k\in Z&lt;/script&gt;
+
+&lt;p&gt;由于词与词之间是相互独立的,且文档与文档之间也是相互独立的.所以我们可以得到整个语料库的词的分布:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(W｜d_i) =\prod_{j=1}^Mp(d_i,w_j)^{n(d_i,w_j)}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(W｜D) = \prod_{i=1}^N\prod_{j=1}^Mp(d_i,w_j)^{n(d_i,w_j)}&lt;/script&gt;
+
+&lt;p&gt;其中,$n(d_i,w_j)表示在文档i中词j出现的次数$,当我们采用极大使然估计来实现参数评估时:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;l(\varTheta,\varPhi)=\sum_{i=1}^N\sum_{j=1}^Mn(d_i,w_j)\log{p(d_i,w_j)} \\
+					  =\sum_{i=1}^N\sum_{j=1}^Mn(d_i,w_j)\log{p(d_i)\sum_{z_k\in Z}p(w_j｜z_k)p(z_k｜d_i)} \\
+					  =\sum_{i=1}^N\sum_{j=1}^Mn(d_i,w_j)(\log{p(d_i)+\sum_{z_k\in Z}\theta_{ik}\phi_{kj}})&lt;/script&gt;
+
+&lt;p&gt;显然,对于含有隐变量的极大使然估计,因为我们不知道隐变量的分布,所以极大似然估计方法得不到参数解.这里我们可以采用EM算法进行参数评估.		&lt;/p&gt;
+
+&lt;h2 id=&quot;em&quot;&gt;2.EM参数评估&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;EM算法可以用于含隐变量的参数评估,它是一种近似求解方法,主要是通过迭代的方法来获取近似最优解.每次迭代包含E步和M步,E步是要建立极大似然函数的下界,求得隐变量的后验分布.M步则是根据隐变量的后验分布来优化要估计的参数.&lt;/p&gt;
+
+&lt;h3 id=&quot;e&quot;&gt;E步&lt;/h3&gt;
+
+&lt;p&gt;在pLSA的参数估计中,可见变量是d和w,隐含变量是主题z,所以隐含变量关于d和w的后验概率为:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(z_k｜d_i,w_j) = \frac{p(z_k,d_i,w_j)}{\sum_{z_k\in Z}p(d_i,w_j,z_k)} \\
+				 =\frac{p(d_i)p(z_k｜d_i)p(w_j｜z_k,d_i)}{\sum_{z_k\in Z}p(d_i)p(z_k｜d_i)p(w_j｜z_k,d_i)} \\
+				 =\frac{p(z_k｜d_i)p(w_j｜z_k)}{\sum_{z_k\in Z}p(z_k｜d_i)p(w_j｜z_k)} \\
+				 =\frac{\theta_{ik}\phi_{kj}}{\sum_{z_k\in Z}\theta_{ik}\phi_{kj}}&lt;/script&gt;
+
+&lt;p&gt;在第一次的迭代时,会基于猜测或其他方法假定参数$\theta&lt;em&gt;{ik},\phi&lt;/em&gt;{kj}$的值.这样便能获得隐变量的后验分布.		&lt;/p&gt;
+
+&lt;h3 id=&quot;m&quot;&gt;M步&lt;/h3&gt;
+
+&lt;p&gt;在M步,将E步得到的隐变量的后验分布代入似然估计中,通过极大似然估计,更新参数$\theta&lt;em&gt;{ik},\phi&lt;/em&gt;{kj}$的值.似然函数的期望为:			&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;E[l]=\sum_{i=1}^N\sum_{j=1}^Mn(d_i,w_j)\sum_{k=1}^Kp(z_k｜d_i,w_j)log[\theta_{ik}\phi_{kj}]&lt;/script&gt;
+
+&lt;p&gt;这是一个多元函数求极值的问题,其中约束条件有:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum_{z_k\in Z}\theta_{ik}=1&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum_{w_j\in W}\phi_{kj} = 1&lt;/script&gt;
+
+&lt;p&gt;将问题转化成拉格朗日乘法,得到的拉格朗日函数为:			&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;H=E[l]+\sum_{k=1}^K\gamma_k(1-\sum_{j=1}^M\phi_{kj}+\sum_{i=1}^N\rho_i(1-\sum_{k=1}^K\phi_ik)&lt;/script&gt;
+
+&lt;p&gt;这是一个关于$\theta&lt;em&gt;{ik}和\phi&lt;/em&gt;{kj}$的函数,分别对其求偏导,得到:	&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/140530/plsa-2.png&quot; alt=&quot;image&quot; /&gt;		&lt;/p&gt;
+
+&lt;p&gt;最后求出期望最大化的新的参数值为:			&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/140530/plsa-3.png&quot; alt=&quot;image&quot; /&gt;		&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;3.总结&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;从前面的推理来看,pLSA和LSA好像并没有什么联系.LSA是基于向量空间模型的SVD分解来进行隐空间投射,来挖掘文档之间的语义层的联系.而pLSA模型是基于层面模型的关于潜在变量的统计建模过程.我们知道pLSA是在文档和词项之间加入了一层隐含变量(主题),我们不妨做如下假定:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;U=(p(d_i｜z_k))_{i,k},V=(p(w_j｜z_k))_{j,k},\overline\sum=diag(p(z_k))_k&lt;/script&gt;
+
+&lt;p&gt;则有:$p=U\overline\sum V=(\sum_kp(d_i｜z_k)p(z_k)p(w_j｜z_k))&lt;em&gt;{i,j}=(p(d_j,w_j))&lt;/em&gt;{i,j}$,可见,			
+$[U,\overline\sum,V]正是p的svd分解,p(z_k)是p的k个特征值.$		&lt;/p&gt;
+
+&lt;p&gt;不同的是,LSA使用特征值进进行SVD分解,则实际上是L2范数意义下对N的最好估计,而pLSA使用EM算法,使似然函数的期望达到最大.并且,pLSA的P矩阵有明确的统计意义,而LSA的这种意义不明显.&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;参考内容:&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.jqian.net/post/plsa.html&quot;&gt;主题模型之pLSA   http://blog.jqian.net/post/plsa.html&lt;/a&gt;		&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://blog.csdn.net/yangliuy/article/details/8330640&quot;&gt;pLSA及EM算法    http://blog.csdn.net/yangliuy/article/details/8330640&lt;/a&gt;&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/plsa/&quot;&gt;pLSA&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on June 02, 2014.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[Latent Semantic Analysis(LSA)]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/lsa-topic-model/" />
   <id>http://jwchennlp.github.com/lsa-topic-model</id>
   <updated>2014-05-30 11:01:55 UTCT00:00:00-00:00</updated>
@@ -85,7 +217,7 @@
 &lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/kemaswill/archive/2013/04/17/3022100.html&quot;&gt;Latent Semantic Analysis(LSA/ LSI)算法简介 http://www.cnblogs.com/kemaswill/&lt;/a&gt;	&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/lsa-topic-model/&quot;&gt;Latent Semantic Analysis(LSA/LSI)&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 30, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/lsa-topic-model/&quot;&gt;Latent Semantic Analysis(LSA)&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 30, 2014.&lt;/p&gt;</content>
 </entry>
 
 
