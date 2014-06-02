@@ -210,11 +210,11 @@ MathJax.Hub.Config({
 				 =\frac{p(z_k｜d_i)p(w_j｜z_k)}{\sum_{z_k\in Z}p(z_k｜d_i)p(w_j｜z_k)} \\
 				 =\frac{\theta_{ik}\phi_{kj}}{\sum_{z_k\in Z}\theta_{ik}\phi_{kj}}</script>
 
-<p>在第一次的迭代时,会基于猜测或其他方法假定参数$\theta<em>{ik},\phi</em>{kj}$的值.这样便能获得隐变量的后验分布.		</p>
+<p>在第一次的迭代时,会基于猜测或其他方法假定参数<script type="math/tex">\theta_{ik},\phi_{kj}</script>的值.这样便能获得隐变量的后验分布.		</p>
 
 <h3 id="m">M步</h3>
 
-<p>在M步,将E步得到的隐变量的后验分布代入似然估计中,通过极大似然估计,更新参数$\theta<em>{ik},\phi</em>{kj}$的值.似然函数的期望为:			</p>
+<p>在M步,将E步得到的隐变量的后验分布代入似然估计中,通过极大似然估计,更新参数<script type="math/tex">\theta_{ik},\phi_{kj}</script>的值.似然函数的期望为:			</p>
 
 <script type="math/tex; mode=display">E[l]=\sum_{i=1}^N\sum_{j=1}^Mn(d_i,w_j)\sum_{k=1}^Kp(z_k｜d_i,w_j)log[\theta_{ik}\phi_{kj}]</script>
 
@@ -228,7 +228,7 @@ MathJax.Hub.Config({
 
 <script type="math/tex; mode=display">H=E[l]+\sum_{k=1}^K\gamma_k(1-\sum_{j=1}^M\phi_{kj}+\sum_{i=1}^N\rho_i(1-\sum_{k=1}^K\phi_ik)</script>
 
-<p>这是一个关于$\theta<em>{ik}和\phi</em>{kj}$的函数,分别对其求偏导,得到:	</p>
+<p>这是一个关于<script type="math/tex">\theta_{ik}和\phi_{kj}</script>的函数,分别对其求偏导,得到:		</p>
 
 <p><img src="../images/140530/plsa-2.png" alt="image" />		</p>
 
@@ -243,8 +243,8 @@ MathJax.Hub.Config({
 
 <script type="math/tex; mode=display">U=(p(d_i｜z_k))_{i,k},V=(p(w_j｜z_k))_{j,k},\overline\sum=diag(p(z_k))_k</script>
 
-<p>则有:$p=U\overline\sum V=(\sum_kp(d_i｜z_k)p(z_k)p(w_j｜z_k))<em>{i,j}=(p(d_j,w_j))</em>{i,j}$,可见,			
-$[U,\overline\sum,V]正是p的svd分解,p(z_k)是p的k个特征值.$		</p>
+<p>则有<script type="math/tex">p=U\overline\sum V=(\sum_kp(d_i｜z_k)p(z_k)p(w_j｜z_k))_{i,j}=(p(d_j,w_j))_{i,j}</script>,可见,			
+<script type="math/tex">[U,\overline\sum,V]正是p的svd分解,p(z_k)是p的k个特征值.</script>		</p>
 
 <p>不同的是,LSA使用特征值进进行SVD分解,则实际上是L2范数意义下对N的最好估计,而pLSA使用EM算法,使似然函数的期望达到最大.并且,pLSA的P矩阵有明确的统计意义,而LSA的这种意义不明显.</p>
 

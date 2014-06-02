@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-06-02T04:44:23-04:00</updated>
+<updated>2014-06-02T05:42:08-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
@@ -96,11 +96,11 @@
 				 =\frac{p(z_k｜d_i)p(w_j｜z_k)}{\sum_{z_k\in Z}p(z_k｜d_i)p(w_j｜z_k)} \\
 				 =\frac{\theta_{ik}\phi_{kj}}{\sum_{z_k\in Z}\theta_{ik}\phi_{kj}}&lt;/script&gt;
 
-&lt;p&gt;在第一次的迭代时,会基于猜测或其他方法假定参数$\theta&lt;em&gt;{ik},\phi&lt;/em&gt;{kj}$的值.这样便能获得隐变量的后验分布.		&lt;/p&gt;
+&lt;p&gt;在第一次的迭代时,会基于猜测或其他方法假定参数&lt;script type=&quot;math/tex&quot;&gt;\theta_{ik},\phi_{kj}&lt;/script&gt;的值.这样便能获得隐变量的后验分布.		&lt;/p&gt;
 
 &lt;h3 id=&quot;m&quot;&gt;M步&lt;/h3&gt;
 
-&lt;p&gt;在M步,将E步得到的隐变量的后验分布代入似然估计中,通过极大似然估计,更新参数$\theta&lt;em&gt;{ik},\phi&lt;/em&gt;{kj}$的值.似然函数的期望为:			&lt;/p&gt;
+&lt;p&gt;在M步,将E步得到的隐变量的后验分布代入似然估计中,通过极大似然估计,更新参数&lt;script type=&quot;math/tex&quot;&gt;\theta_{ik},\phi_{kj}&lt;/script&gt;的值.似然函数的期望为:			&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;E[l]=\sum_{i=1}^N\sum_{j=1}^Mn(d_i,w_j)\sum_{k=1}^Kp(z_k｜d_i,w_j)log[\theta_{ik}\phi_{kj}]&lt;/script&gt;
 
@@ -114,7 +114,7 @@
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;H=E[l]+\sum_{k=1}^K\gamma_k(1-\sum_{j=1}^M\phi_{kj}+\sum_{i=1}^N\rho_i(1-\sum_{k=1}^K\phi_ik)&lt;/script&gt;
 
-&lt;p&gt;这是一个关于$\theta&lt;em&gt;{ik}和\phi&lt;/em&gt;{kj}$的函数,分别对其求偏导,得到:	&lt;/p&gt;
+&lt;p&gt;这是一个关于&lt;script type=&quot;math/tex&quot;&gt;\theta_{ik}和\phi_{kj}&lt;/script&gt;的函数,分别对其求偏导,得到:		&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;../images/140530/plsa-2.png&quot; alt=&quot;image&quot; /&gt;		&lt;/p&gt;
 
@@ -129,8 +129,8 @@
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;U=(p(d_i｜z_k))_{i,k},V=(p(w_j｜z_k))_{j,k},\overline\sum=diag(p(z_k))_k&lt;/script&gt;
 
-&lt;p&gt;则有:$p=U\overline\sum V=(\sum_kp(d_i｜z_k)p(z_k)p(w_j｜z_k))&lt;em&gt;{i,j}=(p(d_j,w_j))&lt;/em&gt;{i,j}$,可见,			
-$[U,\overline\sum,V]正是p的svd分解,p(z_k)是p的k个特征值.$		&lt;/p&gt;
+&lt;p&gt;则有&lt;script type=&quot;math/tex&quot;&gt;p=U\overline\sum V=(\sum_kp(d_i｜z_k)p(z_k)p(w_j｜z_k))_{i,j}=(p(d_j,w_j))_{i,j}&lt;/script&gt;,可见,			
+&lt;script type=&quot;math/tex&quot;&gt;[U,\overline\sum,V]正是p的svd分解,p(z_k)是p的k个特征值.&lt;/script&gt;		&lt;/p&gt;
 
 &lt;p&gt;不同的是,LSA使用特征值进进行SVD分解,则实际上是L2范数意义下对N的最好估计,而pLSA使用EM算法,使似然函数的期望达到最大.并且,pLSA的P矩阵有明确的统计意义,而LSA的这种意义不明显.&lt;/p&gt;
 
