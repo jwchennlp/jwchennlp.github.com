@@ -45,10 +45,18 @@
         <loc>http://jwchennlp.github.com/page3/index.html</loc>
     </url>
     
+    <url>
+        <loc>http://jwchennlp.github.com/page4/index.html</loc>
+    </url>
+    
 
     
     <url>
         <loc>http://jwchennlp.github.com/plsa/</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/parameter-estimation-approaches/</loc>
     </url>
     
     <url>

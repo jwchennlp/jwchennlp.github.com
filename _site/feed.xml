@@ -4,7 +4,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://jwchennlp.github.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://jwchennlp.github.com" />
-<updated>2014-06-02T05:42:08-04:00</updated>
+<updated>2014-06-02T10:50:56-04:00</updated>
 <id>http://jwchennlp.github.com/</id>
 <author>
   <name>jwchen</name>
@@ -146,7 +146,80 @@
 
 
 <entry>
-  <title type="html"><![CDATA[Latent Semantic Analysis(LSA)]]></title>
+  <title type="html"><![CDATA[参数评估方法]]></title>
+ <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/parameter-estimation-approaches/" />
+  <id>http://jwchennlp.github.com/parameter-estimation-approaches</id>
+  <updated>2014-06-02 13:27:24 UTCT00:00:00-00:00</updated>
+  <published>2014-06-02T00:00:00-04:00</published>
+  
+  <author>
+    <name>jwchen</name>
+    <uri>http://jwchennlp.github.com</uri>
+    <email>hit1093710417@email.com</email>
+  </author>
+  <content type="html">&lt;p&gt;pLSA和LDA主题模型是当前统计自然语言处理领域非常热门的问题,这些主题模型一般都是对文本的生成过程提出自己的概率图模型,然后利用已有的文本数据做参数评估.本文主要介绍其中会用到的三种参数评估方法,包括极大似然估计(MLE),最大后验(MAL)和贝叶斯估计.	&lt;/p&gt;
+
+&lt;p&gt;我们主要考虑两个推理问题:		&lt;/p&gt;
+
+&lt;p&gt;(1). 评估参数$\theta$的值以最好的拟合观察到的数据集X.		
+(2). 根据已观测到的数据集X计算新的观察值$\widetilde x$的概率		&lt;/p&gt;
+
+&lt;p&gt;第一个问题可以看成是估计问题,第二个问题可以看成是预测或是回归问题.		theta
+在贝叶斯统计中,参数估计问题可以表述为:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(\theta｜X) = \frac{p(\theta)p(X｜\theta)}{p(X)}&lt;/script&gt;
+
+&lt;p&gt;并且我们可以用如下术语定义:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;posterior=\frac{likelihood*prior}{evidence}&lt;/script&gt;
+
+&lt;h2 id=&quot;mle&quot;&gt;1.极大似然估计(MLE)&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;极大似然估计主要是求使似然函数值最大的参数值($\theta$),似然函数为:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;L(\theta｜X) = \prod_{x\in X}p(x｜\theta)&lt;/script&gt;
+
+&lt;p&gt;对似然函数取对数并另偏导数为0,则可求得参数的解:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\theta_{ML} = argmax_{\theta}L(\theta｜X) = argmax_{\theta}\sum_{x\in X}\log{p(x｜\theta)}&lt;/script&gt;
+
+&lt;p&gt;对上述函数关于参数$\theta_k$求偏导并是的偏导值为0:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{\partial L(\theta｜X)}{\partial \theta_k} = 0, \forall \theta_k\in theta&lt;/script&gt;
+
+&lt;p&gt;根据已观测到的数据集X计算新的观察值$\widetilde x$的概率为:		&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/140530/mle.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;以抛硬币的贝努利实验为例,每次抛硬币时正面出现的概率为p(未知),假设进行抛硬币N次得到结果集合C.用极大似然估计来求解参数p:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;l(p)=\sum_{i=1}^N\log{p(C=c_i｜p)} \\
+	  =n^{(1)}log{p(C=1｜p)}	+n^{(0)}log{p(C=0｜p)} \\
+	  =n^{(1)}log{p}+n^{(0)}log{(1-p)}&lt;/script&gt;
+
+&lt;p&gt;其中$n^{(1)}表示N次实验结果中正面出现的次数,n^{(0)}$表示反面出现的次数.对似然函数求偏导得:		&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{\partial l}{\partial p} = \frac{n^{(1)}}{p}-\frac{n^{(0)}}{1-p}=0&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\hat{p}_{ML} = \frac{n^{(1)}}{n^{(1)}+n^{(0)}}=\frac{n^{(1)}}{N}&lt;/script&gt;
+
+&lt;p&gt;假设抛硬币20次,其中正面出现的次数为12次,则由极大似然估计得出正面出现的概率p=0.6,并且可以预测下一次抛硬币正面向上的概率为0.6．&lt;/p&gt;
+
+&lt;h2 id=&quot;map&quot;&gt;2.最大后验估计(MAP)&lt;/h2&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;最大后验估计(Maximum a posteriori estimation,MAP)和极大似然估计十分相似,但是最大后验估计中加入了对参数的先验信念(priori belief),它的权重设定为先验分布$p(\theta)$,最大后验估计不是要求似然函数最大化,而是要求由贝叶斯公式算出的整个后验概率最大.		&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/140530/map.png&quot; align=&quot;middle&quot; /&gt;&lt;/p&gt;
+
+
+  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/parameter-estimation-approaches/&quot;&gt;参数评估方法&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on June 02, 2014.&lt;/p&gt;</content>
+</entry>
+
+
+<entry>
+  <title type="html"><![CDATA[Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)]]></title>
  <link rel="alternate" type="text/html" href="http://jwchennlp.github.com/lsa-topic-model/" />
   <id>http://jwchennlp.github.com/lsa-topic-model</id>
   <updated>2014-05-30 11:01:55 UTCT00:00:00-00:00</updated>
@@ -217,7 +290,7 @@
 &lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/kemaswill/archive/2013/04/17/3022100.html&quot;&gt;Latent Semantic Analysis(LSA/ LSI)算法简介 http://www.cnblogs.com/kemaswill/&lt;/a&gt;	&lt;/p&gt;
 
 
-  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/lsa-topic-model/&quot;&gt;Latent Semantic Analysis(LSA)&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 30, 2014.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://jwchennlp.github.com/lsa-topic-model/&quot;&gt;Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)&lt;/a&gt; was originally published by jwchen at &lt;a href=&quot;http://jwchennlp.github.com&quot;&gt;My blog&lt;/a&gt; on May 30, 2014.&lt;/p&gt;</content>
 </entry>
 
 

@@ -5,25 +5,25 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>odps_sql &#8211; My blog</title>
+<title>参数评估方法 &#8211; My blog</title>
 <meta name="description" content="good good study,day day up">
-<meta name="keywords" content="odps, sql, 学习笔记">
+<meta name="keywords" content="参数评估, 主题模型, 极大似然估计, 最大后验, 贝叶斯估计">
 
 
 
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="odps_sql">
+<meta property="og:title" content="参数评估方法">
 <meta property="og:description" content="good good study,day day up">
-<meta property="og:url" content="http://jwchennlp.github.com/odps-sql/">
+<meta property="og:url" content="http://jwchennlp.github.com/parameter-estimation-approaches/">
 <meta property="og:site_name" content="My blog">
 
 
 
 
 
-<link rel="canonical" href="http://jwchennlp.github.com/odps-sql/">
+<link rel="canonical" href="http://jwchennlp.github.com/parameter-estimation-approaches/">
 <link href="http://jwchennlp.github.com/feed.xml" type="application/atom+xml" rel="alternate" title="My blog Feed">
 
 
@@ -123,7 +123,7 @@ MathJax.Hub.Config({
 <div class="entry-header">
   <div class="image-credit">Image source: <a href="http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/">dargadgetz</a></div><!-- /.image-credit -->
   <div class="entry-image">
-    <img src="http://jwchennlp.github.com/images/13" alt="odps_sql">
+    <img src="http://jwchennlp.github.com/images/abstract-3.jpg" alt="参数评估方法">
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
 
@@ -133,53 +133,79 @@ MathJax.Hub.Config({
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="http://jwchennlp.github.com/odps-sql/" rel="bookmark" title="odps_sql">odps_sql</a></h1>
+          <h1 class="entry-title"><a href="http://jwchennlp.github.com/parameter-estimation-approaches/" rel="bookmark" title="参数评估方法">参数评估方法</a></h1>
         
-        <h2>April 26, 2014</h2>
+        <h2>June 02, 2014</h2>
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <p>odps(open data processing service，开源数据处理服务)是阿里巴巴的分布式计算平台。</p>
+      <p>pLSA和LDA主题模型是当前统计自然语言处理领域非常热门的问题,这些主题模型一般都是对文本的生成过程提出自己的概率图模型,然后利用已有的文本数据做参数评估.本文主要介绍其中会用到的三种参数评估方法,包括极大似然估计(MLE),最大后验(MAL)和贝叶斯估计.	</p>
 
-<p>数据以sql表格的形式存放在odps中，我们可以是使用类似与sql命令的方式对数据进行操作。当让sql中嵌入了odps平台自己的函数和命令。</p>
+<p>我们主要考虑两个推理问题:		</p>
 
-<p>文档学习ing…</p>
+<p>(1). 评估参数$\theta$的值以最好的拟合观察到的数据集X.		
+(2). 根据已观测到的数据集X计算新的观察值$\widetilde x$的概率		</p>
 
-<h2 id="section">表格建立</h2>
+<p>第一个问题可以看成是估计问题,第二个问题可以看成是预测或是回归问题.		theta
+在贝叶斯统计中,参数估计问题可以表述为:		</p>
 
-<p>创建表格语句如下：   </p>
+<script type="math/tex; mode=display">p(\theta｜X) = \frac{p(\theta)p(X｜\theta)}{p(X)}</script>
 
-<div class="highlight"><pre><code class="sql"><span class="lineno">1</span> <span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="n">exist</span> <span class="n">sales</span><span class="p">(</span>
-<span class="lineno">2</span> <span class="n">shop_name</span>  <span class="n">string</span><span class="p">,</span>      
-<span class="lineno">3</span> <span class="p">...</span>     
-<span class="lineno">4</span> <span class="n">partitioned</span> <span class="k">by</span> <span class="p">(</span><span class="n">sale_date</span> <span class="n">string</span><span class="p">,</span><span class="n">region</span> <span class="n">string</span><span class="p">);</span>     
-<span class="lineno">5</span>     <span class="c1">--创建一张分区表sales</span>
-</code></pre></div>
+<p>并且我们可以用如下术语定义:</p>
 
-<p>partitioned by指定了分区字段，采用分区字段主要是在跟新，新增和读取分区数据时不需要做全表扫描，可以提高效率。       </p>
+<script type="math/tex; mode=display">posterior=\frac{likelihood*prior}{evidence}</script>
 
-<p>可以用命令create table…as select…来新建表格，如：        </p>
+<h2 id="mle">1.极大似然估计(MLE)</h2>
+<hr />
 
-<div class="highlight"><pre><code class="sql"><span class="lineno">1</span> <span class="k">create</span> <span class="k">table</span> <span class="n">sales1</span> <span class="k">as</span>      
-<span class="lineno">2</span>     <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">sales</span><span class="p">;</span>    
-</code></pre></div>
+<p>极大似然估计主要是求使似然函数值最大的参数值($\theta$),似然函数为:		</p>
 
-<p>这样在建立表格的同时，将sales的数据复制到新表中，但是原表格的分区字段没有复制到新表中。如果希望新表格和原表格有相同的数据和表结构（分区属性）.可以用create table… like …命令：    </p>
+<script type="math/tex; mode=display">L(\theta｜X) = \prod_{x\in X}p(x｜\theta)</script>
 
-<div class="highlight"><pre><code class="sql"><span class="lineno">1</span> <span class="k">create</span> <span class="k">table</span> <span class="n">sales1</span> <span class="k">like</span> <span class="n">sales</span>  
-</code></pre></div>
+<p>对似然函数取对数并另偏导数为0,则可求得参数的解:		</p>
+
+<script type="math/tex; mode=display">\theta_{ML} = argmax_{\theta}L(\theta｜X) = argmax_{\theta}\sum_{x\in X}\log{p(x｜\theta)}</script>
+
+<p>对上述函数关于参数$\theta_k$求偏导并是的偏导值为0:		</p>
+
+<script type="math/tex; mode=display">\frac{\partial L(\theta｜X)}{\partial \theta_k} = 0, \forall \theta_k\in theta</script>
+
+<p>根据已观测到的数据集X计算新的观察值$\widetilde x$的概率为:		</p>
+
+<p><img src="../images/140530/mle.png" alt="image" /></p>
+
+<p>以抛硬币的贝努利实验为例,每次抛硬币时正面出现的概率为p(未知),假设进行抛硬币N次得到结果集合C.用极大似然估计来求解参数p:		</p>
+
+<script type="math/tex; mode=display">l(p)=\sum_{i=1}^N\log{p(C=c_i｜p)} \\
+	  =n^{(1)}log{p(C=1｜p)}	+n^{(0)}log{p(C=0｜p)} \\
+	  =n^{(1)}log{p}+n^{(0)}log{(1-p)}</script>
+
+<p>其中$n^{(1)}表示N次实验结果中正面出现的次数,n^{(0)}$表示反面出现的次数.对似然函数求偏导得:		</p>
+
+<script type="math/tex; mode=display">\frac{\partial l}{\partial p} = \frac{n^{(1)}}{p}-\frac{n^{(0)}}{1-p}=0</script>
+
+<script type="math/tex; mode=display">\hat{p}_{ML} = \frac{n^{(1)}}{n^{(1)}+n^{(0)}}=\frac{n^{(1)}}{N}</script>
+
+<p>假设抛硬币20次,其中正面出现的次数为12次,则由极大似然估计得出正面出现的概率p=0.6,并且可以预测下一次抛硬币正面向上的概率为0.6．</p>
+
+<h2 id="map">2.最大后验估计(MAP)</h2>
+<hr />
+
+<p>最大后验估计(Maximum a posteriori estimation,MAP)和极大似然估计十分相似,但是最大后验估计中加入了对参数的先验信念(priori belief),它的权重设定为先验分布$p(\theta)$,最大后验估计不是要求似然函数最大化,而是要求由贝叶斯公式算出的整个后验概率最大.		</p>
+
+<p><img src="../images/140530/map.png" align="middle" /></p>
 
 
       <footer class="entry-meta">
-        <span class="entry-tags"><a href="http://jwchennlp.github.com/tags/#odps" title="Pages tagged odps" class="tag">odps</a><a href="http://jwchennlp.github.com/tags/#sql" title="Pages tagged sql" class="tag">sql</a><a href="http://jwchennlp.github.com/tags/#学习笔记" title="Pages tagged 学习笔记" class="tag">学习笔记</a></span>
-        <span><a href="http://jwchennlp.github.com/odps-sql/" rel="bookmark" title="odps_sql">odps_sql</a> was published on <span class="entry-date date published updated"><time datetime="2014-04-26T00:00:00-04:00">April 26, 2014</time></span></span>
-        (revised: <span class="entry-date date modified"><time datetime="2014-04-26 14:45:37 UTC">04/26/2014</time></span>)
+        <span class="entry-tags"><a href="http://jwchennlp.github.com/tags/#参数评估" title="Pages tagged 参数评估" class="tag">参数评估</a><a href="http://jwchennlp.github.com/tags/#主题模型" title="Pages tagged 主题模型" class="tag">主题模型</a><a href="http://jwchennlp.github.com/tags/#极大似然估计" title="Pages tagged 极大似然估计" class="tag">极大似然估计</a><a href="http://jwchennlp.github.com/tags/#最大后验" title="Pages tagged 最大后验" class="tag">最大后验</a><a href="http://jwchennlp.github.com/tags/#贝叶斯估计" title="Pages tagged 贝叶斯估计" class="tag">贝叶斯估计</a></span>
+        <span><a href="http://jwchennlp.github.com/parameter-estimation-approaches/" rel="bookmark" title="参数评估方法">参数评估方法</a> was published on <span class="entry-date date published updated"><time datetime="2014-06-02T00:00:00-04:00">June 02, 2014</time></span></span>
+        (revised: <span class="entry-date date modified"><time datetime="2014-06-02 13:27:24 UTC">06/02/2014</time></span>)
         <span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>
         <div class="social-share">
           <ul class="socialcount socialcount-small inline-list">
-            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://jwchennlp.github.com/odps-sql/" title="Share on Facebook"><span class="count"><i class="icon-facebook-sign"></i> Like</span></a></li>
-            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://jwchennlp.github.com/odps-sql/" title="Share on Twitter"><span class="count"><i class="icon-twitter-sign"></i> Tweet</span></a></li>
-            <li class="googleplus"><a href="https://plus.google.com/share?url=http://jwchennlp.github.com/odps-sql/" title="Share on Google Plus"><span class="count"><i class="icon-google-plus-sign"></i> +1</span></a></li>
+            <li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=http://jwchennlp.github.com/parameter-estimation-approaches/" title="Share on Facebook"><span class="count"><i class="icon-facebook-sign"></i> Like</span></a></li>
+            <li class="twitter"><a href="https://twitter.com/intent/tweet?text=http://jwchennlp.github.com/parameter-estimation-approaches/" title="Share on Twitter"><span class="count"><i class="icon-twitter-sign"></i> Tweet</span></a></li>
+            <li class="googleplus"><a href="https://plus.google.com/share?url=http://jwchennlp.github.com/parameter-estimation-approaches/" title="Share on Google Plus"><span class="count"><i class="icon-google-plus-sign"></i> +1</span></a></li>
           </ul>
         </div><!-- /.social-share -->
       </footer>
@@ -189,7 +215,7 @@ MathJax.Hub.Config({
     <div class="read-more">
       
         <div class="read-more-header">
-          <a href="http://jwchennlp.github.com/index-construction/" class="read-more-btn">Read More</a>
+          <a href="http://jwchennlp.github.com/lsa-topic-model/" class="read-more-btn">Read More</a>
         </div><!-- /.read-more-header -->
         <div class="read-more-content">
           <h3><a href="http://jwchennlp.github.com/plsa/" title="pLSA">pLSA</a></h3>
@@ -199,13 +225,13 @@ MathJax.Hub.Config({
       <div class="read-more-list">
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/parameter-estimation-approaches/" title="参数评估方法">参数评估方法</a></h4>
-            <span>Published on June 02, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/lsa-topic-model/" title="Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)">Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)</a></h4>
+            <span>Published on May 30, 2014</span>
           </div><!-- /.list-item -->
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/lsa-topic-model/" title="Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)">Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)</a></h4>
-            <span>Published on May 30, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/em-algorithm/" title="EM算法">EM算法</a></h4>
+            <span>Published on May 20, 2014</span>
           </div><!-- /.list-item -->
         
       </div><!-- /.read-more-list -->
