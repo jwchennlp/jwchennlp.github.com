@@ -162,7 +162,7 @@ MathJax.Hub.Config({
 <p><img src="../images/140530/plsa-1.png" align="center" /></p>
 
 <p>对于图(a),d代表文档,Z代表隐变量(文档主题),W为观察到的单词.$p(d_i)表示单词出现在文档d_i的概率$,$p(z_k｜d_i)表示在文档d_i中$,		
-出现$主题z_k下的单词的序列(可以理解为主题z_k也是有一系列表现此主题的单词构成),P(w_j｜z_k)表示在主题z_k下出现单词w_j的$			
+出现$主题z_k下的单词的序列(可以理解为主题z_k也是有一系列表现此主题的单词构成)$,$P(w_j｜z_k)表示在主题z_k下出现单词w_j的$			
 概率.并且每个主题上的所有词服从多项式分布,每个文档上的所有主题服从多项式分布.整个文档的生成过程为:		</p>
 
 <ul>
@@ -181,11 +181,11 @@ MathJax.Hub.Config({
 
 <script type="math/tex; mode=display">p(w_j｜z_k) = \phi_{kj},\sum_{w_j\in W}\phi_{kj} = 1</script>
 
-<p>所以参数评估可以形式化表现为评估参数$\varTheta,\varPhi$:		</p>
+<p>所以参数评估可以形式化表现为评估参数$\Theta,\Phi$:		</p>
 
-<script type="math/tex; mode=display">\varTheta=[\theta_1,\theta_2,...,\theta_N],d_i\in D</script>
+<script type="math/tex; mode=display">\Theta=[\theta_1,\theta_2,...,\theta_N],d_i\in D</script>
 
-<script type="math/tex; mode=display">\varPhi = [\phi_1,\phi_2,...,\phi_k],z_k\in Z</script>
+<script type="math/tex; mode=display">\Phi = [\phi_1,\phi_2,...,\phi_k],z_k\in Z</script>
 
 <p>由于词与词之间是相互独立的,且文档与文档之间也是相互独立的.所以我们可以得到整个语料库的词的分布:		</p>
 
@@ -195,7 +195,7 @@ MathJax.Hub.Config({
 
 <p>其中,$n(d_i,w_j)表示在文档i中词j出现的次数$,当我们采用极大使然估计来实现参数评估时:		</p>
 
-<script type="math/tex; mode=display">l(\varTheta,\varPhi)=\sum_{i=1}^N\sum_{j=1}^Mn(d_i,w_j)\log{p(d_i,w_j)} \\
+<script type="math/tex; mode=display">l(\Theta,\Phi)=\sum_{i=1}^N\sum_{j=1}^Mn(d_i,w_j)\log{p(d_i,w_j)} \\
 					  =\sum_{i=1}^N\sum_{j=1}^Mn(d_i,w_j)\log{p(d_i)\sum_{z_k\in Z}p(w_j｜z_k)p(z_k｜d_i)} \\
 					  =\sum_{i=1}^N\sum_{j=1}^Mn(d_i,w_j)(\log{p(d_i)+\sum_{z_k\in Z}\theta_{ik}\phi_{kj}})</script>
 
