@@ -138,6 +138,165 @@ MathJax.Hub.Config({
   
 <article class="hentry">
   <header>
+    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-06-04T00:00:00-04:00"><a href="http://jwchennlp.github.com/hmm-hidden-markov-model/">June 04, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/hmm-hidden-markov-model/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://jwchennlp.github.com/hmm-hidden-markov-model/" rel="bookmark" title="HMM(Hidden Markov Model)" itemprop="url">HMM(Hidden Markov Model)</a></h1>
+    
+  </header>
+  <div class="entry-content">
+    <h2 id="section">1.介绍</h2>
+<hr />
+
+<p>隐马尔可夫模型(Hidden Markov Model,HMM)是一种统计模型,用它来描述一个含有未知参数的马尔可夫过程.在模型中包括可观察的参数和隐藏的参数,一般要求解的问题是通过观察到的参数来评估过程中的隐含参数.隐马尔可夫模型在语音识别,中文分词,词性标注,机器翻译等领域都有十分广泛的运用.		</p>
+
+<h3 id="section-1">模型表示</h3>
+
+<p>隐马尔可夫模型(HMM)可以用如下的五元组来表示,包括2状态集合和概率矩阵:</p>
+
+<p>(1).隐含状态S={$s_1,s_2,…,s_n$}			
+隐含状态是马尔可夫模型中所隐含的状态.这些状态无法通过直接观测而得到.		
+(2).可观测状态O={$o_1,o_2,…,o_m$}		
+可观察状态是马尔可夫模型中可以观测到的状态.(可观察状态数目和隐含状态数目可以不相等).		
+(3).初始状态概率矩阵$\pi$		
+表示隐含状态在初始时刻t=1时的概率矩阵.初始状态概率矩阵为$\pi=[p(s_1),p(s_2),…,p(s_n)]$			
+(4).隐含状态的概率转移矩阵$A<em>{ij}$		
+表示在HMM模型在各个隐含状态之间的转移概率.其中$A</em>{ij}=p(s_j｜s_i)$表示在t时刻隐含状态为$s_i时,t+1时刻隐含状态为s_j$的概率.		
+(5).隐含状态到观察状态的概率转移矩阵$B<em>{ij}$		
+$B</em>{ij}=p(o_j｜s_i)表示在隐含状态s_i的情况下,观察状态为o_j的概率$.		</p>
+
+<h3 id="section-2">实例</h3>
+
+<p>考虑这样一个例子,有一个隐士,他不知道自己所在地的天气情况(天晴,下雨,多云,对应于隐含状态S).但是他养了一株水藻,他可以观察到水藻的状态(干燥,湿润,湿透,对应于观察状态O).并且对每一个天气,水藻呈现不同状态的概率已知,例如天晴时水藻干燥,湿润和湿透的概率(对应于隐状态转移矩阵A)分别为0.4,0.3,0.3.同时你知道,今天的天气情况下明天的天气情况的概率(如今天天晴时,明天天晴,下雨,多云的概率分别为0.5,0.1,0.对应于观察状态在应状态下的概率转移矩阵B).并且,我们假定从以某一天为开始,这一天的天气情况概率分布(对应于初始概率$\pi$)我们也知道.		</p>
+
+<p>假设隐士观察了水藻一个礼拜,这一个礼拜水藻的状为(干燥,干燥,湿润,湿润,干燥,湿透,干燥).现在问题来了,你能不能计算出这一系列状态出现的概率?能不能计算出隐士所在地方这一个礼拜最可能天气情况?	</p>
+
+<p>带着这些问题你将更好的理解HMM模型的应用.</p>
+
+<h3 id="section-3">基本问题</h3>
+
+<p>HMM可用于解决如下三个问题:</p>
+
+<p>1.评估问题(evaluate) 		</p>
+
+<p>给定观察序列$O=o_1o_2…o_t和模型参数\lambda=(S,O,A,B,\pi)$,计算在HMM模型下观察序列出现的概率.运用前向算法(forwad algorithm)进行求解.	</p>
+
+<p>2.解码问题(decode)</p>
+
+<p>给定观察序列$O=o_1o_2…o_t和模型参数\lambda=(S,O,A,B,\pi)$,根据观察序列计算对应的最有可能的隐状态序列.在实际问题中,我们往往更关心的是马尔可夫模型中的隐含状态,可以运用viterbi算法进行求解.		</p>
+
+<p>3.学习问题 		</p>
+
+<p>HMM模型的参数$\lambda=(A,B,\pi)$未知,如何调整这些参数以使得观察序列O的概率尽可能的大,通常采用Baum-Welch算法解决.	</p>
+
+<p>下面我们详细讨论这3个问题.	</p>
+
+<h2 id="evaluate">2.评估问题(evaluate)</h2>
+<hr />
+
+<p>假设模型参数$\lambda=(A,B,\pi)$已知,考虑上面提到的例子,假设3天间我们观察到的水藻状态为(干燥,湿润,湿透),这三天中的任一天都可能是多云,晴天或是雨天,对于观察序列及隐藏序列,我们可以用如下的网格来表示:			</p>
+
+<p><img src="../images/1406/hmm1.png" alt="image" />			</p>
+
+<p>网格中的每一列表示可能的天气状态,并且每一天中的每个天气都与一个到相近天气状态相连,表示为在当前天气状态下到下一个天气状态的概率.每一列的下面是某个时间点上的观察状态.我们发现,对于如上的描述,这三天可能出现的天气序列有$3^3$=27种,这27种天气情况转化为观察序列的概率和便是观察序列在模型下出现的概率,表示为:</p>
+
+<script type="math/tex; mode=display">P(O｜HMM) = p(O｜sunny,sunny,sunny)+p(O｜sunny,sunny,rainy) \\
++...+P(O｜cloudy,cloudy,cloudy)</script>
+
+<p>$O=(dry,damp,soggy)$,即为观察到的状态序列.这种基于穷举的方法求解效率很低,假设观察序列长度为T,隐含状态数目为N,所有可能的状态序列为$N^T$,没一个状态序列的时间复杂度为$O(T)$,所以总时间复杂度为$O(TN^T)$.		</p>
+
+<p>下面采用前向算法(foward algorithm)进行优化求解.		</p>
+
+<h3 id="section-4">局部概率</h3>
+<p>首先定义局部概率(partial probability),它是指到达某个中间状态的概率.</p>
+
+<p>对于观察序列$O=o_1o_2…o_n,o_i可以理解为t=i时刻观察到的观察状态$,关于观察状态和隐含状态用网格表示为:	</p>
+
+<p><img src="../images/1406/hmm2.png" alt="image" />		</p>
+
+<p>那么t=2时,隐状态为”cloudy”的局部概率可以表示为:		</p>
+
+<p><img src="../images/1406/hmm3.png" alt="image" />	</p>
+
+<p>公式表述为$\alpha_{t=2}(c)=p(damp｜c)*(p(c｜s)+p(c｜c)+p(c｜r))$,其中c,r,s分别是cloudy,rainy和sunny的简称.		</p>
+
+<p>那么延伸一下,假设有N个隐含状态,这t+1时刻处于隐含状态j的隐含概率可以表述为:		</p>
+
+<p><img src="../images/1406/hmm4.png" alt="image" />	</p>
+
+<script type="math/tex; mode=display">\alpha_{t+1}(j) = b(o_{t+1}｜j)\sum_{i=1}^N\alpha_t(i)a_{ij}</script>
+
+<p>其中<script type="math/tex">b(o_{t+1}｜j)</script>表示的是在t+1时刻,观察到的状态<script type="math/tex">o_{t+1}</script>在隐含状态j下的概率,<script type="math/tex">a_{ij}</script>表示隐含状态i到j的转移概率 .</p>
+
+<p>在t=1时,没有路径指向当前时间的隐含状态,t=1时的局部概率定义为:		</p>
+
+<script type="math/tex; mode=display">\alpha_{1}(j)=b(o_1｜j)\pi(j)</script>
+
+<p>在我们求出t=1时个隐含状态的局部概率之后,就可以递归的计算t=2,t=3,…时各个隐含状态的局部概率,直到求得t=T(T为观察序列的长度)时为止.</p>
+
+<p>在t=1时,求每个隐含状态的局部概率时间复杂度为O(1),在t&gt;1时,球每个隐含状态的时间复杂度为O(N),则t&gt;1时求每一列的时间复杂度为O(N*N),T为观察序列的长度,则前向算法的时间复杂度为O(TN^2).	</p>
+
+<h2 id="decode">解码问题(decode)</h2>
+<hr />
+
+<p>假设模型参数$\lambda=(A,B,\pi)$已知,考虑上面提到的例子,假设3天间我们观察到的水藻状态为(干燥,湿润,湿透),需要求解与观察状态对应的最有可能的隐含状态序列.对与上面描述的天气的例子,其网格图为:	</p>
+
+<p><img src="../images/1406/hmm1.png" alt="image" />		</p>
+
+<p>可以知道,最有可能的天气(隐含)序列是每一列中天气组合(总共27种)中的一项,所以最有可能的隐含序列$\hat S$可以表述为:	</p>
+
+<script type="math/tex; mode=display">\hat S=argmax_{s\in S}p(O｜s)</script>
+
+<p><script type="math/tex">其中观察O=(dry,damp,soggy),s为27种隐含序列中的一种</script>		
+同样,我们可以通过穷举法计算每一种可能出现的隐状态序列的概率,概率值最高的便是要求的隐含状态序列.这显然又是十分耗时的工程,我们可以采用viterbi算法优化求解.		</p>
+
+<h3 id="section-5">局部概率和局部最佳路径</h3>
+
+<p>对于上面的程序,先假设在t=3时,天气状态为cloudy时概率最大,那么从t=2到t=3的cloudy状态有3条路径,最佳路径必定是这三条路径中的一条.假设t=2时的从状态rainy到t=3的cloudy的概率最大,则可以说明t=2时的cloudy路径为局部最佳路径,路径对应的概率称为局部概率($\delta$).</p>
+
+<p><img src="../images/1406/hmm5.png" alt="image" /></p>
+
+<center><img src="../images/1406/hmm6.png" /></center>
+
+<p>延伸一下,假设有N+1个隐含状态,在t+1时刻的位于隐含状态j的局部概率为:	</p>
+
+<p><img src="../images/1406/hmm6.png" alt="image" />	</p>
+
+<script type="math/tex; mode=display">\delta_t(j) = max_{i \in N}(\delta_{t-1}(i)a_{ij}b_{jo_t})</script>
+
+<p>其中$b_{jo_t}指的是在t时刻的观察值o_t在隐含状态j下的概率$,在t=1时,没有路径指向当前的隐含状态,其局部概率为:		</p>
+
+<script type="math/tex; mode=display">\delta_1{j} = b_{jo_1}\pi(j)</script>
+
+<p>这样通过计算t=1时各个隐含状态的局部概率,就可以计算t=2,…t=T时各状态的局部概率.其实,在t=T时,计算出来概率$\delta_t(j)$便是最后与观察序列对应的且最后一个隐含状态为j的最终概率,<script type="math/tex">j=max_{j\in N} \delta_t(j)</script>可以求出最后一个观察状态对应的隐含状态.那么如何求之前T-1个观察状态对应的隐含状态?这里我们需要借用反向指针来实现.		</p>
+
+<p>我们知道计算t时刻隐含状态j的局部概率$\delta<em>{t}(j)$,需要的知道t-1时刻的$的\delta</em>{t-1}$,我们需要记录t-1时刻的某个状态i,有i状态到达t时刻的状态j是到达状态j的最佳路径.通过反向指针来记录这种状态:		</p>
+
+<script type="math/tex; mode=display">\phi_t(j) = argmax_{i\in N}(\delta_{t-1}(i)aij)</script>
+
+<p>其中,<script type="math/tex">\phi_t(j)表示指向t时刻状态j的隐含状态,具体所指应该是t-1时刻的某个状态i</script>.		</p>
+
+<p>其实初看这个公式的有些奇怪,我们在计算局部概率$\delta$的时候,同时考虑了局部概率$\delta和转移概率a及混淆概率(从隐含概率到观察概率,b)$.这是因为,我们希望$\phi$可以能回答这个问题”如果我们在这里,最可能通过哪条路径到达下一个状态?”,这个问题与隐藏有关,而与观察状态无关,故而可以忽略混淆矩阵的影响.		</p>
+
+<h3 id="section-6">小结</h3>
+
+<p>viterbi算法提供了一种有效的计算方法来分析HMM模型的观察序列,并捕获最有可能的隐藏序列.它利用递归减少计算两,并使用整个序列的上下文来做判断,从而对包含”噪声”的序列也能进行良好的分析.		</p>
+
+<p>在使用时,viterbi算法对于网格中的没一个隐状态都计算一个局部概率,同时包含一个反向指针来指示最有可能的到达该单元的路径.当完成整个计算之后,首先在终止时刻找到最可能的隐含状态,然后通过反响指针回溯到t=1时刻,这样回溯路径上的状态序列就是最可能的隐含状态序列.		</p>
+
+<h3 id="section-7">参考内容</h3>
+
+<p><a href="www.52nlp.cn/category/hidden-markov-model">我爱自然语言处理-隐马尔可夫模型</a></p>
+
+<h4 id="section-8">维基百科-隐马尔可夫模型</h4>
+
+<p><a href="https://github.com/jwchennlp/HMM">HMM实现源码(python) github.com/jwchennlp/HMM</a></p>
+
+
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
     <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-06-02T00:00:00-04:00"><a href="http://jwchennlp.github.com/plsa/">June 02, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/plsa/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
     
       <h1 class="entry-title"><a href="http://jwchennlp.github.com/plsa/" rel="bookmark" title="pLSA" itemprop="url">pLSA</a></h1>
@@ -389,8 +548,9 @@ MathJax.Hub.Config({
 
 <h3 id="section-1">参考内容:</h3>
 
-<p>Gregor Heinrich:Parameter estimation for text analysis		
-<a href="http://blog.csdn.net/yangliuy/article/details/8296481">文本语言模型的参数估计 http://blog.csdn.net/yangliuy/article/details/8296481</a>		</p>
+<p>Gregor Heinrich:Parameter estimation for text analysis	</p>
+
+<p><a href="http://blog.csdn.net/yangliuy/article/details/8296481">文本语言模型的参数估计 http://blog.csdn.net/yangliuy/article/details/8296481</a>		</p>
 
 <p><a href="http://blog.jqian.net/post/lda.html">主题模型之lda http://blog.jqian.net/post/lda.html</a></p>
 
@@ -565,134 +725,6 @@ MathJax.Hub.Config({
 <p><a href="http://blog.csdn.net/abcjennifer/article/details/8170378">Rachel-Zhang(EM算法原理)</a>		</p>
 
 <p><a href="http://blog.csdn.net/zouxy09/article/details/8537620">zouxy09(从最大似然到EM算法浅析)</a>			</p>
-
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-18T00:00:00-04:00"><a href="http://jwchennlp.github.com/logistic-regression/">May 18, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/logistic-regression/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://jwchennlp.github.com/logistic-regression/" rel="bookmark" title="逻辑回归" itemprop="url">逻辑回归</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    <p>对于逻辑回归函数，我们的假设方程为：		</p>
-
-<script type="math/tex; mode=display">h_\theta(x)=g(\theta^Tx)=\frac{1}{1+e^{-\theta^Tx}}</script>
-
-<p>其中，$g(z)=\frac{1}{1+e^{-z}}$称之为sigmoid函数。		</p>
-
-<p>那么为什么要在逻辑回归里使用sigmoid函数呢，观察逻辑回归的假设方程可以发现，如果没有使用sigmoid函数，假设方程与线性回归的假设方程是一样的。但是很显然，线性回归的假设方程的值域为$(-\infty,+\infty)$,而二分类问题一般去之都是固定的值{0,1}.这个时候我们可以使用sigmoid函数，它的作用相当与实现了一个映射，将$(-\infty,+\infty)$值域映射到（0,1）之间。		</p>
-
-<p>我们假定：	
-<script type="math/tex">P(Y=1｜Ｘ;\theta)=h_\theta(x) \\
-	P(Y=0｜Ｘ;\theta)=1-h_\theta(x)</script>	</p>
-
-<p>上面公式我们可以合并成：		</p>
-
-<script type="math/tex; mode=display">P(Y｜Ｘ;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y} </script>
-
-<p>假设有ｍ个训练集并且相互独立，这参数的似然方程可以表述为：		</p>
-
-<script type="math/tex; mode=display">L(\theta)=p(y｜x;\theta) \\
-		   =\prod_{i=1}^mP(y^{(i)}｜x^{(i)};\theta) \\
-		   =\prod_{i=1}^m(h_\theta(x^{(i)})^{y^{(i)}}(1-h_\theta(x^{(i)}))^{\left(1-y^{(i)}\right)}</script>
-
-<p>下面可以采用最大似然估计来求出参数值：			</p>
-
-<script type="math/tex; mode=display">l(\theta)=logL(\theta) \\
-		   =\sum_{i=1}^my^{(i)}logh(x^{(i)})+(1-y^{(i)})\log(1-h(x^{(i)}))</script>
-
-<p>而后对参数$\theta_j$求偏导:		</p>
-
-<script type="math/tex; mode=display">\frac{\partial}{\partial\theta_j}l(\theta) = \sum_{i=1}^n(y^{(i)}\frac{1}{g(\theta^Tx^{(i)})}-(1-y^{(i)})\frac{1}{1-g(\theta^Tx^{(i)})})\frac{\partial}{\partial\theta_j}g(\theta^Tx) \\
-	= \sum_{i=1}^n(y^{(i)}\frac{1}{g(\theta^Tx^{(i)})}-(1-y^{(i)})\frac{1}{1-g(\theta^Tx^{(i)})})g(\theta^Tx)(1-g(\theta^Tx))\frac{\partial}{\partial\theta_j}\theta^Tx \\
-	= \sum_{i=1}^m(y^{(i)}(1-g(\theta^Tx))-(1-y^{(i)})g(\theta^Tx))x_j \\
-	=\sum_{i=1}^m(y^{(i)}-h_\theta(x))x_j</script>
-
-<p>可以看出，通过极大似然估计来求解参数在逻辑回归中很难实现．		</p>
-
-<h2 id="section">梯度下降</h2>
-<hr />
-
-<p>在线性回归中，我们的代价函数是这么定义的：		</p>
-
-<script type="math/tex; mode=display">J(\theta) = \frac{1}{m}\sum_{i=1}^m(y^{(i)}-h_\theta(x^{(i)}))^2</script>
-
-<p>将我们的假设方程$h_\theta(x)=\frac{1}{1+e^{-\theta^Tx}}$代入上面的代价方程会发现代价函数是一个非凸函数，所以很难获得最优解．		
-这里我们需要重新定义代价函数：		</p>
-
-<script type="math/tex; mode=display">J(\theta) = \frac{1}{m}\sum_{i=1}^mCost(y^{(i)},h_\theta(x^{(i)}))</script>
-
-<p>其中　		</p>
-
-<p><img src="../images/0518/1.png" alt="image" />		</p>
-
-<p>$h<em>\theta(x)与Cost(y^{(i)},h</em>\theta(x^{(i)}))$之间的关系如下图所示：		</p>
-
-<p><img src="../images/0518/2.png" alt="image" />		</p>
-
-<p>当ｙ＝１时，如果假设方程$h_\theta(x)=1$,代价函数为０，如果代假设方程越接近０，则代价函数越大．			</p>
-
-<p>当ｙ＝０时，如果假设方程$h_\theta(x)=０$,代价函数为０，如果代假设方程越接近１，则代价函数越大．		</p>
-
-<p>可以将代价方程组合为如下格式：		</p>
-
-<script type="math/tex; mode=display">Cost(y,h_\theta(x))=-y\log{h_\theta(x)}-(1-y)\log{(1-h_\theta(x))}</script>
-
-<p>那么含有ｍ个样例的数据集的代价代价函数可以表示为:		</p>
-
-<script type="math/tex; mode=display">J(\theta)=\frac{1}{m}\sum_{i=1}^m-y^{(i)}\log{h_\theta(x^{(i)})}-(1-y^{(i)})\log{(1-h_\theta(x^{(i)}))}</script>
-
-<p>而后，我们可以按如下方式不断的更新$\theta$值，指导代价函数达到最优值，这个时候的所的参数便为解．		</p>
-
-<script type="math/tex; mode=display">\theta_j  =  \theta_j-\alpha\frac{\partial}{\partial\theta_j}J(\theta) \\
-		   =  \theta_j-\alpha\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}</script>
-
-<p>在之前讨论过的文本分类问题中，我们对每一类别用互信息特征选择方法选择100个特征，文档集的特征总数为741个，用这些特征构建向量空间模型，用逻辑回归进行测试（用scikit-learn工具包），Ｆ_1值能达到86.6%,具体如下图所示：		</p>
-
-<p><img src="../images/0518/3.png" alt="image" /></p>
-
-<h2 id="section-1">正则化</h2>
-<hr />
-
-<p>为了避免过拟合现象,可以采用正则化方法.正则化方法是结构风险最小化策略的实现,是在经验风险上加上一个正则化项(regularizer)或罚项(penalty).正则化项一般是模型复杂度的单调递增函数,模型越复杂,正则化值就越大.		</p>
-
-<p>$L_2$正则化代价函数定义为:		</p>
-
-<p><img src="../images/0518/4.png" alt="image" />		</p>
-
-<p>当我们采用梯度下降发求解参数时,$\theta$按如下方式进行迭代:		</p>
-
-<p><img src="../images/0518/5.png" alt="image" />		</p>
-
-<p>$L_1$正则化代价函数定义为:		</p>
-
-<script type="math/tex; mode=display">J(\theta)=\frac{1}{m}[\sum_{i=1}^m-y^{(i)}\log{h_\theta(x^{(i)})}-(1-y^{(i)})\log{(1-h_\theta(x^{(i)}))}]+\frac{\lambda}{2m}\sum_{i=i}^n｜\theta_j｜</script>
-
-<p>采用$L_1$正则化一般可以产生稀疏解,也就是说我们得到的参数解$\theta中会有很多位为0,这这可以理解为\theta_j=0$对应的特征的贡献为0,我们可以直接忽略这些特征.		</p>
-
-<p>为了避免模型的过拟合,我们还可以通过减少特征数目,只选取对模型有很强分类能力或贡献的强特征,从而提出那些表示能力较差的弱特征.这在特征选择中有讲解.同时,我们也可以通过交叉验证的方式进行来查模型是否产生过拟合.		</p>
-
-<h2 id="section-2">随机梯度下降法</h2>
-
-<p>从上面的梯度下降可以知道,在每次对$\theta进行迭代的过程中,我们要通过整个训练集更新\theta值$.那么当训练集非常大的时候,显然更新参数将变得非常耗时.随机梯度下降法可以弥补这些缺点.</p>
-
-<p>在随机梯度下降法中,我们定义代价函数为一个单一训练实例的代价:		</p>
-
-<script type="math/tex; mode=display">cost(\theta,(x^{(i)},y^{(i)}))=\frac{1}{2}(h_{theta}(x^{(i)})-y^{(i)})^2</script>
-
-<p>伪代码如下:		</p>
-
-<p><img src="../images/0518/6.png" alt="image" /></p>
-
-<p>随机梯度下降算法在每一次计算之后便更新参数$\theta$,而不需要在整个训练集上进行迭代.随机梯度法比梯度下降法运算速度要快,但是缺点是,随机梯度下降法不是每一步都朝着”正确”的方向迈出的,因此,算法虽然会逐渐走向全局最小值的位置,但是无法达到全局最优解,而是在最优解附近振荡.		</p>
-
-<h2 id="section-3">在线算法和批处理算法</h2>
-<hr />
-
-<p>批处理和在线学习算法都是基于梯度下降原理实现的,批处理需要每次计算时都要考虑整个训练集的数据,并找到一个最快下降方向进行迭代.而在线学习算法只着眼于当前的某一观测值.前者的优点是收敛速度快,缺点是计算复杂.后者的优点是计算量小,收敛速度慢.</p>
 
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
