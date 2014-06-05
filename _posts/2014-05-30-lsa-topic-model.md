@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)"
+title: "Latent Semantic Analysis"
 modified: 2014-05-30 19:01:55 +0800
 tags: [LSA,向量空间模型]
 image:
@@ -10,6 +10,8 @@ image:
 comments: true
 share: true
 ---
+
+**LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系**		
 
 ##1.向量空间模型
 -------------
