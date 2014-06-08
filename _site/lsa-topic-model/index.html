@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title>Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系) &#8211; My blog</title>
+<title>Latent Semantic Analysis &#8211; My blog</title>
 <meta name="description" content="good good study,day day up">
 <meta name="keywords" content="LSA, 向量空间模型">
 
@@ -14,7 +14,7 @@
 <!-- Open Graph -->
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)">
+<meta property="og:title" content="Latent Semantic Analysis">
 <meta property="og:description" content="good good study,day day up">
 <meta property="og:url" content="http://jwchennlp.github.com/lsa-topic-model/">
 <meta property="og:site_name" content="My blog">
@@ -123,7 +123,7 @@ MathJax.Hub.Config({
 <div class="entry-header">
   <div class="image-credit">Image source: <a href="http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/">dargadgetz</a></div><!-- /.image-credit -->
   <div class="entry-image">
-    <img src="http://jwchennlp.github.com/images/abstract-10.jpg" alt="Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)">
+    <img src="http://jwchennlp.github.com/images/abstract-10.jpg" alt="Latent Semantic Analysis">
   </div><!-- /.entry-image -->
 </div><!-- /.entry-header -->
 
@@ -133,13 +133,15 @@ MathJax.Hub.Config({
     <header class="header-title">
       <div class="header-title-wrap">
         
-          <h1 class="entry-title"><a href="http://jwchennlp.github.com/lsa-topic-model/" rel="bookmark" title="Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)">Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)</a></h1>
+          <h1 class="entry-title"><a href="http://jwchennlp.github.com/lsa-topic-model/" rel="bookmark" title="Latent Semantic Analysis">Latent Semantic Analysis</a></h1>
         
         <h2>May 30, 2014</h2>
       </div><!-- /.header-title-wrap -->
     </header>
     <div class="entry-content">
-      <h2 id="section">1.向量空间模型</h2>
+      <p><strong>LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系</strong>		</p>
+
+<h2 id="section">1.向量空间模型</h2>
 <hr />
 
 <p>在信息检索领域,需要对文本语料进行建模,使得能够实现高效进行语料检索的同时保留文本的主要信息.当前采用较多的是向量空间模型.向量空间模型可以看作是一个文本-词项矩阵(matrix<em>{mn}),假设整个语料库有m篇文档,语料库的词项总数为n个,则对每一篇文档,我们用一个n维的向量来描述这个文档,向量中的每一维表示文档中词的权重,权重的度量方法可以有多种(tf,tf-idf),当我们采用tf-idf方法时,对于得到的矩阵中的某一元素,m</em>{ij}表示的是此项w_j在文档d_i中的tf-idf值.向量空间模型基于词袋方法(bag of words)构建文档-词项矩阵,词袋方法也就是说我们之关注文档中出现的词,而不关注文档中词的顺序.</p>
@@ -201,7 +203,7 @@ MathJax.Hub.Config({
 
       <footer class="entry-meta">
         <span class="entry-tags"><a href="http://jwchennlp.github.com/tags/#LSA" title="Pages tagged LSA" class="tag">LSA</a><a href="http://jwchennlp.github.com/tags/#向量空间模型" title="Pages tagged 向量空间模型" class="tag">向量空间模型</a></span>
-        <span><a href="http://jwchennlp.github.com/lsa-topic-model/" rel="bookmark" title="Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)">Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)</a> was published on <span class="entry-date date published updated"><time datetime="2014-05-30T00:00:00-04:00">May 30, 2014</time></span></span>
+        <span><a href="http://jwchennlp.github.com/lsa-topic-model/" rel="bookmark" title="Latent Semantic Analysis">Latent Semantic Analysis</a> was published on <span class="entry-date date published updated"><time datetime="2014-05-30T00:00:00-04:00">May 30, 2014</time></span></span>
         (revised: <span class="entry-date date modified"><time datetime="2014-05-30 11:01:55 UTC">05/30/2014</time></span>)
         <span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>
         <div class="social-share">
@@ -221,20 +223,20 @@ MathJax.Hub.Config({
           <a href="http://jwchennlp.github.com/em-algorithm/" class="read-more-btn">Read More</a>
         </div><!-- /.read-more-header -->
         <div class="read-more-content">
-          <h3><a href="http://jwchennlp.github.com/hmm-hidden-markov-model/" title="HMM(Hidden Markov Model)">HMM(Hidden Markov Model)</a></h3>
-          <p>##1.介绍---------隐马尔可夫模型(Hidden Markov Model,HMM)是一种统计模型,用它来描述一个含有未知参数的马尔可夫过程.在模型中包括可观察的参数和隐藏的参数,一般要求解的问题是通过观察到的参数来评估过程中的隐含参数.隐马尔可夫模型在语音识别,...&hellip; <a href="http://jwchennlp.github.com/hmm-hidden-markov-model/">Continue reading</a></p>
+          <h3><a href="http://jwchennlp.github.com/chinese-word-segmentation/" title="Chinese Word Segmentation">Chinese Word Segmentation</a></h3>
+          <p>##1.介绍-----------------通过之前隐马尔可夫模型(HMM)的讲解及其适用问题的分析,对HMM应该有一个大致的认知.同时,我们知道HMM在很多领域都有运用.现在我们具体实现HMM在中文分词中的运用.		中文分词 (Chinese Word Segmenta...&hellip; <a href="http://jwchennlp.github.com/chinese-word-segmentation/">Continue reading</a></p>
         </div><!-- /.read-more-content -->
       
       <div class="read-more-list">
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/plsa/" title="pLSA">pLSA</a></h4>
-            <span>Published on June 02, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/hmm-hidden-markov-model_140608165432/" title="Hmm Hidden Markov Model_140608165432">Hmm Hidden Markov Model_140608165432</a></h4>
+            <span>Published on June 04, 2014</span>
           </div><!-- /.list-item -->
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/parameter-estimation-approaches/" title="参数评估方法">参数评估方法</a></h4>
-            <span>Published on June 02, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/hmm-hidden-markov-model/" title="HMM(Hidden Markov Model)">HMM(Hidden Markov Model)</a></h4>
+            <span>Published on June 04, 2014</span>
           </div><!-- /.list-item -->
         
       </div><!-- /.read-more-list -->

@@ -138,6 +138,180 @@ MathJax.Hub.Config({
   
 <article class="hentry">
   <header>
+    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-30T00:00:00-04:00"><a href="http://jwchennlp.github.com/lsa-topic-model/">May 30, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/lsa-topic-model/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://jwchennlp.github.com/lsa-topic-model/" rel="bookmark" title="Latent Semantic Analysis" itemprop="url">Latent Semantic Analysis</a></h1>
+    
+  </header>
+  <div class="entry-content">
+    <p><strong>LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系</strong>		</p>
+
+<h2 id="section">1.向量空间模型</h2>
+<hr />
+
+<p>在信息检索领域,需要对文本语料进行建模,使得能够实现高效进行语料检索的同时保留文本的主要信息.当前采用较多的是向量空间模型.向量空间模型可以看作是一个文本-词项矩阵(matrix<em>{mn}),假设整个语料库有m篇文档,语料库的词项总数为n个,则对每一篇文档,我们用一个n维的向量来描述这个文档,向量中的每一维表示文档中词的权重,权重的度量方法可以有多种(tf,tf-idf),当我们采用tf-idf方法时,对于得到的矩阵中的某一元素,m</em>{ij}表示的是此项w_j在文档d_i中的tf-idf值.向量空间模型基于词袋方法(bag of words)构建文档-词项矩阵,词袋方法也就是说我们之关注文档中出现的词,而不关注文档中词的顺序.</p>
+
+<p>对于用响亮空间模型来描述的文档,每个文档都是一个关于词项的向量,当我们要衡量两个文档的相似度时,我们只要求两个向量之间的相似度.当两个文档向量的相似度为1时,说明两个文档完全相同,当两个文档向量的相似度为0时,说明两个向量完全不相关.		</p>
+
+<p>假设我们有两篇文档$d_1,d_2$:		</p>
+
+<p>$d_1为”The product of apple is excellent”,d_2为”Iphone is popular in world”$,两篇文档的词袋为{the product of apple is excellent iphone,popular,in world}.如果我们按照词袋的词序用tf(词项在文档中出现的次数)描述词的权重时,两篇文档的文档向量可以表述为:		</p>
+
+<p>$d_1=[1,1,1,1,1,1,0,0,0,0],d_2=[0,0,0,0,1,0,1,1,1,1]$,当我们要衡量两个文档的相似度时,两个文档向量的相似度为$\frac{d_1*d_2}{｜d_1｜｜d_2｜}=0.182$,可以认为两篇文档相似度很低.其实返回文档,我们发现文档1说的是苹果公司的产品很好,文档2说的是Iphone手机很受欢迎,可以理解为apple和iphone来说是比较相近的.		</p>
+
+<p>向量空间模型用规范化的格式(每个文档都是一个定长的向量)来对文档进行建模,且每个词的权重可以通过tf-idf等方式进行很好的度量,所以向量空间模型在描述文档信息方面是比较有效的.但是向量空间模型很难识别文档中的同义词和一词多义情况,这从文档的向量空间模型表述中可以看出来,文档中的每一个词项都在文档向量的某一维中表述出来,所以当文档中出现相似词时,相似词的权重是在不同维度中描述的,并且当一个词在文档中有多个含义时,词的多个含义在文档向量中也只是在某一维中描述.</p>
+
+<h2 id="latent-semantic-analysis">2.Latent Semantic Analysis</h2>
+<hr />
+
+<p>针对向量空间模型的这些缺点,我们可以采用LSA方法.LSA主要是对按向量空间模型构建的文档-词项高维矩阵映射到一个低维的隐语义空间.LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系.		</p>
+
+<p>LSA依靠奇异值分解(SVD)将文档的向量空间模型矩阵映射到低维空间.这里我们先介绍一下SVD的概念.		</p>
+
+<h3 id="svd">奇异值分解(SVD)</h3>
+
+<p>当矩阵是方阵的时候,我们可以通过球特征值,来描述矩阵中的重要特征.奇异值分解能描述任意矩阵中的重要特征,对于矩阵A:		</p>
+
+<script type="math/tex; mode=display">A_{mn}=U_{mm}\sum_{mn}V^T_{mm}</script>
+
+<p>其中U和V都是正交矩阵,即$UU^T=VV^T=I,\sum中对角线外的其他元素都为0,对角线上元素为奇异值$.		</p>
+
+<script type="math/tex; mode=display">A^TA=(U\sum{V^T})^T(U\sum{V^T}) \\
+  	 =V\sum{^T}U^TU\sum{V^T} \\
+  	 =V\sum{^T}\sum{V^T}</script>
+
+<p>因为U为正交矩阵,所以$A^TA的的特征值为\sum{^T}\sum中对脚线上的非0值$.		</p>
+
+<script type="math/tex; mode=display">A^TAv_i=\lambda_iv_i</script>
+
+<p>$v_i表示上面的右奇异响亮V^T$,此外我们可以得到:		</p>
+
+<script type="math/tex; mode=display">\sigma_i=\sqrt{\lambda_i}  \\
+  u_i = \frac{1}{\lambda_i}Av_i</script>
+
+<p>这里的$\sigma就是上面说的奇异值,u_i是有奇异向量U,奇异值矩阵\sum$中对角线上的奇异值是按从大到小顺序排列的,奇异值的大小可以理解为特征的重要程度,奇异值越大,描述的特征就越重要.</p>
+
+<p>现在回到LSA的讨论中,我们知道LSA通过SVD来将向量空间映射到隐语义空间,主要实现过程是,对奇异值矩阵,我们只取对角线上的前K个奇异值,其余奇异值设为0,现在我们得到的向量空间为:		</p>
+
+<script type="math/tex; mode=display">\overline{A} =U_{mk}\sum_{kk}V^T_{kn}\approx 	U_{mm}\sum_{mn}V^T_{nn}=A</script>
+
+<p>映射后的向量空间会近视等于原始的向量空间是因为,对奇异值矩阵进行了处理,只保留了前k个最大的奇异值,奇异值中值越大的说明所描述的特征越重要,奇异值越小说明所描述的特征贡献越弱,且奇异值在对角线上的减少程度很大,所以所除去前k个最大的奇异值,剩下的非0的奇异值说描述的特征贡献很弱.所以映射后的向量空间与初始向量空间接近.		</p>
+
+<p>说明一点:正常情况下,按照向量空间模型构建的向量空间是非常稀疏的,当采用LSA进行隐语义空间映射后,向量空间的稀疏性会减弱,这可能有助于计算文档之间的联系,尽管文档之间不存在很多相同的词项.	</p>
+
+<h3 id="section-1">参考资料</h3>
+
+<p><a href="http://www.cnblogs.com/LeftNotEasy/archive/2011/01/19/svd-and-applications.html">机器学习中的数学(5)-强大的矩阵奇异值分解(SVD)及其应用 http://leftnoteasy.cnblogs.com</a>		</p>
+
+<p><a href="http://www.cnblogs.com/kemaswill/archive/2013/04/17/3022100.html">Latent Semantic Analysis(LSA/ LSI)算法简介 http://www.cnblogs.com/kemaswill/</a>	</p>
+
+
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
+    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-20T00:00:00-04:00"><a href="http://jwchennlp.github.com/em-algorithm/">May 20, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/em-algorithm/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
+    
+      <h1 class="entry-title"><a href="http://jwchennlp.github.com/em-algorithm/" rel="bookmark" title="EM算法" itemprop="url">EM算法</a></h1>
+    
+  </header>
+  <div class="entry-content">
+    <p>EM算法可以用于含有隐含变量的参数评估问题.		</p>
+
+<h2 id="jesen-">Jesen 不等式</h2>
+<hr />
+
+<p>当函数f为凸函数时,我们知道$f^{\prime\prime}(x)\geq0,如果函数f的输入为向量时,则其半正定矩阵H\geq0$Jesen不等式可以描述为:		</p>
+
+<p><strong>定理</strong>  f是一个凸函数,X是一个随机变量,则:		</p>
+
+<script type="math/tex; mode=display">E[f(X)]\geq{f(EX)}</script>
+
+<p>并且如果f是严格凸函数($f^{\prime\prime}(x)&gt;0),则E[f(X)]\geq{f(EX)}$当且仅当p(X)=P(EX)=1,即X是一个常数.		</p>
+
+<p>通过下面的图可以有个更清晰的认知:			</p>
+
+<p><img src="../images/0520/1.png" alt="image" /></p>
+
+<p>如图可知f为严格凸函数,假设x有0.5的概率取值为a(p(x=a)=0.5),有0.5的概率取值为b,则变量x的期望应当为E[X]=$\frac{a+b}{2}$,期望x值应该是a和b的中点,E(f(x))=$\frac{f(a)+f(b)}{2}$,可以知道$E[f(X)]\geq{f(EX)}$,并且我们知道,只有当X取一个值的概率为1时,有$E[f(X)]={f(EX)}$</p>
+
+<h2 id="em">EM算法</h2>
+<hr />
+
+<p>假设我们有一个关于m个独立样本集${x^{(i)},…,x^{(m)}}$的参数评估问题,样本集中包含了隐含变量z,我们需要估计模型P(x,z)的参数$\theta,参数\theta$的最大似然估计为:		
+<script type="math/tex">l(\theta) = \sum_{i=1}^m\log{p(x^{(i)};\theta)} \\
+			=\sum_{i=1}^m\log\sum_{z^{(i)}}p(x^{(i)},z^{(i)};\theta)</script>		</p>
+
+<p>其中$z^{(i)}是隐含随机变量,如果z^{(i)}是可观测的$,那么通过极大似然估计便可以求得参数解.		</p>
+
+<p>EM算法给出了实现参数评估的一种有效的方法,精确的最大化$l(\theta)可能很困难,这里我们可以采用如下的替代策略:在E步不断的建立l(\theta)的下界$,并且在M步优化下界.通过这两个步骤的迭代过程来实现$l(\theta)的最大化$.</p>
+
+<p>假设$Q_i是变量z的分布,则有\sum_zQ_i(z)=1,_i(z)\geq0$,则可以得到:</p>
+
+<script type="math/tex; mode=display">l(\theta) = \sum_{i=1}^m\log{p(x^{(i)};\theta)}  \\
+			=\sum_{i=1}^m\log\sum_{z^{(i)}}p(x^{(i)},z^{(i)};\theta) \\
+			=\sum_{i=1}^m\log\sum_{z^{(i)}}Q_i{z^{(i)}}\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}  \\
+			\geq\sum_{i=1}^m\sum_{z^{(i)}}Q_i{z^{(i)}}\log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}</script>
+
+<p>公式的第三步到第四步运用到了Jesen不等式,$\log(x)函数是严格凹函数,所以E[f(X)]\leq{f(EX)},其中Q_i{z^{(i)}}表示变量z^{i}$的概率分布,$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}表示变量为z^{i}的函数$,第三步表示的是函数的期望,又由于函数是凹函数,所以其值要大于等于期望的函数.</p>
+
+<p>现在给定了关于隐含变量的分布$Q_i,我们可以得知l(\theta)的下界,对于Q_i有许多选择,我们该如何选择呢?当我们猜测一个初始的\theta值时$,E步所要实现的就是希望我们的替换的$l(\theta)不断的贴近真实l(\theta)的下界,我们从Jesen不等式可以知道E[f(X)]={f(EX)}$的充分必要条件是x为一个常数,也就是说:		</p>
+
+<script type="math/tex; mode=display">\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i{z^{(i)}}}=c(常数)</script>
+
+<p>又$\sum_{z}Q_i(z^{(i)})=1$		</p>
+
+<script type="math/tex; mode=display">\sum_{z}p(x^{(i)},z^{(i)};\theta)=c\sum_{z}Q_i(z^{(i)})=c</script>
+
+<p>可以得到:			</p>
+
+<script type="math/tex; mode=display">Q_i(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum_{z}p(x^{(i)},z^{(i)};\theta)} \\
+			  =\frac{p(x^{(i)},z^{(i)};\theta)}{p(x^{(i)};\theta)} \\
+			  = p(z^{(i)}｜x^{(i)};\theta)</script>
+
+<p>这样在初始猜测一个参数$\theta后,的出z^{(i)}在x^{(i)}和参数\theta下的后验概率分布,即可以得到隐含变量的分布Q^{(i)}$.		</p>
+
+<p><img src="../images/0520/2.png" alt="image" /></p>
+
+<h2 id="section">证明收敛</h2>
+<hr />
+
+<p>这里需要证明算法最终是否会收敛,假设$\theta^{(t)}和\theta^{(t+1))}为两个EM算法成功迭代的参数值,我们需要证明l(\theta^{(t)})\leq{l(\theta^{(t)})}$,如果不等式成立的话,也就是说每次迭代都使得似然估计的值变大.当我们已经通过迭代获得了$\theta^{(i)}$,我们将通过E步选择$Q_i(z^{(i)})=p(z^{(i)}｜x^{(i)};\theta),由于我们知道在E步的时候因为要建立l(\theta^{(t)})的下界$,所有根据Jesen不等式必须有:		</p>
+
+<p><img src="../images/0520/3.png" alt="images" /></p>
+
+<p>对上面等式的右边通过极大似然估计获得$\theta^{(t+1)}$,并且:			</p>
+
+<p><img src="../images/0520/4.png" alt="images" />		</p>
+
+<p>第一个不等式是是由于:		</p>
+
+<p><img src="../images/0520/5.png" alt="images" />	</p>
+
+<p>对任意的$Q^{(i)}和\theta都成立,这里设定Q^{(i)}=Q_t{(t)},\theta=\theta^{(t+1)},第二个不等式成立是因为\theta^{(t+1)}$是通过如下计算获得:			</p>
+
+<p><img src="../images/0520/6.png" alt="images" /></p>
+
+<p>如果我们定义:		</p>
+
+<p><img src="../images/0520/7.png" alt="images" /></p>
+
+<p>通过之前的推导我们知道$l(\theta)\geq{J(Q,\theta)}$,那么EM算法也可以看作是J函数上的坐标上升算法,E步相当依据猜测或上步迭代的$\theta来最大化Q_i,M步相当于根据根据Q_i优化\theta$</p>
+
+<p><strong>参考内容</strong>		</p>
+
+<p><a href="http://www.cnblogs.com/jerrylead/archive/2011/04/06/2006936.html">JeeryLead(EM算法)</a>	</p>
+
+<p><a href="http://blog.csdn.net/abcjennifer/article/details/8170378">Rachel-Zhang(EM算法原理)</a>		</p>
+
+<p><a href="http://blog.csdn.net/zouxy09/article/details/8537620">zouxy09(从最大似然到EM算法浅析)</a>			</p>
+
+  </div><!-- /.entry-content -->
+</article><!-- /.hentry -->
+
+<article class="hentry">
+  <header>
     <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-18T00:00:00-04:00"><a href="http://jwchennlp.github.com/logistic-regression/">May 18, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/logistic-regression/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
     
       <h1 class="entry-title"><a href="http://jwchennlp.github.com/logistic-regression/" rel="bookmark" title="逻辑回归" itemprop="url">逻辑回归</a></h1>
@@ -502,204 +676,6 @@ I(X;Y) = H(X) - H(X｜Y)=H(Y) - H(Y｜X) = H(Y)+H(X) - H(X,Y)</p>
   <li>对负例的采样比例的设定．      </li>
   <li>模型训练时的迭代次数，及是否可以通过多次采样对多次结果进行加权获取最终结果．</li>
 </ul>
-
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-08T00:00:00-04:00"><a href="http://jwchennlp.github.com/support-vector-machine/">May 08, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/support-vector-machine/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://jwchennlp.github.com/support-vector-machine/" rel="bookmark" title="支持向量机" itemprop="url">支持向量机</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    <h2 id="section">问题引出</h2>
-<hr />
-<p>在面对一个最简单的二分类问题，并且假设数据集可分的情况下．具体如下图所示．当我们采用逻辑回归实现分类时，我们用一个分类超平面（决策边界）对数据进行数据进行划分，并在划分后，不同类别的数据分布在分类超平面的两边，这表示分类成功．其实，在数据可分的情况下，我们发现可以有很多条这样的分类超平面，并且都能达到正确分类的效果,这个时候我们可能要问，这些分类超平面的效果一样吗？是否存在一个最优的分类超平面．
-<img src="../images/140508/1.png" alt="image" /></p>
-
-<h2 id="section-1">函数间隔和几何间隔</h2>
-<hr />
-
-<h3 id="section-2">函数间隔</h3>
-
-<p>对于上面数据集，我们计算出了一个超平面$w^Tx+b=０$.对于某一个数据点x我们需要判断其内别,如果$w^Tx+b＞0$，则其类ｙ=1，并且如果$w^Tx+b＞0$并且$w^Tx+b$值越大，则这个点的类别为正例的置信度就越高．当$w^Tx+b＜0$时,点所属类别为－１，并且$w^Tx+b$值越小，这这个点类别为负例的置信度就越高．并且当点ｘ被正确分类时，$y(w^T+b)$为正数．从上面图中可以看出，我们设定分类超平面的上部为正例，A,B,C三个的点都被标记为正例，但是C离决策边界最近，可能稍微变化决策边界就可能导致分类错误，所以C分类正确的置信读低．A离决策边界最远，所以Ｃ被分为正例的置信读高.对于点$\left(x^\left(i\right),y^\left(i\right)\right)$为了获得更好的分类效果，我们希望$y\left(i\right)(w^Tx+b)$尽量大，则分类的置信度就越高．</p>
-
-<p>所以，对数据$\left(x^\left(i\right),y^\left(i\right)\right)$，我们就定义$y\left(i\right)(w^Tx+b)$为此数据点的函数间隔，并且如果使得每个点的函数间隔都倾向于一个大值，则分类置信度越高，分类效果越好．   </p>
-
-<p>给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,…m},我们需要计算每一个样本点到分类超平面的函数间隔.在这里，我们需要求出最小的函数间隔，并且通过修改分类超平面使得最小函数间隔尽可能大，则分类效果更好．     </p>
-
-<script type="math/tex; mode=display">\widehat{\gamma}=\min_{i=1,...,m}\widehat\gamma^\left(i\right)</script>
-
-<p>利用函数间隔来衡量分类效果的置信度有一个缺陷，当我们确定某一个分类超平面$w^Tx+b=0$，我们对ｗ,b同时增加ｋ倍,函数间隔由原来的$y\left(w^Tx+b\right)$变成$ky\left(w^Tx+b\right)$．也就是说某一数据点的函数间隔可以可以任意的缩放或增加．</p>
-
-<h3 id="section-3">几何间隔</h3>
-
-<p>在确定分类超平面之后，任一数据点到分类超平面的距离应该是不变的．如果我们用这个距离来衡量分类置信度的话，效果会很好．    <br />
-<img src="../images/140508/2.png" alt="image" />  <br />
-点A到平面的距离设为$\gamma$,知道分类超平面的法向量为ｗ，那么将A投影到分类超平面上的点B的坐标为$x-\frac{w}{\left|w\right|}\gamma$,且点在决策边界$w^Tx+b=0$上，所以有:        </p>
-
-<script type="math/tex; mode=display">w^T\left(x-\frac{w}{｜w｜}\gamma\right)+b=0</script>
-
-<p>求解得$\gamma=\frac{w}{｜w｜}x+\frac{b}{｜w｜}$,所以对所有的样本点点$\left(x^\left(i\right),y^\left(i\right)\right)$,我们求得每个样本点的几何间隔为:      </p>
-
-<script type="math/tex; mode=display">\gamma^\left(i\right)=y^\left(i\right)\left(\frac{w}{｜w｜}x^\left(i\right)+\frac{b}{｜w｜}\right)</script>
-
-<p>给定训练集合S={($x^\left(i\right),y^\left(i\right)）$,i=1,…m},我们需要计算每一个样本点到分类超平面的几何距离.在这里，我们需要求出最小的几何距离，并且通过修改分类超平面使得最小几何距离尽可能大，则分类效果更好．        </p>
-
-<script type="math/tex; mode=display">\gamma=\min_{i=1,...,m}\gamma^\left(i\right)</script>
-
-<h2 id="section-4">最优间隔分类器</h2>
-
-<p>当给定训练集之后，按照前面分析直观上最好的分类效果是找到决策边界使得(几何)间隔最大化.因为我们的决策是使得最小几何间隔最大化，则显然对所有点的分类的置信度很高．所以当对于一个线性可分的数据集，我们要通过一个分类超平面来分割所有的正例和负例．那么我们的问题可以转化成下面的优化问题:   </p>
-
-<script type="math/tex; mode=display">\max_{\gamma,w,b}   \gamma \\
- s.t.    y^\left(i\right)\left(\frac{w}{|w|}x^\left(i\right)+\frac{b}{|w|}\right)\geq\gamma,i=1,...,m
-</script>
-
-<p>由于我们知道在确定了(w,b)之后，我们可以通过同比例的缩放或增加(w,b),所以我们可以通过相应的扩张比例使得｜w｜的值为１．所以优化问题转化成如下形式：     </p>
-
-<script type="math/tex; mode=display">\max_{\gamma,w,b}   \gamma \\
- s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq\gamma,i=1,...,m　\\
- |w|=1
-</script>
-
-<table>
-  <tbody>
-    <tr>
-      <td>通过约束</td>
-      <td>w</td>
-      <td>=1,使得函数间隔等于几何间隔．但是因为如上的优化问题是非凸问题，我们很难通过软件来进行求解．所以我们将第一个问题转化成如下问题:</td>
-    </tr>
-  </tbody>
-</table>
-
-<script type="math/tex; mode=display">\max_{\gamma,w,b}:  \frac{\widehat\gamma}{|w|} \\
- s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq\widehat\gamma,i=1,...,m
-</script>
-
-<p>其中$\widehat\gamma$代表的是最小函数间隔，我们知道函数间隔是可以通过(w,b)的同比例变化而变化，这里为了为了简化计算，我们将$\widehat\gamma$设为１．那么如上的优化问题变为:     </p>
-
-<script type="math/tex; mode=display">\max_{\gamma,w,b}:  \frac{1}{|w|} \\
- s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
-</script>
-
-<p>进一步转变，优化问题变成如下格式：       </p>
-
-<script type="math/tex; mode=display">\min_{\gamma,w,b}: \frac{1}{2}w^2 \\
- s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
-</script>
-
-<h2 id="section-5">拉格朗日算子</h2>
-
-<p>对于如下的原始优化问题：    </p>
-
-<script type="math/tex; mode=display"> \min_w:f(w) \\
-s.t.:g_i(w)\leq0,i=1,...k  \\
-h_i(w)=0,i=1,...l   
-</script>
-
-<p>其拉格朗日算子为<script type="math/tex">L(w,\alpha,\beta)=f(w)+\sum_\left(i=1\right)^k\alpha_ig_i(w)+\sum_\left(i=1\right)^l\beta_ih_i(w)</script>,其中$\alpha_i,\beta_i$为拉格朗日乘数．      <br />
-考虑如下等式：     </p>
-
-<script type="math/tex; mode=display">\theta_p(w)=\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)</script>
-
-<p>其中ｐ表示原始的,我们发现当给定ｗ，并且ｗ满足我们原始问题的约束（$g_i(w)\leq0，h_i(w)=0$），如果ｗ违背这些约束，则显然$\theta_p(w)=\infty$,当ｗ满足原始问题约束时，$\theta_p(w)=０$．那么可以的出如下结论：  </p>
-
-<script type="math/tex; mode=display">\min_w\theta_p(w)=\min_w\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)</script>
-
-<p>同时我们定义$p^*=\min_w\theta_p(w)$为原始问题的解．   <br />
-现在对应它的对偶问题：     </p>
-
-<script type="math/tex; mode=display">\max_\left(\alpha,\beta:\alpha_i\geq0\right)\theta_d(p)=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)</script>
-
-<p>我们知道，最大最小问题的解小于最小最大问题的解：     </p>
-
-<script type="math/tex; mode=display">d^*=\max_\left(\alpha,\beta:\alpha_i\geq0\right)\min_wL(w,\alpha,\beta)\leq\min_w\max_\left(\alpha,\beta:\alpha_i\geq0\right)L(w,\alpha,\beta)=p^*</script>
-
-<p>当ｆ和$g_i$为凸函数时，$h_i$为仿射函数(仿射变换的定义是在几何空间中，一个向量空间进行一次线性变换并接上一个平移，变换成另一个向量空间)，有$d^＊=p^＊$，在这些约束下，一定存在一个$w^＊$是原始问题的解，$\alpha^＊,\beta^＊$是对偶问题的解，并且有$d^＊=p^＊=L(w^＊,\alpha^＊,\beta^＊)$,同时这３个参数满足KKT条件，KKT条件描述如下：    <br />
-<img src="../images/140508/3.png" alt="image" />		</p>
-
-<p>其中第三个约束称为对偶互补条件，并且当$a_i＞０$时，$g_i(w^*)=0$,满足这些条件的点所对应的几何间隔便是最小几何间隔．这些点称为支持向量.</p>
-
-<p>现在回到优化边界分类器部分,我们的原始问题定义为：       </p>
-
-<script type="math/tex; mode=display">\min_{\gamma,w,b}: \frac{1}{2}w^2 \\
- s.t.    y^\left(i\right)\left(wx^\left(i\right)+b\right)\geq 1,i=1,...,m
-</script>
-
-<p>约束条件可以表示为：        </p>
-
-<script type="math/tex; mode=display">g_i(w)=-y^\left(i\right)(w^Tx\left(i\right)+b)+1\leq0</script>
-
-<p><img src="../images/140508/4.png" alt="image" />    </p>
-
-<p>我们可以看到，有最小几何间隔的点离决策边界最近．我们知道这些点$\left(x^\left(i\right),y\left(i\right)\right)$满足$g_i(w)=0$.我们将这些点称之为支持向量．从上图知道，数据集中有３个支持向量，一般来说支持向量的个数会明显小于数据集的大小，这在后面会相当有用．      </p>
-
-<p>原始问题的拉格朗日算子可以表示为：      </p>
-
-<script type="math/tex; mode=display">L(w,b,\alpha)=\frac{1}{2}w^2-\sum_{i=1}^m\alpha_i[y^\left(i\right)(w^Tx\left(i\right)+b)+1]</script>
-
-<p>这个时候我们通过求对偶问题$\theta_p(w)$来求原始问题的解．具体方法是对Ｌ函数关于参数ｗ和ｂ求偏导数：    <br />
-<img src="../images/140508/5.png" alt="image" />
-<img src="../images/140508/6.png" alt="image" />
-<img src="../images/140508/7.png" alt="image" />      <br />
-将得到的约束代回到上面的拉格朗日算子中．得到：          <br />
-<img src="../images/140508/8.png" alt="image" />
-<img src="../images/140508/9.png" alt="image" />      <br />
-最后原始问题的对偶优化问题可以定义为：            <br />
-<img src="../images/140508/10.png" alt="image" /></p>
-
-<p>现在假定我们已经求得对偶问题最优解的$\alpha_i$，那么我们是如何做预测的呢？对于一个新的数据点ｘ，我们知道预测是通过判断$w^Tx+b$的值来判定的，如果大于０，类别为正例，如果小于０，类别为负例,我们将上面求解的ｗ值代入：         <br />
-<img src="../images/140508/11.png" alt="image" />		</p>
-
-<p>我们知道$\alpha_i\geq0$,且根据KKT约束条件中的对偶互补条件$\alpha_ig_i(w)\geq0$,并且$\alpha&gt;0$时，$g_i(w)=0$,表示这些点有最小的几何间隔，也就是说这些点表示支持向量．我们知道，在判断ｘ类别的时候，我们只需要考虑$\alpha_i&gt;0$的情况，也对应的我们只需要考虑数据集中的支持向量．同时，支持向量想对于数据集来说是小很多的．这样很显然可以进行高效求解.</p>
-
-
-  </div><!-- /.entry-content -->
-</article><!-- /.hentry -->
-
-<article class="hentry">
-  <header>
-    <div class="entry-meta"><span class="entry-date date published updated"><time datetime="2014-05-07T00:00:00-04:00"><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/">May 07, 2014</a></time></span><span class="author vcard"><span class="fn"><a href="http://jwchennlp.github.com/about/" title="About jwchen">jwchen</a></span></span>&nbsp; &bull; &nbsp;<span class="entry-comments"><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/#disqus_thread">Comment</a></span></div><!-- /.entry-meta -->
-    
-      <h1 class="entry-title"><a href="http://jwchennlp.github.com/generative-model-and-discriminative-model/" rel="bookmark" title="生成模型和判别模型" itemprop="url">生成模型和判别模型</a></h1>
-    
-  </header>
-  <div class="entry-content">
-    <h2 id="section">定义</h2>
-<hr />
-<blockquote>
-  <p>生成方法由数据学习联合概率分布P(x,y)，然后求出条件概率分布P(y｜ｘ)作为预测的模
-型，即成生模型:  <br />
-<img src="../images/140507/1.png" alt="image" /> <br />
-这样的方法成为生成方法，是因为模型表示了给定输入ｘ产生输出ｙ的生成关系．典型的生成模型有，朴素贝叶斯和隐马尔可夫模型．  <br />
-判别方法是由数据直接学习决策函数ｆ(x)或者条件概率分布P(y｜x)作为预测的模型，即判别模型，判别方法关心的是对给定的输入x,应该预测什么样的输出ｙ，典型的方法包括感知机，决策树，逻辑回归．   </p>
-</blockquote>
-
-<h2 id="section-1">理解</h2>
-<hr />
-<p>在面对猫狗分类问题时，我们该如何实现呢？  <br />
-方法一：当我们利用逻辑回归或是感知机模型时，我们需要数据集所投射的空间中，找到一个决策边界，在决策边界一边的属于一类动物，在决策边界另一边的属于另一种动物．当来一个我们不知道的动物时，我们将它放入空间中，通过判断它在决策边界的那一侧来判断是猫还是狗． <br />
-方法二：将数据集中的猫都拿出来，建立一个关于猫的特征的模型．按同样的方法建立一个关于狗的模型．这样，当判断一个动物时，我们分别查看它在猫模型中属于猫的概率和在狗模型中属于狗的概率，哪个值大，便说明属于哪个模型．   </p>
-
-<p>方法一通过对数据集训练出一个模型，并通过判断P(y|x)下的条件概率来判断ｙ的类别．这种方法成为判别方法，对应建立的模型属于判别模型．   <br />
-方法二对数据集的每一个类别建立一个模型，并通过联合概率P(x,y)来判断ｘ特征所应对应的类别．这种方法成为生成方法．  </p>
-
-<p>其实通过联合概率来判断类别进行了一个变形，一般我们是要判断P(y|x)下的概率，可以进行如下转换： <br />
-<img src="../images/140507/1.png" alt="image" />  <br />
-对于某个参数ｘ，其概率值P(x)值在所有类别下都是相同的，所以问题便等同于如下问题：            <br />
-<img src="../images/140507/2.png" alt="image" />        </p>
-
-<p>不妨通过一个朴素贝叶斯生成模型来了解生成模型的判定过程．
-如图，训练集包含４篇文档，我们需要验证测试集中的文档类别： <br />
-<img src="../images/140507/3.png" alt="iamge" />    </p>
-
-<p>我们需要计算每一个类别下P(x｜y)P(y)的概率，并且概率最大的那一类便是文档所属类别．即计算P((Chinese,chinese,Chinese,Tokyo,Japan)｜y=c)P(y=c)和P((Chinese,chinese,Chinese,Tokyo,Japan)｜y=$\bar{c}$)P(y=$\bar{c}$)．</p>
-
-<p>之后利用朴素贝叶斯的的条件独立定义进行求解便能获知测试及属于哪个类别．</p>
-
 
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->

@@ -52,6 +52,14 @@
 
     
     <url>
+        <loc>http://jwchennlp.github.com/chinese-word-segmentation/</loc>
+    </url>
+    
+    <url>
+        <loc>http://jwchennlp.github.com/hmm-hidden-markov-model_140608165432/</loc>
+    </url>
+    
+    <url>
         <loc>http://jwchennlp.github.com/hmm-hidden-markov-model/</loc>
     </url>
     

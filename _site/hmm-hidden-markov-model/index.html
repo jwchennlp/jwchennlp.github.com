@@ -148,16 +148,24 @@ MathJax.Hub.Config({
 
 <p>隐马尔可夫模型(HMM)可以用如下的五元组来表示,包括2状态集合和概率矩阵:</p>
 
-<p>(1).隐含状态S={$s_1,s_2,…,s_n$}			
-隐含状态是马尔可夫模型中所隐含的状态.这些状态无法通过直接观测而得到.		
-(2).可观测状态O={$o_1,o_2,…,o_m$}		
-可观察状态是马尔可夫模型中可以观测到的状态.(可观察状态数目和隐含状态数目可以不相等).		
-(3).初始状态概率矩阵$\pi$		
-表示隐含状态在初始时刻t=1时的概率矩阵.初始状态概率矩阵为$\pi=[p(s_1),p(s_2),…,p(s_n)]$			
-(4).隐含状态的概率转移矩阵$A<em>{ij}$		
-表示在HMM模型在各个隐含状态之间的转移概率.其中$A</em>{ij}=p(s_j｜s_i)$表示在t时刻隐含状态为$s_i时,t+1时刻隐含状态为s_j$的概率.		
-(5).隐含状态到观察状态的概率转移矩阵$B<em>{ij}$		
-$B</em>{ij}=p(o_j｜s_i)表示在隐含状态s_i的情况下,观察状态为o_j的概率$.		</p>
+<p>(1).隐含状态S={$s_1,s_2,…,s_n$}		</p>
+
+<p>隐含状态是马尔可夫模型中所隐含的状态.这些状态无法通过直接观测而得到.		</p>
+
+<p>(2).可观测状态O={$o_1,o_2,…,o_m$}				</p>
+
+<p>可观察状态是马尔可夫模型中可以观测到的状态.(可观察状态数目和隐含状态数目可以不相等).		</p>
+
+<p>(3).初始状态概率矩阵$\pi$			</p>
+
+<p>表示隐含状态在初始时刻t=1时的概率矩阵.初始状态概率矩阵为$\pi=[p(s_1),p(s_2),…,p(s_n)]$		</p>
+
+<p>(4).隐含状态的概率转移矩阵$A_{ij}$		
+表示在HMM模型在各个隐含状态之间的转移概率.其中<script type="math/tex">A_{ij}=p(s_j｜s_i)</script>表示在t时刻隐含状态为$s_i时,t+1时刻隐含状态为s_j$的概率.		</p>
+
+<p>(5).隐含状态到观察状态的概率转移矩阵<script type="math/tex">B_{ij}</script>	</p>
+
+<p><script type="math/tex">B_{ij}=p(o_j｜s_i)</script>表示在隐含状态$s_i的情况下,观察状态为o_j$的概率.		</p>
 
 <h3 id="section-2">实例</h3>
 
@@ -190,7 +198,7 @@ $B</em>{ij}=p(o_j｜s_i)表示在隐含状态s_i的情况下,观察状态为o_j�
 
 <p>假设模型参数$\lambda=(A,B,\pi)$已知,考虑上面提到的例子,假设3天间我们观察到的水藻状态为(干燥,湿润,湿透),这三天中的任一天都可能是多云,晴天或是雨天,对于观察序列及隐藏序列,我们可以用如下的网格来表示:			</p>
 
-<p><img src="../images/1406/hmm1.png" alt="image" />			</p>
+<center><img src="../images/1406/hmm1.png" /></center>
 
 <p>网格中的每一列表示可能的天气状态,并且每一天中的每个天气都与一个到相近天气状态相连,表示为在当前天气状态下到下一个天气状态的概率.每一列的下面是某个时间点上的观察状态.我们发现,对于如上的描述,这三天可能出现的天气序列有$3^3$=27种,这27种天气情况转化为观察序列的概率和便是观察序列在模型下出现的概率,表示为:</p>
 
@@ -206,17 +214,17 @@ $B</em>{ij}=p(o_j｜s_i)表示在隐含状态s_i的情况下,观察状态为o_j�
 
 <p>对于观察序列$O=o_1o_2…o_n,o_i可以理解为t=i时刻观察到的观察状态$,关于观察状态和隐含状态用网格表示为:	</p>
 
-<p><img src="../images/1406/hmm2.png" alt="image" />		</p>
+<center><img src="../images/1406/hmm2.png" /></center>
 
 <p>那么t=2时,隐状态为”cloudy”的局部概率可以表示为:		</p>
 
-<p><img src="../images/1406/hmm3.png" alt="image" />	</p>
+<center><img src="../images/1406/hmm3.png" /></center>
 
 <p>公式表述为$\alpha_{t=2}(c)=p(damp｜c)*(p(c｜s)+p(c｜c)+p(c｜r))$,其中c,r,s分别是cloudy,rainy和sunny的简称.		</p>
 
 <p>那么延伸一下,假设有N个隐含状态,这t+1时刻处于隐含状态j的隐含概率可以表述为:		</p>
 
-<p><img src="../images/1406/hmm4.png" alt="image" />	</p>
+<center><img src="../images/1406/hmm4.png" /></center>
 
 <script type="math/tex; mode=display">\alpha_{t+1}(j) = b(o_{t+1}｜j)\sum_{i=1}^N\alpha_t(i)a_{ij}</script>
 
@@ -230,12 +238,12 @@ $B</em>{ij}=p(o_j｜s_i)表示在隐含状态s_i的情况下,观察状态为o_j�
 
 <p>在t=1时,求每个隐含状态的局部概率时间复杂度为O(1),在t&gt;1时,球每个隐含状态的时间复杂度为O(N),则t&gt;1时求每一列的时间复杂度为O(N*N),T为观察序列的长度,则前向算法的时间复杂度为O(TN^2).	</p>
 
-<h2 id="decode">解码问题(decode)</h2>
+<h2 id="decode">3.解码问题(decode)</h2>
 <hr />
 
 <p>假设模型参数$\lambda=(A,B,\pi)$已知,考虑上面提到的例子,假设3天间我们观察到的水藻状态为(干燥,湿润,湿透),需要求解与观察状态对应的最有可能的隐含状态序列.对与上面描述的天气的例子,其网格图为:	</p>
 
-<p><img src="../images/1406/hmm1.png" alt="image" />		</p>
+<center><img src="../images/1406/hmm1.png" /></center>
 
 <p>可以知道,最有可能的天气(隐含)序列是每一列中天气组合(总共27种)中的一项,所以最有可能的隐含序列$\hat S$可以表述为:	</p>
 
@@ -248,13 +256,11 @@ $B</em>{ij}=p(o_j｜s_i)表示在隐含状态s_i的情况下,观察状态为o_j�
 
 <p>对于上面的程序,先假设在t=3时,天气状态为cloudy时概率最大,那么从t=2到t=3的cloudy状态有3条路径,最佳路径必定是这三条路径中的一条.假设t=2时的从状态rainy到t=3的cloudy的概率最大,则可以说明t=2时的cloudy路径为局部最佳路径,路径对应的概率称为局部概率($\delta$).</p>
 
-<p><img src="../images/1406/hmm5.png" alt="image" /></p>
-
-<center><img src="../images/1406/hmm6.png" /></center>
+<center><img src="../images/1406/hmm5.png" /></center>
 
 <p>延伸一下,假设有N+1个隐含状态,在t+1时刻的位于隐含状态j的局部概率为:	</p>
 
-<p><img src="../images/1406/hmm6.png" alt="image" />	</p>
+<center><img src="../images/1406/hmm6.png" /></center>
 
 <script type="math/tex; mode=display">\delta_t(j) = max_{i \in N}(\delta_{t-1}(i)a_{ij}b_{jo_t})</script>
 
@@ -264,7 +270,7 @@ $B</em>{ij}=p(o_j｜s_i)表示在隐含状态s_i的情况下,观察状态为o_j�
 
 <p>这样通过计算t=1时各个隐含状态的局部概率,就可以计算t=2,…t=T时各状态的局部概率.其实,在t=T时,计算出来概率$\delta_t(j)$便是最后与观察序列对应的且最后一个隐含状态为j的最终概率,<script type="math/tex">j=max_{j\in N} \delta_t(j)</script>可以求出最后一个观察状态对应的隐含状态.那么如何求之前T-1个观察状态对应的隐含状态?这里我们需要借用反向指针来实现.		</p>
 
-<p>我们知道计算t时刻隐含状态j的局部概率$\delta<em>{t}(j)$,需要的知道t-1时刻的$的\delta</em>{t-1}$,我们需要记录t-1时刻的某个状态i,有i状态到达t时刻的状态j是到达状态j的最佳路径.通过反向指针来记录这种状态:		</p>
+<p>我们知道计算t时刻隐含状态j的局部概率<script type="math/tex">\delta_{t}(j)</script>,需要的知道t-1时刻的<script type="math/tex">\delta_{t-1}</script>,我们需要记录t-1时刻的某个状态i,有i状态到达t时刻的状态j是到达状态j的最佳路径.通过反向指针来记录这种状态:		</p>
 
 <script type="math/tex; mode=display">\phi_t(j) = argmax_{i\in N}(\delta_{t-1}(i)aij)</script>
 
@@ -278,13 +284,85 @@ $B</em>{ij}=p(o_j｜s_i)表示在隐含状态s_i的情况下,观察状态为o_j�
 
 <p>在使用时,viterbi算法对于网格中的没一个隐状态都计算一个局部概率,同时包含一个反向指针来指示最有可能的到达该单元的路径.当完成整个计算之后,首先在终止时刻找到最可能的隐含状态,然后通过反响指针回溯到t=1时刻,这样回溯路径上的状态序列就是最可能的隐含状态序列.		</p>
 
-<h3 id="section-7">参考内容</h3>
+<h2 id="section-7">4.学习问题</h2>
+<hr />
+
+<p>如果模型参数的先验分布已知,也就是参数$\lambda=(\pi,a,b)$已知的情况下,对于某一观察序列,可以计算出观察序列出现的概率及与观察序列对应的最有可能的隐含序列.如果模型的参数事先并不知道,那么能够在给定某一观察序列的情况下估计模型的参数?</p>
+
+<p>这种情况下,我们可以用极大似然估计来估计模型参数,问题可以定义为:		</p>
+
+<p><script type="math/tex">\lambda=argmax_{\lambda}l(O｜\lambda) \\
+		 =argmax_{\lambda}\sum_{i=1}^T\log p(o_t｜\lambda) \\
+		 =argmax_{\lambda}\sum_{i=1}^T\log \sum_{s_t} p(o_t,s_t｜\lambda)</script>		
+其中$\lambda$是HMM模型的参数集合,O是观察序列,长度为T.$s_t$表示t时刻可能的隐含状态.		</p>
+
+<p>由于含有隐变量,很难通过极大似然估计获取参数解.对于这一类含有隐变量的参数估计问题,可以采用EM算法进行参数评估.		</p>
+
+<p>这里我们主要采用前向-后向算法(Forward-backward algorithm)算法进行问题的近似求解,前向-后向算法是EM算法的一个特例.		</p>
+
+<p>这具体讲解之前,先引入几个概念:</p>
+
+<p>首先我们已经知道前向变量$\alpha$的意义,<script type="math/tex">\alpha_t(j)</script>表示t时刻位于隐含变量j的局部概率.		</p>
+
+<script type="math/tex; mode=display">\alpha_1(j) = \pi(j)b_j(o_1),t=1</script>
+
+<script type="math/tex; mode=display">\alpha_{t+1}(j) = b_j(o_{t+1})\sum_{i=1}^N\alpha_t(i)a_{ij},t>1</script>
+
+<p>类似的,我们可以定义后向变量$\beta$,$\beta_t(j)表示观察序列o_{t+1}…o_T$在t时刻隐含变量为j的概率,形式话定义为:		</p>
+
+<script type="math/tex; mode=display">\beta_t(j) =p(o_{t+1}...o_T｜q_t = s_j;\lambda),i\leq t\leq T,1\leq j\leq N</script>
+
+<p>初始化,令t=T时刻的所有状态的后向变量为1:		</p>
+
+<script type="math/tex; mode=display">\beta_T(j) = 1,1\leq j\leq N</script>
+
+<p>当t&lt;T时,通过下图t和t+1时刻的隐含变量之间的关系可以的出t时刻的后向变量为:		</p>
+
+<center><img src="../images/1406/hmm10.png" /></center>
+
+<script type="math/tex; mode=display">\beta_t(j) = \sum_{i=1}^N\beta_{t+1}(i)a_{ji}b_i(o_{t+1}),1\leq j\leq N,1\leq t\leq T-1</script>
+
+<p>给定观察序列O和HMM模型,定义t时刻处于隐含状态$s_j$的概率变量为:		</p>
+
+<script type="math/tex; mode=display">\gamma_t(j) = p(q_t=s_j｜O,\lambda) \\
+			  =\frac{\alpha_t(j)\beta_t(j)}{p(O｜\lambda)} \\
+			  =\frac{\alpha_t(j)\beta_t(j)}{\sum_{i=1}^N\alpha_t(j)\beta_t(j)}</script>
+
+<p>其中分母的作用是确保<script type="math/tex">\sum_{i=1}^N\alpha_t(j)\beta_t(j)=1</script>			</p>
+
+<p>给定观察序列O和HMM,定义t时刻处于隐含状态$s_i$,且t+1时刻处于隐含状态$s_j$的概率变量为:		</p>
+
+<script type="math/tex; mode=display">\xi_t(i,j) = p(q_t=s_i,q_{t+1}=s_j｜O,\lambda) \\
+			 = \frac{\alpha_t(i)a_{ij}\beta_{t+1}(j)b_{j}(o_{t+1})}{p(O｜\lambda)} \\
+			 =\frac{\alpha_t(i)a_{ij}\beta_{t+1}(j)b_{j}(o_{t+1})}{\sum_{i=1}^n\sum_{j=1}^N\alpha_t(i)a_{ij}\beta_{t+1}(j)b_{j}(o_{t+1})}</script>
+
+<p>并且,<script type="math/tex">\gamma_t(i) = \sum_{j=1}^N\xi_t(i,j)</script>		</p>
+
+<p>现在回到参数的求解过程中来.		</p>
+
+<p>EM算法是一个迭代的过程,通过迭代来执行E步和M布来达到参数的近似最优解.具体到我们的问题中,E步得到隐变量的概率分布(通过隐变量的后验概率).在实现过程中,我们知道与隐变量相关的是隐变量概率转移矩阵和观察状态在隐变量下的混淆矩阵.所以按照如上的方式计算<script type="math/tex">\gamma_t(i)和\xi_t{i,j}</script>	</p>
+
+<p>在M步中,需要更新模型参数:		</p>
+
+<p>$\overline\pi<em>(i)$是在初始时刻出现状态i的频率的期望值,$\overline\pi</em>(i)=\gamma_1(i)$		</p>
+
+<p><script type="math/tex">\overline\alpha_{ij}</script>是从状态i转移到状态j的次数的期望值/从状态i转移出去的次数的期望值:		</p>
+
+<script type="math/tex; mode=display">\overline\alpha_{ij}=\frac{\sum_{t=1}^{T-1}\xi_t(i,j)}{\sum_{t=1}^{T-1}\gamma_t(i)}</script>
+
+<p>$\overline b_j(k)$是在状态j下观察到的可观察状态k的次数的期望/从状态j下观察到的所有可观察状态的次数的期望		</p>
+
+<script type="math/tex; mode=display">\overline b_j(k) =\frac{\sum_{t=1,s.t.o_t=k}^T\gamma_t(j)}{\sum_{t=1}^T\gamma_t(j)}</script>
+
+<h3 id="section-8">参考内容</h3>
 
 <p><a href="www.52nlp.cn/category/hidden-markov-model">我爱自然语言处理-隐马尔可夫模型</a></p>
 
-<h4 id="section-8">维基百科-隐马尔可夫模型</h4>
+<h4 id="section-9">维基百科-隐马尔可夫模型</h4>
 
 <p><a href="https://github.com/jwchennlp/HMM">HMM实现源码(python) github.com/jwchennlp/HMM</a></p>
+
+<p><a href="http://www.cnblogs.com/zhangchaoyang/articles/2220398.html">前向-后向算法(forward-backward algorithm) http://www.cnblogs.com/zhangchaoyang/articles/2220398.html</a></p>
 
 
       <footer class="entry-meta">
@@ -309,20 +387,20 @@ $B</em>{ij}=p(o_j｜s_i)表示在隐含状态s_i的情况下,观察状态为o_j�
           <a href="http://jwchennlp.github.com/plsa/" class="read-more-btn">Read More</a>
         </div><!-- /.read-more-header -->
         <div class="read-more-content">
-          <h3><a href="http://jwchennlp.github.com/plsa/" title="pLSA">pLSA</a></h3>
-          <p>在对LSA的介绍中,我们知道LSA的核心思想是将建立的文档-词项矩阵运用SVD将高维空间映射到到隐语义空间,这样可以较好的解决同义词的问题.但语义的权重不好解释.1.层面模型(aspect model)pLSA是以层面模型进行建模,层面模型是一个统计模型.它是关联于潜在类别...&hellip; <a href="http://jwchennlp.github.com/plsa/">Continue reading</a></p>
+          <h3><a href="http://jwchennlp.github.com/chinese-word-segmentation/" title="Chinese Word Segmentation">Chinese Word Segmentation</a></h3>
+          <p>##1.介绍-----------------通过之前隐马尔可夫模型(HMM)的讲解及其适用问题的分析,对HMM应该有一个大致的认知.同时,我们知道HMM在很多领域都有运用.现在我们具体实现HMM在中文分词中的运用.		中文分词 (Chinese Word Segmenta...&hellip; <a href="http://jwchennlp.github.com/chinese-word-segmentation/">Continue reading</a></p>
         </div><!-- /.read-more-content -->
       
       <div class="read-more-list">
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/parameter-estimation-approaches/" title="参数评估方法">参数评估方法</a></h4>
-            <span>Published on June 02, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/hmm-hidden-markov-model_140608165432/" title="Hmm Hidden Markov Model_140608165432">Hmm Hidden Markov Model_140608165432</a></h4>
+            <span>Published on June 04, 2014</span>
           </div><!-- /.list-item -->
         
           <div class="list-item">
-            <h4><a href="http://jwchennlp.github.com/lsa-topic-model/" title="Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)">Latent Semantic Analysis(LSA的目标是在找到一个数据映射之后能很好的词汇层面信息的同时能够表示不同实体间的语义关系)</a></h4>
-            <span>Published on May 30, 2014</span>
+            <h4><a href="http://jwchennlp.github.com/plsa/" title="pLSA">pLSA</a></h4>
+            <span>Published on June 02, 2014</span>
           </div><!-- /.list-item -->
         
       </div><!-- /.read-more-list -->
